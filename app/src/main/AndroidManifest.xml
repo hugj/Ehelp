@@ -16,6 +16,22 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".account.SignUp"
+            android:label="@string/title_activity_sign_up" >
+        </activity>
+        <activity
+            android:name=".account.FindPassword"
+            android:label="@string/title_activity_find_password" >
+        </activity>
+        <activity
+            android:name=".account.ResetPassword"
+            android:label="@string/title_activity_reset_password" >
+        </activity>
+        <activity
+            android:name=".send.SendHelp"
+            android:label="@string/title_activity_send_help" >
+        </activity>
     </application>
 
 </manifest>
