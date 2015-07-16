@@ -47,7 +47,27 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
+        <activity android:name=".account.SignUp"
+            android:label="Sign up"
+            android:parentActivityName=".account.login" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.ehelp.account.login" />
+        </activity>
+        <activity android:name=".account.FindPassword"
+            android:label="Find password"
+            android:parentActivityName=".account.login" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.ehelp.account.login" />
+        </activity>
+        <activity android:name=".account.ResetPassword"
+            android:label="Reset password"
+            android:parentActivityName=".account.login" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.ehelp.account.login" />
+        </activity>
         <!-- Required SDK核心功能-->
         <activity
             android:name="cn.jpush.android.ui.PushActivity"
@@ -59,6 +79,7 @@
                 <category android:name="com.ehelp" />
             </intent-filter>
         </activity>
+
         <!-- Required  SDK核心功能-->
         <service
             android:name="cn.jpush.android.service.DownloadService"

@@ -12,6 +12,18 @@ import com.ehelp.R;
 
 public class login extends ActionBarActivity {
 
+    public void signUp(View view) {
+        // Do something in response to button
+        Intent intent = new Intent(this, SignUp.class);
+        startActivity(intent);
+    }
+
+    public void findPassword(View view) {
+        // Do something in response to button
+        Intent intent = new Intent(this, FindPassword.class);
+        startActivity(intent);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,15 +52,4 @@ public class login extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void signUp(View view) {
-        // Do something in response to button
-        Intent intent = new Intent(this, SignUp.class);
-        startActivity(intent);
-    }
-
-    public void findPassword(View view) {
-        // Do something in response to button
-        Intent intent = new Intent(this, FindPassword.class);
-        startActivity(intent);
-    }
 }
