@@ -42,7 +42,7 @@
             android:layout_weight="1"
             android:ems="10"
             android:hint="密码"
-            android:inputType="numberPassword" />
+            android:inputType="textPassword" />
 
         <Button
             android:id="@+id/button2"
