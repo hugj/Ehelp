@@ -2,8 +2,8 @@ package com.ehelp.account;
 
 import android.app.TabActivity;
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -14,10 +14,17 @@ import com.ehelp.R;
 
 public class FindPassword extends TabActivity {
 
+    private Toolbar mToolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();
+       // mToolbar = (Toolbar) findViewById(R.id.toolbar);
+// toolbar.setLogo(R.drawable.ic_launcher);
+       // mToolbar.setTitle("找回密码");// 标题的文字需在setSupportActionBar之前，不然会无效
+// toolbar.setSubtitle("副标题");
+        //setSupportActionBar(mToolbar);
         TabHost tabHost = getTabHost();
         LayoutInflater.from(this).inflate(R.layout.activity_find_password,
                 tabHost.getTabContentView(), true);

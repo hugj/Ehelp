@@ -13,4 +13,6 @@
     </string-array>
     <string name="title_activity_reset_password">ResetPassword</string>
     <string name="title_activity_send_help">SendHelp</string>
+    <string name="title_activity_send_question">SendQuestion</string>
+    <string name="title_activity_send_sos">SendSOS</string>
 </resources>

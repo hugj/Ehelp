@@ -8,13 +8,14 @@ import android.view.MenuItem;
 
 import com.ehelp.R;
 
-public class SendHelp extends ActionBarActivity {
+public class SendQuestion extends ActionBarActivity {
 
     private Toolbar mToolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_send_help);
+        setContentView(R.layout.activity_send_question);
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
 // toolbar.setLogo(R.drawable.ic_launcher);
         mToolbar.setTitle("注册");// 标题的文字需在setSupportActionBar之前，不然会无效
@@ -25,7 +26,7 @@ public class SendHelp extends ActionBarActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_send_help, menu);
+        getMenuInflater().inflate(R.menu.menu_send_question, menu);
         return true;
     }
 

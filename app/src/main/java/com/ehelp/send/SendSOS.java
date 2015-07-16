@@ -2,30 +2,23 @@ package com.ehelp.send;
 
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.ehelp.R;
 
-public class SendHelp extends ActionBarActivity {
+public class SendSOS extends ActionBarActivity {
 
-    private Toolbar mToolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_send_help);
-        mToolbar = (Toolbar) findViewById(R.id.toolbar);
-// toolbar.setLogo(R.drawable.ic_launcher);
-        mToolbar.setTitle("注册");// 标题的文字需在setSupportActionBar之前，不然会无效
-// toolbar.setSubtitle("副标题");
-        setSupportActionBar(mToolbar);
+        setContentView(R.layout.activity_send_sos);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_send_help, menu);
+        getMenuInflater().inflate(R.menu.menu_send_so, menu);
         return true;
     }
 
