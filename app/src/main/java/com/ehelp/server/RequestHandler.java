@@ -108,7 +108,7 @@ public class RequestHandler {
 	/* send a file(.jpg) to server by POST method
 	 * @params a url path
 	 * 		   a image file
-	 * @return a String "true" if upload successfully,0
+	 * @return a String "true" if upload successfully,
 	 * 		   "false" otherwise
 	 */
 
