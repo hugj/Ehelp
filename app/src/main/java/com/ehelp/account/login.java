@@ -32,19 +32,20 @@ public class login extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Intent intent = getIntent();
         setContentView(R.layout.activity_login);
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
 // toolbar.setLogo(R.drawable.ic_launcher);
-        mToolbar.setTitle("登录");// 标题的文字需在setSupportActionBar之前，不然会无效
-// toolbar.setSubtitle("副标题");
+        mToolbar.setTitle("锟斤拷录");// 锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷锟絪etSupportActionBar之前锟斤拷锟斤拷然锟斤拷锟斤拷效
+// toolbar.setSubtitle("锟斤拷锟斤拷锟斤拷");
         setSupportActionBar(mToolbar);
-/* 这些通过ActionBar来设置也是一样的，注意要在setSupportActionBar(toolbar);之后，不然就报错了 */
-// getSupportActionBar().setTitle("标题");
-// getSupportActionBar().setSubtitle("副标题");
+/* 锟斤拷些通锟斤拷ActionBar锟斤拷锟斤拷锟斤拷也锟斤拷一锟斤拷锟侥ｏ拷注锟斤拷要锟斤拷setSupportActionBar(toolbar);之锟襟，诧拷然锟酵憋拷锟斤拷锟斤拷 */
+// getSupportActionBar().setTitle("锟斤拷锟斤拷");
+// getSupportActionBar().setSubtitle("锟斤拷锟斤拷锟斤拷");
 // getSupportActionBar().setLogo(R.drawable.ic_launcher);
 
-/* 菜单的监听可以在toolbar里设置，也可以像ActionBar那样，通过Activity的onOptionsItemSelected
-回调方法来处理
+/* 锟剿碉拷锟侥硷拷锟斤拷锟斤拷锟斤拷锟斤拷toolbar锟斤拷锟斤拷锟矫ｏ拷也锟斤拷锟斤拷锟斤拷ActionBar锟斤拷锟斤拷锟斤拷通锟斤拷Activity锟斤拷onOptionsItemSelected
+锟截碉拷锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷
         mToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {

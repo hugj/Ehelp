@@ -15,4 +15,5 @@
     <string name="title_activity_send_help">SendHelp</string>
     <string name="title_activity_send_question">SendQuestion</string>
     <string name="title_activity_send_sos">SendSOS</string>
+    <string name="title_activity_test">Test</string>
 </resources>

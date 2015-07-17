@@ -1,5 +1,6 @@
 package com.ehelp.send;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -14,10 +15,11 @@ public class SendHelp extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Intent intent = getIntent();
         setContentView(R.layout.activity_send_help);
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
 // toolbar.setLogo(R.drawable.ic_launcher);
-        mToolbar.setTitle("注册");// 标题的文字需在setSupportActionBar之前，不然会无效
+        mToolbar.setTitle("发送求助");// 标题的文字需在setSupportActionBar之前，不然会无效
 // toolbar.setSubtitle("副标题");
         setSupportActionBar(mToolbar);
     }
