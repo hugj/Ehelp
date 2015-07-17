@@ -14,7 +14,7 @@ import java.net.URL;
 import java.util.UUID;
 
 /*@author HanksChan
-* @version 1.3
+* @version 1.2
 * With this class, Client can send the request
 * to the Server and get the response from the Server 
 */
@@ -110,7 +110,6 @@ public class RequestHandler {
 	 * 		   a image file
 	 * @return a String "true" if upload successfully,0
 	 * 		   "false" otherwise
-	 * test url: http://120.24.208.130:3000/upload
 	 */
 	
 	public static String uploadFile(String urlString, File file) {
