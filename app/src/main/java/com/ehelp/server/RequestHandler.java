@@ -1,26 +1,33 @@
 package com.example.server;
 
 import java.io.BufferedReader;
+import java.io.DataOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.UUID;
 
 /*@author HanksChan
-* @version 1.0  
+* @version 1.3
 * With this class, Client can send the request
 * to the Server and get the response from the Server 
 */
 
 public class RequestHandler {
 
-	/*send the request by GET method
-	* @param a url path: "url:port/extend_url?params1&params2"
-	* 		 for the ehelp project, must provide the url path
-	*        like "http://120.24.208.130:1501/account/login..."
-	* @return a string that the server respond with json format
-	* 		  a string "false"/null indicate some errors happened
-	*/
+	/* send the request by GET method
+	 * @param a url path: "url:port/extend_url?params1&params2"
+	 * 		  for the ehelp project, must provide the url path
+	 *        like "http://120.24.208.130:1501/account/login..."
+	 * @return a string that the server respond with json format
+	 * 		   a string "false"/null indicate some errors happened
+	 */
 	public static String sendGetRequest(String urlString){
 		
 		try {
@@ -47,19 +54,20 @@ public class RequestHandler {
 		} catch (Exception e) {
 		
 			e.printStackTrace();
-			return "false";
+			
 		}
+		
 		return "false";
 	}
 	
-	/*send the request by POST method
-	* @param a url path: "url:port/extend_url?params1&params2"
-	* 		 for the ehelp project, must provide the url path
-	*        like "http://120.24.208.130:1501/account/login..."
-	*        a String with json format
-	* @return a string that the server respond with json format
-	* 		  a string "false"/null indicate some errors happened
-	*/
+	/* send the request by POST method
+	 * @param a url path
+	 * 		  for the ehelp project, must provide the url path
+	 *        like "http://120.24.208.130:1501/account/login..."
+	 *        a String with json format
+	 * @return a string that the server respond with json format
+	 * 		   a string "false"/null indicate some errors happened
+	 */
 	public static String sendPostRequest(String urlString, String jsondata){
 		
 		try {
@@ -86,12 +94,90 @@ public class RequestHandler {
 				}
 				return sBuffer.toString();
 			}
+			
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
-			return "false";
+			
 		}
 		
 		return "false";
+		
+	}
+	
+	/* send a file(.jpg) to server by POST method
+	 * @params a url path
+	 * 		   a image file
+	 * @return a String "true" if upload successfully,0
+	 * 		   "false" otherwise
+	 * test url: http://120.24.208.130:3000/upload
+	 */
+	
+	public static String uploadFile(String urlString, File file) {
+		
+		String PREFIX = "--";
+		String lINE_ENDString = "\r\n";
+		String BOUNDARY = UUID.randomUUID().toString(); // set the boundary
+		
+		
+		try {
+			
+			URL url = new URL(urlString);
+			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+			conn.setConnectTimeout(50000);
+			conn.setReadTimeout(50000);
+			conn.setRequestMethod("POST");
+			conn.setDoInput(true); // permit to use the inputstream
+			conn.setDoOutput(true); // permit to use the outputstrem
+			conn.setUseCaches(false); // deny to use the cache
+			conn.setRequestProperty("Content-Type", "multipart/form-data"+";boundary=" + BOUNDARY);// set the request Content-Type
+			conn.setRequestProperty("connection", "keep-alive");
+			
+			if(file != null) {
+				OutputStream outputStream = conn.getOutputStream();
+				DataOutputStream doStream = new DataOutputStream(outputStream);
+				
+				// request's entity body
+				StringBuffer sBuffer = new StringBuffer();
+				sBuffer.append(PREFIX);
+				sBuffer.append(BOUNDARY);
+				sBuffer.append(lINE_ENDString);		
+				sBuffer.append("Content-Disposition: form-data; name=\"avatar\"; filename=\""
+						+ file.getName() + "\"" + lINE_ENDString);
+				sBuffer.append("Content-Type: application/octet-stream; charset = utf-8" + lINE_ENDString);
+				sBuffer.append(lINE_ENDString);
+				
+				doStream.write(sBuffer.toString().getBytes());
+				
+				InputStream in = new FileInputStream(file);
+				byte[] bytes = new byte[2014];
+				int len = 0;
+				while((len = in.read(bytes)) != -1) {
+					doStream.write(bytes, 0, len);
+				}
+				in.close();
+				doStream.write(
+						(lINE_ENDString + PREFIX + BOUNDARY + PREFIX + lINE_ENDString).getBytes());
+				doStream.flush();
+				
+				if(conn.getResponseCode() == 200) {
+					return "true";
+				}
+				
+			}
+			
+			
+		} catch (MalformedURLException e) {
+			
+			e.printStackTrace();
+			
+		} catch (IOException e) {
+
+			e.printStackTrace();
+			
+		}
+		
+		return "false";
+		
 	}
 }
