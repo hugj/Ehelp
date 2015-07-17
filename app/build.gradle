@@ -2,8 +2,8 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 21
-    buildToolsVersion '20.0.0'
-    android {compileOptions.encoding = "GBK"}
+    buildToolsVersion '21.1.2'
+    android {compileOptions.encoding = "UTF-8"}
 
     defaultConfig {
         applicationId "com.ehelp"
@@ -23,6 +23,5 @@ android {
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.android.support:appcompat-v7:22.2.0'
-    compile files('libs/xUtils-2.6.14.jar')
     compile files('libs/jpush-sdk-release1.7.5.jar')
 }
