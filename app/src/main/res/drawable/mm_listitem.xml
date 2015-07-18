@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<selector
+  xmlns:android="http://schemas.android.com/apk/res/android">
+  /*
+   *选择器，android:state_focused 是否取得焦点，比如用户选择了一个文本框
+   *state_selected 被选中，它与focus state并不完全一样，如一个list view 被选中的时候，它里面的各个子组件可能通过方向键，被选中了。
+   */
+    <item android:state_selected="true" android:drawable="@drawable/mm_listitem_pressed" />
+    <item android:state_focused="true" android:drawable="@drawable/mm_listitem_pressed" />
+    <item android:state_focused="false" android:state_pressed="true" android:drawable="@drawable/mm_listitem_pressed" />
+    <item android:drawable="@drawable/mm_listitem_grey_normal" />
+</selector>
