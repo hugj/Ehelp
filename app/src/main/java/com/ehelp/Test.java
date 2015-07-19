@@ -1,6 +1,7 @@
 package com.ehelp;
 
 import android.content.Intent;
+import android.os.StrictMode;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -20,9 +21,6 @@ public class Test extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test);
-        String jsonStrng = "";
-        String message = RequestHandler.sendPostRequest(
-                "http://120.24.208.130:1501/account/login", jsonStrng);
     }
 
     @Override

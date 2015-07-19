@@ -1,6 +1,7 @@
 package com.ehelp.account;
 
 import android.content.Intent;
+import android.os.StrictMode;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -36,6 +37,13 @@ public class login extends ActionBarActivity {
     }
 
     private void init() {
+        // 使用后台线程运行网络连接功能
+        StrictMode.setThreadPolicy(
+                new StrictMode.ThreadPolicy.Builder().
+                        detectDiskReads().detectDiskWrites().detectNetwork().penaltyLog().build());
+        StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder().
+                detectLeakedSqlLiteObjects().detectLeakedClosableObjects().
+                penaltyLog().penaltyDeath().build());
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
 // toolbar.setLogo(R.drawable.ic_launcher);
         mToolbar.setTitle("登录");// �������������setSupportActionBar֮ǰ����Ȼ����Ч
@@ -106,31 +114,36 @@ public class login extends ActionBarActivity {
         account = Eaccount.getText().toString();
         password = Epassword.getText().toString();
         if ((!account.isEmpty()) &&(!password.isEmpty())) {
-            /*String jsonStrng = "{" +
+            String jsonStrng = "{" +
                     "\"account\": \" " + account + "\", " +
-                    "\"password\": \"\", " +  "}";*/
-            String jsonStrng = "";
+                    "\"password\": \"\", " +  "}";
+            //String jsonStrng = "";
             String message = RequestHandler.sendPostRequest(
                     "http://120.24.208.130:1501/account/login", jsonStrng);
             String salt;
+            String status;
             try {
                 JSONObject jO = new JSONObject(message);
+                status = jO.getString("status");
+                if (status.equals("500")) {
+                    Toast.makeText(getApplicationContext(), "用户未注册",
+                            Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 salt = jO.getString("salt");
                 jsonStrng = "{" +
-                        "\"account\": \" " + account + "\", " +
-                        "\"password\": \" " + password + "\", " +
-                        "\"salt\": \" " + salt + "\", " +  "}";
+                        "\"account\": \" " + "a@test.com" + "\", " +
+                        "\"password\": \" " + "dd9e9158a2f5212528a868375a7c1940" + "\", " +
+                        "\"salt\": \" " + "XYmHBcPv" + "\", " +  "}";
                 message = RequestHandler.sendPostRequest(
                         "http://120.24.208.130:8888/account/login", jsonStrng);
                 if (message == "false") {
                     Toast.makeText(getApplicationContext(), "登录失败",
                             Toast.LENGTH_SHORT).show();
-                    System.out.println("登录失败");
                 }
                 else {
                     Toast.makeText(getApplicationContext(), "登录成功",
                             Toast.LENGTH_SHORT).show();
-                    System.out.println("登陆成功");
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
