@@ -19,9 +19,7 @@ public class SendQuestion extends ActionBarActivity {
         Intent intent = getIntent();
         setContentView(R.layout.activity_send_question);
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
-// toolbar.setLogo(R.drawable.ic_launcher);
-        mToolbar.setTitle("提问");// 标题的文字需在setSupportActionBar之前，不然会无效
-// toolbar.setSubtitle("副标题");
+        mToolbar.setTitle("鎻愰棶淇℃伅");// 锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷锟絪etSupportActionBar之前锟斤拷锟斤拷然锟斤拷锟斤拷效
         setSupportActionBar(mToolbar);
     }
 

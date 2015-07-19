@@ -17,9 +17,7 @@ public class ResetPassword extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reset_password);
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
-// toolbar.setLogo(R.drawable.ic_launcher);
-        mToolbar.setTitle("重置密码");// 标题的文字需在setSupportActionBar之前，不然会无效
-// toolbar.setSubtitle("副标题");
+        mToolbar.setTitle("閲嶇疆瀵嗙爜");// 锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷锟絪etSupportActionBar之前锟斤拷锟斤拷然锟斤拷锟斤拷效
         setSupportActionBar(mToolbar);
     }
 

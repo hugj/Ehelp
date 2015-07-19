@@ -20,31 +20,27 @@ public class FindPassword extends TabActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();
-       // mToolbar = (Toolbar) findViewById(R.id.toolbar);
-// toolbar.setLogo(R.drawable.ic_launcher);
-       // mToolbar.setTitle("ÕÒ»ØÃÜÂë");// ±êÌâµÄÎÄ×ÖĞèÔÚsetSupportActionBarÖ®Ç°£¬²»È»»áÎŞĞ§
-// toolbar.setSubtitle("¸±±êÌâ");
-        //setSupportActionBar(mToolbar);
+
         TabHost tabHost = getTabHost();
         LayoutInflater.from(this).inflate(R.layout.activity_find_password,
                 tabHost.getTabContentView(), true);
-        tabHost.addTab(tabHost.newTabSpec("tab1").setIndicator("¶ÌĞÅÕÒ»Ø")
+        tabHost.addTab(tabHost.newTabSpec("tab1").setIndicator("é€šè¿‡éªŒè¯ç æ‰¾å›")
                 .setContent(R.id.view1));
-        tabHost.addTab(tabHost.newTabSpec("tab3").setIndicator("ÓÊÏäÕÒ»Ø")
+        tabHost.addTab(tabHost.newTabSpec("tab3").setIndicator("é€šè¿‡é‚®ç®±æ‰¾å›")
                 .setContent(R.id.view2));
-        tabHost.addTab(tabHost.newTabSpec("tab3").setIndicator("°²È«ÎÊÌâÕÒ»Ø")
+        tabHost.addTab(tabHost.newTabSpec("tab3").setIndicator("å›ç­”é—®é¢˜æ‰¾å›")
                 .setContent(R.id.view3));
 
 
-        //±êÇ©ÇĞ»»ÊÂ¼ş´¦Àí£¬setOnTabChangedListener
+        //ï¿½ï¿½Ç©ï¿½Ğ»ï¿½ï¿½Â¼ï¿½ï¿½ï¿½ï¿½ï¿½setOnTabChangedListener
         tabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
             @Override
             public void onTabChanged(String tabId) {
-                if (tabId.equals("tab1")) {   //µÚÒ»¸ö±êÇ©
+                if (tabId.equals("tab1")) {   //ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½Ç©
                 }
-                if (tabId.equals("tab2")) {   //µÚ¶ş¸ö±êÇ©
+                if (tabId.equals("tab2")) {   //ï¿½Ú¶ï¿½ï¿½ï¿½ï¿½ï¿½Ç©
                 }
-                if (tabId.equals("tab3")) {   //µÚÈı¸ö±êÇ©
+                if (tabId.equals("tab3")) {   //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç©
                 }
             }
         });

@@ -19,9 +19,7 @@ public class SignUp extends ActionBarActivity {
         Intent intent = getIntent();
         setContentView(R.layout.activity_sign_up);
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
-// toolbar.setLogo(R.drawable.ic_launcher);
-        mToolbar.setTitle("×¢²á");// ±êÌâµÄÎÄ×ÖÐèÔÚsetSupportActionBarÖ®Ç°£¬²»È»»áÎÞÐ§
-// toolbar.setSubtitle("¸±±êÌâ");
+        mToolbar.setTitle("æ³¨å†Œæ–°ç”¨æˆ·");// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½setSupportActionBarÖ®Ç°ï¿½ï¿½ï¿½ï¿½È»ï¿½ï¿½ï¿½ï¿½Ð§
         setSupportActionBar(mToolbar);
     }
 

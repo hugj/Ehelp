@@ -45,33 +45,9 @@ public class login extends ActionBarActivity {
                 detectLeakedSqlLiteObjects().detectLeakedClosableObjects().
                 penaltyLog().penaltyDeath().build());
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
-// toolbar.setLogo(R.drawable.ic_launcher);
         mToolbar.setTitle("登录");// �������������setSupportActionBar֮ǰ����Ȼ����Ч
-// toolbar.setSubtitle("������");
         setSupportActionBar(mToolbar);
-/* ��Щͨ��ActionBar������Ҳ��һ���ģ�ע��Ҫ��setSupportActionBar(toolbar);֮�󣬲�Ȼ�ͱ����� */
-// getSupportActionBar().setTitle("����");
-// getSupportActionBar().setSubtitle("������");
-// getSupportActionBar().setLogo(R.drawable.ic_launcher);
 
-/* �˵��ļ���������toolbar�����ã�Ҳ������ActionBar������ͨ��Activity��onOptionsItemSelected
-�ص�����������
-        mToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.action_settings:
-                        Toast.makeText(activity_login.this, "action_settings", 0).show();
-                        break;
-                    case R.id.action_share:
-                        Toast.makeText(MainActivity.this, "action_share", 0).show();
-                        break;
-                    default:
-                        break;
-                }
-                return true;
-            }
-        });*/
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
