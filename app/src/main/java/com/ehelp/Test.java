@@ -11,6 +11,7 @@ import com.ehelp.account.login;
 import com.ehelp.send.SendHelp;
 import com.ehelp.send.SendQuestion;
 import com.ehelp.send.SendSOS;
+import com.ehelp.server.RequestHandler;
 
 
 public class Test extends ActionBarActivity {
@@ -19,6 +20,9 @@ public class Test extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test);
+        String jsonStrng = "";
+        String message = RequestHandler.sendPostRequest(
+                "http://120.24.208.130:1501/account/login", jsonStrng);
     }
 
     @Override

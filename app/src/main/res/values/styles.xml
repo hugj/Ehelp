@@ -7,7 +7,7 @@
         <!-- Toolbar颜色 -->
         <item name="colorPrimary">@color/colorPrimary</item>
 
-        <item name="android:textColorPrimary">#FFFFFF</item>
+        <item name="android:textColorPrimary">#666666</item>
         <!-- 返回键样式 -->
         <item name="drawerArrowStyle">@style/AppTheme.DrawerArrowToggle</item>
     </style>

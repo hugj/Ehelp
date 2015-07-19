@@ -106,9 +106,10 @@ public class login extends ActionBarActivity {
         account = Eaccount.getText().toString();
         password = Epassword.getText().toString();
         if ((!account.isEmpty()) &&(!password.isEmpty())) {
-            String jsonStrng = "{" +
+            /*String jsonStrng = "{" +
                     "\"account\": \" " + account + "\", " +
-                    "\"password\": \"\", " +  "}";
+                    "\"password\": \"\", " +  "}";*/
+            String jsonStrng = "";
             String message = RequestHandler.sendPostRequest(
                     "http://120.24.208.130:1501/account/login", jsonStrng);
             String salt;

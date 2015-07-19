@@ -10,7 +10,7 @@
         android:orientation="horizontal" >
 
         <EditText
-            android:id="@+id/edit_message1"
+            android:id="@+id/edit_phoneNum"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -36,7 +36,7 @@
         android:orientation="horizontal" >
 
         <EditText
-            android:id="@+id/edit_message2"
+            android:id="@+id/edit_password"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -67,6 +67,7 @@
             android:layout_marginLeft="31dp"
             android:background="@color/button"
             android:text="登录"
+            android:onClick="signIn"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true" />
 
