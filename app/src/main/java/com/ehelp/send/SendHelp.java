@@ -18,9 +18,7 @@ public class SendHelp extends ActionBarActivity {
         Intent intent = getIntent();
         setContentView(R.layout.activity_send_help);
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
-// toolbar.setLogo(R.drawable.ic_launcher);
-        mToolbar.setTitle("·¢ËÍÇóÖú");// ±êÌâµÄÎÄ×ÖĞèÔÚsetSupportActionBarÖ®Ç°£¬²»È»»áÎŞĞ§
-// toolbar.setSubtitle("¸±±êÌâ");
+        mToolbar.setTitle("å‘é€æ±‚åŠ©ä¿¡æ¯");// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½setSupportActionBarÖ®Ç°ï¿½ï¿½ï¿½ï¿½È»ï¿½ï¿½ï¿½ï¿½Ğ§
         setSupportActionBar(mToolbar);
     }
 
