@@ -1,28 +1,98 @@
 package com.ehelp.account;
 
 import android.content.Intent;
+import android.os.StrictMode;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import com.ehelp.R;
+import com.ehelp.server.RequestHandler;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class SignUp extends ActionBarActivity {
 
     private Toolbar mToolbar;
+    private EditText Epassword;
+    private EditText Epassword2;
+    private EditText Eaccount;
+    private String password;
+    private String password2;
+    private String account;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();
         setContentView(R.layout.activity_sign_up);
+        init();
+    }
+
+    private void init() {
+        // ä½¿ç”¨åå°çº¿ç¨‹è¿è¡Œç½‘ç»œè¿æ¥åŠŸèƒ½
+        StrictMode.setThreadPolicy(
+                new StrictMode.ThreadPolicy.Builder().
+                        detectDiskReads().detectDiskWrites().detectNetwork().penaltyLog().build());
+        StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder().
+                detectLeakedSqlLiteObjects().detectLeakedClosableObjects().
+                penaltyLog().penaltyDeath().build());
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
 // toolbar.setLogo(R.drawable.ic_launcher);
-        mToolbar.setTitle("×¢²á");// ±êÌâµÄÎÄ×ÖĞèÔÚsetSupportActionBarÖ®Ç°£¬²»È»»áÎŞĞ§
-// toolbar.setSubtitle("¸±±êÌâ");
+        mToolbar.setTitle("×¢ï¿½ï¿½");// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½setSupportActionBarÖ®Ç°ï¿½ï¿½ï¿½ï¿½È»ï¿½ï¿½ï¿½ï¿½Ğ§
+// toolbar.setSubtitle("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
         setSupportActionBar(mToolbar);
+    }
+
+    public void signUp(View view) {
+        Eaccount = (EditText)findViewById(R.id.edit_phoneNum);
+        Epassword = (EditText)findViewById(R.id.edit_password);
+        Epassword2 = (EditText)findViewById(R.id.edit_password2);
+        account = Eaccount.getText().toString();
+        password = Epassword.getText().toString();
+        password2 = Epassword2.getText().toString();
+        if ((!account.isEmpty()) && (!password.isEmpty()) && (!password2.isEmpty())) {
+            if (password.length() < 6) {
+                Toast.makeText(getApplicationContext(), "å¯†ç åº”ä¸å°‘äº6ä½",
+                        Toast.LENGTH_SHORT).show();
+                return;
+            }
+            if (!password.equals(password2)) {
+                Toast.makeText(getApplicationContext(), "å¯†ç ä¸ä¸€è‡´",
+                        Toast.LENGTH_SHORT).show();
+                return;
+            }
+            String jsonStrng = "{" +
+                    "\"account\": \" " + account + "\", " +
+                    "\"password\": \"" + password + "\" " +  "}";
+            String message = RequestHandler.sendPostRequest(
+                    "http://120.24.208.130:1501/account/regist", jsonStrng);
+            String status;
+            try {
+                JSONObject jO = new JSONObject(message);
+                status = jO.getString("status");
+                if (status.equals("200")) {
+                    Toast.makeText(getApplicationContext(), "æ³¨å†ŒæˆåŠŸ",
+                            Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getApplicationContext(), "æ³¨å†Œå¤±è´¥",
+                            Toast.LENGTH_SHORT).show();
+                    return;
+
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        } else {
+            Toast.makeText(getApplicationContext(), "ç”¨æˆ·åæˆ–å¯†ç ä¸èƒ½ä¸ºç©º",
+                    Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override

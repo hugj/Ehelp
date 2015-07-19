@@ -10,7 +10,7 @@
         android:orientation="horizontal" >
 
         <EditText
-            android:id="@+id/edit_message1"
+            android:id="@+id/edit_phoneNum"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -33,7 +33,7 @@
 
 
         <EditText
-            android:id="@+id/edit_message2"
+            android:id="@+id/edit_password"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -50,7 +50,7 @@
 
 
         <EditText
-            android:id="@+id/edit_message3"
+            android:id="@+id/edit_password2"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -68,7 +68,7 @@
 
 
         <EditText
-            android:id="@+id/edit_message4"
+            android:id="@+id/edit_identify"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -88,7 +88,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.42"
             android:background="@color/button"
-            android:text="注册" />
+            android:text="注册"
+            android:onClick="signUp" />
 
     </LinearLayout>
 

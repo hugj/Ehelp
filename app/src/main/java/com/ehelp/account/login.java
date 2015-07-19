@@ -116,27 +116,25 @@ public class login extends ActionBarActivity {
         if ((!account.isEmpty()) &&(!password.isEmpty())) {
             String jsonStrng = "{" +
                     "\"account\": \" " + account + "\", " +
-                    "\"password\": \"\", " +  "}";
+                    "\"password\": \"\" " +  "}";
             //String jsonStrng = "";
             String message = RequestHandler.sendPostRequest(
                     "http://120.24.208.130:1501/account/login", jsonStrng);
             String salt;
-            String status;
             try {
                 JSONObject jO = new JSONObject(message);
-                status = jO.getString("status");
-                if (status.equals("500")) {
+                salt = jO.getString("salt");
+                if (salt.equals("")) {
                     Toast.makeText(getApplicationContext(), "用户未注册",
                             Toast.LENGTH_SHORT).show();
                     return;
                 }
-                salt = jO.getString("salt");
                 jsonStrng = "{" +
-                        "\"account\": \" " + "a@test.com" + "\", " +
-                        "\"password\": \" " + "dd9e9158a2f5212528a868375a7c1940" + "\", " +
-                        "\"salt\": \" " + "XYmHBcPv" + "\", " +  "}";
+                        "\"account\": \" " + account + "\", " +
+                        "\"password\": \" " + password + "\", " +
+                        "\"salt\": \" " + salt + "\" " +  "}";
                 message = RequestHandler.sendPostRequest(
-                        "http://120.24.208.130:8888/account/login", jsonStrng);
+                        "http://120.24.208.130:1501/account/login", jsonStrng);
                 if (message == "false") {
                     Toast.makeText(getApplicationContext(), "登录失败",
                             Toast.LENGTH_SHORT).show();
@@ -151,7 +149,6 @@ public class login extends ActionBarActivity {
         } else {
             Toast.makeText(getApplicationContext(), "用户名或密码不能为空",
                     Toast.LENGTH_SHORT).show();
-            System.out.println("用户名或密码不能为空");
         }
     }
 
