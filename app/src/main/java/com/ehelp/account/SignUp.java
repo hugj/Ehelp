@@ -44,9 +44,7 @@ public class SignUp extends ActionBarActivity {
                 detectLeakedSqlLiteObjects().detectLeakedClosableObjects().
                 penaltyLog().penaltyDeath().build());
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
-// toolbar.setLogo(R.drawable.ic_launcher);
-        mToolbar.setTitle("ע��");// �������������setSupportActionBar֮ǰ����Ȼ����Ч
-// toolbar.setSubtitle("������");
+        mToolbar.setTitle("注册新用户");
         setSupportActionBar(mToolbar);
     }
 
@@ -69,8 +67,8 @@ public class SignUp extends ActionBarActivity {
                 return;
             }
             String jsonStrng = "{" +
-                    "\"account\": \" " + account + "\", " +
-                    "\"password\": \"" + password + "\" " +  "}";
+                    "\"account\":\"" + account + "\"," +
+                    "\"password\":\"" + password + "\"" + "}";
             String message = RequestHandler.sendPostRequest(
                     "http://120.24.208.130:1501/account/regist", jsonStrng);
             String status;
@@ -84,7 +82,6 @@ public class SignUp extends ActionBarActivity {
                     Toast.makeText(getApplicationContext(), "注册失败",
                             Toast.LENGTH_SHORT).show();
                     return;
-
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
