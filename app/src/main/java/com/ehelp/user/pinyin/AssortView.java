@@ -57,7 +57,7 @@ public class AssortView extends Button {
 			if (i == selectIndex) {
 				paint.setColor(Color.parseColor("#3399ff"));
 				paint.setFakeBoldText(true);
-				paint.setTextSize(30);
+				paint.setTextSize(50);
 			}
 			float xPos = width / 2 - paint.measureText(assort[i]) / 2;
 			float yPos = interval * i + interval;

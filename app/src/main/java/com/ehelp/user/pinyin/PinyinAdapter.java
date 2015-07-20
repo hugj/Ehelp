@@ -8,6 +8,8 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.ehelp.R;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -32,8 +34,9 @@ public class PinyinAdapter extends BaseExpandableListAdapter {
 		long time = System.currentTimeMillis();
 		sort();
 		Toast toast=Toast.makeText(context,
-				String.valueOf(System.currentTimeMillis() - time), Toast.LENGTH_LONG );
+				String.valueOf(System.currentTimeMillis() - time), Toast.LENGTH_SHORT );
 		toast.show();
+
 	}
 	private void sort() {
 		for (String str : strList) {
@@ -58,7 +61,7 @@ public class PinyinAdapter extends BaseExpandableListAdapter {
 			View contentView, ViewGroup arg4) {
 		// TODO Auto-generated method stub
 		if (contentView == null) {
-			contentView = inflater.inflate(R.layout.adapter_chat, null);
+			contentView = inflater.inflate(R.layout.activity_adapterchat, null);
 		}
 		TextView textView = (TextView) contentView.findViewById(R.id.name);
 		textView.setText(assort.getHashList().getValueIndex(group, child));

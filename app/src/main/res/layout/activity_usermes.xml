@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#eee"
+    android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="45dp"
+        android:id="@+id/title"
+        android:background="#00CC33"
+        android:gravity="center_horizontal|center_vertical"  >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/mes_user3"
+            android:textSize="20sp"
+            android:textColor="#fff" />
+    </LinearLayout>
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:scrollbarStyle="outsideOverlay">
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+            <TextView android:layout_width="fill_parent"
+                android:layout_height="25dp"
+                android:background="#eee"/>
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="14dp"
+                android:gravity="center_vertical"
+                android:clickable="true"
+                android:background="@drawable/preference_first_item"
+                android:id="@+id/user_name1">
+                <RelativeLayout android:layout_width="55dp"
+                    android:layout_height="60dp" android:id="@+id/user_name">
+                    <ImageView android:id="@+id/user_name2" android:layout_width="50dp"
+                        android:layout_height="50dp" android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true" android:paddingLeft="5dp"
+                        android:background="@drawable/icon" />
+                </RelativeLayout>
+
+                <TextView android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:layout_toRightOf="@id/user_name"
+                    android:textColor="#000" android:layout_centerVertical="true"
+                    android:textSize="20sp" android:id="@+id/user_name3"
+                    android:text="@string/mes_username"/>
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:scaleType="matrix"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    android:clickable="true"
+                    android:src="@drawable/mm_submenu" />
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="50dp"
+                android:gravity="center_vertical"
+                android:clickable="true"
+                android:background="@drawable/preference_last_item"
+                android:id="@+id/user_account">
+                <RelativeLayout android:layout_width="55dp"
+                    android:layout_height="60dp" android:id="@+id/user_account1">
+                    <ImageView android:id="@+id/user_account2" android:layout_width="50dp"
+                        android:layout_height="50dp" android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true" android:paddingLeft="5dp"
+                        android:background="@drawable/icon" />
+                </RelativeLayout>
+
+                <TextView android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:layout_toRightOf="@id/user_account1"
+                    android:textColor="#000" android:layout_centerVertical="true"
+                    android:textSize="20sp" android:id="@+id/user_account3"
+                    android:text="@string/mes_account"/>
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:scaleType="matrix"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    android:src="@drawable/mm_submenu" />
+            </RelativeLayout>
+            <TextView android:layout_width="fill_parent"
+                android:layout_height="30dp"
+                android:background="#eee"/>
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="50dp"
+                android:gravity="center_vertical"
+                android:clickable="true"
+                android:background="@drawable/preference_first_item"
+                android:id="@+id/user_page">
+                <RelativeLayout android:layout_width="55dp"
+                    android:layout_height="60dp" android:id="@+id/user_page1">
+                    <ImageView android:id="@+id/user_page2" android:layout_width="50dp"
+                        android:layout_height="50dp" android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true" android:paddingLeft="5dp"
+                        android:background="@drawable/icon" />
+                </RelativeLayout>
+
+                <TextView android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:layout_toRightOf="@id/user_page1"
+                    android:textColor="#000" android:layout_centerVertical="true"
+                    android:textSize="20sp" android:id="@+id/user_page3"
+                    android:text="@string/mes_page"/>
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:scaleType="matrix"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    android:src="@drawable/mm_submenu" />
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="50dp"
+                android:gravity="center_vertical"
+                android:clickable="true"
+                android:background="@drawable/preference_item"
+                android:id="@+id/user_friends">
+                <RelativeLayout android:layout_width="55dp"
+                    android:layout_height="60dp" android:id="@+id/user_friends1">
+                    <ImageView android:id="@+id/user_friends2" android:layout_width="50dp"
+                        android:layout_height="50dp" android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true" android:paddingLeft="5dp"
+                        android:background="@drawable/icon" />
+                </RelativeLayout>
+
+                <TextView android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:layout_toRightOf="@id/user_friends1"
+                    android:textColor="#000" android:layout_centerVertical="true"
+                    android:textSize="20sp" android:id="@+id/user_friends3"
+                    android:text="@string/mes_username"/>
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:scaleType="matrix"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    android:src="@drawable/mm_submenu" />
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="50dp"
+                android:gravity="center_vertical"
+                android:clickable="true"
+                android:background="@drawable/preference_item"
+                android:id="@+id/user_bank">
+                <RelativeLayout android:layout_width="55dp"
+                    android:layout_height="60dp" android:id="@+id/user_bank1">
+                    <ImageView android:id="@+id/user_bank2" android:layout_width="50dp"
+                        android:layout_height="50dp" android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true" android:paddingLeft="5dp"
+                        android:background="@drawable/icon" />
+                </RelativeLayout>
+
+                <TextView android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:layout_toRightOf="@id/user_bank1"
+                    android:textColor="#000" android:layout_centerVertical="true"
+                    android:textSize="20sp" android:id="@+id/user_bank3"
+                    android:text="@string/mes_bank"/>
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:scaleType="matrix"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    android:src="@drawable/mm_submenu" />
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="50dp"
+                android:gravity="center_vertical"
+                android:clickable="true"
+                android:background="@drawable/preference_last_item"
+                android:id="@+id/user_news">
+                <RelativeLayout android:layout_width="55dp"
+                    android:layout_height="60dp" android:id="@+id/user_news1">
+                    <ImageView android:id="@+id/user_new2" android:layout_width="50dp"
+                        android:layout_height="50dp" android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true" android:paddingLeft="5dp"
+                        android:background="@drawable/icon" />
+                </RelativeLayout>
+
+                <TextView android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:layout_toRightOf="@id/user_news1"
+                    android:textColor="#000" android:layout_centerVertical="true"
+                    android:textSize="20sp" android:id="@+id/user_new3"
+                    android:text="@string/mes_news"/>
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:scaleType="matrix"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    android:src="@drawable/mm_submenu" />
+            </RelativeLayout>
+            <TextView android:layout_width="fill_parent"
+                android:layout_height="30dp"
+                android:background="#eee"/>
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="50dp"
+                android:gravity="center_vertical"
+                android:clickable="true"
+                android:background="@drawable/preference_first_item"
+                android:id="@+id/user_help">
+                <RelativeLayout android:layout_width="55dp"
+                    android:layout_height="60dp" android:id="@+id/user_help1">
+                    <ImageView android:id="@+id/user_help2" android:layout_width="50dp"
+                        android:layout_height="50dp" android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true" android:paddingLeft="5dp"
+                        android:background="@drawable/icon" />
+                </RelativeLayout>
+
+                <TextView android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:layout_toRightOf="@id/user_help1"
+                    android:textColor="#000" android:layout_centerVertical="true"
+                    android:textSize="20sp" android:id="@+id/user_help3"
+                    android:text="@string/mes_help"/>
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:scaleType="matrix"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    android:src="@drawable/mm_submenu" />
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="50dp"
+                android:gravity="center_vertical"
+                android:clickable="true"
+                android:background="@drawable/preference_last_item"
+                android:id="@+id/user_about">
+                <RelativeLayout android:layout_width="55dp"
+                    android:layout_height="60dp" android:id="@+id/user_about1">
+                    <ImageView android:id="@+id/user_about2" android:layout_width="50dp"
+                        android:layout_height="50dp" android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true" android:paddingLeft="5dp"
+                        android:background="@drawable/icon" />
+                </RelativeLayout>
+
+                <TextView android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:layout_toRightOf="@id/user_about1"
+                    android:textColor="#000" android:layout_centerVertical="true"
+                    android:textSize="20sp" android:id="@+id/user_about3"
+                    android:text="@string/mes_username"/>
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:scaleType="matrix"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    android:src="@drawable/mm_submenu" />
+            </RelativeLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

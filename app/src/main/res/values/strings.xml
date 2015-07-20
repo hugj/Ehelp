@@ -1,9 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="hello">Hello World, MainActivity!</string>
-    <string name="app_name">通讯录</string>
+    <string name="app_name">Ehelp</string>
     <string name="title_activity_message">messageActivity</string>
-
+    <string name= "mes_username">用户名</string>
+    <string name="mes_title">个人信息</string>
+    <string name="mes_file">性别</string>
+    <string name="mes_user1">男</string>
+    <string name="mes_user2">女</string>
+    <string name="mes_user3">用户信息</string>
+    <string name="mes_account">我的账号</string>
+    <string name="mes_page">个人主页</string>
+    <string name="mes_friends">我的人脉</string>
+    <string name="mes_bank">爱心银行</string>
+    <string name="mes_news">消息与提醒</string>
+    <string name="mes_help">帮助</string>
+    <string name="mes_about">关于我们</string>
+    <string name="mes_phone">手机号</string>
+    <string name="mes_local">所在地</string>
+    <string name="mes_age">年龄</string>
+    <string name="mes_birth">生日</string>
+    <string name="mes_detail">详细信息</string>
+    <string name="mes_setname">备注姓名</string>
+    <string name="mes_addcontact">添加为紧急联系人</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="title_activity_homepage">homepageActivity</string>
+    <string name="title_activity_adapterchat">adapterchatActivity</string>
 </resources>

@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#eee"
-    android:id="@+id/detail_mes">
+    android:id="@+id/single_mes">
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="45dp"
@@ -12,7 +13,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/mes_detail"
+            android:text="@string/mes_title"
             android:textSize="20sp"
             android:textColor="#fff" />
     </LinearLayout>
@@ -24,10 +25,10 @@
         android:layout_height="wrap_content"
         android:gravity="center_horizontal|center_vertical">
         <ImageView
-            android:id="@+id/detail_icon"
+            android:id="@+id/single_icon"
             android:layout_width="70dp"
             android:layout_height="70dp"
-            android:background="@drawable/icon"/>
+            android:background="@drawable/icon" />
     </LinearLayout>
     <LinearLayout
         android:layout_width="fill_parent"
@@ -35,165 +36,183 @@
         android:orientation="vertical" >
         <RelativeLayout
             android:layout_width="fill_parent"
-            android:layout_height="40dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="14dp"
             android:gravity="center_vertical"
             android:clickable="true"
-            android:id="@+id/detail_name">
+            android:background="@drawable/preference_first_item"
+            android:id="@+id/single_name">
             <TextView android:layout_width="wrap_content"
                 android:layout_height="wrap_content" android:textColor="#000"
-                android:textSize="18sp" android:id="@+id/detail_name1"
-                android:text="@string/mes_username"
                 android:layout_centerVertical="true"
-                android:layout_alignParentStart="true" />
+                android:textSize="20sp" android:id="@+id/single_name1"
+                android:text="@string/mes_username"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/detail_name2"
-                android:textSize="18sp"
+                android:id="@+id/single_name2"
                 android:textColor="#000" android:layout_centerVertical="true"
-                android:layout_toRightOf="@id/detail_name1"
+                android:layout_toRightOf="@id/single_name1"
                 android:text="         abcdefg"/>
-        </RelativeLayout>
-        <RelativeLayout
-            android:layout_width="fill_parent"
-            android:layout_height="40dp"
-            android:gravity="center_vertical"
-            android:clickable="true"
-            android:id="@+id/detail_phone">
-            <TextView android:layout_width="wrap_content"
-                android:layout_height="wrap_content" android:textColor="#000"
-                android:layout_centerVertical="true"
-                android:textSize="18sp" android:id="@+id/detail_phone1"
-                android:text="@string/mes_phone"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/detail_phone2"
-                android:textSize="18sp"
-                android:textColor="#000" android:layout_centerVertical="true"
-                android:layout_toRightOf="@id/detail_phone1"
-                android:text="         12345678"/>
-        </RelativeLayout>
-        <RelativeLayout
-            android:layout_width="fill_parent"
-            android:layout_height="40dp"
-            android:gravity="center_vertical"
-            android:clickable="true"
-            android:id="@+id/detail_setname">
-            <TextView android:layout_width="wrap_content"
-                android:layout_height="wrap_content" android:textColor="#000"
-                android:layout_centerVertical="true"
-                android:textSize="18sp" android:id="@+id/detail_setname1"
-                android:text="@string/mes_setname"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/detail_setname2"
-                android:textSize="18sp"
-                android:textColor="#000" android:layout_centerVertical="true"
-                android:layout_toRightOf="@id/detail_setname1"
-                android:text="      张三"/>
-             <ImageView
+            <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:scaleType="matrix"
                 android:layout_centerVertical="true"
                 android:layout_alignParentRight="true"
                 android:clickable="true"
-                android:src="@drawable/mm_submenu"
-                 android:id="@+id/detial_setname3" />
+                android:id="@+id/single_name3"
+                android:src="@drawable/mm_submenu" />
         </RelativeLayout>
         <RelativeLayout
             android:layout_width="fill_parent"
-            android:layout_height="40dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="14dp"
             android:gravity="center_vertical"
             android:clickable="true"
-            android:id="@+id/detail_file">
+            android:background="@drawable/preference_item"
+            android:id="@+id/single_phone">
             <TextView android:layout_width="wrap_content"
                 android:layout_height="wrap_content" android:textColor="#000"
                 android:layout_centerVertical="true"
-                android:textSize="18sp" android:id="@+id/detail_file1"
+                android:textSize="20sp" android:id="@+id/single_phone1"
+                android:text="@string/mes_phone"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/single_phone2"
+                android:textColor="#000" android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/single_phone1"
+                android:text="         12345678"/>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:scaleType="matrix"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:clickable="true"
+                android:id="@+id/single_phone3"
+                android:src="@drawable/mm_submenu" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="14dp"
+            android:gravity="center_vertical"
+            android:clickable="true"
+            android:background="@drawable/preference_item"
+            android:id="@+id/single_file">
+            <TextView android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:textColor="#000"
+                android:layout_centerVertical="true"
+                android:textSize="20sp" android:id="@+id/single_file1"
                 android:text="@string/mes_file"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/detail_file2"
-                android:textSize="18sp"
+                android:id="@+id/single_file2"
                 android:textColor="#000" android:layout_centerVertical="true"
-                android:layout_toRightOf="@id/detail_file1"
+                android:layout_toRightOf="@id/single_file1"
                 android:text="             女"/>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:scaleType="matrix"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:clickable="true"
+                android:id="@+id/single_file3"
+                android:src="@drawable/mm_submenu" />
         </RelativeLayout>
         <RelativeLayout
             android:layout_width="fill_parent"
-            android:layout_height="40dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="14dp"
             android:gravity="center_vertical"
             android:clickable="true"
-            android:id="@+id/detail_loacl">
+            android:background="@drawable/preference_item"
+            android:id="@+id/single_loacl">
             <TextView android:layout_width="wrap_content"
                 android:layout_height="wrap_content" android:textColor="#000"
                 android:layout_centerVertical="true"
-                android:textSize="18sp" android:id="@+id/detail_loacl1"
+                android:textSize="20sp" android:id="@+id/single_loacl1"
                 android:text="@string/mes_local"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/detail_loacl2"
-                android:textSize="18sp"
+                android:id="@+id/single_loacl2"
                 android:textColor="#000" android:layout_centerVertical="true"
-                android:layout_toRightOf="@id/detail_loacl1"
+                android:layout_toRightOf="@id/single_loacl1"
                 android:text="         广州"/>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:scaleType="matrix"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:clickable="true"
+                android:id="@+id/single_loacl3"
+                android:src="@drawable/mm_submenu" />
         </RelativeLayout>
         <RelativeLayout
             android:layout_width="fill_parent"
-            android:layout_height="40dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="14dp"
             android:gravity="center_vertical"
             android:clickable="true"
-            android:id="@+id/detail_age">
+            android:background="@drawable/preference_item"
+            android:id="@+id/single_age">
             <TextView android:layout_width="wrap_content"
                 android:layout_height="wrap_content" android:textColor="#000"
                 android:layout_centerVertical="true"
-                android:textSize="18sp"
-                android:id="@+id/detail_age1"
+                android:textSize="20sp" android:id="@+id/single_age1"
                 android:text="@string/mes_age"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/detail_age2"
-                android:textSize="18sp"
+                android:id="@+id/single_age2"
                 android:textColor="#000" android:layout_centerVertical="true"
-                android:layout_toRightOf="@id/detail_age1"
+                android:layout_toRightOf="@id/single_age1"
                 android:text="         12345678"/>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:scaleType="matrix"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:clickable="true"
+                android:id="@+id/single_age3"
+                android:src="@drawable/mm_submenu" />
         </RelativeLayout>
         <RelativeLayout
             android:layout_width="fill_parent"
-            android:layout_height="40dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="14dp"
             android:gravity="center_vertical"
             android:clickable="true"
-            android:id="@+id/detail_birth">
+            android:background="@drawable/preference_last_item"
+            android:id="@+id/single_birth">
             <TextView android:layout_width="wrap_content"
                 android:layout_height="wrap_content" android:textColor="#000"
                 android:layout_centerVertical="true"
-                android:textSize="18sp" android:id="@+id/detail_birth1"
+                android:textSize="20sp" android:id="@+id/single_birth1"
                 android:text="@string/mes_birth"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/detail_birth2"
-                android:textSize="18sp"
+                android:id="@+id/single_birth2"
                 android:textColor="#000" android:layout_centerVertical="true"
-                android:layout_toRightOf="@id/detail_birth1"
+                android:layout_toRightOf="@id/single_birth1"
                 android:text="         2000-11-28"/>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:scaleType="matrix"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:clickable="true"
+                android:id="@+id/single_birth3"
+                android:src="@drawable/mm_submenu" />
         </RelativeLayout>
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal|center_vertical">
-        <Button
-            android:layout_width="200dp"
-            android:layout_height="45dp"
-            android:text="@string/mes_addcontact"
-            android:background="#00CC33"
-            android:id="@+id/addcontact" />
     </LinearLayout>
 </LinearLayout>

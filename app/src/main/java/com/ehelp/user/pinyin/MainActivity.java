@@ -1,6 +1,7 @@
 package com.ehelp.user.pinyin;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -9,7 +10,7 @@ import android.widget.ExpandableListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
-import com.ehelp.user.pinyin.AssortView.OnTouchAssortListener;
+import com.ehelp.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +23,13 @@ public class MainActivity extends Activity {
 	private ExpandableListView eListView;
 	private AssortView assortView;
 	private List<String> names;
+
+	public void getMessagePage(View view) {
+		Intent intent = new Intent(this, messageActivity.class);
+		startActivity(intent);
+	}
+
+
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -56,40 +64,42 @@ public class MainActivity extends Activity {
 		for (int i = 0, length = adapter.getGroupCount(); i < length; i++) {
 			eListView.expandGroup(i);
 		}
-		assortView.setOnTouchAssortListener(new OnTouchAssortListener() {
-			
-			View layoutView=LayoutInflater.from(MainActivity.this)
+		assortView.setOnTouchAssortListener(new AssortView.OnTouchAssortListener() {
+
+			View layoutView = LayoutInflater.from(MainActivity.this)
 					.inflate(R.layout.alert_dialog_menu_layout, null);
-			TextView text =(TextView) layoutView.findViewById(R.id.content);
-			PopupWindow popupWindow ;
-			
+			TextView text = (TextView) layoutView.findViewById(R.id.content);
+			PopupWindow popupWindow;
+
 			public void onTouchAssortListener(String str) {
-			   int index=adapter.getAssort().getHashList().indexOfKey(str);
-			   if(index!=-1) {
-					eListView.setSelectedGroup(index);;
-			   }
-				if(popupWindow!=null){
-				text.setText(str);
+				int index = adapter.getAssort().getHashList().indexOfKey(str);
+				if (index != -1) {
+					eListView.setSelectedGroup(index);
+					;
 				}
-				else {
-				      popupWindow = new PopupWindow(layoutView,
-							80, 80,	false);
+				if (popupWindow != null) {
+					text.setText(str);
+				} else {
+					popupWindow = new PopupWindow(layoutView,
+							80, 80, false);
 					popupWindow.showAtLocation(getWindow().getDecorView(),
 							Gravity.CENTER, 0, 0);
 				}
 				text.setText(str);
 			}
+
 			public void onTouchAssortUP() {
-				if(popupWindow!=null)
-				popupWindow.dismiss();
-				popupWindow=null;
+				if (popupWindow != null)
+					popupWindow.dismiss();
+				popupWindow = null;
 			}
 		});
 	}
+
+
 	@Override
 	protected void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
 	}
-
 }
