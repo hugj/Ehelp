@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+    <!-- background 里的drawable，下面的控件也会相应变化 -->
+
+
+    <RelativeLayout android:layout_width="match_parent"
+        android:id="@+id/contact_layout"
+        android:layout_height="60dp" android:gravity="center_vertical"
+        android:background="@drawable/mm_listitem"
+        android:clickable="true"
+        android:onClick="getMessagePage">
+
+        <RelativeLayout android:layout_width="55dp"
+            android:layout_height="60dp" android:id="@+id/head_layout">
+            <ImageView android:id="@+id/head" android:layout_width="55dp"
+                android:layout_height="55dp" android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true" android:paddingLeft="5dp"
+                android:background="@drawable/icon" />
+
+        </RelativeLayout>
+
+        <TextView android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:layout_toRightOf="@id/head_layout"
+            android:textColor="#000" android:layout_centerVertical="true"
+            android:textSize="20sp" android:id="@+id/name" />
+        <TextView android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:layout_toRightOf="@id/head_layout"
+            android:layout_alignParentBottom="true" android:padding="7dp"
+            android:textColor="#666" android:id="@+id/message" />
+    </RelativeLayout>
+</LinearLayout>
