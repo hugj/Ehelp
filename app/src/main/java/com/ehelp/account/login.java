@@ -19,6 +19,10 @@ import com.ehelp.server.RequestHandler;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
 
 public class login extends ActionBarActivity {
 
@@ -27,6 +31,25 @@ public class login extends ActionBarActivity {
     private EditText Eaccount;
     private String password;
     private String account;
+
+    private String MD5_encode(String password, String salt) {
+        password = password + salt;
+        byte[] hash;
+        try {
+            hash = MessageDigest.getInstance("MD5").digest(password.getBytes("UTF-8"));
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException("Huh, MD5 should be supported?", e);
+        } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException("Huh, UTF-8 should be supported?", e);
+        }
+        StringBuilder hex = new StringBuilder(hash.length * 2);
+        for (byte b :hash) {
+            if ((b & 0xFF) < 0x10)
+                hex.append("0");
+            hex.append(Integer.toHexString(b & 0xFF));
+        }
+        return hex.toString();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,32 +114,45 @@ public class login extends ActionBarActivity {
         password = Epassword.getText().toString();
         if ((!account.isEmpty()) &&(!password.isEmpty())) {
             String jsonStrng = "{" +
-                    "\"account\": \" " + account + "\", " +
-                    "\"password\": \"\" " +  "}";
+                    "\"account\":\"" + account + "\"," +
+                    "\"password\":\"\"" +  "}";
             //String jsonStrng = "";
             String message = RequestHandler.sendPostRequest(
                     "http://120.24.208.130:1501/account/login", jsonStrng);
+            if (message == "false") {
+                Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
+                        Toast.LENGTH_SHORT).show();
+                return;
+            }
             String salt;
             try {
                 JSONObject jO = new JSONObject(message);
-                salt = jO.getString("salt");
-                if (salt.equals("")) {
+                if (jO.getInt("status") == 500) {
                     Toast.makeText(getApplicationContext(), "用户未注册",
                             Toast.LENGTH_SHORT).show();
                     return;
                 }
+                salt = jO.getString("salt");
+                String password2 = MD5_encode(password, salt);
                 jsonStrng = "{" +
-                        "\"account\": \" " + account + "\", " +
-                        "\"password\": \" " + password + "\", " +
-                        "\"salt\": \" " + salt + "\" " +  "}";
+                        "\"account\":\"" + account + "\"," +
+                        "\"password\":\"" + password2 + "\"," +
+                        "\"salt\":\"" + salt + "\" " +  "}";
                 message = RequestHandler.sendPostRequest(
                         "http://120.24.208.130:1501/account/login", jsonStrng);
                 if (message == "false") {
-                    Toast.makeText(getApplicationContext(), "登录失败",
+                    Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
+                            Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                jO = new JSONObject(message);
+                if (jO.getInt("status") == 500) {
+                    Toast.makeText(getApplicationContext(), "密码错误，登录失败",
                             Toast.LENGTH_SHORT).show();
                 }
                 else {
-                    Toast.makeText(getApplicationContext(), "登录成功",
+                    String user_id = jO.getString("id");
+                    Toast.makeText(getApplicationContext(), "登录成功, 用户id:" + user_id,
                             Toast.LENGTH_SHORT).show();
                 }
             } catch (JSONException e) {
