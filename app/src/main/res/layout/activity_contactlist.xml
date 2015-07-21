@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent" android:layout_height="fill_parent"
+    android:orientation="vertical">
+    <TextView android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textSize="15dip" />
+    <RelativeLayout android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+        <ExpandableListView android:layout_width="fill_parent"
+            android:layout_height="fill_parent" android:id="@+id/elist"
+            android:layout_alignParentTop="true" android:layout_alignParentLeft="true"
+            android:groupIndicator="@null" />
+
+        <com.ehelp.user.pinyin.AssortView
+            android:layout_width="30dip" android:layout_height="fill_parent"
+            android:layout_alignParentTop="true" android:layout_alignParentRight="true"
+            android:id="@+id/assort" />
+    </RelativeLayout>
+</LinearLayout>

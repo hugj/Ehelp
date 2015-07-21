@@ -12,7 +12,7 @@ import com.ehelp.account.login;
 import com.ehelp.send.SendHelp;
 import com.ehelp.send.SendQuestion;
 import com.ehelp.send.SendSOS;
-import com.ehelp.server.RequestHandler;
+import com.ehelp.user.pinyin.ContactlistActivity;
 
 
 public class Test extends ActionBarActivity {
@@ -62,6 +62,12 @@ public class Test extends ActionBarActivity {
     public void sendque(View view) {
         // Do something in response to button
         Intent intent = new Intent(this, SendQuestion.class);
+        startActivity(intent);
+    }
+
+    public void ContactList(View view) {
+
+        Intent intent = new Intent(this, ContactlistActivity.class);
         startActivity(intent);
     }
 }

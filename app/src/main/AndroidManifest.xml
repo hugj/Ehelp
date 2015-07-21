@@ -154,6 +154,30 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".user.pinyin.ContactlistActivity"
+            android:label="@string/title_activity_contactlist"
+            android:parentActivityName=".Test" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.ehelp.Test" />
+        </activity>
+        <activity
+            android:name=".user.pinyin.adapterchatActivity"
+            android:label="@string/title_activity_adapterchat" >
+        </activity>
+        <activity
+            android:name=".user.pinyin.homepageActivity"
+            android:label="@string/title_activity_homepage" >
+        </activity>
+        <activity
+            android:name=".user.pinyin.UsermesActivity"
+            android:label="@string/title_activity_usermes" >
+        </activity>
+        <activity
+            android:name=".user.pinyin.messageActivity"
+            android:label="@string/title_activity_message" >
+        </activity>
     </application>
 
 </manifest>

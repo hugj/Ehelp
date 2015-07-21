@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="Encoding" native2AsciiForPropertiesFiles="true" defaultCharsetForPropertiesFiles="UTF-8">
+    <file url="file://$PROJECT_DIR$/app/libs/pinyin4j-2.5.0.jar" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/ehelp/user/sort/HashList.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/ehelp/user/sort/KeySort.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable-hdpi" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable-ldpi" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable-mdpi" charset="GBK" />
     <file url="file://$PROJECT_DIR$/app/libs/MobTools.jar" charset="GBK" />
     <file url="file://$PROJECT_DIR$/app/libs/SMSSDK-1.2.2.jar" charset="GBK" />
     <file url="PROJECT" charset="UTF-8" />
