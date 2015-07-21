@@ -23,7 +23,7 @@
             android:layout_height="wrap_content"
             android:text="获取验证码"
             android:background="@color/button"
-            android:id="@+id/button4" />
+            android:id="@+id/request_code_btn" />
     </LinearLayout>
 
     <LinearLayout
@@ -83,13 +83,12 @@
         android:orientation="horizontal" >
 
         <Button
-            android:id="@+id/button1"
+            android:id="@+id/commit_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="0.42"
             android:background="@color/button"
-            android:text="注册"
-            android:onClick="signUp" />
+            android:text="注册"/>
 
     </LinearLayout>
 

@@ -2,6 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.ehelp" >
 
+    <uses-sdk
+        android:minSdkVersion="14"
+        android:targetSdkVersion="19" />
+
     <!-- Required 自定义用来收发消息的相关权限 -->
     <permission
         android:name="com.ehelp.permission.JPUSH_MESSAGE"
