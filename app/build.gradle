@@ -32,4 +32,6 @@ dependencies {
     compile 'com.github.wangjiegulu:ShadowViewHelper:1.0.1'
     compile 'com.android.support:support-v4:22.2.0'
     compile project(':library')
+    compile files('libs/baidumapapi_v3_5_0.jar')
+    compile files('libs/locSDK_5.2.jar')
 }

@@ -8,6 +8,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.ehelp.account.login;
+import com.ehelp.map.BMapApiDemoMain;
 import com.ehelp.send.SendHelp;
 import com.ehelp.send.SendQuestion;
 import com.ehelp.send.SendSOS;
@@ -121,6 +122,11 @@ public class Test extends AIActionBarActivity implements RapidFloatingActionCont
     public void sendque(View view) {
         // Do something in response to button
         Intent intent = new Intent(this, SendQuestion.class);
+        startActivity(intent);
+    }
+
+    public void goToMap(View view) {
+        Intent intent = new Intent(this, BMapApiDemoMain.class);
         startActivity(intent);
     }
 
