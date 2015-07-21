@@ -1,9 +1,8 @@
 package com.ehelp;
 
 import android.content.Intent;
-import android.os.StrictMode;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,6 +16,7 @@ import com.ehelp.user.pinyin.ContactlistActivity;
 
 public class Test extends ActionBarActivity {
 
+    public final static String EXTRA_MESSAGE = "com.ehelp.MESSAGE";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
