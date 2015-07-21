@@ -1,8 +1,8 @@
 package com.ehelp;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -12,17 +12,76 @@ import com.ehelp.send.SendHelp;
 import com.ehelp.send.SendQuestion;
 import com.ehelp.send.SendSOS;
 import com.ehelp.user.pinyin.ContactlistActivity;
+import com.wangjie.androidbucket.utils.ABTextUtil;
+import com.wangjie.androidbucket.utils.imageprocess.ABShape;
+import com.wangjie.androidinject.annotation.annotations.base.AILayout;
+import com.wangjie.androidinject.annotation.annotations.base.AIView;
+import com.wangjie.androidinject.annotation.present.AIActionBarActivity;
+import com.wangjie.rapidfloatingactionbutton.RapidFloatingActionButton;
+import com.wangjie.rapidfloatingactionbutton.RapidFloatingActionHelper;
+import com.wangjie.rapidfloatingactionbutton.RapidFloatingActionLayout;
+import com.wangjie.rapidfloatingactionbutton.contentimpl.labellist.RFACLabelItem;
+import com.wangjie.rapidfloatingactionbutton.contentimpl.labellist.RapidFloatingActionContentLabelList;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
-public class Test extends ActionBarActivity {
+@AILayout(R.layout.activity_test)
+public class Test extends AIActionBarActivity implements RapidFloatingActionContentLabelList.OnRapidFloatingActionContentLabelListListener {
+    @AIView(R.id.label_list_sample_rfal)
+    private RapidFloatingActionLayout rfaLayout;
+    @AIView(R.id.label_list_sample_rfab)
+    private RapidFloatingActionButton rfaButton;
+    private RapidFloatingActionHelper rfabHelper;
 
-    public final static String EXTRA_MESSAGE = "com.ehelp.MESSAGE";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_test);
-    }
+        //setContentView(R.layout.activity_test);
+        RapidFloatingActionContentLabelList rfaContent = new RapidFloatingActionContentLabelList(context);
+        rfaContent.setOnRapidFloatingActionContentLabelListListener(this);
+        List<RFACLabelItem> items = new ArrayList<>();
+        items.add(new RFACLabelItem<Integer>()
+                        .setLabel("求救")
+                        .setResId(R.mipmap.ic_launcher)
+                        .setIconNormalColor(0xffd84315)
+                        .setIconPressedColor(0xffbf360c)
+                        .setWrapper(0)
+        );
+        items.add(new RFACLabelItem<Integer>()
+                        .setLabel("求助")
+//                        .setResId(R.mipmap.ico_test_c)
+                        .setDrawable(getResources().getDrawable(R.mipmap.ic_launcher))
+                        .setIconNormalColor(0xff4e342e)
+                        .setIconPressedColor(0xff3e2723)
+                        .setLabelColor(Color.WHITE)
+                        .setLabelSizeSp(14)
+                        .setLabelBackgroundDrawable(ABShape.generateCornerShapeDrawable(0xaa000000, ABTextUtil.dip2px(context, 4)))
+                        .setWrapper(1)
+        );
+        items.add(new RFACLabelItem<Integer>()
+                        .setLabel("提问")
+                        .setResId(R.mipmap.ic_launcher)
+                        .setIconNormalColor(0xff056f00)
+                        .setIconPressedColor(0xff0d5302)
+                        .setLabelColor(0xff056f00)
+                        .setWrapper(2)
+        );
+        rfaContent
+                .setItems(items)
+                .setIconShadowRadius(ABTextUtil.dip2px(context, 5))
+                .setIconShadowColor(0xff888888)
+                .setIconShadowDy(ABTextUtil.dip2px(context, 5))
+        ;
 
+        rfabHelper = new RapidFloatingActionHelper(
+                context,
+                rfaLayout,
+                rfaButton,
+                rfaContent
+        ).build();
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -69,5 +128,17 @@ public class Test extends ActionBarActivity {
 
         Intent intent = new Intent(this, ContactlistActivity.class);
         startActivity(intent);
+    }
+
+    @Override
+    public void onRFACItemLabelClick(int position, RFACLabelItem item) {
+        showToastMessage("clicked label: " + position);
+        rfabHelper.toggleContent();
+    }
+
+    @Override
+    public void onRFACItemIconClick(int position, RFACLabelItem item) {
+        showToastMessage("clicked icon: " + position);
+        rfabHelper.toggleContent();
     }
 }
