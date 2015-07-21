@@ -40,6 +40,10 @@ public class Test extends AIActionBarActivity implements RapidFloatingActionCont
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //setContentView(R.layout.activity_test);
+        init();
+    }
+
+    private void init() {
         RapidFloatingActionContentLabelList rfaContent = new RapidFloatingActionContentLabelList(context);
         rfaContent.setOnRapidFloatingActionContentLabelListListener(this);
         List<RFACLabelItem> items = new ArrayList<>();
@@ -83,6 +87,18 @@ public class Test extends AIActionBarActivity implements RapidFloatingActionCont
                 rfaContent
         ).build();
     }
+    @Override
+    public void onRFACItemLabelClick(int position, RFACLabelItem item) {
+        showToastMessage("clicked label: " + position);
+        rfabHelper.toggleContent();
+    }
+
+    @Override
+    public void onRFACItemIconClick(int position, RFACLabelItem item) {
+        showToastMessage("clicked icon: " + position);
+        rfabHelper.toggleContent();
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -136,15 +152,4 @@ public class Test extends AIActionBarActivity implements RapidFloatingActionCont
         startActivity(intent);
     }
 
-    @Override
-    public void onRFACItemLabelClick(int position, RFACLabelItem item) {
-        showToastMessage("clicked label: " + position);
-        rfabHelper.toggleContent();
-    }
-
-    @Override
-    public void onRFACItemIconClick(int position, RFACLabelItem item) {
-        showToastMessage("clicked icon: " + position);
-        rfabHelper.toggleContent();
-    }
 }

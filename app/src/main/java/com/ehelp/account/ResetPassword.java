@@ -106,7 +106,7 @@ public class ResetPassword extends ActionBarActivity {
             try {
                 JSONObject jO = new JSONObject(message);
                 if (jO.getInt("status") == 500) {
-                    Toast.makeText(getApplicationContext(), "修改失败",
+                    Toast.makeText(getApplicationContext(), "用户名未注册",
                             Toast.LENGTH_SHORT).show();
                     return;
                 }
