@@ -44,4 +44,10 @@
     <string name="title_activity_bmap_api_demo_main">BMapApiDemoMain</string>
     <string name="title_activity_comment">Comment</string>
     <string name="title_activity_myhistory">Myhistory</string>
+    <string name="cancel">取消</string>
+    <string name="ensure">确定</string>
+    <string name="mes_editname">编辑用户名</string>
+    <string name="mes_editlocation">编辑所在地</string>
+    <string name="mes_editbirthday">编辑生日</string>
+    <string name="title_activity_mesnotename">MesnotenameActivity</string>
 </resources>

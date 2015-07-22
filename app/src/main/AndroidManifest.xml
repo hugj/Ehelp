@@ -207,6 +207,10 @@
             android:name=".user.Myhistory"
             android:label="@string/title_activity_myhistory" >
         </activity>
+        <activity
+            android:name=".user.pinyin.MessetnameActivity"
+            android:label="@string/title_activity_mesnotename" >
+        </activity>
     </application>
 
 </manifest>
