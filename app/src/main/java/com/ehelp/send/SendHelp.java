@@ -96,7 +96,16 @@ public class SendHelp extends AIActionBarActivity implements RapidFloatingAction
 
     @Override
     public void onRFACItemIconClick(int position, RFACLabelItem item) {
-        showToastMessage("clicked icon: " + position);
+        if (position == 0) {
+            Intent intent = new Intent(this, SendSOS.class);
+            startActivity(intent);
+        } else
+        if (position == 1) {
+            showToastMessage("您正在求助界面");
+        } else {
+            Intent intent = new Intent(this, SendQuestion.class);
+            startActivity(intent);
+        }
         rfabHelper.toggleContent();
     }
 
