@@ -1,0 +1,95 @@
+<!--LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"-->
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="您对帮助者的评价是？"
+        android:id="@+id/textView"
+        android:layout_marginTop="129dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true" />
+    <EditText
+        android:layout_width="500dp"
+        android:layout_height="200dp"
+        android:ems="10"
+        android:id="@+id/editText_comment"
+        android:hint="在这里输入您的评价"
+        android:layout_below="@+id/textView"
+        android:layout_alignParentStart="true" />
+
+    <RatingBar
+        android:id="@+id/ratingBar"
+        android:numStars="5"
+        android:rating="3"
+        android:layout_below="@+id/editText_comment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+    </RatingBar>
+
+    <!--ImageButton//这些是图片按钮
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_below="@+id/editText_comment"
+        android:onClick="btn1_Listener"
+        android:id="@+id/imageButton1"
+        android:background="@drawable/kyy"/>
+    <ImageButton
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_below="@+id/editText_comment"
+        android:layout_toRightOf="@+id/imageButton1"
+        android:onClick="btn2_Listener"
+        android:id="@+id/imageButton2"
+        android:background="@drawable/kyy"/>
+
+    <ImageButton
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_below="@+id/editText_comment"
+        android:layout_toRightOf="@+id/imageButton2"
+        android:onClick="btn3_Listener"
+        android:id="@+id/imageButton3"
+        android:background="@drawable/kyy"/>
+
+    <ImageButton
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_below="@+id/editText_comment"
+        android:layout_toRightOf="@+id/imageButton3"
+        android:onClick="btn4_Listener"
+        android:id="@+id/imageButton4"
+        android:background="@drawable/kyy"/>
+
+    <ImageButton
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_below="@+id/editText_comment"
+        android:layout_toRightOf="@+id/imageButton4"
+        android:onClick="btn5_Listener"
+        android:id="@+id/imageButton5"
+        android:background="@drawable/kyy"/-->
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="提交"
+        android:id="@+id/button_comment_send"
+        android:layout_below="@+id/ratingBar"
+
+
+        android:layout_alignEnd="@+id/textView" />
+    <!--android:onClick="btn_Listener"android:layout_below="@+id/imageButton3"-->
+</RelativeLayout>
+    <!--/LinearLayout-->

@@ -1,15 +1,13 @@
 package com.ehelp.account;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v7.app.ActionBarActivity;
-import android.os.Bundle;
-import android.view.Gravity;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-//import android.widget.Toolbar;
-import android.support.v7.widget.Toolbar;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -19,9 +17,7 @@ import com.ehelp.server.RequestHandler;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.UnsupportedEncodingException;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
+//import android.widget.Toolbar;
 
 
 public class login extends ActionBarActivity {
@@ -31,25 +27,6 @@ public class login extends ActionBarActivity {
     private EditText Eaccount;
     private String password;
     private String account;
-
-    private String MD5_encode(String password, String salt) {
-        password = password + salt;
-        byte[] hash;
-        try {
-            hash = MessageDigest.getInstance("MD5").digest(password.getBytes("UTF-8"));
-        } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException("Huh, MD5 should be supported?", e);
-        } catch (UnsupportedEncodingException e) {
-            throw new RuntimeException("Huh, UTF-8 should be supported?", e);
-        }
-        StringBuilder hex = new StringBuilder(hash.length * 2);
-        for (byte b :hash) {
-            if ((b & 0xFF) < 0x10)
-                hex.append("0");
-            hex.append(Integer.toHexString(b & 0xFF));
-        }
-        return hex.toString();
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,11 +44,13 @@ public class login extends ActionBarActivity {
         StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder().
                 detectLeakedSqlLiteObjects().detectLeakedClosableObjects().
                 penaltyLog().penaltyDeath().build());
-        mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        mToolbar.setTitle("登录");// �������������setSupportActionBar֮ǰ����Ȼ����Ч
-        setSupportActionBar(mToolbar);
 
+        //set toolbar
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        mToolbar.setTitle("登录");
+        setSupportActionBar(mToolbar);
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -133,7 +112,7 @@ public class login extends ActionBarActivity {
                     return;
                 }
                 salt = jO.getString("salt");
-                String password2 = MD5_encode(password, salt);
+                String password2 = MD5.MD5_encode(password, salt);
                 jsonStrng = "{" +
                         "\"account\":\"" + account + "\"," +
                         "\"password\":\"" + password2 + "\"," +

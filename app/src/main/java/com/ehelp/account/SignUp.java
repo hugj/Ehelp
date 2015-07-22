@@ -1,29 +1,17 @@
 package com.ehelp.account;
 
 import android.content.Intent;
-import android.os.StrictMode;
-import android.support.v7.app.ActionBarActivity;
-import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Toast;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import cn.smssdk.EventHandler;
-import cn.smssdk.SMSSDK;
-import cn.smssdk.utils.SMSLog;
-import android.app.Activity;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.os.StrictMode;
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -36,6 +24,10 @@ import com.ehelp.server.RequestHandler;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import cn.smssdk.EventHandler;
+import cn.smssdk.SMSSDK;
+import cn.smssdk.utils.SMSLog;
+
 public class SignUp extends ActionBarActivity implements OnClickListener {
 
     private Toolbar mToolbar;
@@ -45,13 +37,8 @@ public class SignUp extends ActionBarActivity implements OnClickListener {
     private String password;
     private String password2;
     private String account;
-    // 验证码输入框
     private EditText inputCodeEt;
-
-    // 获取验证码按钮
     private Button requestCodeBtn;
-
-    // 注册按钮
     private Button commitBtn;
 
     int i = 60;
@@ -72,6 +59,8 @@ public class SignUp extends ActionBarActivity implements OnClickListener {
         StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder().
                 detectLeakedSqlLiteObjects().detectLeakedClosableObjects().
                 penaltyLog().penaltyDeath().build());
+
+        //set toolbar
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         mToolbar.setTitle("注册新用户");
         setSupportActionBar(mToolbar);

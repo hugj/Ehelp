@@ -41,6 +41,9 @@
     <string name="mes_detail">详细信息</string>
     <string name="mes_setname">备注姓名</string>
     <string name="mes_addcontact">添加为紧急联系人</string>
+    <string name="title_activity_bmap_api_demo_main">BMapApiDemoMain</string>
+    <string name="title_activity_comment">Comment</string>
+    <string name="title_activity_myhistory">Myhistory</string>
     <string name="cancel">取消</string>
     <string name="ensure">确定</string>
     <string name="mes_editname">编辑用户名</string>
