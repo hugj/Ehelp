@@ -43,9 +43,7 @@
             android:id="@+id/button15"
             android:onClick="ques"
             android:layout_alignParentTop="true" />
-
         <Button
-            style="?android:attr/buttonStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="send_map1"
@@ -53,7 +51,6 @@
             android:id="@+id/button4" />
 
         <Button
-            style="?android:attr/buttonStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="send_map2"
@@ -61,7 +58,6 @@
             android:id="@+id/button5" />
 
         <Button
-            style="?android:attr/buttonStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="send_map3"
@@ -69,7 +65,6 @@
             android:id="@+id/button9" />
 
         <Button
-            style="?android:attr/buttonStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="send_map4"
@@ -77,7 +72,6 @@
             android:id="@+id/button7" />
 
         <Button
-            style="?android:attr/buttonStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="send_map5"
