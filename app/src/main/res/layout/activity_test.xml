@@ -33,6 +33,13 @@
             android:id="@+id/button11"
             android:onClick="goToMap"
             android:layout_alignParentTop="true" />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="评论"
+            android:id="@+id/button12"
+            android:onClick="comment"
+            android:layout_alignParentTop="true" />
 
     </LinearLayout>
 

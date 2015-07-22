@@ -8,6 +8,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.ehelp.account.login;
+import com.ehelp.evaluate.Comment;
 import com.ehelp.map.BMapApiDemoMain;
 import com.ehelp.send.SendHelp;
 import com.ehelp.send.SendQuestion;
@@ -133,6 +134,11 @@ public class Test extends AIActionBarActivity implements RapidFloatingActionCont
     public void login(View view) {
         // Do something in response to button
         Intent intent = new Intent(this, login.class);
+        startActivity(intent);
+    }
+    public void comment(View view) {
+        // Do something in response to button
+        Intent intent = new Intent(this, Comment.class);
         startActivity(intent);
     }
 
