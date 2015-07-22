@@ -44,13 +44,13 @@ import com.baidu.mapapi.search.route.WalkingRouteResult;
 import com.ehelp.R;
 
 /**
- * ´ËdemoÓÃÀ´Õ¹Ê¾ÈçºÎ½øĞĞ¼İ³µ¡¢²½ĞĞ¡¢¹«½»Â·ÏßËÑË÷²¢ÔÚµØÍ¼Ê¹ÓÃRouteOverlay¡¢TransitOverlay»æÖÆ
- * Í¬Ê±Õ¹Ê¾ÈçºÎ½øĞĞ½Úµãä¯ÀÀ²¢µ¯³öÅİÅİ
+ * æ­¤demoç”¨æ¥å±•ç¤ºå¦‚ä½•è¿›è¡Œé©¾è½¦ã€æ­¥è¡Œã€å…¬äº¤è·¯çº¿æœç´¢å¹¶åœ¨åœ°å›¾ä½¿ç”¨RouteOverlayã€TransitOverlayç»˜åˆ¶
+ * åŒæ—¶å±•ç¤ºå¦‚ä½•è¿›è¡ŒèŠ‚ç‚¹æµè§ˆå¹¶å¼¹å‡ºæ³¡æ³¡
  */
 public class BMapApiDemoMain extends Activity implements BaiduMap.OnMapClickListener,
         OnGetRoutePlanResultListener {
 
-    //ä¯ÀÀÂ·Ïß½ÚµãÏà¹Ø
+    //æµè§ˆè·¯çº¿èŠ‚ç‚¹ç›¸å…³
     RouteLine route = null;
     OverlayManager routeOverlay = null;
     boolean useDefaultIcon = false;
@@ -60,15 +60,15 @@ public class BMapApiDemoMain extends Activity implements BaiduMap.OnMapClickList
     //
     MapView mMapView = null;    // map View
     BaiduMap mBaidumap = null;
-    //ËÑË÷Ïà¹Ø
-    RoutePlanSearch mSearch = null;    // ËÑË÷Ä£¿é£¬Ò²¿ÉÈ¥µôµØÍ¼Ä£¿é¶ÀÁ¢Ê¹ÓÃ
+    //æœç´¢ç›¸å…³
+    RoutePlanSearch mSearch = null;    // æœç´¢æ¨¡å—ï¼Œä¹Ÿå¯å»æ‰åœ°å›¾æ¨¡å—ç‹¬ç«‹ä½¿ç”¨
 
-    //¶¨Î»Ïà¹Ø
+    //å®šä½ç›¸å…³
     LocationClient mLocClient;
-    boolean isFirstLoc = true;// ÊÇ·ñÊ×´Î¶¨Î»
+    boolean isFirstLoc = true;// æ˜¯å¦é¦–æ¬¡å®šä½
     public MyLocationListenner myListener = new MyLocationListenner();
 
-    //ĞÅÏ¢Ïà¹Ø
+    //ä¿¡æ¯ç›¸å…³
     private Marker mMarker1;
     private Marker mMarker2;
     private Marker mMarker3;
@@ -79,33 +79,33 @@ public class BMapApiDemoMain extends Activity implements BaiduMap.OnMapClickList
         super.onCreate(savedInstanceState);
         SDKInitializer.initialize(getApplicationContext());
         setContentView(R.layout.activity_bmap_api_demo_main);
-        CharSequence titleLable = "Â·Ïß¹æ»®";
+        CharSequence titleLable = "è·¯çº¿è§„åˆ’";
         setTitle(titleLable);
-        // ³õÊ¼»¯µØÍ¼
+        // åˆå§‹åŒ–åœ°å›¾
         mMapView = (MapView) findViewById(R.id.map);
         mBaidumap = mMapView.getMap();
         int count = mMapView.getChildCount();
         init();
-        // È¥³ıÎŞ¹ØÍ¼±ê
+        // å»é™¤æ— å…³å›¾æ ‡
         for (int i = 0; i < count; i++) {
             View child = mMapView.getChildAt(i);
             if (child instanceof ZoomControls || child instanceof ImageView) {
                 child.setVisibility(View.INVISIBLE);
             }
         }
-        // µØÍ¼µã»÷ÊÂ¼ş´¦Àí
+        // åœ°å›¾ç‚¹å‡»äº‹ä»¶å¤„ç†
         mBaidumap.setOnMapClickListener(this);
-        // ³õÊ¼»¯ËÑË÷Ä£¿é£¬×¢²áÊÂ¼ş¼àÌı
+        // åˆå§‹åŒ–æœç´¢æ¨¡å—ï¼Œæ³¨å†Œäº‹ä»¶ç›‘å¬
         mSearch = RoutePlanSearch.newInstance();
         mSearch.setOnGetRoutePlanResultListener(this);
 
-        // ¶¨Î»Ïà¹Ø
+        // å®šä½ç›¸å…³
         mBaidumap.setMyLocationEnabled(true);
         mLocClient = new LocationClient(this);
         mLocClient.registerLocationListener(myListener);
         LocationClientOption option = new LocationClientOption();
-        option.setOpenGps(true);// ´ò¿ªgps
-        option.setCoorType("bd09ll"); // ÉèÖÃ×ø±êÀàĞÍ
+        option.setOpenGps(true);// æ‰“å¼€gps
+        option.setCoorType("bd09ll"); // è®¾ç½®åæ ‡ç±»å‹
         option.setScanSpan(1000);
         mLocClient.setLocOption(option);
         mLocClient.start();
@@ -117,9 +117,9 @@ public class BMapApiDemoMain extends Activity implements BaiduMap.OnMapClickList
                 button.setBackgroundResource(R.drawable.popup);
                 InfoWindow.OnInfoWindowClickListener listener = null;
                 if (marker == mMarker1) {
-                    button.setText("ÕâÀïÊÇÌø×ª");
+                    button.setText("è¿™é‡Œæ˜¯è·³è½¬");
                     button.setTextColor(Color.BLACK);
-                    /*ÕâÀïÊÇÌø×ªbutton
+                    /*è¿™é‡Œæ˜¯è·³è½¬button
                     listener = new InfoWindow.OnInfoWindowClickListener() {
                         public void onInfoWindowClick() {
                             LatLng ll = marker.getPosition();
@@ -134,9 +134,9 @@ public class BMapApiDemoMain extends Activity implements BaiduMap.OnMapClickList
                     mInfoWindow = new InfoWindow(BitmapDescriptorFactory.fromView(button), ll, -47, listener);
                     mBaidumap.showInfoWindow(mInfoWindow);
                 } else if (marker == mMarker2) {
-                    button.setText("ÕâÀïÊÇÌø×ª");
+                    button.setText("è¿™é‡Œæ˜¯è·³è½¬");
                     button.setTextColor(Color.BLACK);
-                    /*ÕâÀïÊÇÌø×ªbutton
+                    /*è¿™é‡Œæ˜¯è·³è½¬button
                     button.setOnClickListener(new View.OnClickListener() {
                         public void onClick(View v) {
                             marker.setIcon(bd);
@@ -149,9 +149,9 @@ public class BMapApiDemoMain extends Activity implements BaiduMap.OnMapClickList
                     mInfoWindow = new InfoWindow(button, ll, -47);
                     mBaidumap.showInfoWindow(mInfoWindow);
                 } else if (marker == mMarker3) {
-                    button.setText("ÕâÀïÊÇÌø×ª");
+                    button.setText("è¿™é‡Œæ˜¯è·³è½¬");
                     button.setTextColor(Color.BLACK);
-                    /*ÕâÀïÊÇÌø×ªbutton
+                    /*è¿™é‡Œæ˜¯è·³è½¬button
                     button.setOnClickListener(new View.OnClickListener() {
                         public void onClick(View v) {
                             marker.remove();
@@ -170,24 +170,24 @@ public class BMapApiDemoMain extends Activity implements BaiduMap.OnMapClickList
     }
 
     /**
-     * ·¢ÆğÂ·Ïß¹æ»®ËÑË÷Ê¾Àı
+     * å‘èµ·è·¯çº¿è§„åˆ’æœç´¢ç¤ºä¾‹
      *
      * @param v
      */
     public void SearchButtonProcess(View v) {
-        //ÖØÖÃä¯ÀÀ½ÚµãµÄÂ·ÏßÊı¾İ
+        //é‡ç½®æµè§ˆèŠ‚ç‚¹çš„è·¯çº¿æ•°æ®
         route = null;
         mBaidumap.clear();
-        // ´¦ÀíËÑË÷°´Å¥ÏìÓ¦
+        // å¤„ç†æœç´¢æŒ‰é’®å“åº”
         init();
-        LatLng pt2 = new LatLng(23.03777, 113.496627); //LatLng´ú±íµØÍ¼ÉÏ¾­Î³¶ÈÌá¹©µÄÎ»ÖÃ
+        LatLng pt2 = new LatLng(23.03777, 113.496627); //LatLngä»£è¡¨åœ°å›¾ä¸Šç»çº¬åº¦æä¾›çš„ä½ç½®
         PlanNode enNode = PlanNode.withLocation(pt2);
         BitmapDescriptor bd = BitmapDescriptorFactory.fromResource(R.drawable.icon_gcoding);
         OverlayOptions o2 = new MarkerOptions().icon(bd).position(pt2);
         mBaidumap.addOverlay(o2);
 
 
-        // Êµ¼ÊÊ¹ÓÃÖĞÇë¶ÔÆğµãÖÕµã³ÇÊĞ½øĞĞÕıÈ·µÄÉè¶¨
+        // å®é™…ä½¿ç”¨ä¸­è¯·å¯¹èµ·ç‚¹ç»ˆç‚¹åŸå¸‚è¿›è¡Œæ­£ç¡®çš„è®¾å®š
         if (v.getId() == R.id.drive) {
             mSearch.drivingSearch((new DrivingRoutePlanOption())
                     .from(stNode)
@@ -200,8 +200,8 @@ public class BMapApiDemoMain extends Activity implements BaiduMap.OnMapClickList
     }
 
     /**
-     * ÇĞ»»Â·ÏßÍ¼±ê£¬Ë¢ĞÂµØÍ¼Ê¹ÆäÉúĞ§
-     * ×¢Òâ£º ÆğÖÕµãÍ¼±êÊ¹ÓÃÖĞĞÄ¶ÔÆë.
+     * åˆ‡æ¢è·¯çº¿å›¾æ ‡ï¼Œåˆ·æ–°åœ°å›¾ä½¿å…¶ç”Ÿæ•ˆ
+     * æ³¨æ„ï¼š èµ·ç»ˆç‚¹å›¾æ ‡ä½¿ç”¨ä¸­å¿ƒå¯¹é½.
      */
 
 
@@ -213,10 +213,10 @@ public class BMapApiDemoMain extends Activity implements BaiduMap.OnMapClickList
     @Override
     public void onGetWalkingRouteResult(WalkingRouteResult result) {
         if (result == null || result.error != SearchResult.ERRORNO.NO_ERROR) {
-            Toast.makeText(BMapApiDemoMain.this, "±§Ç¸£¬Î´ÕÒµ½½á¹û", Toast.LENGTH_SHORT).show();
+            Toast.makeText(BMapApiDemoMain.this, "æŠ±æ­‰ï¼Œæœªæ‰¾åˆ°ç»“æœ", Toast.LENGTH_SHORT).show();
         }
         if (result.error == SearchResult.ERRORNO.AMBIGUOUS_ROURE_ADDR) {
-            //ÆğÖÕµã»òÍ¾¾­µãµØÖ·ÓĞáªÒå£¬Í¨¹ıÒÔÏÂ½Ó¿Ú»ñÈ¡½¨Òé²éÑ¯ĞÅÏ¢
+            //èµ·ç»ˆç‚¹æˆ–é€”ç»ç‚¹åœ°å€æœ‰å²ä¹‰ï¼Œé€šè¿‡ä»¥ä¸‹æ¥å£è·å–å»ºè®®æŸ¥è¯¢ä¿¡æ¯
             //result.getSuggestAddrInfo()
             return;
         }
@@ -238,10 +238,10 @@ public class BMapApiDemoMain extends Activity implements BaiduMap.OnMapClickList
     @Override
     public void onGetDrivingRouteResult(DrivingRouteResult result) {
         if (result == null || result.error != SearchResult.ERRORNO.NO_ERROR) {
-            Toast.makeText(BMapApiDemoMain.this, "±§Ç¸£¬Î´ÕÒµ½½á¹û", Toast.LENGTH_SHORT).show();
+            Toast.makeText(BMapApiDemoMain.this, "æŠ±æ­‰ï¼Œæœªæ‰¾åˆ°ç»“æœ", Toast.LENGTH_SHORT).show();
         }
         if (result.error == SearchResult.ERRORNO.AMBIGUOUS_ROURE_ADDR) {
-            //ÆğÖÕµã»òÍ¾¾­µãµØÖ·ÓĞáªÒå£¬Í¨¹ıÒÔÏÂ½Ó¿Ú»ñÈ¡½¨Òé²éÑ¯ĞÅÏ¢
+            //èµ·ç»ˆç‚¹æˆ–é€”ç»ç‚¹åœ°å€æœ‰å²ä¹‰ï¼Œé€šè¿‡ä»¥ä¸‹æ¥å£è·å–å»ºè®®æŸ¥è¯¢ä¿¡æ¯
             //result.getSuggestAddrInfo()
             return;
         }
@@ -256,7 +256,7 @@ public class BMapApiDemoMain extends Activity implements BaiduMap.OnMapClickList
         }
     }
 
-    //¶¨ÖÆRouteOverly
+    //å®šåˆ¶RouteOverly
     private class MyDrivingRouteOverlay extends DrivingRouteOverlay {
 
         public MyDrivingRouteOverlay(BaiduMap baiduMap) {
@@ -321,12 +321,12 @@ public class BMapApiDemoMain extends Activity implements BaiduMap.OnMapClickList
 
         @Override
         public void onReceiveLocation(BDLocation location) {
-            // map view Ïú»Ùºó²»ÔÚ´¦ÀíĞÂ½ÓÊÕµÄÎ»ÖÃ
+            // map view é”€æ¯åä¸åœ¨å¤„ç†æ–°æ¥æ”¶çš„ä½ç½®
             if (location == null || mMapView == null)
                 return;
             MyLocationData locData = new MyLocationData.Builder()
                     .accuracy(location.getRadius())
-                            // ´Ë´¦ÉèÖÃ¿ª·¢Õß»ñÈ¡µ½µÄ·½ÏòĞÅÏ¢£¬Ë³Ê±Õë0-360
+                            // æ­¤å¤„è®¾ç½®å¼€å‘è€…è·å–åˆ°çš„æ–¹å‘ä¿¡æ¯ï¼Œé¡ºæ—¶é’ˆ0-360
                     .direction(100).latitude(location.getLatitude())
                     .longitude(location.getLongitude()).build();
             mBaidumap.setMyLocationData(locData);
@@ -347,7 +347,7 @@ public class BMapApiDemoMain extends Activity implements BaiduMap.OnMapClickList
 
     public void init() {
         LatLngBounds.Builder builder = new LatLngBounds.Builder();
-        // ÔİÊ±Ìá¹©Èı¸öµã±ê×¢ÔÚµØÍ¼ÉÏ×÷ÎªÀı×Ó
+        // æš‚æ—¶æä¾›ä¸‰ä¸ªç‚¹æ ‡æ³¨åœ¨åœ°å›¾ä¸Šä½œä¸ºä¾‹å­
         LatLng pt4 = new LatLng(23.063309, 113.394004);
         LatLng pt2 = new LatLng(23.062578, 113.410821);
         LatLng pt3 = new LatLng(23.045286, 113.405934);
