@@ -95,6 +95,17 @@ public class Test extends AIActionBarActivity implements RapidFloatingActionCont
 
     @Override
     public void onRFACItemIconClick(int position, RFACLabelItem item) {
+        if (position == 0) {
+            Intent intent = new Intent(this, SendSOS.class);
+            startActivity(intent);
+        } else
+        if (position == 1) {
+            Intent intent = new Intent(this, SendHelp.class);
+            startActivity(intent);
+        } else {
+            Intent intent = new Intent(this, SendQuestion.class);
+            startActivity(intent);
+        }
         showToastMessage("clicked icon: " + position);
         rfabHelper.toggleContent();
     }
@@ -123,21 +134,6 @@ public class Test extends AIActionBarActivity implements RapidFloatingActionCont
     public void login(View view) {
         // Do something in response to button
         Intent intent = new Intent(this, login.class);
-        startActivity(intent);
-    }
-    public void sendsos(View view) {
-        // Do something in response to button
-        Intent intent = new Intent(this, SendSOS.class);
-        startActivity(intent);
-    }
-    public void sendhelp(View view) {
-        // Do something in response to button
-        Intent intent = new Intent(this, SendHelp.class);
-        startActivity(intent);
-    }
-    public void sendque(View view) {
-        // Do something in response to button
-        Intent intent = new Intent(this, SendQuestion.class);
         startActivity(intent);
     }
 

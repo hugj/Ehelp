@@ -20,33 +20,6 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="发送求救"
-            android:onClick="sendsos"
-            android:id="@+id/button7"
-            android:layout_below="@+id/button6"
-            android:layout_alignParentStart="true" />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="发送求助"
-            android:onClick="sendhelp"
-            android:id="@+id/button8"
-            android:layout_below="@+id/button7"
-            android:layout_alignParentStart="true" />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="提问"
-            android:onClick="sendque"
-            android:id="@+id/button9"
-            android:layout_below="@+id/button8"
-            android:layout_alignParentStart="true" />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:text="好友"
             android:id="@+id/button10"
             android:onClick="ContactList"
