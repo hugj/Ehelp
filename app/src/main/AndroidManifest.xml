@@ -178,6 +178,10 @@
             android:name=".user.pinyin.messageActivity"
             android:label="@string/title_activity_message" >
         </activity>
+        <activity
+            android:name=".user.pinyin.MessetnameActivity"
+            android:label="@string/title_activity_mesnotename" >
+        </activity>
     </application>
 
 </manifest>

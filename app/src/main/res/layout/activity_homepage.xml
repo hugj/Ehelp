@@ -84,15 +84,6 @@
                 android:textColor="#000" android:layout_centerVertical="true"
                 android:layout_toRightOf="@id/single_phone1"
                 android:text="         12345678"/>
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:scaleType="matrix"
-                android:layout_centerVertical="true"
-                android:layout_alignParentRight="true"
-                android:clickable="true"
-                android:id="@+id/single_phone3"
-                android:src="@drawable/mm_submenu" />
         </RelativeLayout>
         <RelativeLayout
             android:layout_width="fill_parent"
@@ -173,16 +164,7 @@
                 android:id="@+id/single_age2"
                 android:textColor="#000" android:layout_centerVertical="true"
                 android:layout_toRightOf="@id/single_age1"
-                android:text="         12345678"/>
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:scaleType="matrix"
-                android:layout_centerVertical="true"
-                android:layout_alignParentRight="true"
-                android:clickable="true"
-                android:id="@+id/single_age3"
-                android:src="@drawable/mm_submenu" />
+                android:text="           18"/>
         </RelativeLayout>
         <RelativeLayout
             android:layout_width="fill_parent"
@@ -197,13 +179,13 @@
                 android:layout_centerVertical="true"
                 android:textSize="20sp" android:id="@+id/single_birth1"
                 android:text="@string/mes_birth"/>
-            <TextView
+            <EditText
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/single_birth2"
-                android:textColor="#000" android:layout_centerVertical="true"
-                android:layout_toRightOf="@id/single_birth1"
-                android:text="         2000-11-28"/>
+                android:layout_marginRight="15px"
+                android:textColor="#000"
+                android:layout_toRightOf="@id/single_birth1" />
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
