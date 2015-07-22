@@ -40,7 +40,7 @@ public class SendHelp extends AIActionBarActivity implements RapidFloatingAction
     private EditText Eevents;
     private EditText Edesc_event;
     private EditText Eshare_money;
-    private String events;
+    private String event;
     private String share_money;
     private String desc_event;
 
@@ -156,12 +156,13 @@ public class SendHelp extends AIActionBarActivity implements RapidFloatingAction
         Eevents = (EditText)findViewById(R.id.edit_message2);
         Edesc_event = (EditText)findViewById(R.id.edit_message3);
         Eshare_money = (EditText)findViewById(R.id.edit_message4);
-        events = Eevents.getText().toString();
+        event = Eevents.getText().toString();
         desc_event = Edesc_event.getText().toString();
         share_money = Eshare_money.getText().toString();
-        if (!events.isEmpty()) {
+        if (!event.isEmpty()) {
             String jsonStrng = "{" +
                     "\"id\":" + user_id + ",\"type\":1," +
+                    "\"title\":\"" + event + "\"," +
                     "\"content\":\"" + desc_event + "\"" + "}";
             String message = RequestHandler.sendPostRequest(
                     "http://120.24.208.130:1501/event/add", jsonStrng);
