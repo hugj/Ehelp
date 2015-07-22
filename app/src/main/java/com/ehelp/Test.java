@@ -106,7 +106,6 @@ public class Test extends AIActionBarActivity implements RapidFloatingActionCont
             Intent intent = new Intent(this, SendQuestion.class);
             startActivity(intent);
         }
-        showToastMessage("clicked icon: " + position);
         rfabHelper.toggleContent();
     }
 
