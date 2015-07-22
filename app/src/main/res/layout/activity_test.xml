@@ -41,6 +41,14 @@
             android:onClick="comment"
             android:layout_alignParentTop="true" />
 
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="历史记录"
+            android:id="@+id/button13"
+            android:onClick="history"
+            android:layout_alignParentTop="true" />
+
     </LinearLayout>
 
     <com.wangjie.rapidfloatingactionbutton.RapidFloatingActionLayout

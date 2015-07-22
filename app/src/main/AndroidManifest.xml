@@ -203,6 +203,10 @@
             android:name=".evaluate.Comment"
             android:label="@string/title_activity_comment" >
         </activity>
+        <activity
+            android:name=".user.Myhistory"
+            android:label="@string/title_activity_myhistory" >
+        </activity>
     </application>
 
 </manifest>

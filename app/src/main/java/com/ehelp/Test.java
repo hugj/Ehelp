@@ -13,6 +13,7 @@ import com.ehelp.map.BMapApiDemoMain;
 import com.ehelp.send.SendHelp;
 import com.ehelp.send.SendQuestion;
 import com.ehelp.send.SendSOS;
+import com.ehelp.user.Myhistory;
 import com.ehelp.user.pinyin.ContactlistActivity;
 import com.wangjie.androidbucket.utils.ABTextUtil;
 import com.wangjie.androidbucket.utils.imageprocess.ABShape;
@@ -139,6 +140,12 @@ public class Test extends AIActionBarActivity implements RapidFloatingActionCont
     public void comment(View view) {
         // Do something in response to button
         Intent intent = new Intent(this, Comment.class);
+        startActivity(intent);
+    }
+
+    public void history(View view) {
+        // Do something in response to button
+        Intent intent = new Intent(this, Myhistory.class);
         startActivity(intent);
     }
 
