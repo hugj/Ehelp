@@ -165,6 +165,7 @@ public class SendQuestion extends AIActionBarActivity implements RapidFloatingAc
         if (!question.isEmpty()) {
             String jsonStrng = "{" +
                     "\"id\":" + user_id + ",\"type\":0," +
+                    "\"title\":\"" + question + "\"," +
                     "\"content\":\"" + desc_ques + "\"" + "}";
             String message = RequestHandler.sendPostRequest(
                     "http://120.24.208.130:1501/event/add", jsonStrng);
