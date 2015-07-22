@@ -13,7 +13,7 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="登录Z"
+            android:text="登录"
             android:id="@+id/button6"
             android:onClick="login"
             android:layout_alignParentTop="true" />
