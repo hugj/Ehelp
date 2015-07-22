@@ -9,8 +9,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.DatePicker;
-import android.widget.EditText;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ehelp.R;
@@ -23,7 +23,7 @@ public class homepageActivity extends Activity {
     private AlertDialog EditlocationDialog = null;
     //private AlertDialog EditbrithdayDialog = null;
     private final static int DATE_DIALOG = 0;
-    private EditText edt = null;
+    private TextView edt = null;
     private RelativeLayout brithday_edit = null;
     private Calendar c = null;
     @Override
@@ -111,7 +111,7 @@ public class homepageActivity extends Activity {
         });
         //编辑生日
         brithday_edit = (RelativeLayout)findViewById(R.id.single_birth);
-        edt = (EditText)findViewById(R.id.single_birth2);
+        edt = (TextView)findViewById(R.id.single_birth2);
         brithday_edit.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 showDialog(DATE_DIALOG);
