@@ -3,11 +3,16 @@ package com.ehelp.send;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import com.ehelp.R;
+import com.ehelp.server.RequestHandler;
 import com.wangjie.androidbucket.utils.ABTextUtil;
 import com.wangjie.androidbucket.utils.imageprocess.ABShape;
 import com.wangjie.androidinject.annotation.annotations.base.AILayout;
@@ -31,6 +36,14 @@ public class SendHelp extends AIActionBarActivity implements RapidFloatingAction
     private RapidFloatingActionHelper rfabHelper;
     private Toolbar mToolbar;
 
+    //submit()
+    private EditText Eevents;
+    private EditText Edesc_event;
+    private EditText Eshare_money;
+    private String events;
+    private String share_money;
+    private String desc_event;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,6 +53,12 @@ public class SendHelp extends AIActionBarActivity implements RapidFloatingAction
     }
 
     private void init() {
+        StrictMode.setThreadPolicy(
+                new StrictMode.ThreadPolicy.Builder().
+                        detectDiskReads().detectDiskWrites().detectNetwork().penaltyLog().build());
+        StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder().
+                detectLeakedSqlLiteObjects().detectLeakedClosableObjects().
+                penaltyLog().penaltyDeath().build());
         //set toolbar
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         mToolbar.setTitle("发送求助信息");
@@ -129,5 +148,33 @@ public class SendHelp extends AIActionBarActivity implements RapidFloatingAction
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void submit(View view) {
+        init();
+        int user_id = 17;
+        Eevents = (EditText)findViewById(R.id.edit_message2);
+        Edesc_event = (EditText)findViewById(R.id.edit_message3);
+        Eshare_money = (EditText)findViewById(R.id.edit_message4);
+        events = Eevents.getText().toString();
+        desc_event = Edesc_event.getText().toString();
+        share_money = Eshare_money.getText().toString();
+        if (!events.isEmpty()) {
+            String jsonStrng = "{" +
+                    "\"id\":" + user_id + ",\"type\":1," +
+                    "\"content\":\"" + desc_event + "\"" + "}";
+            String message = RequestHandler.sendPostRequest(
+                    "http://120.24.208.130:1501/event/add", jsonStrng);
+            if (message == "false") {
+                Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
+                        Toast.LENGTH_SHORT).show();
+                return;
+            }   else {
+                Toast.makeText(getApplicationContext(), message,
+                        Toast.LENGTH_SHORT).show();
+                // 这里是未完成的页面跳转
+                // getMenuInflater().inflate(R.menu.menu_send_help, menu);
+            }
+        }
     }
 }
