@@ -1,14 +1,9 @@
 package com.ehelp.map;
 
-import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -56,7 +51,7 @@ import android.media.AudioManager;
 //统计代码
 import cn.jpush.android.api.JPushInterface;
 
-public class sendsos_map extends ActionBarActivity implements BaiduMap.OnMapClickListener,
+public class sendsos_map extends Activity implements BaiduMap.OnMapClickListener,
         OnGetRoutePlanResultListener {
 
     //浏览路线节点相关
@@ -84,10 +79,6 @@ public class sendsos_map extends ActionBarActivity implements BaiduMap.OnMapClic
     private Marker mMarker4;
     private InfoWindow mInfoWindow;
 
-    //toolbar
-    private Toolbar mToolbar;
-
-
     private Button button7;
     private Vibrator vib;
     private SoundPool sp;
@@ -113,11 +104,6 @@ public class sendsos_map extends ActionBarActivity implements BaiduMap.OnMapClic
         mMapView = (MapView) findViewById(R.id.map);
         mBaidumap = mMapView.getMap();
         int count = mMapView.getChildCount();
-
-        //set toolbar
-        mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        mToolbar.setTitle("紧急求救状态");
-        setSupportActionBar(mToolbar);
         init();
         // 去除无关图标
         for (int i = 0; i < count; i++) {
@@ -330,49 +316,17 @@ public class sendsos_map extends ActionBarActivity implements BaiduMap.OnMapClic
         return false;
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_send_help, menu);
-        return true;
-    }
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_send_help, menu);
-        return true;
-    }
-
-    @Override
-    protected void onPause() {
+//    @Override
+//    protected void onPause() {
 //        mMapView.onPause();
-        super.onPause();
-        JPushInterface.onPause(this);
-    }
+//        super.onPause();
+//    }
 //
-    @Override
-    protected void onResume() {
+//    @Override
+//    protected void onResume() {
 //        mMapView.onResume();
-        super.onResume();
-        JPushInterface.onResume(this);
-    }
+//        super.onResume();
+//    }
 //
 //    @Override
 //    protected void onDestroy() {
