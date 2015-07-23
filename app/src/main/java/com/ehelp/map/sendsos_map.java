@@ -316,19 +316,17 @@ public class sendsos_map extends Activity implements BaiduMap.OnMapClickListener
         return false;
     }
 
-    @Override
-    protected void onPause() {
+//    @Override
+//    protected void onPause() {
 //        mMapView.onPause();
-        super.onPause();
-        JPushInterface.onPause(this);
-    }
+//        super.onPause();
+//    }
 //
-    @Override
-    protected void onResume() {
+//    @Override
+//    protected void onResume() {
 //        mMapView.onResume();
-        super.onResume();
-        JPushInterface.onResume(this);
-    }
+//        super.onResume();
+//    }
 //
 //    @Override
 //    protected void onDestroy() {
