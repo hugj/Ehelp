@@ -50,4 +50,5 @@
     <string name="mes_editlocation">编辑所在地</string>
     <string name="mes_editbirthday">编辑生日</string>
     <string name="title_activity_mesnotename">MesnotenameActivity</string>
+    <string name="title_activity_register_password">RegisterPassword</string>
 </resources>

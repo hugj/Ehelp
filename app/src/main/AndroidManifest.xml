@@ -211,6 +211,10 @@
             android:name=".user.pinyin.MessetnameActivity"
             android:label="@string/title_activity_mesnotename" >
         </activity>
+        <activity
+            android:name=".account.RegisterPassword"
+            android:label="@string/title_activity_register_password" >
+        </activity>
     </application>
 
 </manifest>

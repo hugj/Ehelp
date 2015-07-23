@@ -31,15 +31,13 @@ import cn.smssdk.utils.SMSLog;
 public class SignUp extends ActionBarActivity implements OnClickListener {
 
     private Toolbar mToolbar;
-    private EditText Epassword;
-    private EditText Epassword2;
     private EditText Eaccount;
-    private String password;
-    private String password2;
-    private String account;
     private EditText inputCodeEt;
     private Button requestCodeBtn;
     private Button commitBtn;
+    private String phoneNums;
+
+    public final static String EXTRA_MESSAGE = "com.ehelp.MESSAGE";
 
     int i = 60;
 
@@ -64,6 +62,7 @@ public class SignUp extends ActionBarActivity implements OnClickListener {
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         mToolbar.setTitle("注册新用户");
         setSupportActionBar(mToolbar);
+
         inputCodeEt = (EditText) findViewById(R.id.edit_identify);//验证码
         requestCodeBtn = (Button) findViewById(R.id.request_code_btn);
         commitBtn = (Button) findViewById(R.id.commit_btn);
@@ -94,38 +93,59 @@ public class SignUp extends ActionBarActivity implements OnClickListener {
     public void onClick(View v) {
         Eaccount = (EditText)findViewById(R.id.edit_phoneNum);
         int a = 1;
-        String phoneNums = Eaccount.getText().toString();
+        phoneNums = Eaccount.getText().toString();
         a = 2;
         switch (v.getId()) {
             case R.id.request_code_btn:
-                // 1. 通过规则判断手机号
-                if (!judgePhoneNums(phoneNums)) {
+                String jsonStrng = "{" +
+                        "\"account\":\"" + phoneNums + "\"," +
+                        "\"password\":\"\"" +  "}";
+                //String jsonStrng = "";
+                String message = RequestHandler.sendPostRequest(
+                        "http://120.24.208.130:1501/account/login", jsonStrng);
+                if (message == "false") {
+                    Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
+                            Toast.LENGTH_SHORT).show();
                     return;
-                } // 2. 通过sdk发送短信验证
-                SMSSDK.getVerificationCode("86", phoneNums);
+                }
+                try {
+                    JSONObject jO = new JSONObject(message);
+                    if (jO.getInt("status") == 500) {
+                        // 1. 通过规则判断手机号
+                        if (!judgePhoneNums(phoneNums)) {
+                            return;
+                        } // 2. 通过sdk发送短信验证
+                        SMSSDK.getVerificationCode("86", phoneNums);
 
-                // 3. 把按钮变成不可点击，并且显示倒计时（正在获取）
-                requestCodeBtn.setClickable(false);
-                requestCodeBtn.setBackgroundColor(Color.WHITE);
-                requestCodeBtn.setTextColor(Color.GRAY);
-                requestCodeBtn.setText("重新发送(" + i + ")");
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        for (; i > 0; i--) {
-                            handler.sendEmptyMessage(-9);
-                            if (i <= 0) {
-                                break;
+                        // 3. 把按钮变成不可点击，并且显示倒计时（正在获取）
+                        requestCodeBtn.setClickable(false);
+                        requestCodeBtn.setBackgroundColor(Color.WHITE);
+                        requestCodeBtn.setTextColor(Color.GRAY);
+                        requestCodeBtn.setText("重新发送(" + i + ")");
+                        new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                for (; i > 0; i--) {
+                                    handler.sendEmptyMessage(-9);
+                                    if (i <= 0) {
+                                        break;
+                                    }
+                                    try {
+                                        Thread.sleep(1000);
+                                    } catch (InterruptedException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                                handler.sendEmptyMessage(-8);
                             }
-                            try {
-                                Thread.sleep(1000);
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                        handler.sendEmptyMessage(-8);
+                        }).start();
+                    } else {
+                        Toast.makeText(getApplicationContext(), "该用户已注册",
+                                Toast.LENGTH_SHORT).show();
                     }
-                }).start();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
                 break;
 
             case R.id.commit_btn:
@@ -156,7 +176,9 @@ public class SignUp extends ActionBarActivity implements OnClickListener {
                     if (event == SMSSDK.EVENT_SUBMIT_VERIFICATION_CODE) {// 提交验证码成功
                         Toast.makeText(getApplicationContext(), "提交验证码成功",
                                 Toast.LENGTH_SHORT).show();
-                        signUp();
+                        Intent intent = new Intent(SignUp.this, RegisterPassword.class);
+                        intent.putExtra(EXTRA_MESSAGE, phoneNums);
+                        startActivity(intent);
                     } else if (event == SMSSDK.EVENT_GET_VERIFICATION_CODE) {
                         commitBtn.setClickable(true);
                         commitBtn.setBackgroundColor(Color.GREEN);
@@ -233,49 +255,6 @@ public class SignUp extends ActionBarActivity implements OnClickListener {
     protected void onDestroy() {
         SMSSDK.unregisterAllEventHandler();
         super.onDestroy();
-    }
-
-    public void signUp() {
-        Epassword = (EditText)findViewById(R.id.edit_password);
-        Epassword2 = (EditText)findViewById(R.id.edit_password2);
-        account = Eaccount.getText().toString();
-        password = Epassword.getText().toString();
-        password2 = Epassword2.getText().toString();
-        if ((!account.isEmpty()) && (!password.isEmpty()) && (!password2.isEmpty())) {
-            if (password.length() < 6) {
-                Toast.makeText(getApplicationContext(), "密码应不少于6位",
-                        Toast.LENGTH_SHORT).show();
-                return;
-            }
-            if (!password.equals(password2)) {
-                Toast.makeText(getApplicationContext(), "密码不一致",
-                        Toast.LENGTH_SHORT).show();
-                return;
-            }
-            String jsonStrng = "{" +
-                    "\"account\":\"" + account + "\"," +
-                    "\"password\":\"" + password + "\"" + "}";
-            String message = RequestHandler.sendPostRequest(
-                    "http://120.24.208.130:1501/account/regist", jsonStrng);
-            String status;
-            try {
-                JSONObject jO = new JSONObject(message);
-                status = jO.getString("status");
-                if (status.equals("200")) {
-                    Toast.makeText(getApplicationContext(), "注册成功",
-                            Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(getApplicationContext(), "注册失败",
-                            Toast.LENGTH_SHORT).show();
-                    return;
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        } else {
-            Toast.makeText(getApplicationContext(), "用户名或密码不能为空",
-                    Toast.LENGTH_SHORT).show();
-        }
     }
 
     @Override
