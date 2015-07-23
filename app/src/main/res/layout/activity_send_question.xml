@@ -24,7 +24,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_weight="1"
-                android:maxLength="40"
                 android:hint="问题"/>
 
             <EditText
@@ -32,7 +31,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="228dp"
                 android:layout_weight="1"
-                android:maxLength="40"
                 android:hint="问题描述"
                 android:inputType="textMultiLine"
                 android:gravity="left|top"

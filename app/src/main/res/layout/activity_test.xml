@@ -56,6 +56,14 @@
             android:onClick="health"
             android:layout_alignParentTop="true" />
 
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="问题详情"
+            android:id="@+id/button15"
+            android:onClick="ques"
+            android:layout_alignParentTop="true" />
+
     </LinearLayout>
 
     <com.wangjie.rapidfloatingactionbutton.RapidFloatingActionLayout

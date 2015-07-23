@@ -1,22 +1,18 @@
-package com.ehelp;
+package com.ehelp.receive;
 
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.StrictMode;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
+import android.widget.EditText;
 
-import com.ehelp.account.login;
-import com.ehelp.evaluate.Comment;
-import com.ehelp.map.BMapApiDemoMain;
-import com.ehelp.receive.QuestionDetail;
+import com.ehelp.R;
 import com.ehelp.send.SendHelp;
 import com.ehelp.send.SendQuestion;
 import com.ehelp.send.SendSOS;
-import com.ehelp.user.Myhistory;
-import com.ehelp.user.pinyin.ContactlistActivity;
-import com.ehelp.user.pinyin.Health;
 import com.wangjie.androidbucket.utils.ABTextUtil;
 import com.wangjie.androidbucket.utils.imageprocess.ABShape;
 import com.wangjie.androidinject.annotation.annotations.base.AILayout;
@@ -31,23 +27,43 @@ import com.wangjie.rapidfloatingactionbutton.contentimpl.labellist.RapidFloating
 import java.util.ArrayList;
 import java.util.List;
 
-
-@AILayout(R.layout.activity_test)
-public class Test extends AIActionBarActivity implements RapidFloatingActionContentLabelList.OnRapidFloatingActionContentLabelListListener {
+@AILayout(R.layout.activity_question_detail)
+public class QuestionDetail extends AIActionBarActivity implements RapidFloatingActionContentLabelList.OnRapidFloatingActionContentLabelListListener {
     @AIView(R.id.label_list_sample_rfal)
     private RapidFloatingActionLayout rfaLayout;
     @AIView(R.id.label_list_sample_rfab)
     private RapidFloatingActionButton rfaButton;
     private RapidFloatingActionHelper rfabHelper;
+    private Toolbar mToolbar;
+
+    // submit()
+    private EditText Equestion;
+    private EditText Edesc_ques;
+    private EditText Eshare_money;
+    private String question;
+    private String share_money;
+    private String desc_ques;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.activity_test);
+        Intent intent = getIntent();
         init();
     }
 
     private void init() {
+        StrictMode.setThreadPolicy(
+                new StrictMode.ThreadPolicy.Builder().
+                        detectDiskReads().detectDiskWrites().detectNetwork().penaltyLog().build());
+        StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder().
+                detectLeakedSqlLiteObjects().detectLeakedClosableObjects().
+                penaltyLog().penaltyDeath().build());
+
+        //set toolbar
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        mToolbar.setTitle("问题详情");
+        setSupportActionBar(mToolbar);
+        //set FAB
         RapidFloatingActionContentLabelList rfaContent = new RapidFloatingActionContentLabelList(context);
         rfaContent.setOnRapidFloatingActionContentLabelListListener(this);
         List<RFACLabelItem> items = new ArrayList<>();
@@ -113,10 +129,11 @@ public class Test extends AIActionBarActivity implements RapidFloatingActionCont
         rfabHelper.toggleContent();
     }
 
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_test, menu);
+        getMenuInflater().inflate(R.menu.menu_question_detail, menu);
         return true;
     }
 
@@ -134,43 +151,4 @@ public class Test extends AIActionBarActivity implements RapidFloatingActionCont
 
         return super.onOptionsItemSelected(item);
     }
-    public void login(View view) {
-        // Do something in response to button
-        Intent intent = new Intent(this, login.class);
-        startActivity(intent);
-    }
-    public void comment(View view) {
-        // Do something in response to button
-        Intent intent = new Intent(this, Comment.class);
-        startActivity(intent);
-    }
-
-    public void history(View view) {
-        // Do something in response to button
-        Intent intent = new Intent(this, Myhistory.class);
-        startActivity(intent);
-    }
-
-    public void ques(View view) {
-        // Do something in response to button
-        Intent intent = new Intent(this, QuestionDetail.class);
-        startActivity(intent);
-    }
-
-    public void goToMap(View view) {
-        Intent intent = new Intent(this, BMapApiDemoMain.class);
-        startActivity(intent);
-    }
-
-    public void health(View view) {
-        Intent intent = new Intent(this, Health.class);
-        startActivity(intent);
-    }
-
-    public void ContactList(View view) {
-
-        Intent intent = new Intent(this, ContactlistActivity.class);
-        startActivity(intent);
-    }
-
 }

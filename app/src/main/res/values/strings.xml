@@ -52,4 +52,5 @@
     <string name="title_activity_mesnotename">MesnotenameActivity</string>
     <string name="title_activity_register_password">RegisterPassword</string>
     <string name="title_activity_health">Health</string>
+    <string name="title_activity_question_detail">QuestionDetail</string>
 </resources>
