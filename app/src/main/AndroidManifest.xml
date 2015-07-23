@@ -215,6 +215,10 @@
             android:name=".account.RegisterPassword"
             android:label="@string/title_activity_register_password" >
         </activity>
+        <activity
+            android:name=".user.pinyin.Health"
+            android:label="@string/title_activity_health" >
+        </activity>
     </application>
 
 </manifest>

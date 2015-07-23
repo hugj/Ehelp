@@ -18,7 +18,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/mes_editname"
+                android:text="请修改您的信息"
                 android:layout_marginBottom="15dp"
                 android:textColor="#000"
                 android:textSize="20sp"

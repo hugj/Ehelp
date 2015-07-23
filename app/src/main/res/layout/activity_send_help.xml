@@ -44,6 +44,8 @@
                 android:layout_height="60dp"
                 android:layout_weight="1"
                 android:ems="10"
+                android:singleLine="true"
+                android:numeric="integer"
                 android:hint="所需人数"/>
 
             <EditText
@@ -52,6 +54,8 @@
                 android:layout_height="60dp"
                 android:layout_weight="1"
                 android:ems="10"
+                android:singleLine="true"
+                android:numeric="integer"
                 android:hint="悬赏爱心币"/>
 
             <RelativeLayout

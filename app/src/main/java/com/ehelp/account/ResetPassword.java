@@ -129,11 +129,10 @@ public class ResetPassword extends ActionBarActivity {
                             Toast.LENGTH_SHORT).show();
                 }
                 else {
-                    String user_id = jO.getString("id");
-                    Toast.makeText(getApplicationContext(), "修改成功, 已自动登陆，用户id:" + user_id,
+                    Toast.makeText(getApplicationContext(), "修改成功,请重新登录",
                             Toast.LENGTH_SHORT).show();
-                    //Intent intent = new Intent(this, login.class);
-                    //startActivity(intent);
+                    Intent intent = new Intent(this, login.class);
+                    startActivity(intent);
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
