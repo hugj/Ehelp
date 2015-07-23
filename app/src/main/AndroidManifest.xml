@@ -54,6 +54,9 @@
         <activity
             android:name=".account.login"
             android:label="@string/app_name" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.ehelp.Test" />
         </activity>
         <activity
             android:name=".account.SignUp"
