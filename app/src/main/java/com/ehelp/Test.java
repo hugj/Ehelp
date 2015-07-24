@@ -13,11 +13,15 @@ import com.ehelp.map.recievehelp_map;
 import com.ehelp.map.recievesos_map;
 import com.ehelp.map.sendhelp_map;
 import com.ehelp.map.sendsos_map;
+import com.ehelp.evaluate.Comment;
+import com.ehelp.receive.QuestionDetail;
 import com.ehelp.send.SendHelp;
 import com.ehelp.send.SendQuestion;
 import com.ehelp.send.SendSOS;
 import com.ehelp.map.sendhelpcomeback_map;
+import com.ehelp.user.Myhistory;
 import com.ehelp.user.pinyin.ContactlistActivity;
+import com.ehelp.user.pinyin.Health;
 import com.wangjie.androidbucket.utils.ABTextUtil;
 import com.wangjie.androidbucket.utils.imageprocess.ABShape;
 import com.wangjie.androidinject.annotation.annotations.base.AILayout;
@@ -140,9 +144,31 @@ public class Test extends AIActionBarActivity implements RapidFloatingActionCont
         Intent intent = new Intent(this, login.class);
         startActivity(intent);
     }
+    public void comment(View view) {
+        // Do something in response to button
+        Intent intent = new Intent(this, Comment.class);
+        startActivity(intent);
+    }
+
+    public void history(View view) {
+        // Do something in response to button
+        Intent intent = new Intent(this, Myhistory.class);
+        startActivity(intent);
+    }
+
+    public void ques(View view) {
+        // Do something in response to button
+        Intent intent = new Intent(this, QuestionDetail.class);
+        startActivity(intent);
+    }
 
     public void goToMap(View view) {
         Intent intent = new Intent(this, recievehelp_map.class);
+        startActivity(intent);
+    }
+
+    public void health(View view) {
+        Intent intent = new Intent(this, Health.class);
         startActivity(intent);
     }
 

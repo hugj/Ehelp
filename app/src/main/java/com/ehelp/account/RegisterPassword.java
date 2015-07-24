@@ -1,9 +1,9 @@
 package com.ehelp.account;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v7.app.ActionBarActivity;
+import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -17,8 +17,7 @@ import com.ehelp.server.RequestHandler;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class ResetPassword extends ActionBarActivity {
-
+public class RegisterPassword extends ActionBarActivity {
     private Toolbar mToolbar;
     private EditText Epassword;
     private EditText Epassword2;
@@ -29,7 +28,7 @@ public class ResetPassword extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_reset_password);
+        setContentView(R.layout.activity_register_password);
         init();
     }
 
@@ -48,14 +47,14 @@ public class ResetPassword extends ActionBarActivity {
 
         //set toolbar
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        mToolbar.setTitle("重置密码");
+        mToolbar.setTitle("注册新用户");
         setSupportActionBar(mToolbar);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_reset_password, menu);
+        getMenuInflater().inflate(R.menu.menu_register_password, menu);
         return true;
     }
 
@@ -74,13 +73,13 @@ public class ResetPassword extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void resetPassword(View view) {
-        // Do something in response to button
+
+    public void signUp(View view) {
         Epassword = (EditText)findViewById(R.id.edit_password);
-        password = Epassword.getText().toString();
         Epassword2 = (EditText)findViewById(R.id.edit_password2);
+        password = Epassword.getText().toString();
         password2 = Epassword2.getText().toString();
-        if ((!password2.isEmpty()) &&(!password.isEmpty())) {
+        if ((!account.isEmpty()) && (!password.isEmpty()) && (!password2.isEmpty())) {
             if (password.length() < 6) {
                 Toast.makeText(getApplicationContext(), "密码应不少于6位",
                         Toast.LENGTH_SHORT).show();
@@ -91,56 +90,30 @@ public class ResetPassword extends ActionBarActivity {
                         Toast.LENGTH_SHORT).show();
                 return;
             }
+            String password2 = MD5.MD5_encode(password, "");
             String jsonStrng = "{" +
                     "\"account\":\"" + account + "\"," +
-                    "\"password\":\"\"" +  "}";
-            //String jsonStrng = "";
+                    "\"password\":\"" + password2 + "\"" + "}";
             String message = RequestHandler.sendPostRequest(
-                    "http://120.24.208.130:1501/account/login", jsonStrng);
-            if (message == "false") {
-                Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
-                        Toast.LENGTH_SHORT).show();
-                return;
-            }
-            String salt;
+                    "http://120.24.208.130:1501/account/regist", jsonStrng);
+            String status;
             try {
                 JSONObject jO = new JSONObject(message);
-                if (jO.getInt("status") == 500) {
-                    Toast.makeText(getApplicationContext(), "用户名未注册",
+                status = jO.getString("status");
+                if (status.equals("200")) {
+                    Toast.makeText(getApplicationContext(), "注册成功",
+                            Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getApplicationContext(), "注册失败",
                             Toast.LENGTH_SHORT).show();
                     return;
-                }
-                salt = jO.getString("salt");
-                String password2 = MD5.MD5_encode(password, salt);
-                jsonStrng = "{" +
-                        "\"account\":\"" + account + "\"," +
-                        "\"password\":\"" + password2 + "\"," +
-                        "\"salt\":\"" + salt + "\" " +  "}";
-                message = RequestHandler.sendPostRequest(
-                        "http://120.24.208.130:1501/account/modify_password", jsonStrng);
-                if (message == "false") {
-                    Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
-                            Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                jO = new JSONObject(message);
-                if (jO.getInt("status") == 500) {
-                    Toast.makeText(getApplicationContext(), "修改失败",
-                            Toast.LENGTH_SHORT).show();
-                }
-                else {
-                    Toast.makeText(getApplicationContext(), "修改成功,请重新登录",
-                            Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(this, login.class);
-                    startActivity(intent);
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
             }
         } else {
-            Toast.makeText(getApplicationContext(), "新密码不能为空",
+            Toast.makeText(getApplicationContext(), "密码不能为空",
                     Toast.LENGTH_SHORT).show();
         }
     }
-
 }

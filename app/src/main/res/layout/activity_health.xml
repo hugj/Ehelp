@@ -13,7 +13,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/mes_title"
+            android:text="健康卡"
             android:textSize="20sp"
             android:textColor="#fff" />
     </LinearLayout>
@@ -41,28 +41,21 @@
             android:gravity="center_vertical"
             android:clickable="true"
             android:background="@drawable/preference_first_item"
-            android:id="@+id/single_name">
+            android:id="@+id/allergy">
             <TextView android:layout_width="wrap_content"
                 android:layout_height="wrap_content" android:textColor="#000"
                 android:layout_centerVertical="true"
-                android:textSize="20sp" android:id="@+id/single_name1"
-                android:text="@string/mes_username"/>
+                android:textSize="20sp"
+                android:id="@+id/allergy1"
+                android:text="过敏反应"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/single_name2"
+                android:id="@+id/allergy2"
                 android:textColor="#000" android:layout_centerVertical="true"
-                android:layout_toRightOf="@id/single_name1"
-                android:text="         abcdefg"/>
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:scaleType="matrix"
-                android:layout_centerVertical="true"
-                android:layout_alignParentRight="true"
-                android:clickable="true"
-                android:id="@+id/single_name3"
-                android:src="@drawable/mm_submenu" />
+                android:layout_toRightOf="@id/allergy1"
+                android:text="         无"/>
+
         </RelativeLayout>
         <RelativeLayout
             android:layout_width="fill_parent"
@@ -75,15 +68,16 @@
             <TextView android:layout_width="wrap_content"
                 android:layout_height="wrap_content" android:textColor="#000"
                 android:layout_centerVertical="true"
-                android:textSize="20sp" android:id="@+id/single_phone1"
-                android:text="@string/mes_phone"/>
+                android:textSize="20sp"
+                android:id="@+id/medicine"
+                android:text="药物使用"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/single_phone2"
+                android:id="@+id/medicine2"
                 android:textColor="#000" android:layout_centerVertical="true"
-                android:layout_toRightOf="@id/single_phone1"
-                android:text="         12345678"/>
+                android:layout_toRightOf="@id/medicine"
+                android:text="         无"/>
         </RelativeLayout>
         <RelativeLayout
             android:layout_width="fill_parent"
@@ -96,25 +90,19 @@
             <TextView android:layout_width="wrap_content"
                 android:layout_height="wrap_content" android:textColor="#000"
                 android:layout_centerVertical="true"
-                android:textSize="20sp" android:id="@+id/single_file1"
-                android:text="@string/mes_file"/>
+                android:textSize="20sp"
+                android:id="@+id/bloodType"
+                android:text="血型"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/single_file2"
+                android:id="@+id/bloodType2"
                 android:textColor="#000" android:layout_centerVertical="true"
-                android:layout_toRightOf="@id/single_file1"
-                android:text="             女"/>
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:scaleType="matrix"
-                android:layout_centerVertical="true"
-                android:layout_alignParentRight="true"
-                android:clickable="true"
-                android:id="@+id/single_file3"
-                android:src="@drawable/mm_submenu" />
+                android:layout_toRightOf="@id/bloodType"
+                android:text="     A"/>
+
         </RelativeLayout>
+
         <RelativeLayout
             android:layout_width="fill_parent"
             android:layout_height="50dp"
@@ -126,24 +114,16 @@
             <TextView android:layout_width="wrap_content"
                 android:layout_height="wrap_content" android:textColor="#000"
                 android:layout_centerVertical="true"
-                android:textSize="20sp" android:id="@+id/single_loacl1"
-                android:text="@string/mes_local"/>
+                android:textSize="20sp" android:id="@+id/mediHistory"
+                android:text="病史"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/single_loacl2"
+                android:id="@+id/mediHistory2"
                 android:textColor="#000" android:layout_centerVertical="true"
-                android:layout_toRightOf="@id/single_loacl1"
-                android:text="         广州"/>
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:scaleType="matrix"
-                android:layout_centerVertical="true"
-                android:layout_alignParentRight="true"
-                android:clickable="true"
-                android:id="@+id/single_loacl3"
-                android:src="@drawable/mm_submenu" />
+                android:layout_toRightOf="@id/mediHistory"
+                android:text="        蛇精病"/>
+
         </RelativeLayout>
         <RelativeLayout
             android:layout_width="fill_parent"
@@ -156,15 +136,16 @@
             <TextView android:layout_width="wrap_content"
                 android:layout_height="wrap_content" android:textColor="#000"
                 android:layout_centerVertical="true"
-                android:textSize="20sp" android:id="@+id/single_age1"
-                android:text="@string/mes_age"/>
+                android:textSize="20sp"
+                android:id="@+id/height"
+                android:text="身高"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/single_age2"
+                android:id="@+id/height2"
                 android:textColor="#000" android:layout_centerVertical="true"
-                android:layout_toRightOf="@id/single_age1"
-                android:text="           18"/>
+                android:layout_toRightOf="@id/height"
+                android:text="           250"/>
         </RelativeLayout>
         <RelativeLayout
             android:layout_width="fill_parent"
@@ -177,24 +158,19 @@
             <TextView android:layout_width="wrap_content"
                 android:layout_height="wrap_content" android:textColor="#000"
                 android:layout_centerVertical="true"
-                android:textSize="20sp" android:id="@+id/single_birth1"
-                android:text="@string/mes_birth"/>
+                android:textSize="20sp"
+                android:id="@+id/weight"
+                android:text="体重"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/single_birth2"
+                android:id="@+id/weight2"
                 android:textColor="#000"
-                android:layout_centerVertical="true"
-                android:layout_toRightOf="@id/single_birth1" />
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:scaleType="matrix"
-                android:layout_centerVertical="true"
-                android:layout_alignParentRight="true"
-                android:clickable="true"
-                android:id="@+id/single_birth3"
-                android:src="@drawable/mm_submenu" />
+                android:text="250"
+                android:layout_alignBottom="@+id/weight"
+                android:layout_toEndOf="@+id/weight"
+                android:layout_marginStart="69dp" />
+
         </RelativeLayout>
     </LinearLayout>
 </LinearLayout>

@@ -19,6 +19,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.ehelp.R;
+import com.ehelp.server.RequestHandler;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -95,34 +96,55 @@ public class FindPassword extends ActionBarActivity implements OnClickListener {
         a = 2;
         switch (v.getId()) {
             case R.id.request_code_btn:
-                // 1. 通过规则判断手机号
-                if (!judgePhoneNums(phoneNums)) {
+                String jsonStrng = "{" +
+                        "\"account\":\"" + phoneNums + "\"," +
+                        "\"password\":\"\"" +  "}";
+                //String jsonStrng = "";
+                String message = RequestHandler.sendPostRequest(
+                        "http://120.24.208.130:1501/account/login", jsonStrng);
+                if (message == "false") {
+                    Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
+                            Toast.LENGTH_SHORT).show();
                     return;
-                } // 2. 通过sdk发送短信验证
-                SMSSDK.getVerificationCode("86", phoneNums);
+                }
+                try {
+                    JSONObject jO = new JSONObject(message);
+                    if (jO.getInt("status") == 500) {
+                        Toast.makeText(getApplicationContext(), "用户未注册",
+                                Toast.LENGTH_SHORT).show();
+                    } else {
+                        // 1. 通过规则判断手机号
+                        if (!judgePhoneNums(phoneNums)) {
+                            return;
+                        } // 2. 通过sdk发送短信验证
+                        SMSSDK.getVerificationCode("86", phoneNums);
 
-                // 3. 把按钮变成不可点击，并且显示倒计时（正在获取）
-                requestCodeBtn.setClickable(false);
-                requestCodeBtn.setBackgroundColor(Color.WHITE);
-                requestCodeBtn.setTextColor(Color.GRAY);
-                requestCodeBtn.setText("重新发送(" + i + ")");
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        for (; i > 0; i--) {
-                            handler.sendEmptyMessage(-9);
-                            if (i <= 0) {
-                                break;
+                        // 3. 把按钮变成不可点击，并且显示倒计时（正在获取）
+                        requestCodeBtn.setClickable(false);
+                        requestCodeBtn.setBackgroundColor(Color.WHITE);
+                        requestCodeBtn.setTextColor(Color.GRAY);
+                        requestCodeBtn.setText("重新发送(" + i + ")");
+                        new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                for (; i > 0; i--) {
+                                    handler.sendEmptyMessage(-9);
+                                    if (i <= 0) {
+                                        break;
+                                    }
+                                    try {
+                                        Thread.sleep(1000);
+                                    } catch (InterruptedException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                                handler.sendEmptyMessage(-8);
                             }
-                            try {
-                                Thread.sleep(1000);
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                        handler.sendEmptyMessage(-8);
+                        }).start();
                     }
-                }).start();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
                 break;
 
             case R.id.commit_btn:

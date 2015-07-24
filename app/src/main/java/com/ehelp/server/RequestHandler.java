@@ -34,7 +34,7 @@ public class RequestHandler {
 			
 			URL url = new URL(urlString);
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-			conn.setConnectTimeout(600);
+			conn.setConnectTimeout(1000);
 			conn.setRequestMethod("GET");
 			conn.setDoInput(true); // permit to use the inputstream
 			conn.setDoOutput(true); // permit to use the outputstrem
@@ -74,7 +74,7 @@ public class RequestHandler {
 			
 			URL url = new URL(urlString);
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-			conn.setConnectTimeout(600);
+			conn.setConnectTimeout(1000);
 			conn.setRequestMethod("POST");
 			conn.setDoInput(true); // permit to use the inputstream
 			conn.setDoOutput(true); // permit to use the outputstrem
