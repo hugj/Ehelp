@@ -9,7 +9,8 @@
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:id="@+id/linearLayout2">
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -26,13 +27,6 @@
             android:onClick="ContactList"
             android:layout_alignParentTop="true" />
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="地图"
-            android:id="@+id/button11"
-            android:onClick="goToMap"
-            android:layout_alignParentTop="true" />
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -102,7 +96,9 @@
             android:layout_height="wrap_content"
             android:onClick="send_map5"
             android:text="发送求救"
-            android:id="@+id/button8" />
+            android:id="@+id/button8"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/linearLayout2" />
 
 
     </LinearLayout>
@@ -114,7 +110,8 @@
         android:layout_height="match_parent"
         rfal:rfal_frame_color="#ffffff"
         rfal:rfal_frame_alpha="0.7"
-        >
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true">
 
         <com.wangjie.rapidfloatingactionbutton.RapidFloatingActionButton
             xmlns:rfab="http://schemas.android.com/apk/res-auto"
