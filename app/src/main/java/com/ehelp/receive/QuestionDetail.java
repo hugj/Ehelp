@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.widget.EditText;
 
 import com.ehelp.R;
+import com.ehelp.evaluate.Comment;
 import com.ehelp.send.SendHelp;
 import com.ehelp.send.SendQuestion;
 import com.ehelp.send.SendSOS;
@@ -49,6 +50,11 @@ public class QuestionDetail extends AIActionBarActivity implements RapidFloating
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();
         init();
+    }
+
+   // @Override
+    public void setmToolbar(){
+
     }
 
     private void init() {
@@ -147,6 +153,7 @@ public class QuestionDetail extends AIActionBarActivity implements RapidFloating
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            //跳转至回答页面
             return true;
         }
 
