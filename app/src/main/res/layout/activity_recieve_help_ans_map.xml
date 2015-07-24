@@ -42,7 +42,7 @@
             android:layout_width="fill_parent"
             android:layout_height="150sp"
             android:inputType="textPersonName"
-            android:text="添加信息"
+            android:hint="添加信息"
             android:ems="10"
             android:id="@+id/editText2"
             android:layout_alignParentBottom="true"

@@ -12,6 +12,7 @@ import android.view.View;
 
 import com.ehelp.R;
 import com.ehelp.Test;
+import com.ehelp.map.sendsos_map;
 import com.github.jlmd.animatedcircleloadingview.AnimatedCircleLoadingView;
 
 public class CountNum extends ActionBarActivity {
@@ -116,7 +117,7 @@ public class CountNum extends ActionBarActivity {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                Intent intent = new Intent(CountNum.this, SendSOS.class);
+                Intent intent = new Intent(CountNum.this, sendsos_map.class);
                 startActivity(intent);
                 CountNum.this.finish();
             }
