@@ -17,6 +17,7 @@ import com.ehelp.map.sendhelp_map;
 import com.ehelp.map.sendhelpcomeback_map;
 import com.ehelp.map.sendsos_map;
 import com.ehelp.receive.QuestionDetail;
+import com.ehelp.send.CountNum;
 import com.ehelp.send.SendHelp;
 import com.ehelp.send.SendQuestion;
 import com.ehelp.send.SendSOS;
@@ -104,7 +105,7 @@ public class Test extends AIActionBarActivity implements RapidFloatingActionCont
     @Override
     public void onRFACItemIconClick(int position, RFACLabelItem item) {
         if (position == 0) {
-            Intent intent = new Intent(this, SendSOS.class);
+            Intent intent = new Intent(this, CountNum.class);
             startActivity(intent);
         } else
         if (position == 1) {

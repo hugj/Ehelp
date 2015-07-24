@@ -1,0 +1,32 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="32sp"
+    android:paddingRight="32sp"
+    android:paddingTop="64sp"
+    android:paddingBottom="48sp"
+    android:background="@color/background_floating_material_dark" tools:context=".send.CountNum">
+
+    <com.github.jlmd.animatedcircleloadingview.AnimatedCircleLoadingView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/circle_loading_view"
+        android:layout_width="256sp"
+        android:layout_height="256sp"
+        android:background="@color/background_floating_material_dark"
+        android:layout_centerHorizontal="true"
+        app:mainColor="@color/main_color"
+        app:secondaryColor="@color/secondary_color"
+        />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:text="@string/count_num"
+        android:background="@color/main_color"
+        android:textColor="@color/button_text"
+        android:textSize="24sp"
+        android:onClick="backToHome"/>
+
+
+</RelativeLayout>

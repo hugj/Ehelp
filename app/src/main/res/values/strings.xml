@@ -56,6 +56,8 @@
     <string name="title_activity_register_password">RegisterPassword</string>
     <string name="title_activity_health">Health</string>
     <string name="title_activity_question_detail">QuestionDetail</string>
+    <string name="title_activity_count_num">CountNum</string>
+    <string name="count_num">放弃求救</string>
     <string name="title_activity_sendhelp_map">sendhelp_map</string>
     <string name="title_activity_sendsos_map">sendsos_map</string>
     <string name="title_activity_recievesos_map">recievesos_map</string>
