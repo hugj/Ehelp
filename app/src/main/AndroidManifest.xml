@@ -6,9 +6,6 @@
         android:minSdkVersion="14"
         android:targetSdkVersion="19" />
 
-    <!-- 手机振动权限 -->
-    <uses-permission android:name="android.permission.VIBRATE" />
-
     <!-- Required 自定义用来收发消息的相关权限 -->
     <permission
         android:name="com.ehelp.permission.JPUSH_MESSAGE"
@@ -41,16 +38,13 @@
 
     <!-- 允许应用读取低级别的系统日志文件 -->
     <uses-permission android:name="android.permission.READ_LOGS" />
+    <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
-        <meta-data
-            android:name="com.baidu.lbsapi.API_KEY"
-            android:value="NnNvfHUWC4MpbOlGpDct7xTt" />
-
         <activity
             android:name=".account.login"
             android:label="@string/app_name" >
@@ -145,19 +139,28 @@
             android:value="developer-default" />
         <meta-data
             android:name="JPUSH_APPKEY"
-            android:value="8723d16030ca86d530b35e22" /> <!-- </>值来自开发者平台取得的AppKey -->
+            android:value="newappkey" /> <!-- </>值来自开发者平台取得的AppKey -->
 
         <activity
             android:name=".send.SendQuestion"
             android:label="@string/title_activity_send_question" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.ehelp.Test" />
         </activity>
         <activity
             android:name=".send.SendSOS"
             android:label="@string/title_activity_send_sos" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.ehelp.Test" />
         </activity>
         <activity
             android:name=".send.SendHelp"
             android:label="@string/title_activity_send_help" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.ehelp.Test" />
         </activity>
         <activity
             android:name=".Test"
@@ -185,10 +188,6 @@
             android:label="@string/title_activity_homepage" >
         </activity>
         <activity
-            android:name=".user.pinyin.SettingActivity"
-            android:label="@string/title_activity_setting" >
-        </activity>
-        <activity
             android:name=".user.pinyin.UsermesActivity"
             android:label="@string/title_activity_usermes" >
         </activity>
@@ -197,7 +196,7 @@
             android:label="@string/title_activity_message" >
         </activity>
         <activity
-            android:name=".map.recievehelp_map"
+            android:name=".map.BMapApiDemoMain"
             android:configChanges="orientation|keyboardHidden"
             android:label="@string/title_activity_bmap_api_demo_main"
             android:parentActivityName=".Test"
@@ -238,36 +237,13 @@
             android:label="@string/title_activity_question_detail" >
         </activity>
         <activity
-            android:name=".user.pinyin.AccountsafeActivity"
-            android:label="@string/title_activity_accountsafe" >
+            android:name=".send.CountNum"
+            android:label="@string/title_activity_count_num"
+            android:parentActivityName=".Test" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.ehelp.Test" />
         </activity>
-<<<<<<< HEAD
-        <activity
-            android:name=".map.sendhelp_map"
-            android:label="@string/title_activity_sendhelp_map" >
-        </activity>
-        <activity
-            android:name=".map.sendsos_map"
-            android:label="@string/title_activity_sendsos_map" >
-        </activity>
-        <activity
-            android:name=".map.recievesos_map"
-            android:label="@string/title_activity_recievesos_map" >
-        </activity>
-        <activity
-            android:name=".map.sendhelpcomeback_map"
-            android:label="@string/title_activity_sendhelpcomeback_map" >
-        </activity>
-        <activity
-            android:name=".map.recieve_help_ans_map"
-            android:label="@string/title_activity_recieve_help_ans_map" >
-        </activity>
-        <activity
-            android:name=".home.Home"
-            android:label="@string/title_activity_home" >
-        </activity>
-=======
->>>>>>> origin/master
     </application>
 
 </manifest>

@@ -68,4 +68,6 @@
     <string name="title_activity_question_detail">QuestionDetail</string>
     <string name="title_activity_setting">SettingActivity</string>
     <string name="title_activity_accountsafe">AccountsafeActivity</string>
+    <string name="title_activity_count_num">CountNum</string>
+    <string name="count_num">放弃求救</string>
 </resources>
