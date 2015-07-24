@@ -34,6 +34,47 @@
             android:onClick="goToMap"
             android:layout_alignParentTop="true" />
 
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="send_map1"
+            android:text="接受求助信息以及回答"
+            android:id="@+id/button4" />
+
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="send_map2"
+            android:text="接受求救信息"
+            android:id="@+id/button5" />
+
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="send_map3"
+            android:text="发送求助"
+            android:id="@+id/button9" />
+
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="send_map4"
+            android:text="发送求助之后返回地图界面"
+            android:id="@+id/button7" />
+
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="send_map5"
+            android:text="发送求救"
+            android:id="@+id/button8" />
+
+
     </LinearLayout>
 
     <com.wangjie.rapidfloatingactionbutton.RapidFloatingActionLayout

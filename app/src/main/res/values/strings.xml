@@ -42,4 +42,9 @@
     <string name="mes_setname">备注姓名</string>
     <string name="mes_addcontact">添加为紧急联系人</string>
     <string name="title_activity_bmap_api_demo_main">BMapApiDemoMain</string>
+    <string name="title_activity_sendhelp_map">sendhelp_map</string>
+    <string name="title_activity_sendsos_map">sendsos_map</string>
+    <string name="title_activity_recievesos_map">recievesos_map</string>
+    <string name="title_activity_sendhelpcomeback_map">sendhelpcomeback_map</string>
+    <string name="title_activity_recieve_help_ans_map">recieve_help_ans_map</string>
 </resources>

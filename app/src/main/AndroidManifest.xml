@@ -36,7 +36,7 @@
     <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
 
-    <!--允许应用读取低级别的系统日志文件 -->
+    <!-- 允许应用读取低级别的系统日志文件 -->
     <uses-permission android:name="android.permission.READ_LOGS" />
 
     <application
@@ -44,6 +44,10 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
+        <meta-data
+            android:name="com.baidu.lbsapi.API_KEY"
+            android:value="hIOmFOzyRNVo5W7H75h5vmfo" />
+
         <activity
             android:name=".account.login"
             android:label="@string/app_name" >
@@ -182,13 +186,12 @@
             android:name=".user.pinyin.messageActivity"
             android:label="@string/title_activity_message" >
         </activity>
-
         <activity
-            android:name=".map.BMapApiDemoMain"
+            android:name=".map.recievehelp_map"
+            android:configChanges="orientation|keyboardHidden"
             android:label="@string/title_activity_bmap_api_demo_main"
             android:parentActivityName=".Test"
-            android:configChanges="orientation|keyboardHidden"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.ehelp.Test" />
@@ -199,6 +202,27 @@
             android:enabled="true"
             android:process=":remote" >
         </service>
+
+        <activity
+            android:name=".map.sendhelp_map"
+            android:label="@string/title_activity_sendhelp_map" >
+        </activity>
+        <activity
+            android:name=".map.sendsos_map"
+            android:label="@string/title_activity_sendsos_map" >
+        </activity>
+        <activity
+            android:name=".map.recievesos_map"
+            android:label="@string/title_activity_recievesos_map" >
+        </activity>
+        <activity
+            android:name=".map.sendhelpcomeback_map"
+            android:label="@string/title_activity_sendhelpcomeback_map" >
+        </activity>
+        <activity
+            android:name=".map.recieve_help_ans_map"
+            android:label="@string/title_activity_recieve_help_ans_map" >
+        </activity>
     </application>
 
 </manifest>
