@@ -44,14 +44,6 @@ import com.baidu.mapapi.search.route.WalkingRoutePlanOption;
 import com.baidu.mapapi.search.route.WalkingRouteResult;
 import com.ehelp.R;
 
-//手机振动与手机发声
-import android.os.Vibrator;
-import android.media.SoundPool;
-import android.media.AudioManager;
-//统计代码
-import cn.jpush.android.api.JPushInterface;
-
-
 public class recievesos_map extends Activity implements BaiduMap.OnMapClickListener,
         OnGetRoutePlanResultListener {
 
@@ -81,15 +73,10 @@ public class recievesos_map extends Activity implements BaiduMap.OnMapClickListe
     private Marker mMarker4;
     private InfoWindow mInfoWindow;
 
-
-
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         SDKInitializer.initialize(getApplicationContext());
         setContentView(R.layout.activity_recievesos_map);
-
-        //调用振动发声
-        //this.vibandsp();
 
         CharSequence titleLable = "路线规划";
         setTitle(titleLable);
@@ -307,19 +294,17 @@ public class recievesos_map extends Activity implements BaiduMap.OnMapClickListe
         return false;
     }
 
-    @Override
-    protected void onPause() {
-        //mMapView.onPause();
-        super.onPause();
-        JPushInterface.onPause(this);
-    }
+//    @Override
+//    protected void onPause() {
+//        mMapView.onPause();
+//        super.onPause();
+//    }
 
-    @Override
-    protected void onResume() {
-        //mMapView.onResume();
-        super.onResume();
-        JPushInterface.onResume(this);
-    }
+//    @Override
+//    protected void onResume() {
+//        mMapView.onResume();
+//        super.onResume();
+//    }
 //
 //    @Override
 //    protected void onDestroy() {
@@ -384,21 +369,5 @@ public class recievesos_map extends Activity implements BaiduMap.OnMapClickListe
         mMarker1 = (Marker) (mBaidumap.addOverlay(o1));
         mMarker2 = (Marker) (mBaidumap.addOverlay(o2));
         mMarker3 = (Marker) (mBaidumap.addOverlay(o3));
-    }
-
-    public void vibandsp() {
-        //手机振动发声
-        Vibrator vib;
-        SoundPool sp;
-
-        //振动代码
-        vib = (Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
-        long[] pattern = {1000, 1000, 1000, 1000};//设定振动模式，单位:ms
-        vib.vibrate(pattern, 2);
-
-        //发声代码
-        sp = new SoundPool(10, AudioManager.STREAM_SYSTEM, 5);
-        sp.load(this, R.raw.test, 1);
-        sp.play(1, 1, 1, 0, -1, 1);
     }
 }

@@ -1,6 +1,7 @@
 package com.ehelp.map;
 
 import android.app.Activity;
+import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
@@ -43,6 +44,12 @@ import com.baidu.mapapi.search.route.WalkingRoutePlanOption;
 import com.baidu.mapapi.search.route.WalkingRouteResult;
 import com.ehelp.R;
 
+//手机振动与手机发声
+import android.os.Vibrator;
+import android.media.SoundPool;
+import android.media.AudioManager;
+//统计代码
+import cn.jpush.android.api.JPushInterface;
 
 public class sendsos_map extends Activity implements BaiduMap.OnMapClickListener,
         OnGetRoutePlanResultListener {
@@ -72,10 +79,25 @@ public class sendsos_map extends Activity implements BaiduMap.OnMapClickListener
     private Marker mMarker4;
     private InfoWindow mInfoWindow;
 
+    private Button button7;
+    private Vibrator vib;
+    private SoundPool sp;
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         SDKInitializer.initialize(getApplicationContext());
         setContentView(R.layout.activity_sendsos_map);
+
+        button7 = (Button)findViewById(R.id.button7);
+        //调用振动发声
+        this.vibandsp();
+        button7.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                stopvands();
+            }
+        });
+
         CharSequence titleLable = "路线规划";
         setTitle(titleLable);
         // 初始化地图
@@ -294,17 +316,19 @@ public class sendsos_map extends Activity implements BaiduMap.OnMapClickListener
         return false;
     }
 
-//    @Override
-//    protected void onPause() {
+    @Override
+    protected void onPause() {
 //        mMapView.onPause();
-//        super.onPause();
-//    }
+        super.onPause();
+        JPushInterface.onPause(this);
+    }
 //
-//    @Override
-//    protected void onResume() {
+    @Override
+    protected void onResume() {
 //        mMapView.onResume();
-//        super.onResume();
-//    }
+        super.onResume();
+        JPushInterface.onResume(this);
+    }
 //
 //    @Override
 //    protected void onDestroy() {
@@ -369,5 +393,21 @@ public class sendsos_map extends Activity implements BaiduMap.OnMapClickListener
         mMarker1 = (Marker) (mBaidumap.addOverlay(o1));
         mMarker2 = (Marker) (mBaidumap.addOverlay(o2));
         mMarker3 = (Marker) (mBaidumap.addOverlay(o3));
+    }
+    private void vibandsp() {
+        //手机振动发声
+        //振动代码
+        vib = (Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
+        long[] pattern = {1000, 1000, 1000, 1000};//设定振动模式，单位:ms
+        vib.vibrate(pattern, 2);
+
+        //发声代码
+        sp = new SoundPool(10, AudioManager.STREAM_SYSTEM, 5);
+        sp.load(getApplicationContext(), R.raw.alarm, 1);
+        sp.play(1, 1, 1, 0, -1, 1);
+    }
+    private void stopvands() {
+        vib.cancel();
+        sp.stop(1);
     }
 }
