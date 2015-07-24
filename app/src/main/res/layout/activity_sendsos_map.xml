@@ -3,7 +3,7 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical" >
-
+    <include layout="@layout/toolbar"/>
     <RelativeLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
@@ -21,7 +21,7 @@
             android:layout_width="fill_parent"
             android:layout_height="160sp"
             android:inputType="textPersonName"
-            android:text="点击这里可以添加求助信息详情"
+            android:hint="点击这里可以添加求助信息详情"
             android:ems="10"
             android:id="@+id/editText"
             android:layout_alignParentBottom="true"
@@ -36,14 +36,6 @@
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true" />
 
-        <Button
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="提交"
-            android:id="@+id/button13"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true" />
 
     </RelativeLayout>
 

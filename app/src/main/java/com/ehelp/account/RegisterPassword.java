@@ -103,6 +103,9 @@ public class RegisterPassword extends ActionBarActivity {
                 if (status.equals("200")) {
                     Toast.makeText(getApplicationContext(), "注册成功",
                             Toast.LENGTH_SHORT).show();
+                    Intent it = new Intent(this, login.class);
+                    startActivity(it);
+                    RegisterPassword.this.finish();
                 } else {
                     Toast.makeText(getApplicationContext(), "注册失败",
                             Toast.LENGTH_SHORT).show();

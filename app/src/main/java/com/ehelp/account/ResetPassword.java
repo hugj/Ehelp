@@ -133,6 +133,7 @@ public class ResetPassword extends ActionBarActivity {
                             Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(this, login.class);
                     startActivity(intent);
+                    ResetPassword.this.finish();
                 }
             } catch (JSONException e) {
                 e.printStackTrace();

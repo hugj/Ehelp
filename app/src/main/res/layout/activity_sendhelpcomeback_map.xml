@@ -67,7 +67,7 @@
             android:layout_width="fill_parent"
             android:layout_height="90sp"
             android:inputType="textPersonName"
-            android:text="添加信息"
+            android:hint="添加信息"
             android:ems="10"
             android:id="@+id/editText2"
             android:layout_above="@+id/button"
@@ -85,7 +85,7 @@
         <TextView
             android:layout_width="300sp"
             android:layout_height="80sp"
-            android:text="aaaaaaaaaaaaaaa"
+            android:text="哈哈哈哈哈哈哈哈哈哈呵呵"
             android:id="@+id/textView"
             android:layout_marginTop="0sp"
             android:layout_alignTop="@+id/imageView"
