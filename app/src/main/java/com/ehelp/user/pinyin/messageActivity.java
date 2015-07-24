@@ -56,21 +56,27 @@ public class messageActivity extends ActionBarActivity {
                         .SOFT_INPUT_STATE_VISIBLE);
             }
         });
-        //add contact
+        //add contact添加紧急联系人
         Button add_excontact = (Button)findViewById(R.id.addexcontact);
         add_excontact.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                messageActivity.this.dialog();
+                messageActivity.this.add_dialog();
+            }
+        });
+        //delete contact 删除好友
+        Button Delete_contact = (Button)findViewById(R.id.delete_contact);
+        Delete_contact.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                messageActivity.this.delete_dialog();
             }
         });
     }
     //add ex contact
-    protected void dialog() {
+    protected void add_dialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("是否添加？");
-        builder.setTitle("添加紧急联系人");
-
+        builder.setMessage("是否添加为紧急联系人？");
         builder.setPositiveButton("确认", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -85,6 +91,25 @@ public class messageActivity extends ActionBarActivity {
             }
         });
         builder.create().show();
+    }
+    //删除好友
+    protected void delete_dialog() {
+        AlertDialog.Builder delete = new AlertDialog.Builder(this);
+        delete.setMessage("确定删除此好友？");
+        delete.setPositiveButton("确认", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                messageActivity.this.finish();
+            }
+        });
+        delete.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        delete.create().show();
     }
 
     //test-------------------------------------------------------

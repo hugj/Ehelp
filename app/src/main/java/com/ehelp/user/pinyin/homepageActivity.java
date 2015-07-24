@@ -53,7 +53,8 @@ public class homepageActivity extends Activity {
                             public void onClick(View v) {
 //                                TextView Set_name = (TextView)findViewById(R.id.single_name2);
 //                                EditText Get_edittext = (EditText)findViewById(R.id.edit_username4);
-//                                Set_name.setText(Get_edittext.getText().toString());
+//                                String str = Get_edittext.getText().toString();
+//                                Set_name.setText(str);
                                 Toast.makeText(getApplicationContext(), "set name sucessfully",
                                         Toast.LENGTH_SHORT).show();
                                 EditnameDialog.dismiss();

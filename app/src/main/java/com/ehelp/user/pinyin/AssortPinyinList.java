@@ -13,14 +13,17 @@ public class AssortPinyinList {
     public  String getFirstChar(String value) {
         char firstChar = value.charAt(0);
         String first = null;
+        //汉语转化拼音
         String[] print = PinyinHelper.toHanyuPinyinStringArray(firstChar);
         if (print == null) {
+            //小写字母改为大写字母
             if ((firstChar >= 97 && firstChar <= 122)) {
                 firstChar -= 32;
             }
             if (firstChar >= 65 && firstChar <= 90) {
                 first = String.valueOf((char) firstChar);
             } else {
+                //其它的
                 first = "#";
             }
         } else {

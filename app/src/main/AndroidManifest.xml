@@ -182,6 +182,10 @@
             android:label="@string/title_activity_homepage" >
         </activity>
         <activity
+            android:name=".user.pinyin.SettingActivity"
+            android:label="@string/title_activity_setting" >
+        </activity>
+        <activity
             android:name=".user.pinyin.UsermesActivity"
             android:label="@string/title_activity_usermes" >
         </activity>
@@ -229,6 +233,10 @@
         <activity
             android:name=".receive.QuestionDetail"
             android:label="@string/title_activity_question_detail" >
+        </activity>
+        <activity
+            android:name=".user.pinyin.AccountsafeActivity"
+            android:label="@string/title_activity_accountsafe" >
         </activity>
         <activity
             android:name=".map.sendhelp_map"

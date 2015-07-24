@@ -31,11 +31,12 @@
     <string name="mes_user3">用户信息</string>
     <string name="mes_account">我的账号</string>
     <string name="mes_page">个人主页</string>
-    <string name="mes_friends">我的人脉</string>
+    <string name="mes_friends">通讯录</string>
+    <string name="mes_healthcard">健康卡</string>
     <string name="mes_bank">爱心银行</string>
     <string name="mes_news">我参与的</string>
     <string name="mes_help">帮助</string>
-    <string name="mes_about">关于我们</string>
+    <string name="mes_setting">设置</string>
     <string name="mes_phone">手机号</string>
     <string name="mes_local">所在地</string>
     <string name="mes_age">年龄</string>
@@ -43,6 +44,7 @@
     <string name="mes_detail">详细信息</string>
     <string name="mes_setname">备注姓名</string>
     <string name="mes_addcontact">添加为紧急联系人</string>
+    <string name="mes_deletefriend">删除好友</string>
     <string name="title_activity_bmap_api_demo_main">BMapApiDemoMain</string>
     <string name="title_activity_comment">Comment</string>
     <string name="title_activity_myhistory">Myhistory</string>
@@ -52,14 +54,18 @@
     <string name="mes_editlocation">编辑所在地</string>
     <string name="mes_editbirthday">编辑生日</string>
     <string name="mes_contactlist">联系人列表</string>
+    <string name="mes_accept_push_or_not">是否接受推送消息</string>
+    <string name="mes_privacy_setting">隐私设置</string>
+    <string name="mes_account_safe">账户与安全</string>
+    <string name="mes_version_update">版本更新</string>
+    <string name="mes_about_us">关于我们</string>
+    <string name="mes_exit">退出登录</string>
+    <string name="mes_change_password">修改密码</string>
+    <string name="mes_change_phone">修改绑定手机号</string>
     <string name="title_activity_mesnotename">MesnotenameActivity</string>
     <string name="title_activity_register_password">RegisterPassword</string>
     <string name="title_activity_health">Health</string>
     <string name="title_activity_question_detail">QuestionDetail</string>
-    <string name="title_activity_sendhelp_map">sendhelp_map</string>
-    <string name="title_activity_sendsos_map">sendsos_map</string>
-    <string name="title_activity_recievesos_map">recievesos_map</string>
-    <string name="title_activity_sendhelpcomeback_map">sendhelpcomeback_map</string>
-    <string name="title_activity_recieve_help_ans_map">recieve_help_ans_map</string>
-    <string name="title_activity_home">Home</string>
+    <string name="title_activity_setting">SettingActivity</string>
+    <string name="title_activity_accountsafe">AccountsafeActivity</string>
 </resources>

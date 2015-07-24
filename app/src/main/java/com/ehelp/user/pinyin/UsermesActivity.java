@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+
 import com.ehelp.R;
 
 /**
@@ -15,8 +16,14 @@ public class UsermesActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_usermes);
     }
+    //点击跳转到个人主页
     public void user_page_click(View v) {
         Intent intent = new Intent(this, homepageActivity.class);
+        startActivity(intent);
+    }
+    //点击跳转到设置页面
+    public void Setting_page_click(View v) {
+        Intent intent = new Intent(this, SettingActivity.class);
         startActivity(intent);
     }
 }
