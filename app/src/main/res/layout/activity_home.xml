@@ -118,7 +118,8 @@
                         android:gravity="center_vertical"
                         android:clickable="true"
                         android:background="@drawable/preference_item"
-                        android:id="@+id/user_friends">
+                        android:id="@+id/user_friends"
+                        android:onClick="ContactList">
                         <RelativeLayout android:layout_width="55dp"
                             android:layout_height="60dp" android:id="@+id/user_friends1">
                             <ImageView android:id="@+id/user_friends2" android:layout_width="50dp"
@@ -148,7 +149,8 @@
                         android:gravity="center_vertical"
                         android:clickable="true"
                         android:background="@drawable/preference_item"
-                        android:id="@+id/user_healthcard">
+                        android:id="@+id/user_healthcard"
+                        android:onClick="health">
                         <RelativeLayout android:layout_width="55dp"
                             android:layout_height="60dp" android:id="@+id/user_healthcard1">
                             <ImageView android:id="@+id/user_healthcard2" android:layout_width="50dp"
@@ -163,7 +165,7 @@
                             android:layout_marginLeft="30dp"
                             android:textColor="#000" android:layout_centerVertical="true"
                             android:textSize="20sp" android:id="@+id/user_healthcard3"
-                            android:text="aaa"/>
+                            android:text="健康卡"/>
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -208,7 +210,8 @@
                         android:gravity="center_vertical"
                         android:clickable="true"
                         android:background="@drawable/preference_last_item"
-                        android:id="@+id/user_news">
+                        android:id="@+id/user_news"
+                        android:onClick="history">
                         <RelativeLayout android:layout_width="55dp"
                             android:layout_height="60dp" android:id="@+id/user_news1">
                             <ImageView android:id="@+id/user_new2" android:layout_width="50dp"
@@ -288,7 +291,7 @@
                             android:layout_marginLeft="30dp"
                             android:textColor="#000" android:layout_centerVertical="true"
                             android:textSize="20sp" android:id="@+id/user_setting3"
-                            android:text="aaaa"/>
+                            android:text="设置"/>
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
