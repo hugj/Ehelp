@@ -97,7 +97,7 @@ public class PinyinAdapter extends BaseExpandableListAdapter {
         TextView textView = (TextView) contentView.findViewById(R.id.name);
         textView.setText(assort.getFirstChar(assort.getHashList()
                 .getValueIndex(group, 0)));
-        return contentView;
+          return contentView;
     }
 
     public boolean hasStableIds() {
@@ -111,5 +111,4 @@ public class PinyinAdapter extends BaseExpandableListAdapter {
     public AssortPinyinList getAssort() {
         return assort;
     }
-
 }

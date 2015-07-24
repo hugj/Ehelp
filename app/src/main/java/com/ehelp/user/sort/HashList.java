@@ -41,7 +41,6 @@ public class HashList<K, V> {
 
 	public V getValueIndex(int key, int value) {
 		return getValueListIndex(key).get(value);
-
 	}
 
 	public int size() {

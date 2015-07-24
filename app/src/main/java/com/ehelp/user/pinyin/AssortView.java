@@ -8,6 +8,7 @@ import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.widget.Button;
+
 public class AssortView extends Button {
 
     public interface OnTouchAssortListener {
@@ -30,7 +31,7 @@ public class AssortView extends Button {
         // TODO Auto-generated constructor stub
     }
 
-    private String[] assort = { "#", "A", "B", "C", "D", "E", "F", "G",
+    private String[] assort = {"#","A", "B", "C", "D", "E", "F", "G",
             "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T",
             "U", "V", "W", "X", "Y", "Z" };
     private Paint paint = new Paint();
@@ -55,10 +56,12 @@ public class AssortView extends Button {
             paint.setTypeface(Typeface.DEFAULT_BOLD);
             paint.setColor(Color.WHITE);
             if (i == selectIndex) {
+                // 被选择的字母改变颜色和粗体
                 paint.setColor(Color.parseColor("#3399ff"));
                 paint.setFakeBoldText(true);
                 paint.setTextSize(50);
             }
+            //计算字母的X&Y坐标
             float xPos = width / 2 - paint.measureText(assort[i]) / 2;
             float yPos = interval * i + interval;
             canvas.drawText(assort[i], xPos, yPos, paint);
@@ -86,7 +89,6 @@ public class AssortView extends Button {
                     if (onTouch != null) {
                         onTouch.onTouchAssortListener(assort[selectIndex]);
                     }
-
                     break;
                 case MotionEvent.ACTION_UP:
                     if (onTouch != null) {
