@@ -26,7 +26,8 @@
     <file url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_recievehelp_map.xml" charset="GBK" />
     <file url="file://$PROJECT_DIR$/app/src/main/res/menu/menu_bmap_api_demo_main.xml" charset="GBK" />
     <file url="file://$PROJECT_DIR$/app/src/main/res/raw" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/res/raw/test.mp3" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/raw/alarm.mp3" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/raw/locations.json" charset="GBK" />
     <file url="file://$PROJECT_DIR$/library" charset="GBK" />
     <file url="PROJECT" charset="UTF-8" />
   </component>
