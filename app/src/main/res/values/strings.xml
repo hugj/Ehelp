@@ -31,7 +31,7 @@
     <string name="mes_page">个人主页</string>
     <string name="mes_friends">我的人脉</string>
     <string name="mes_bank">爱心银行</string>
-    <string name="mes_news">消息与提醒</string>
+    <string name="mes_news">我参与的</string>
     <string name="mes_help">帮助</string>
     <string name="mes_about">关于我们</string>
     <string name="mes_phone">手机号</string>
@@ -49,6 +49,7 @@
     <string name="mes_editname">编辑用户名</string>
     <string name="mes_editlocation">编辑所在地</string>
     <string name="mes_editbirthday">编辑生日</string>
+    <string name="mes_contactlist">联系人列表</string>
     <string name="title_activity_mesnotename">MesnotenameActivity</string>
     <string name="title_activity_register_password">RegisterPassword</string>
     <string name="title_activity_health">Health</string>
