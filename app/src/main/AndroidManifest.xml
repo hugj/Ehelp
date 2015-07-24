@@ -238,6 +238,7 @@
             android:name=".user.pinyin.AccountsafeActivity"
             android:label="@string/title_activity_accountsafe" >
         </activity>
+<<<<<<< HEAD
         <activity
             android:name=".map.sendhelp_map"
             android:label="@string/title_activity_sendhelp_map" >
@@ -262,6 +263,8 @@
             android:name=".home.Home"
             android:label="@string/title_activity_home" >
         </activity>
+=======
+>>>>>>> origin/master
     </application>
 
 </manifest>
