@@ -76,6 +76,10 @@ public class Myhistory extends Activity {
         mPager.setAdapter(new MyPagerAdapter(listViews));
         mPager.setCurrentItem(0);
         mPager.setOnPageChangeListener(new MyOnPageChangeListener());
+        //初始化，使默认页面卡是是绿色的
+        TextView tv = (TextView) findViewById(R.id.text1);
+        tv.setBackgroundColor(Color.GREEN);
+
     }
 
     /**
