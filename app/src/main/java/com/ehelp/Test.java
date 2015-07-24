@@ -11,9 +11,9 @@ import com.ehelp.account.login;
 import com.ehelp.evaluate.Comment;
 import com.ehelp.map.BMapApiDemoMain;
 import com.ehelp.receive.QuestionDetail;
+import com.ehelp.send.CountNum;
 import com.ehelp.send.SendHelp;
 import com.ehelp.send.SendQuestion;
-import com.ehelp.send.SendSOS;
 import com.ehelp.user.Myhistory;
 import com.ehelp.user.pinyin.ContactlistActivity;
 import com.ehelp.user.pinyin.Health;
@@ -100,7 +100,7 @@ public class Test extends AIActionBarActivity implements RapidFloatingActionCont
     @Override
     public void onRFACItemIconClick(int position, RFACLabelItem item) {
         if (position == 0) {
-            Intent intent = new Intent(this, SendSOS.class);
+            Intent intent = new Intent(this, CountNum.class);
             startActivity(intent);
         } else
         if (position == 1) {

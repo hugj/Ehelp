@@ -38,6 +38,7 @@
 
     <!-- 允许应用读取低级别的系统日志文件 -->
     <uses-permission android:name="android.permission.READ_LOGS" />
+    <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
         android:allowBackup="true"
@@ -143,14 +144,23 @@
         <activity
             android:name=".send.SendQuestion"
             android:label="@string/title_activity_send_question" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.ehelp.Test" />
         </activity>
         <activity
             android:name=".send.SendSOS"
             android:label="@string/title_activity_send_sos" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.ehelp.Test" />
         </activity>
         <activity
             android:name=".send.SendHelp"
             android:label="@string/title_activity_send_help" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.ehelp.Test" />
         </activity>
         <activity
             android:name=".Test"
@@ -225,6 +235,14 @@
         <activity
             android:name=".receive.QuestionDetail"
             android:label="@string/title_activity_question_detail" >
+        </activity>
+        <activity
+            android:name=".send.CountNum"
+            android:label="@string/title_activity_count_num"
+            android:parentActivityName=".Test" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.ehelp.Test" />
         </activity>
     </application>
 

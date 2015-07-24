@@ -54,4 +54,6 @@
     <string name="title_activity_register_password">RegisterPassword</string>
     <string name="title_activity_health">Health</string>
     <string name="title_activity_question_detail">QuestionDetail</string>
+    <string name="title_activity_count_num">CountNum</string>
+    <string name="count_num">放弃求救</string>
 </resources>
