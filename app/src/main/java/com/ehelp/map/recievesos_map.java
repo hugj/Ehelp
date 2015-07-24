@@ -1,9 +1,14 @@
 package com.ehelp.map;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -44,7 +49,8 @@ import com.baidu.mapapi.search.route.WalkingRoutePlanOption;
 import com.baidu.mapapi.search.route.WalkingRouteResult;
 import com.ehelp.R;
 
-public class recievesos_map extends Activity implements BaiduMap.OnMapClickListener,
+
+public class recievesos_map extends ActionBarActivity implements BaiduMap.OnMapClickListener,
         OnGetRoutePlanResultListener {
 
     ImageView Image;
@@ -73,6 +79,9 @@ public class recievesos_map extends Activity implements BaiduMap.OnMapClickListe
     private Marker mMarker4;
     private InfoWindow mInfoWindow;
 
+    //TOOLbar
+    private Toolbar mToolbar;
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         SDKInitializer.initialize(getApplicationContext());
@@ -84,6 +93,12 @@ public class recievesos_map extends Activity implements BaiduMap.OnMapClickListe
         mMapView = (MapView) findViewById(R.id.map);
         mBaidumap = mMapView.getMap();
         int count = mMapView.getChildCount();
+
+        //set toolbar
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        mToolbar.setTitle("求救信息详情");
+        setSupportActionBar(mToolbar);
+
         init();
         // 去除无关图标
         for (int i = 0; i < count; i++) {
@@ -166,8 +181,8 @@ public class recievesos_map extends Activity implements BaiduMap.OnMapClickListe
             }
         });
 
-
     }
+
     /**
      * 发起路线规划搜索示例
      *
@@ -292,6 +307,28 @@ public class recievesos_map extends Activity implements BaiduMap.OnMapClickListe
     @Override
     public boolean onMapPoiClick(MapPoi poi) {
         return false;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_send_help, menu);
+        return true;
     }
 
 //    @Override

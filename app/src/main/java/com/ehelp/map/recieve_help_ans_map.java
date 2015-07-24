@@ -3,6 +3,9 @@ package com.ehelp.map;
 import android.app.Activity;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -42,9 +45,10 @@ import com.baidu.mapapi.search.route.TransitRouteResult;
 import com.baidu.mapapi.search.route.WalkingRoutePlanOption;
 import com.baidu.mapapi.search.route.WalkingRouteResult;
 import com.ehelp.R;
+import com.wangjie.androidinject.annotation.present.AIActionBarActivity;
 
 
-public class recieve_help_ans_map extends Activity implements BaiduMap.OnMapClickListener,
+public class recieve_help_ans_map extends AIActionBarActivity implements BaiduMap.OnMapClickListener,
         OnGetRoutePlanResultListener {
 
     ImageView Image;
@@ -73,6 +77,10 @@ public class recieve_help_ans_map extends Activity implements BaiduMap.OnMapClic
     private Marker mMarker4;
     private InfoWindow mInfoWindow;
 
+    //TOOLbar
+    private Toolbar mToolbar;
+
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         SDKInitializer.initialize(getApplicationContext());
@@ -83,6 +91,12 @@ public class recieve_help_ans_map extends Activity implements BaiduMap.OnMapClic
         mMapView = (MapView) findViewById(R.id.map);
         mBaidumap = mMapView.getMap();
         int count = mMapView.getChildCount();
+
+        //set toolbar
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        mToolbar.setTitle("求助信息详情");
+        setSupportActionBar(mToolbar);
+
         init();
         // 去除无关图标
         for (int i = 0; i < count; i++) {
@@ -295,6 +309,28 @@ public class recieve_help_ans_map extends Activity implements BaiduMap.OnMapClic
         return false;
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_send_help, menu);
+        return true;
+    }
+
 //    @Override
 //    protected void onPause() {
 //        mMapView.onPause();
@@ -344,6 +380,7 @@ public class recieve_help_ans_map extends Activity implements BaiduMap.OnMapClic
     }
 
     public void init() {
+
         LatLngBounds.Builder builder = new LatLngBounds.Builder();
         // 暂时提供三个点标注在地图上作为例子
         LatLng pt4 = new LatLng(23.063309, 113.394004);

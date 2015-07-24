@@ -1,7 +1,12 @@
 package com.ehelp.map;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -25,11 +30,13 @@ import com.ehelp.R;
 /**
  * 此demo用来展示如何进行地理编码搜索（用地址检索坐标）、反地理编码搜索（用坐标检索地址）
  */
-public class sendhelp_map extends Activity implements
+public class sendhelp_map extends ActionBarActivity implements
         OnGetGeoCoderResultListener {
     GeoCoder mSearch = null; // 搜索模块，也可去掉地图模块独立使用
     BaiduMap mBaiduMap = null;
     MapView mMapView = null;
+    //TOOLbar
+    private Toolbar mToolbar;
 
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -38,6 +45,11 @@ public class sendhelp_map extends Activity implements
         setContentView(R.layout.activity_sendhelp_map);
         CharSequence titleLable = "发布求助";
         setTitle(titleLable);
+
+        //set toolbar
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        mToolbar.setTitle("发送求助");
+        setSupportActionBar(mToolbar);
 
         // 地图初始化
         mMapView = (MapView) findViewById(R.id.bmapView);
@@ -109,4 +121,25 @@ public class sendhelp_map extends Activity implements
     @Override
     public void onGetReverseGeoCodeResult(ReverseGeoCodeResult result) {}
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_send_help, menu);
+        return true;
+    }
 }
