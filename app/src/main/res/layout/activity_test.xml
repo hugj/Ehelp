@@ -11,10 +11,19 @@
         android:layout_height="fill_parent"
         android:orientation="vertical"
         android:id="@+id/linearLayout2">
+
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="登录Z"
+            android:text="主页"
+            android:id="@+id/button66"
+            android:onClick="home"
+            android:layout_alignParentTop="true" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="登录"
             android:id="@+id/button6"
             android:onClick="login"
             android:layout_alignParentTop="true" />

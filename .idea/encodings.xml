@@ -19,6 +19,9 @@
     <file url="file://$PROJECT_DIR$/app/src/main/res/drawable" charset="GBK" />
     <file url="file://$PROJECT_DIR$/app/src/main/res/drawable-hdpi" charset="GBK" />
     <file url="file://$PROJECT_DIR$/app/src/main/res/drawable-ldpi" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable-ldpi/f.png" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable-ldpi/fi.png" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable-ldpi/fo.png" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/src/main/res/drawable-mdpi" charset="GBK" />
     <file url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_recievehelp_map.xml" charset="GBK" />
     <file url="file://$PROJECT_DIR$/app/src/main/res/menu/menu_bmap_api_demo_main.xml" charset="GBK" />

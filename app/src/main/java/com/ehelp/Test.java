@@ -8,6 +8,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.ehelp.account.login;
+import com.ehelp.home.Home;
 import com.ehelp.map.recieve_help_ans_map;
 import com.ehelp.map.recievehelp_map;
 import com.ehelp.map.recievesos_map;
@@ -139,6 +140,13 @@ public class Test extends AIActionBarActivity implements RapidFloatingActionCont
 
         return super.onOptionsItemSelected(item);
     }
+
+    public void home(View view) {
+        // Do something in response to button
+        Intent intent = new Intent(this, Home.class);
+        startActivity(intent);
+    }
+
     public void login(View view) {
         // Do something in response to button
         Intent intent = new Intent(this, login.class);

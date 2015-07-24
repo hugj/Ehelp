@@ -1,0 +1,339 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <include layout="@layout/toolbar" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_horizontal">
+
+    <android.support.v4.widget.DrawerLayout
+        android:id="@+id/drawer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <!-- 内容界面 -->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#666666"
+            android:orientation="vertical" >
+
+            <com.ehelp.home.widget.PagerSlidingTabStrip
+                android:id="@+id/tabs"
+                android:layout_width="match_parent"
+                android:layout_height="48dip" >
+            </com.ehelp.home.widget.PagerSlidingTabStrip>
+
+            <android.support.v4.view.ViewPager
+                android:id="@+id/pager"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" >
+            </android.support.v4.view.ViewPager>
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" >
+                <ImageView
+                    android:id="@+id/single_icon3"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/icon" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="20sp"
+                    android:layout_toRightOf="@id/single_icon3"
+                    android:id="@+id/user_name3"
+                    android:text="@string/mes_username"/>
+                <TextView
+                    android:id="@+id/edit_message6"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_toRightOf="@id/single_icon3"
+                    android:layout_below="@+id/user_name3"
+                    android:layout_weight="1"
+                    android:text="回答XXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+                    XXXXXXXXXXXXXXXXXXXXXXX"/>
+            </RelativeLayout>
+        </LinearLayout>
+
+        <!-- 侧滑菜单内容 -->
+
+        <LinearLayout
+            android:id="@+id/drawer_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:background="#cccccc"
+            android:orientation="vertical"
+            android:padding="8dp" >
+
+            <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="350dp"
+                android:layout_height="fill_parent"
+                android:scrollbarStyle="outsideOverlay">
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical" >
+                    <RelativeLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="50dp"
+                        android:gravity="center_vertical"
+                        android:clickable="true"
+                        android:background="@drawable/preference_first_item"
+                        android:id="@+id/user_page"
+                        android:onClick="user_page_click">
+                        <RelativeLayout android:layout_width="55dp"
+                            android:layout_height="60dp" android:id="@+id/user_page1">
+                            <ImageView android:id="@+id/user_page2" android:layout_width="50dp"
+                                android:layout_height="50dp" android:layout_alignParentLeft="true"
+                                android:layout_centerVertical="true" android:paddingLeft="5dp"
+                                android:background="@drawable/icon" />
+                        </RelativeLayout>
+
+                        <TextView android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_toRightOf="@id/user_page1"
+                            android:layout_marginLeft="30dp"
+                            android:textColor="#000" android:layout_centerVertical="true"
+                            android:textSize="20sp" android:id="@+id/user_page3"
+                            android:text="@string/mes_page"/>
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:scaleType="matrix"
+                            android:layout_centerVertical="true"
+                            android:layout_alignParentRight="true"
+                            android:src="@drawable/mm_submenu" />
+                    </RelativeLayout>
+                    <RelativeLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="50dp"
+                        android:gravity="center_vertical"
+                        android:clickable="true"
+                        android:background="@drawable/preference_item"
+                        android:id="@+id/user_friends">
+                        <RelativeLayout android:layout_width="55dp"
+                            android:layout_height="60dp" android:id="@+id/user_friends1">
+                            <ImageView android:id="@+id/user_friends2" android:layout_width="50dp"
+                                android:layout_height="50dp" android:layout_alignParentLeft="true"
+                                android:layout_centerVertical="true" android:paddingLeft="5dp"
+                                android:background="@drawable/icon" />
+                        </RelativeLayout>
+
+                        <TextView android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_toRightOf="@id/user_friends1"
+                            android:layout_marginLeft="30dp"
+                            android:textColor="#000" android:layout_centerVertical="true"
+                            android:textSize="20sp" android:id="@+id/user_friends3"
+                            android:text="@string/mes_friends"/>
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:scaleType="matrix"
+                            android:layout_centerVertical="true"
+                            android:layout_alignParentRight="true"
+                            android:src="@drawable/mm_submenu" />
+                    </RelativeLayout>
+                    <RelativeLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="50dp"
+                        android:gravity="center_vertical"
+                        android:clickable="true"
+                        android:background="@drawable/preference_item"
+                        android:id="@+id/user_healthcard">
+                        <RelativeLayout android:layout_width="55dp"
+                            android:layout_height="60dp" android:id="@+id/user_healthcard1">
+                            <ImageView android:id="@+id/user_healthcard2" android:layout_width="50dp"
+                                android:layout_height="50dp" android:layout_alignParentLeft="true"
+                                android:layout_centerVertical="true" android:paddingLeft="5dp"
+                                android:background="@drawable/icon" />
+                        </RelativeLayout>
+
+                        <TextView android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_toRightOf="@id/user_healthcard1"
+                            android:layout_marginLeft="30dp"
+                            android:textColor="#000" android:layout_centerVertical="true"
+                            android:textSize="20sp" android:id="@+id/user_healthcard3"
+                            android:text="aaa"/>
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:scaleType="matrix"
+                            android:layout_centerVertical="true"
+                            android:layout_alignParentRight="true"
+                            android:src="@drawable/mm_submenu" />
+                    </RelativeLayout>
+                    <RelativeLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="50dp"
+                        android:gravity="center_vertical"
+                        android:clickable="true"
+                        android:background="@drawable/preference_item"
+                        android:id="@+id/user_bank">
+                        <RelativeLayout android:layout_width="55dp"
+                            android:layout_height="60dp" android:id="@+id/user_bank1">
+                            <ImageView android:id="@+id/user_bank2" android:layout_width="50dp"
+                                android:layout_height="50dp" android:layout_alignParentLeft="true"
+                                android:layout_centerVertical="true" android:paddingLeft="5dp"
+                                android:background="@drawable/icon" />
+                        </RelativeLayout>
+
+                        <TextView android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_toRightOf="@id/user_bank1"
+                            android:layout_marginLeft="30dp"
+                            android:textColor="#000" android:layout_centerVertical="true"
+                            android:textSize="20sp" android:id="@+id/user_bank3"
+                            android:text="@string/mes_bank"/>
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:scaleType="matrix"
+                            android:layout_centerVertical="true"
+                            android:layout_alignParentRight="true"
+                            android:src="@drawable/mm_submenu" />
+                    </RelativeLayout>
+                    <RelativeLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="50dp"
+                        android:gravity="center_vertical"
+                        android:clickable="true"
+                        android:background="@drawable/preference_last_item"
+                        android:id="@+id/user_news">
+                        <RelativeLayout android:layout_width="55dp"
+                            android:layout_height="60dp" android:id="@+id/user_news1">
+                            <ImageView android:id="@+id/user_new2" android:layout_width="50dp"
+                                android:layout_height="50dp" android:layout_alignParentLeft="true"
+                                android:layout_centerVertical="true" android:paddingLeft="5dp"
+                                android:background="@drawable/icon" />
+                        </RelativeLayout>
+
+                        <TextView android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_toRightOf="@id/user_news1"
+                            android:layout_marginLeft="30dp"
+                            android:textColor="#000" android:layout_centerVertical="true"
+                            android:textSize="20sp" android:id="@+id/user_new3"
+                            android:text="@string/mes_news"/>
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:scaleType="matrix"
+                            android:layout_centerVertical="true"
+                            android:layout_alignParentRight="true"
+                            android:src="@drawable/mm_submenu" />
+                    </RelativeLayout>
+                    <View  android:layout_height="7px"
+                        android:layout_width="fill_parent"
+                        android:layout_marginTop="60dp"
+                        android:background="#ee0044ee"/>
+                    <RelativeLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="50dp"
+                        android:gravity="center_vertical"
+                        android:clickable="true"
+                        android:layout_marginTop="25dp"
+                        android:background="@drawable/preference_first_item"
+                        android:id="@+id/user_help">
+                        <RelativeLayout android:layout_width="55dp"
+                            android:layout_height="60dp" android:id="@+id/user_help1">
+                            <ImageView android:id="@+id/user_help2" android:layout_width="50dp"
+                                android:layout_height="50dp" android:layout_alignParentLeft="true"
+                                android:layout_centerVertical="true" android:paddingLeft="5dp"
+                                android:background="@drawable/icon" />
+                        </RelativeLayout>
+
+                        <TextView android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_toRightOf="@id/user_help1"
+                            android:layout_marginLeft="30dp"
+                            android:textColor="#000" android:layout_centerVertical="true"
+                            android:textSize="20sp" android:id="@+id/user_help3"
+                            android:text="@string/mes_help"/>
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:scaleType="matrix"
+                            android:layout_centerVertical="true"
+                            android:layout_alignParentRight="true"
+                            android:src="@drawable/mm_submenu" />
+                    </RelativeLayout>
+                    <RelativeLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="50dp"
+                        android:gravity="center_vertical"
+                        android:clickable="true"
+                        android:background="@drawable/preference_last_item"
+                        android:id="@+id/user_setting">
+                        <RelativeLayout android:layout_width="55dp"
+                            android:layout_height="60dp" android:id="@+id/user_setting1">
+                            <ImageView android:id="@+id/user_setting2" android:layout_width="50dp"
+                                android:layout_height="50dp" android:layout_alignParentLeft="true"
+                                android:layout_centerVertical="true" android:paddingLeft="5dp"
+                                android:background="@drawable/icon" />
+                        </RelativeLayout>
+
+                        <TextView android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_toRightOf="@id/user_setting1"
+                            android:layout_marginLeft="30dp"
+                            android:textColor="#000" android:layout_centerVertical="true"
+                            android:textSize="20sp" android:id="@+id/user_setting3"
+                            android:text="aaaa"/>
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:scaleType="matrix"
+                            android:layout_centerVertical="true"
+                            android:layout_alignParentRight="true"
+                            android:src="@drawable/mm_submenu" />
+                    </RelativeLayout>
+                </LinearLayout>
+            </ScrollView>
+        </LinearLayout>
+    </android.support.v4.widget.DrawerLayout>
+
+    </RelativeLayout>
+
+    <com.wangjie.rapidfloatingactionbutton.RapidFloatingActionLayout
+        xmlns:rfal="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/label_list_sample_rfal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        rfal:rfal_frame_color="#ffffff"
+        rfal:rfal_frame_alpha="0.7"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true">
+
+        <com.wangjie.rapidfloatingactionbutton.RapidFloatingActionButton
+            xmlns:rfab="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/label_list_sample_rfab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginRight="15dp"
+            android:layout_marginBottom="15dp"
+            rfab:rfab_size="normal"
+            rfab:rfab_drawable="@drawable/rfab__drawable_rfab_default"
+            rfab:rfab_color_normal="#37474f"
+            rfab:rfab_color_pressed="#263238"
+            rfab:rfab_shadow_radius="7dp"
+            rfab:rfab_shadow_color="#999999"
+            rfab:rfab_shadow_dx="0dp"
+            rfab:rfab_shadow_dy="5dp"
+            />
+
+
+    </com.wangjie.rapidfloatingactionbutton.RapidFloatingActionLayout>
+
+</LinearLayout>

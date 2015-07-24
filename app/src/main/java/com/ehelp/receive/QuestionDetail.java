@@ -62,6 +62,7 @@ public class QuestionDetail extends AIActionBarActivity implements RapidFloating
         //set toolbar
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         mToolbar.setTitle("问题详情");
+        //getActionBar().setDisplayHomeAsUpEnabled(true);
         setSupportActionBar(mToolbar);
         //set FAB
         RapidFloatingActionContentLabelList rfaContent = new RapidFloatingActionContentLabelList(context);
@@ -151,4 +152,17 @@ public class QuestionDetail extends AIActionBarActivity implements RapidFloating
 
         return super.onOptionsItemSelected(item);
     }
+
+    private Toolbar.OnMenuItemClickListener onMenuItemClick = new Toolbar.OnMenuItemClickListener() {
+        @Override
+        public boolean onMenuItemClick(MenuItem menuItem) {
+            String msg = "";
+            switch (menuItem.getItemId()) {
+                case R.id.action_ans:
+                    msg += "Click edit";
+                    break;
+            }
+            return true;
+        }
+    };
 }
