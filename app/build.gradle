@@ -34,4 +34,5 @@ dependencies {
     compile project(':library')
     compile files('libs/baidumapapi_v3_5_0.jar')
     compile files('libs/locSDK_5.2.jar')
+    compile project(':AnimatedCircleLoading')
 }

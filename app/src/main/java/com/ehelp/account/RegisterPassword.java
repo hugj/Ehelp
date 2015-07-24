@@ -103,6 +103,8 @@ public class RegisterPassword extends ActionBarActivity {
                 if (status.equals("200")) {
                     Toast.makeText(getApplicationContext(), "注册成功",
                             Toast.LENGTH_SHORT).show();
+                    // 由于之前的页面除了login之外全都被销毁，所以这里只需要销毁该页面就可跳到login
+                    RegisterPassword.this.finish();
                 } else {
                     Toast.makeText(getApplicationContext(), "注册失败",
                             Toast.LENGTH_SHORT).show();

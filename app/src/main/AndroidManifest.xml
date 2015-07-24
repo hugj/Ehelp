@@ -49,11 +49,14 @@
         android:theme="@style/AppTheme" >
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
-            android:value="NnNvfHUWC4MpbOlGpDct7xTt" />
+            android:value="xDO3hA5xIb6dwLnHvPlD5yC9" />
 
         <activity
             android:name=".account.login"
             android:label="@string/app_name" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.ehelp.Test" />
         </activity>
         <activity
             android:name=".account.SignUp"
@@ -147,14 +150,23 @@
         <activity
             android:name=".send.SendQuestion"
             android:label="@string/title_activity_send_question" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.ehelp.Test" />
         </activity>
         <activity
             android:name=".send.SendSOS"
             android:label="@string/title_activity_send_sos" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.ehelp.Test" />
         </activity>
         <activity
             android:name=".send.SendHelp"
             android:label="@string/title_activity_send_help" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.ehelp.Test" />
         </activity>
         <activity
             android:name=".Test"
@@ -180,10 +192,6 @@
         <activity
             android:name=".user.pinyin.homepageActivity"
             android:label="@string/title_activity_homepage" >
-        </activity>
-        <activity
-            android:name=".user.pinyin.SettingActivity"
-            android:label="@string/title_activity_setting" >
         </activity>
         <activity
             android:name=".user.pinyin.UsermesActivity"
@@ -235,11 +243,6 @@
             android:label="@string/title_activity_question_detail" >
         </activity>
         <activity
-            android:name=".user.pinyin.AccountsafeActivity"
-            android:label="@string/title_activity_accountsafe" >
-        </activity>
-<<<<<<< HEAD
-        <activity
             android:name=".map.sendhelp_map"
             android:label="@string/title_activity_sendhelp_map" >
         </activity>
@@ -263,8 +266,14 @@
             android:name=".home.Home"
             android:label="@string/title_activity_home" >
         </activity>
-=======
->>>>>>> origin/master
+        <activity
+            android:name=".send.CountNum"
+            android:label="@string/title_activity_count_num"
+            android:parentActivityName=".Test" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.ehelp.Test" />
+        </activity>
     </application>
 
 </manifest>

@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.ehelp.R;
+import com.ehelp.home.Home;
 import com.ehelp.server.RequestHandler;
 
 import org.json.JSONException;
@@ -133,6 +134,9 @@ public class login extends ActionBarActivity {
                     String user_id = jO.getString("id");
                     Toast.makeText(getApplicationContext(), "登录成功, 用户id:" + user_id,
                             Toast.LENGTH_SHORT).show();
+                    Intent it = new Intent(this, Home.class);
+                    startActivity(it);
+                    login.this.finish();
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
