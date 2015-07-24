@@ -163,7 +163,7 @@ public class SignUp extends ActionBarActivity implements OnClickListener {
             if (msg.what == -9) {
                 requestCodeBtn.setText("重新发送(" + i + ")");
             } else if (msg.what == -8) {
-                requestCodeBtn.setBackgroundColor(Color.GREEN);
+                requestCodeBtn.setBackgroundColor(Color.argb(102, 51, 181, 229));
                 requestCodeBtn.setText("获取验证码");
                 requestCodeBtn.setClickable(true);
                 i = 60;
@@ -182,7 +182,7 @@ public class SignUp extends ActionBarActivity implements OnClickListener {
                         SignUp.this.finish();
                     } else if (event == SMSSDK.EVENT_GET_VERIFICATION_CODE) {
                         commitBtn.setClickable(true);
-                        commitBtn.setBackgroundColor(Color.BLUE);
+                        commitBtn.setBackgroundColor(Color.argb(102, 51, 181, 229));
                         commitBtn.setTextColor(Color.BLACK);
 
                         Toast.makeText(getApplicationContext(), "验证码已经发送",

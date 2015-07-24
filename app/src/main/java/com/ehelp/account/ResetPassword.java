@@ -131,8 +131,7 @@ public class ResetPassword extends ActionBarActivity {
                 else {
                     Toast.makeText(getApplicationContext(), "修改成功,请重新登录",
                             Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(this, login.class);
-                    startActivity(intent);
+                    // 销毁该页面，即可返回到login界面
                     ResetPassword.this.finish();
                 }
             } catch (JSONException e) {
