@@ -40,7 +40,7 @@
             android:layout_width="fill_parent"
             android:layout_height="100sp"
             android:inputType="textPersonName"
-            android:text="已经去世了"
+            android:hint="已经去世了"
             android:ems="10"
             android:id="@+id/editText2"
             android:layout_alignParentBottom="true"
