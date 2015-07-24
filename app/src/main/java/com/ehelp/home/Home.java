@@ -14,6 +14,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import com.ehelp.R;
@@ -21,6 +22,10 @@ import com.ehelp.home.widget.PagerSlidingTabStrip;
 import com.ehelp.send.SendHelp;
 import com.ehelp.send.SendQuestion;
 import com.ehelp.send.SendSOS;
+import com.ehelp.user.Myhistory;
+import com.ehelp.user.pinyin.ContactlistActivity;
+import com.ehelp.user.pinyin.Health;
+import com.ehelp.user.pinyin.homepageActivity;
 import com.wangjie.androidbucket.utils.ABTextUtil;
 import com.wangjie.androidbucket.utils.imageprocess.ABShape;
 import com.wangjie.androidinject.annotation.annotations.base.AILayout;
@@ -171,6 +176,28 @@ public class Home extends AIActionBarActivity implements RapidFloatingActionCont
             }
         });
         initTabsValue();
+    }
+
+    public void ContactList(View view) {
+
+        Intent intent = new Intent(this, ContactlistActivity.class);
+        startActivity(intent);
+    }
+
+    public void user_page_click(View v) {
+        Intent intent = new Intent(this, homepageActivity.class);
+        startActivity(intent);
+    }
+
+    public void health(View view) {
+        Intent intent = new Intent(this, Health.class);
+        startActivity(intent);
+    }
+
+    public void history(View view) {
+        // Do something in response to button
+        Intent intent = new Intent(this, Myhistory.class);
+        startActivity(intent);
     }
 
     /**

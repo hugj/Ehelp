@@ -31,32 +31,9 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="好友"
-            android:id="@+id/button10"
-            android:onClick="ContactList"
-            android:layout_alignParentTop="true" />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:text="评价"
             android:id="@+id/button12"
             android:onClick="comment"
-            android:layout_alignParentTop="true" />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="历史记录"
-            android:id="@+id/button13"
-            android:onClick="history"
-            android:layout_alignParentTop="true" />
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="健康卡"
-            android:id="@+id/button14"
-            android:onClick="health"
             android:layout_alignParentTop="true" />
 
         <Button
