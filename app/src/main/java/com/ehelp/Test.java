@@ -20,7 +20,6 @@ import com.ehelp.receive.QuestionDetail;
 import com.ehelp.send.CountNum;
 import com.ehelp.send.SendHelp;
 import com.ehelp.send.SendQuestion;
-import com.ehelp.send.SendSOS;
 import com.ehelp.user.Myhistory;
 import com.wangjie.androidbucket.utils.ABTextUtil;
 import com.wangjie.androidbucket.utils.imageprocess.ABShape;
