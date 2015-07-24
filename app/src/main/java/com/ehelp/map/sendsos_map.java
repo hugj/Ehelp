@@ -80,8 +80,8 @@ public class sendsos_map extends Activity implements BaiduMap.OnMapClickListener
     private InfoWindow mInfoWindow;
 
     private Button button7;
-    private Vibrator vib;
     private SoundPool sp;
+    private Vibrator vib;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -316,24 +316,24 @@ public class sendsos_map extends Activity implements BaiduMap.OnMapClickListener
         return false;
     }
 
-//    @Override
-//    protected void onPause() {
-//        mMapView.onPause();
-//        super.onPause();
-//    }
-//
-//    @Override
-//    protected void onResume() {
-//        mMapView.onResume();
-//        super.onResume();
-//    }
-//
-//    @Override
-//    protected void onDestroy() {
-//        mSearch.destroy();
-//        mMapView.onDestroy();
-//        super.onDestroy();
-//    }
+    @Override
+    protected void onPause() {
+        mMapView.onPause();
+        super.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        mMapView.onResume();
+        super.onResume();
+    }
+
+    @Override
+    protected void onDestroy() {
+        mSearch.destroy();
+        mMapView.onDestroy();
+        super.onDestroy();
+    }
 
 
     public class MyLocationListenner implements BDLocationListener {
