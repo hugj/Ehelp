@@ -61,6 +61,7 @@ public class ContactlistActivity extends Activity {
         names.add("jack");
         names.add("jackson");
         names.add("0小明");
+        names.add(" ");
         adapter = new PinyinAdapter(this,names);
         eListView.setAdapter(adapter);
 
