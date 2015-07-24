@@ -244,6 +244,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.ehelp.Test" />
         </activity>
+        <activity
+            android:name=".send.CountNum"
+            android:label="@string/title_activity_count_num"
+            android:parentActivityName=".Test" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.ehelp.Test" />
+        </activity>
     </application>
 
 </manifest>

@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="button">#00cc33</color>
-    <color name="colorPrimary">#009933</color>
-    <color name="colorPrimaryDark">#006633</color>
+    <color name="button">#6633B5E5</color>
+    <color name="colorPrimary">#4876FF</color>
+    <color name="colorPrimaryDark">#3A5FCD</color>
+    <color name="background_tab_pressed">#6633B5E5</color>
     <color name="background">#ff4f5f5f</color>
     <!--<color name="main_color">#ff9a00</color>-->
     <color name="main_color">#ffff8c00</color>
