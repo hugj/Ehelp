@@ -95,7 +95,8 @@
                 android:gravity="center_vertical"
                 android:clickable="true"
                 android:background="@drawable/preference_first_item"
-                android:id="@+id/user_page">
+                android:id="@+id/user_page"
+                android:onClick="user_page_click">
                 <RelativeLayout android:layout_width="55dp"
                     android:layout_height="60dp" android:id="@+id/user_page1">
                     <ImageView android:id="@+id/user_page2" android:layout_width="50dp"
@@ -136,7 +137,7 @@
                     android:layout_height="wrap_content" android:layout_toRightOf="@id/user_friends1"
                     android:textColor="#000" android:layout_centerVertical="true"
                     android:textSize="20sp" android:id="@+id/user_friends3"
-                    android:text="@string/mes_username"/>
+                    android:text="@string/mes_friends"/>
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -251,7 +252,7 @@
                     android:layout_height="wrap_content" android:layout_toRightOf="@id/user_about1"
                     android:textColor="#000" android:layout_centerVertical="true"
                     android:textSize="20sp" android:id="@+id/user_about3"
-                    android:text="@string/mes_username"/>
+                    android:text="@string/mes_about"/>
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

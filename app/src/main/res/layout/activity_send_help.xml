@@ -24,7 +24,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_weight="1"
-                android:maxLength="40"
                 android:hint="求助事件"/>
 
             <EditText
@@ -32,12 +31,28 @@
                 android:layout_width="match_parent"
                 android:layout_height="228dp"
                 android:layout_weight="1"
-                android:maxLength="40"
                 android:hint="事件描述"
                 android:inputType="textMultiLine"
                 android:gravity="left|top"
                 android:minLines="6" />
 
+            <EditText
+                android:id="@+id/edit_message5"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_weight="1"
+                android:ems="10"
+                android:singleLine="true"
+                android:numeric="integer"
+                android:hint="所需人数"/>
+
+            <EditText
+                android:id="@+id/edit_message6"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_weight="1"
+                android:ems="10"
+                android:hint="帮助时间"/>
 
             <EditText
                 android:id="@+id/edit_message4"
@@ -45,6 +60,8 @@
                 android:layout_height="60dp"
                 android:layout_weight="1"
                 android:ems="10"
+                android:singleLine="true"
+                android:numeric="integer"
                 android:hint="悬赏爱心币"/>
 
             <RelativeLayout

@@ -36,7 +36,7 @@
     <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
 
-    <!--允许应用读取低级别的系统日志文件 -->
+    <!-- 允许应用读取低级别的系统日志文件 -->
     <uses-permission android:name="android.permission.READ_LOGS" />
 
     <application
@@ -182,13 +182,12 @@
             android:name=".user.pinyin.messageActivity"
             android:label="@string/title_activity_message" >
         </activity>
-
         <activity
             android:name=".map.BMapApiDemoMain"
+            android:configChanges="orientation|keyboardHidden"
             android:label="@string/title_activity_bmap_api_demo_main"
             android:parentActivityName=".Test"
-            android:configChanges="orientation|keyboardHidden"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.ehelp.Test" />
@@ -199,6 +198,31 @@
             android:enabled="true"
             android:process=":remote" >
         </service>
+
+        <activity
+            android:name=".evaluate.Comment"
+            android:label="@string/title_activity_comment" >
+        </activity>
+        <activity
+            android:name=".user.Myhistory"
+            android:label="@string/title_activity_myhistory" >
+        </activity>
+        <activity
+            android:name=".user.pinyin.MessetnameActivity"
+            android:label="@string/title_activity_mesnotename" >
+        </activity>
+        <activity
+            android:name=".account.RegisterPassword"
+            android:label="@string/title_activity_register_password" >
+        </activity>
+        <activity
+            android:name=".user.pinyin.Health"
+            android:label="@string/title_activity_health" >
+        </activity>
+        <activity
+            android:name=".receive.QuestionDetail"
+            android:label="@string/title_activity_question_detail" >
+        </activity>
     </application>
 
 </manifest>
