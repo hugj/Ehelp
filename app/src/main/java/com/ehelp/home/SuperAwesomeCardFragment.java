@@ -27,14 +27,12 @@ import android.widget.FrameLayout;
 import android.widget.FrameLayout.LayoutParams;
 import android.widget.TextView;
 
-import com.ehelp.R;
-
 public class SuperAwesomeCardFragment extends Fragment {
 
     private static final String ARG_POSITION = "position";
 
     private int position;
-    private static final int[] drawables = { R.drawable.f, R.drawable.fi, R.drawable.f, R.drawable.fo};
+    //private static final int[] drawables = { R.drawable.f, R.drawable.fi, R.drawable.f, R.drawable.fo};
 
     public static SuperAwesomeCardFragment newInstance(int position) {
         SuperAwesomeCardFragment f = new SuperAwesomeCardFragment();
@@ -82,15 +80,6 @@ public class SuperAwesomeCardFragment extends Fragment {
 
         fl.addView(v);
         return fl;
-    }
-
-    /**
-     * 提供当前Fragment的主色调的Bitmap对象,供Palette解析颜色
-     *
-     * @return
-     */
-    public static int getBackgroundBitmapPosition(int selectViewPagerItem) {
-        return drawables[selectViewPagerItem];
     }
 
 }
