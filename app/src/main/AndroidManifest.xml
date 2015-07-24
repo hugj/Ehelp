@@ -211,6 +211,18 @@
             android:name=".user.pinyin.MessetnameActivity"
             android:label="@string/title_activity_mesnotename" >
         </activity>
+        <activity
+            android:name=".account.RegisterPassword"
+            android:label="@string/title_activity_register_password" >
+        </activity>
+        <activity
+            android:name=".user.pinyin.Health"
+            android:label="@string/title_activity_health" >
+        </activity>
+        <activity
+            android:name=".receive.QuestionDetail"
+            android:label="@string/title_activity_question_detail" >
+        </activity>
     </application>
 
 </manifest>

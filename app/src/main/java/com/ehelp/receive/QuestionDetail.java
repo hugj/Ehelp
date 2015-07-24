@@ -1,4 +1,4 @@
-package com.ehelp.send;
+package com.ehelp.receive;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -7,12 +7,12 @@ import android.os.StrictMode;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.ehelp.R;
-import com.ehelp.server.RequestHandler;
+import com.ehelp.send.SendHelp;
+import com.ehelp.send.SendQuestion;
+import com.ehelp.send.SendSOS;
 import com.wangjie.androidbucket.utils.ABTextUtil;
 import com.wangjie.androidbucket.utils.imageprocess.ABShape;
 import com.wangjie.androidinject.annotation.annotations.base.AILayout;
@@ -27,8 +27,8 @@ import com.wangjie.rapidfloatingactionbutton.contentimpl.labellist.RapidFloating
 import java.util.ArrayList;
 import java.util.List;
 
-@AILayout(R.layout.activity_send_question)
-public class SendQuestion extends AIActionBarActivity implements RapidFloatingActionContentLabelList.OnRapidFloatingActionContentLabelListListener {
+@AILayout(R.layout.activity_question_detail)
+public class QuestionDetail extends AIActionBarActivity implements RapidFloatingActionContentLabelList.OnRapidFloatingActionContentLabelListListener {
     @AIView(R.id.label_list_sample_rfal)
     private RapidFloatingActionLayout rfaLayout;
     @AIView(R.id.label_list_sample_rfab)
@@ -61,9 +61,8 @@ public class SendQuestion extends AIActionBarActivity implements RapidFloatingAc
 
         //set toolbar
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        mToolbar.setTitle("提问信息");
+        mToolbar.setTitle("问题详情");
         setSupportActionBar(mToolbar);
-
         //set FAB
         RapidFloatingActionContentLabelList rfaContent = new RapidFloatingActionContentLabelList(context);
         rfaContent.setOnRapidFloatingActionContentLabelListListener(this);
@@ -124,15 +123,17 @@ public class SendQuestion extends AIActionBarActivity implements RapidFloatingAc
             Intent intent = new Intent(this, SendHelp.class);
             startActivity(intent);
         } else {
-            showToastMessage("您正在提问界面");
+            Intent intent = new Intent(this, SendQuestion.class);
+            startActivity(intent);
         }
         rfabHelper.toggleContent();
     }
 
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_send_question, menu);
+        getMenuInflater().inflate(R.menu.menu_question_detail, menu);
         return true;
     }
 
@@ -149,36 +150,5 @@ public class SendQuestion extends AIActionBarActivity implements RapidFloatingAc
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    public void submit(View view) {
-        init();
-
-        // temp id useed
-        int user_id = 17;
-        Equestion = (EditText)findViewById(R.id.edit_message2);
-        Edesc_ques = (EditText)findViewById(R.id.edit_message3);
-        Eshare_money = (EditText)findViewById(R.id.edit_message4);
-        question = Equestion.getText().toString();
-        desc_ques = Edesc_ques.getText().toString();
-        share_money = Eshare_money.getText().toString();
-        if (!question.isEmpty()) {
-            String jsonStrng = "{" +
-                    "\"id\":" + user_id + ",\"type\":0," +
-                    "\"title\":\"" + question + "\"," +
-                    "\"content\":\"" + desc_ques + "\"" + "}";
-            String message = RequestHandler.sendPostRequest(
-                    "http://120.24.208.130:1501/event/add", jsonStrng);
-            if (message == "false") {
-                Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
-                        Toast.LENGTH_SHORT).show();
-                return;
-            }   else {
-                Toast.makeText(getApplicationContext(), message,  //测试
-                        Toast.LENGTH_SHORT).show();
-                // 这里是未完成的页面跳转
-                // getMenuInflater().inflate(R.menu.menu_send_help, menu);
-            }
-        }
     }
 }

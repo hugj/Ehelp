@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#eee"
+    android:id="@+id/single_mes">
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="45dp"
+        android:background="#00CC33"
+        android:gravity="center_horizontal|center_vertical"  >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="健康卡"
+            android:textSize="20sp"
+            android:textColor="#fff" />
+    </LinearLayout>
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="10dp" />
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal|center_vertical">
+        <ImageView
+            android:id="@+id/single_icon"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:background="@drawable/icon" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="14dp"
+            android:gravity="center_vertical"
+            android:clickable="true"
+            android:background="@drawable/preference_first_item"
+            android:id="@+id/allergy">
+            <TextView android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:textColor="#000"
+                android:layout_centerVertical="true"
+                android:textSize="20sp"
+                android:id="@+id/allergy1"
+                android:text="过敏反应"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/allergy2"
+                android:textColor="#000" android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/allergy1"
+                android:text="         无"/>
+
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="14dp"
+            android:gravity="center_vertical"
+            android:clickable="true"
+            android:background="@drawable/preference_item"
+            android:id="@+id/single_phone">
+            <TextView android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:textColor="#000"
+                android:layout_centerVertical="true"
+                android:textSize="20sp"
+                android:id="@+id/medicine"
+                android:text="药物使用"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/medicine2"
+                android:textColor="#000" android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/medicine"
+                android:text="         无"/>
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="14dp"
+            android:gravity="center_vertical"
+            android:clickable="true"
+            android:background="@drawable/preference_item"
+            android:id="@+id/single_file">
+            <TextView android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:textColor="#000"
+                android:layout_centerVertical="true"
+                android:textSize="20sp"
+                android:id="@+id/bloodType"
+                android:text="血型"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/bloodType2"
+                android:textColor="#000" android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/bloodType"
+                android:text="     A"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="14dp"
+            android:gravity="center_vertical"
+            android:clickable="true"
+            android:background="@drawable/preference_item"
+            android:id="@+id/single_loacl">
+            <TextView android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:textColor="#000"
+                android:layout_centerVertical="true"
+                android:textSize="20sp" android:id="@+id/mediHistory"
+                android:text="病史"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/mediHistory2"
+                android:textColor="#000" android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/mediHistory"
+                android:text="        蛇精病"/>
+
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="14dp"
+            android:gravity="center_vertical"
+            android:clickable="true"
+            android:background="@drawable/preference_item"
+            android:id="@+id/single_age">
+            <TextView android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:textColor="#000"
+                android:layout_centerVertical="true"
+                android:textSize="20sp"
+                android:id="@+id/height"
+                android:text="身高"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/height2"
+                android:textColor="#000" android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/height"
+                android:text="           250"/>
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="14dp"
+            android:gravity="center_vertical"
+            android:clickable="true"
+            android:background="@drawable/preference_last_item"
+            android:id="@+id/single_birth">
+            <TextView android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:textColor="#000"
+                android:layout_centerVertical="true"
+                android:textSize="20sp"
+                android:id="@+id/weight"
+                android:text="体重"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/weight2"
+                android:textColor="#000"
+                android:text="250"
+                android:layout_alignBottom="@+id/weight"
+                android:layout_toEndOf="@+id/weight"
+                android:layout_marginStart="69dp" />
+
+        </RelativeLayout>
+    </LinearLayout>
+</LinearLayout>
