@@ -95,8 +95,13 @@ public class PinyinAdapter extends BaseExpandableListAdapter {
             contentView.setClickable(true);
         }
         TextView textView = (TextView) contentView.findViewById(R.id.name);
-        textView.setText(assort.getFirstChar(assort.getHashList()
-                .getValueIndex(group, 0)));
+        if (assort.getFirstChar(assort.getHashList()
+                .getValueIndex(group, 0)) == "#"){
+            textView.setText("紧急联系人");
+        } else {
+            textView.setText(assort.getFirstChar(assort.getHashList()
+                    .getValueIndex(group, 0)));
+        }
           return contentView;
     }
 
