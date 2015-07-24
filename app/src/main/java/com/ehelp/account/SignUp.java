@@ -69,7 +69,7 @@ public class SignUp extends ActionBarActivity implements OnClickListener {
         requestCodeBtn.setOnClickListener(this);
         commitBtn.setOnClickListener(this);
 
-        requestCodeBtn.setBackgroundColor(Color.GREEN);
+        requestCodeBtn.setBackgroundColor(Color.argb(102, 51, 181, 229));
         commitBtn.setClickable(false);
         commitBtn.setTextColor(Color.GRAY);
 
@@ -179,9 +179,10 @@ public class SignUp extends ActionBarActivity implements OnClickListener {
                         Intent intent = new Intent(SignUp.this, RegisterPassword.class);
                         intent.putExtra(EXTRA_MESSAGE, phoneNums);
                         startActivity(intent);
+                        SignUp.this.finish();
                     } else if (event == SMSSDK.EVENT_GET_VERIFICATION_CODE) {
                         commitBtn.setClickable(true);
-                        commitBtn.setBackgroundColor(Color.GREEN);
+                        commitBtn.setBackgroundColor(Color.BLUE);
                         commitBtn.setTextColor(Color.BLACK);
 
                         Toast.makeText(getApplicationContext(), "验证码已经发送",
