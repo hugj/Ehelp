@@ -8,12 +8,17 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.ehelp.account.login;
+import com.ehelp.map.recieve_help_ans_map;
+import com.ehelp.map.recievehelp_map;
+import com.ehelp.map.recievesos_map;
+import com.ehelp.map.sendhelp_map;
+import com.ehelp.map.sendsos_map;
 import com.ehelp.evaluate.Comment;
-import com.ehelp.map.BMapApiDemoMain;
 import com.ehelp.receive.QuestionDetail;
 import com.ehelp.send.SendHelp;
 import com.ehelp.send.SendQuestion;
 import com.ehelp.send.SendSOS;
+import com.ehelp.map.sendhelpcomeback_map;
 import com.ehelp.user.Myhistory;
 import com.ehelp.user.pinyin.ContactlistActivity;
 import com.ehelp.user.pinyin.Health;
@@ -158,7 +163,7 @@ public class Test extends AIActionBarActivity implements RapidFloatingActionCont
     }
 
     public void goToMap(View view) {
-        Intent intent = new Intent(this, BMapApiDemoMain.class);
+        Intent intent = new Intent(this, recievehelp_map.class);
         startActivity(intent);
     }
 
@@ -173,4 +178,33 @@ public class Test extends AIActionBarActivity implements RapidFloatingActionCont
         startActivity(intent);
     }
 
+    public void send_map1(View view) {
+
+        Intent intent = new Intent(this, recieve_help_ans_map.class);
+        startActivity(intent);
+    }
+
+    public void send_map2(View view) {
+
+        Intent intent = new Intent(this, recievesos_map.class);
+        startActivity(intent);
+    }
+
+    public void send_map3(View view) {
+
+        Intent intent = new Intent(this, sendhelp_map.class);
+        startActivity(intent);
+    }
+
+    public void send_map4(View view) {
+
+        Intent intent = new Intent(this, sendhelpcomeback_map.class);
+        startActivity(intent);
+    }
+
+    public void send_map5(View view) {
+
+        Intent intent = new Intent(this, sendsos_map.class);
+        startActivity(intent);
+    }
 }

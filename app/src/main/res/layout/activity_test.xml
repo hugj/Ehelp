@@ -9,7 +9,8 @@
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:id="@+id/linearLayout2">
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -26,13 +27,6 @@
             android:onClick="ContactList"
             android:layout_alignParentTop="true" />
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="地图"
-            android:id="@+id/button11"
-            android:onClick="goToMap"
-            android:layout_alignParentTop="true" />
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -64,6 +58,49 @@
             android:onClick="ques"
             android:layout_alignParentTop="true" />
 
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="send_map1"
+            android:text="接受求助信息以及回答"
+            android:id="@+id/button4" />
+
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="send_map2"
+            android:text="接受求救信息"
+            android:id="@+id/button5" />
+
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="send_map3"
+            android:text="发送求助"
+            android:id="@+id/button9" />
+
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="send_map4"
+            android:text="发送求助之后返回地图界面"
+            android:id="@+id/button7" />
+
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="send_map5"
+            android:text="发送求救"
+            android:id="@+id/button8"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/linearLayout2" />
+
+
     </LinearLayout>
 
     <com.wangjie.rapidfloatingactionbutton.RapidFloatingActionLayout
@@ -73,7 +110,8 @@
         android:layout_height="match_parent"
         rfal:rfal_frame_color="#ffffff"
         rfal:rfal_frame_alpha="0.7"
-        >
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true">
 
         <com.wangjie.rapidfloatingactionbutton.RapidFloatingActionButton
             xmlns:rfab="http://schemas.android.com/apk/res-auto"

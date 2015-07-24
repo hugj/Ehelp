@@ -44,6 +44,10 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
+        <meta-data
+            android:name="com.baidu.lbsapi.API_KEY"
+            android:value="hIOmFOzyRNVo5W7H75h5vmfo" />
+
         <activity
             android:name=".account.login"
             android:label="@string/app_name" >
@@ -182,8 +186,9 @@
             android:name=".user.pinyin.messageActivity"
             android:label="@string/title_activity_message" >
         </activity>
+
         <activity
-            android:name=".map.BMapApiDemoMain"
+            android:name=".map.recievehelp_map"
             android:configChanges="orientation|keyboardHidden"
             android:label="@string/title_activity_bmap_api_demo_main"
             android:parentActivityName=".Test"
@@ -222,6 +227,27 @@
         <activity
             android:name=".receive.QuestionDetail"
             android:label="@string/title_activity_question_detail" >
+        </activity>
+
+        <activity
+            android:name=".map.sendhelp_map"
+            android:label="@string/title_activity_sendhelp_map" >
+        </activity>
+        <activity
+            android:name=".map.sendsos_map"
+            android:label="@string/title_activity_sendsos_map" >
+        </activity>
+        <activity
+            android:name=".map.recievesos_map"
+            android:label="@string/title_activity_recievesos_map" >
+        </activity>
+        <activity
+            android:name=".map.sendhelpcomeback_map"
+            android:label="@string/title_activity_sendhelpcomeback_map" >
+        </activity>
+        <activity
+            android:name=".map.recieve_help_ans_map"
+            android:label="@string/title_activity_recieve_help_ans_map" >
         </activity>
     </application>
 

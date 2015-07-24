@@ -8,7 +8,7 @@
     <file url="file://$PROJECT_DIR$/app/libs/baidumapapi_v3_5_0.jar" charset="GBK" />
     <file url="file://$PROJECT_DIR$/app/libs/locSDK_5.2.jar" charset="GBK" />
     <file url="file://$PROJECT_DIR$/app/libs/pinyin4j-2.5.0.jar" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/com/ehelp/map/BMapApiDemoMain.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/ehelp/map/recievehelp_map.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/src/main/java/com/ehelp/user/sort/HashList.java" charset="GBK" />
     <file url="file://$PROJECT_DIR$/app/src/main/java/com/ehelp/user/sort/KeySort.java" charset="GBK" />
     <file url="file://$PROJECT_DIR$/app/src/main/jniLibs/arm64-v8a" charset="GBK" />
@@ -20,7 +20,7 @@
     <file url="file://$PROJECT_DIR$/app/src/main/res/drawable-hdpi" charset="GBK" />
     <file url="file://$PROJECT_DIR$/app/src/main/res/drawable-ldpi" charset="GBK" />
     <file url="file://$PROJECT_DIR$/app/src/main/res/drawable-mdpi" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_bmap_api_demo_main.xml" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_recievehelp_map.xml" charset="GBK" />
     <file url="file://$PROJECT_DIR$/app/src/main/res/menu/menu_bmap_api_demo_main.xml" charset="GBK" />
     <file url="file://$PROJECT_DIR$/app/src/main/res/raw" charset="GBK" />
     <file url="file://$PROJECT_DIR$/library" charset="GBK" />

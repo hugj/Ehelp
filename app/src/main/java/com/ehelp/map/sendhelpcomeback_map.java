@@ -43,13 +43,11 @@ import com.baidu.mapapi.search.route.WalkingRoutePlanOption;
 import com.baidu.mapapi.search.route.WalkingRouteResult;
 import com.ehelp.R;
 
-/**
- * 此demo用来展示如何进行驾车、步行、公交路线搜索并在地图使用RouteOverlay、TransitOverlay绘制
- * 同时展示如何进行节点浏览并弹出泡泡
- */
-public class BMapApiDemoMain extends Activity implements BaiduMap.OnMapClickListener,
+
+public class sendhelpcomeback_map extends Activity implements BaiduMap.OnMapClickListener,
         OnGetRoutePlanResultListener {
 
+    ImageView Image;
     //浏览路线节点相关
     RouteLine route = null;
     OverlayManager routeOverlay = null;
@@ -78,7 +76,7 @@ public class BMapApiDemoMain extends Activity implements BaiduMap.OnMapClickList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         SDKInitializer.initialize(getApplicationContext());
-        setContentView(R.layout.activity_bmap_api_demo_main);
+        setContentView(R.layout.activity_sendhelpcomeback_map);
         CharSequence titleLable = "路线规划";
         setTitle(titleLable);
         // 初始化地图
@@ -213,7 +211,7 @@ public class BMapApiDemoMain extends Activity implements BaiduMap.OnMapClickList
     @Override
     public void onGetWalkingRouteResult(WalkingRouteResult result) {
         if (result == null || result.error != SearchResult.ERRORNO.NO_ERROR) {
-            Toast.makeText(BMapApiDemoMain.this, "抱歉，未找到结果", Toast.LENGTH_SHORT).show();
+            Toast.makeText(sendhelpcomeback_map.this, "抱歉，未找到结果", Toast.LENGTH_SHORT).show();
         }
         if (result.error == SearchResult.ERRORNO.AMBIGUOUS_ROURE_ADDR) {
             //起终点或途经点地址有岐义，通过以下接口获取建议查询信息
@@ -238,7 +236,7 @@ public class BMapApiDemoMain extends Activity implements BaiduMap.OnMapClickList
     @Override
     public void onGetDrivingRouteResult(DrivingRouteResult result) {
         if (result == null || result.error != SearchResult.ERRORNO.NO_ERROR) {
-            Toast.makeText(BMapApiDemoMain.this, "抱歉，未找到结果", Toast.LENGTH_SHORT).show();
+            Toast.makeText(sendhelpcomeback_map.this, "抱歉，未找到结果", Toast.LENGTH_SHORT).show();
         }
         if (result.error == SearchResult.ERRORNO.AMBIGUOUS_ROURE_ADDR) {
             //起终点或途经点地址有岐义，通过以下接口获取建议查询信息
