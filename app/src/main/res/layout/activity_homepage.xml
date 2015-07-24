@@ -53,7 +53,8 @@
                 android:id="@+id/single_name2"
                 android:textColor="#000" android:layout_centerVertical="true"
                 android:layout_toRightOf="@id/single_name1"
-                android:text="         abcdefg"/>
+                android:layout_marginLeft="30dp"
+                android:text="abcdefg"/>
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -83,7 +84,8 @@
                 android:id="@+id/single_phone2"
                 android:textColor="#000" android:layout_centerVertical="true"
                 android:layout_toRightOf="@id/single_phone1"
-                android:text="         12345678"/>
+                android:layout_marginLeft="30dp"
+                android:text="12345678"/>
         </RelativeLayout>
         <RelativeLayout
             android:layout_width="fill_parent"
@@ -104,7 +106,8 @@
                 android:id="@+id/single_file2"
                 android:textColor="#000" android:layout_centerVertical="true"
                 android:layout_toRightOf="@id/single_file1"
-                android:text="             女"/>
+                android:layout_marginLeft="50dp"
+                android:text="女"/>
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -134,7 +137,8 @@
                 android:id="@+id/single_loacl2"
                 android:textColor="#000" android:layout_centerVertical="true"
                 android:layout_toRightOf="@id/single_loacl1"
-                android:text="         广州"/>
+                android:layout_marginLeft="30dp"
+                android:text="广州"/>
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -164,7 +168,8 @@
                 android:id="@+id/single_age2"
                 android:textColor="#000" android:layout_centerVertical="true"
                 android:layout_toRightOf="@id/single_age1"
-                android:text="           18"/>
+                android:layout_marginLeft="50dp"
+                android:text="18"/>
         </RelativeLayout>
         <RelativeLayout
             android:layout_width="fill_parent"
@@ -185,7 +190,9 @@
                 android:id="@+id/single_birth2"
                 android:textColor="#000"
                 android:layout_centerVertical="true"
-                android:layout_toRightOf="@id/single_birth1" />
+                android:layout_toRightOf="@id/single_birth1"
+                android:layout_marginLeft="50dp"
+                android:text="2000-11-28"/>
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

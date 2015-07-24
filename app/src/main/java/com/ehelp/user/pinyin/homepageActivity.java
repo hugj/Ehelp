@@ -51,6 +51,9 @@ public class homepageActivity extends Activity {
                         .setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
+//                                TextView Set_name = (TextView)findViewById(R.id.single_name2);
+//                                EditText Get_edittext = (EditText)findViewById(R.id.edit_username4);
+//                                Set_name.setText(Get_edittext.getText().toString());
                                 Toast.makeText(getApplicationContext(), "set name sucessfully",
                                         Toast.LENGTH_SHORT).show();
                                 EditnameDialog.dismiss();
@@ -64,6 +67,7 @@ public class homepageActivity extends Activity {
         });
         //选择性别
         RelativeLayout Sex_choose = (RelativeLayout)findViewById(R.id.single_file);
+        final TextView Gender_choose = (TextView)findViewById(R.id.single_file2);
         Sex_choose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -72,9 +76,14 @@ public class homepageActivity extends Activity {
                         new String[]{"男", "女"}, 0,
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
+                                if (which == 1) {
+                                    Gender_choose.setText(R.string.mes_user2);
+                                } else {
+                                    Gender_choose.setText(R.string.mes_user1);
+                                }
                                 dialog.dismiss();
                             }
-                        }).setNegativeButton("取消", null).show();
+                        }).show();
             }
         });
         //编辑所在地名

@@ -40,8 +40,8 @@ public class ContactlistActivity extends Activity {
         assortView = (AssortView) findViewById(R.id.assort);
         names=new ArrayList<String>();
         names.add("lxz");
+        names.add("ming");
         names.add("Ada");
-        names.add("ܽming");
         names.add("nini");
         names.add("dada");
         names.add("jingjing");
@@ -53,12 +53,14 @@ public class ContactlistActivity extends Activity {
         names.add("nih");
         names.add("Java");
         names.add("gen");
+        names.add("小米");
         names.add("qianqian");
         names.add("有道");
         names.add("明明");
         names.add("yes");
         names.add("jack");
         names.add("jackson");
+        names.add("0小明");
         adapter = new PinyinAdapter(this,names);
         eListView.setAdapter(adapter);
 
@@ -66,7 +68,6 @@ public class ContactlistActivity extends Activity {
             eListView.expandGroup(i);
         }
         assortView.setOnTouchAssortListener(new AssortView.OnTouchAssortListener() {
-
             View layoutView = LayoutInflater.from(ContactlistActivity.this)
                     .inflate(R.layout.alert_dialog_menu_layout, null);
             TextView text = (TextView) layoutView.findViewById(R.id.content);
@@ -76,13 +77,12 @@ public class ContactlistActivity extends Activity {
                 int index = adapter.getAssort().getHashList().indexOfKey(str);
                 if (index != -1) {
                     eListView.setSelectedGroup(index);
-                    ;
                 }
                 if (popupWindow != null) {
                     text.setText(str);
                 } else {
                     popupWindow = new PopupWindow(layoutView,
-                            80, 80, false);
+                            120, 120, false);
                     popupWindow.showAtLocation(getWindow().getDecorView(),
                             Gravity.CENTER, 0, 0);
                 }
@@ -96,8 +96,6 @@ public class ContactlistActivity extends Activity {
             }
         });
     }
-
-
     @Override
     protected void onResume() {
         // TODO Auto-generated method stub
