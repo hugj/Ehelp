@@ -6,6 +6,9 @@
         android:minSdkVersion="14"
         android:targetSdkVersion="19" />
 
+    <!-- 手机振动权限 -->
+    <uses-permission android:name="android.permission.VIBRATE" />
+
     <!-- Required 自定义用来收发消息的相关权限 -->
     <permission
         android:name="com.ehelp.permission.JPUSH_MESSAGE"
@@ -139,7 +142,7 @@
             android:value="developer-default" />
         <meta-data
             android:name="JPUSH_APPKEY"
-            android:value="newappkey" /> <!-- </>值来自开发者平台取得的AppKey -->
+            android:value="8723d16030ca86d530b35e22" /> <!-- </>值来自开发者平台取得的AppKey -->
 
         <activity
             android:name=".send.SendQuestion"
