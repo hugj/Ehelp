@@ -1,106 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
     android:orientation="vertical" >
-    <include layout="@layout/toolbar" />
-
 
     <RelativeLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" >
-
-        <com.baidu.mapapi.map.MapView
-            android:id="@+id/bmapView"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:clickable="true" />
-
-        <LinearLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_toEndOf="@+id/button"
-            android:layout_alignStart="@+id/button2"
-            android:id="@+id/linearLayout">
-
-            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:orientation="horizontal"
-                android:layout_toEndOf="@+id/button"
-                android:layout_alignStart="@+id/button2" >
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-
-        <Button
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="结束求助"
-            android:id="@+id/button"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentStart="true" />
-
-        <Button
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="继续求助"
-            android:id="@+id/button2"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true" />
-
-        <Button
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="取消求助"
-            android:id="@+id/button3"
-            android:layout_alignParentBottom="true"
-            android:layout_alignEnd="@+id/drive" />
+        android:layout_width="fill_parent"
+        android:layout_height="50dip"
+        android:orientation="horizontal"
+        android:id="@+id/relativeLayout">
 
         <EditText
             android:id="@+id/city"
-            android:layout_width="fill_parent"
-            android:layout_height="47dp"
-            android:ems="10"
-            android:text=""
-            android:background="#003e4245"
-            android:layout_alignParentTop="true"
-            android:layout_toStartOf="@+id/linearLayout" />
-
-        <EditText
-            android:id="@+id/location"
-            android:layout_width="fill_parent"
-            android:layout_height="47dp"
-            android:ems="10"
-            android:hint="请输入目标地址"
-            android:background="#8d3e4245"
-            android:layout_alignParentTop="true"
-            android:layout_toStartOf="@+id/drive"
-            android:layout_alignEnd="@+id/linearLayout"
-            android:textColor="#ffffffff">
-
-            <requestFocus />
-        </EditText>
-
-        <Button
-            android:id="@+id/drive"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="SearchButtonProcess"
-            android:text="搜索"
-            android:layout_below="@+id/linearLayout"
-            android:layout_alignParentEnd="true"
-            android:background="#003e4245"
-            android:layout_alignBottom="@+id/location"
-            android:textColor="#ffffffff" />
+            android:layout_height="match_parent"
+            android:text="" />
+
+        <AutoCompleteTextView
+            android:id="@+id/searchkey"
+            android:layout_width="fill_parent"
+            android:layout_height="52sp"
+            android:layout_weight="0.88"
+            android:hint="这里输入信息" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="50dip"
+        android:orientation="horizontal" >
 
     </RelativeLayout>
-</LinearLayout>
+
+    <fragment
+        android:id="@+id/map"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        class="com.baidu.mapapi.map.SupportMapFragment"
+        android:layout_below="@+id/relativeLayout"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:id="@+id/search"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="12"
+        android:onClick="searchButtonProcess"
+        android:padding="10dip"
+        android:text="搜索"
+        android:background="#003e4245"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="结束求助"
+        android:id="@+id/button"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="取消求助"
+        android:id="@+id/button3"
+        android:layout_alignParentBottom="true"
+        android:layout_alignEnd="@+id/search" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="继续求助"
+        android:id="@+id/button4"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
+
+</RelativeLayout>

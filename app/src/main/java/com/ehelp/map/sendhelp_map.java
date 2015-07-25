@@ -1,13 +1,12 @@
 package com.ehelp.map;
 
-import android.app.ActionBar;
-import android.app.Activity;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.support.v4.app.FragmentActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -15,131 +14,216 @@ import android.widget.ZoomControls;
 
 import com.baidu.mapapi.SDKInitializer;
 import com.baidu.mapapi.map.BaiduMap;
-import com.baidu.mapapi.map.BitmapDescriptorFactory;
-import com.baidu.mapapi.map.MapStatusUpdateFactory;
 import com.baidu.mapapi.map.MapView;
-import com.baidu.mapapi.map.MarkerOptions;
+import com.baidu.mapapi.map.SupportMapFragment;
+import com.baidu.mapapi.overlayutil.PoiOverlay;
+import com.baidu.mapapi.search.core.CityInfo;
+import com.baidu.mapapi.search.core.PoiInfo;
 import com.baidu.mapapi.search.core.SearchResult;
-import com.baidu.mapapi.search.geocode.GeoCodeOption;
-import com.baidu.mapapi.search.geocode.GeoCodeResult;
-import com.baidu.mapapi.search.geocode.GeoCoder;
-import com.baidu.mapapi.search.geocode.OnGetGeoCoderResultListener;
-import com.baidu.mapapi.search.geocode.ReverseGeoCodeResult;
+import com.baidu.mapapi.search.poi.OnGetPoiSearchResultListener;
+import com.baidu.mapapi.search.poi.PoiCitySearchOption;
+import com.baidu.mapapi.search.poi.PoiDetailResult;
+import com.baidu.mapapi.search.poi.PoiDetailSearchOption;
+import com.baidu.mapapi.search.poi.PoiResult;
+import com.baidu.mapapi.search.poi.PoiSearch;
+import com.baidu.mapapi.search.sug.OnGetSuggestionResultListener;
+import com.baidu.mapapi.search.sug.SuggestionResult;
+import com.baidu.mapapi.search.sug.SuggestionSearch;
+import com.baidu.mapapi.search.sug.SuggestionSearchOption;
 import com.ehelp.R;
 
 /**
- * 此demo用来展示如何进行地理编码搜索（用地址检索坐标）、反地理编码搜索（用坐标检索地址）
+ * 演示poi搜索功能
  */
-public class sendhelp_map extends ActionBarActivity implements
-        OnGetGeoCoderResultListener {
-    GeoCoder mSearch = null; // 搜索模块，也可去掉地图模块独立使用
-    BaiduMap mBaiduMap = null;
+public class sendhelp_map extends FragmentActivity implements
+        OnGetPoiSearchResultListener, OnGetSuggestionResultListener {
+
+    private PoiSearch mPoiSearch = null;
+    private SuggestionSearch mSuggestionSearch = null;
+    private BaiduMap mBaiduMap = null;
     MapView mMapView = null;
-    //TOOLbar
-    private Toolbar mToolbar;
+    /**
+     * 搜索关键字输入窗口
+     */
+    private AutoCompleteTextView keyWorldsView = null;
+    private ArrayAdapter<String> sugAdapter = null;
+    private int load_Index = 0;
 
-    protected void onCreate(Bundle savedInstanceState) {
-
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
         SDKInitializer.initialize(getApplicationContext());
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sendhelp_map);
-        CharSequence titleLable = "发布求助";
-        setTitle(titleLable);
+        // 初始化搜索模块，注册搜索事件监听
+        mPoiSearch = PoiSearch.newInstance();
+        mPoiSearch.setOnGetPoiSearchResultListener(this);
+        mSuggestionSearch = SuggestionSearch.newInstance();
+        mSuggestionSearch.setOnGetSuggestionResultListener(this);
+        keyWorldsView = (AutoCompleteTextView) findViewById(R.id.searchkey);
+        sugAdapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_dropdown_item_1line);
+        keyWorldsView.setAdapter(sugAdapter);
+        mBaiduMap = ((SupportMapFragment) (getSupportFragmentManager()
+                .findFragmentById(R.id.map))).getBaiduMap();
 
-        //set toolbar
-        mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        mToolbar.setTitle("发送求助");
-        setSupportActionBar(mToolbar);
-
-        // 地图初始化
-        mMapView = (MapView) findViewById(R.id.bmapView);
-        mBaiduMap = mMapView.getMap();
-
-        // 初始化搜索模块，注册事件监听
-        mSearch = GeoCoder.newInstance();
-        mSearch.setOnGetGeoCodeResultListener(this);
-
+        /**
+         * 当输入关键字变化时，动态更新建议列表
+         */
+        mMapView = (MapView) findViewById(R.id.map);
         int count = mMapView.getChildCount();
-        //init();
+        // 去除无关图标
         for (int i = 0; i < count; i++) {
             View child = mMapView.getChildAt(i);
             if (child instanceof ZoomControls || child instanceof ImageView) {
                 child.setVisibility(View.INVISIBLE);
             }
         }
-    }
+        keyWorldsView.addTextChangedListener(new TextWatcher() {
 
-    /**
-     * 发起搜索
-     *
-     * @param v
-     */
-    public void SearchButtonProcess(View v) {
-        EditText editCity = (EditText) findViewById(R.id.city);
-        EditText editGeoCodeKey = (EditText) findViewById(R.id.location);
-        // Geo搜索
-        mSearch.geocode(new GeoCodeOption().city(
-                editCity.getText().toString()).address(
-                editGeoCodeKey.getText().toString()));
+            @Override
+            public void afterTextChanged(Editable arg0) {
+
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence arg0, int arg1,
+                                          int arg2, int arg3) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence cs, int arg1, int arg2,
+                                      int arg3) {
+                if (cs.length() <= 0) {
+                    return;
+                }
+                String city = ((EditText) findViewById(R.id.city)).getText()
+                        .toString();
+                /**
+                 * 使用建议搜索服务获取建议列表，结果在onSuggestionResult()中更新
+                 */
+                mSuggestionSearch
+                        .requestSuggestion((new SuggestionSearchOption())
+                                .keyword(cs.toString()).city(city));
+            }
+        });
 
     }
 
     @Override
     protected void onPause() {
-        mMapView.onPause();
         super.onPause();
     }
 
     @Override
     protected void onResume() {
-        mMapView.onResume();
         super.onResume();
     }
 
     @Override
     protected void onDestroy() {
-        mMapView.onDestroy();
-        mSearch.destroy();
+        mPoiSearch.destroy();
+        mSuggestionSearch.destroy();
         super.onDestroy();
     }
 
     @Override
-    public void onGetGeoCodeResult(GeoCodeResult result) {
-        if (result == null || result.error != SearchResult.ERRORNO.NO_ERROR) {
-            Toast.makeText(sendhelp_map.this, "抱歉，未能找到结果", Toast.LENGTH_LONG)
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+    }
+
+    /**
+     * 影响搜索按钮点击事件
+     *
+     * @param v
+     */
+    public void searchButtonProcess(View v) {
+        EditText editCity = (EditText) findViewById(R.id.city);
+        EditText editSearchKey = (EditText) findViewById(R.id.searchkey);
+        mPoiSearch.searchInCity((new PoiCitySearchOption())
+                .city(editCity.getText().toString())
+                .keyword(editSearchKey.getText().toString())
+                .pageNum(load_Index));
+    }
+
+    public void goToNextPage(View v) {
+        load_Index++;
+        searchButtonProcess(null);
+    }
+
+    public void onGetPoiResult(PoiResult result) {
+        if (result == null
+                || result.error == SearchResult.ERRORNO.RESULT_NOT_FOUND) {
+            Toast.makeText(sendhelp_map.this, "未找到结果", Toast.LENGTH_LONG)
                     .show();
             return;
         }
-        mBaiduMap.clear();
-        mBaiduMap.addOverlay(new MarkerOptions().position(result.getLocation())
-                .icon(BitmapDescriptorFactory
-                        .fromResource(R.drawable.icon_gcoding)));
-        mBaiduMap.setMapStatus(MapStatusUpdateFactory.newLatLng(result
-                .getLocation()));
+        if (result.error == SearchResult.ERRORNO.NO_ERROR) {
+            mBaiduMap.clear();
+            PoiOverlay overlay = new MyPoiOverlay(mBaiduMap);
+            mBaiduMap.setOnMarkerClickListener(overlay);
+            overlay.setData(result);
+            overlay.addToMap();
+            overlay.zoomToSpan();
+            return;
+        }
+        if (result.error == SearchResult.ERRORNO.AMBIGUOUS_KEYWORD) {
+
+            // 当输入关键字在本市没有找到，但在其他城市找到时，返回包含该关键字信息的城市列表
+            String strInfo = "在";
+            for (CityInfo cityInfo : result.getSuggestCityList()) {
+                strInfo += cityInfo.city;
+                strInfo += ",";
+            }
+            strInfo += "找到结果";
+            Toast.makeText(sendhelp_map.this, strInfo, Toast.LENGTH_LONG)
+                    .show();
+        }
+    }
+
+    public void onGetPoiDetailResult(PoiDetailResult result) {
+        if (result.error != SearchResult.ERRORNO.NO_ERROR) {
+            Toast.makeText(sendhelp_map.this, "抱歉，未找到结果", Toast.LENGTH_SHORT)
+                    .show();
+        } else {
+            Toast.makeText(sendhelp_map.this, result.getName() + ": " + result.getAddress(), Toast.LENGTH_SHORT)
+                    .show();
+        }
     }
 
     @Override
-    public void onGetReverseGeoCodeResult(ReverseGeoCodeResult result) {}
+    public void onGetSuggestionResult(SuggestionResult res) {
+        if (res == null || res.getAllSuggestions() == null) {
+            return;
+        }
+        sugAdapter.clear();
+        for (SuggestionResult.SuggestionInfo info : res.getAllSuggestions()) {
+            if (info.key != null)
+                sugAdapter.add(info.key);
+        }
+        sugAdapter.notifyDataSetChanged();
+    }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+    private class MyPoiOverlay extends PoiOverlay {
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        public MyPoiOverlay(BaiduMap baiduMap) {
+            super(baiduMap);
         }
 
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_send_help, menu);
-        return true;
+        @Override
+        public boolean onPoiClick(int index) {
+            super.onPoiClick(index);
+            PoiInfo poi = getPoiResult().getAllPoi().get(index);
+            // if (poi.hasCaterDetails) {
+            mPoiSearch.searchPoiDetail((new PoiDetailSearchOption())
+                    .poiUid(poi.uid));
+            // }
+            return true;
+        }
     }
 }
