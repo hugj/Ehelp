@@ -7,7 +7,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
@@ -155,12 +154,12 @@ public class Home extends AIActionBarActivity implements RapidFloatingActionCont
                 R.string.drawer_close);
         mDrawerToggle.syncState();
         mDrawerLayout.setDrawerListener(mDrawerToggle);
-
+///*
         mPagerSlidingTabStrip = (PagerSlidingTabStrip) findViewById(R.id.tabs);
         mViewPager = (ViewPager) findViewById(R.id.pager);
         mViewPager.setAdapter(new MyPagerAdapter(getSupportFragmentManager()));
         mPagerSlidingTabStrip.setViewPager(mViewPager);
-        mPagerSlidingTabStrip.setOnPageChangeListener(new OnPageChangeListener() {
+        mPagerSlidingTabStrip.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 
             @Override
             public void onPageSelected(int arg0) {
@@ -175,7 +174,7 @@ public class Home extends AIActionBarActivity implements RapidFloatingActionCont
             public void onPageScrollStateChanged(int arg0) {
             }
         });
-        initTabsValue();
+        initTabsValue();//*/
     }
 
     public void ContactList(View view) {
