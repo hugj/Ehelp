@@ -1,7 +1,10 @@
 package com.ehelp.map;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -14,6 +17,7 @@ import android.widget.ZoomControls;
 
 import com.baidu.mapapi.SDKInitializer;
 import com.baidu.mapapi.map.BaiduMap;
+import com.baidu.mapapi.map.MapFragment;
 import com.baidu.mapapi.map.MapView;
 import com.baidu.mapapi.map.SupportMapFragment;
 import com.baidu.mapapi.overlayutil.PoiOverlay;
@@ -35,7 +39,7 @@ import com.ehelp.R;
 /**
  * 演示poi搜索功能
  */
-public class sendhelp_map extends FragmentActivity implements
+public class sendhelp_map extends ActionBarActivity implements
         OnGetPoiSearchResultListener, OnGetSuggestionResultListener {
 
     private PoiSearch mPoiSearch = null;
@@ -49,11 +53,18 @@ public class sendhelp_map extends FragmentActivity implements
     private ArrayAdapter<String> sugAdapter = null;
     private int load_Index = 0;
 
+    private Toolbar mToolbar;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         SDKInitializer.initialize(getApplicationContext());
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sendhelp_map);
+
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        mToolbar.setTitle("确定求助地点");
+        setSupportActionBar(mToolbar);
+
         // 初始化搜索模块，注册搜索事件监听
         mPoiSearch = PoiSearch.newInstance();
         mPoiSearch.setOnGetPoiSearchResultListener(this);
@@ -65,6 +76,8 @@ public class sendhelp_map extends FragmentActivity implements
         keyWorldsView.setAdapter(sugAdapter);
         mBaiduMap = ((SupportMapFragment) (getSupportFragmentManager()
                 .findFragmentById(R.id.map))).getBaiduMap();
+//        mBaiduMap = ((MapFragment) (getFragmentManager()
+//                .findById(R.id.map))).getBaiduMap();
 
         /**
          * 当输入关键字变化时，动态更新建议列表

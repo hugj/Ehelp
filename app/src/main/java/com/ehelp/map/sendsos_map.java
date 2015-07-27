@@ -333,6 +333,7 @@ public class sendsos_map extends Activity implements BaiduMap.OnMapClickListener
         mSearch.destroy();
         mMapView.onDestroy();
         super.onDestroy();
+        vib.cancel(); // 退出该页面则关闭震动提示
     }
 
 
