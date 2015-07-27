@@ -162,5 +162,29 @@ public class SuperAwesomeCardFragment extends Fragment {
         }
     }
 
+    public void onPause() {
+        //mMapView.onPause();
+        super.onPause();
+    }
+
+    @Override
+    public void onResume() {
+        //mMapView.onResume();
+        super.onResume();
+    }
+
+    @Override
+    public void onDestroy() {
+        // 退出时销毁定位
+        if (mMapView != null) {
+            mLocClient.stop();
+            // 关闭定位图层
+            mBaiduMap.setMyLocationEnabled(false);
+            mMapView.onDestroy();
+            mMapView = null;
+        }
+        super.onDestroy();
+    }
+
 }
 
