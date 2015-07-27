@@ -16,6 +16,7 @@
 
 package com.ehelp.home;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.TypedValue;
@@ -23,9 +24,12 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.FrameLayout;
 import android.widget.FrameLayout.LayoutParams;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.ZoomControls;
 
@@ -41,6 +45,7 @@ import com.baidu.mapapi.map.MapView;
 import com.baidu.mapapi.map.MyLocationConfiguration;
 import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.model.LatLng;
+import com.ehelp.receive.QuestionDetail;
 
 public class SuperAwesomeCardFragment extends Fragment {
     // 定位相关
@@ -124,8 +129,20 @@ public class SuperAwesomeCardFragment extends Fragment {
             v.setText("谁来帮帮我");
             fl.addView(v);
         } else {
-            v.setText("???");
-            fl.addView(v);
+            ListView queList = new ListView(getActivity());
+            queList.setLayoutParams(new LinearLayout.LayoutParams(-1, -1));
+            HomeAdapter que = new HomeAdapter(getActivity());
+            queList.setAdapter(que);
+            fl.addView(queList);
+            //绑定监听
+            queList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                public void onItemClick(AdapterView<?> arg0, View arg1, int index, long arg3) {
+                    if (index == 0) {
+                        Intent intent = new Intent(getActivity(), QuestionDetail.class);
+                        startActivity(intent);
+                    }
+                }
+            });
         }
         return fl;
     }
