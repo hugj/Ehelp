@@ -373,6 +373,7 @@ public class sendsos_map extends ActionBarActivity implements BaiduMap.OnMapClic
         mMapView.onDestroy();
         this.stopvands();
         super.onDestroy();
+        vib.cancel(); // 退出该页面则关闭震动提示
     }
 
 

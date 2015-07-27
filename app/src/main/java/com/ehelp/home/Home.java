@@ -109,7 +109,19 @@ public class Home extends AIActionBarActivity implements RapidFloatingActionCont
     }
     @Override
     public void onRFACItemLabelClick(int position, RFACLabelItem item) {
-        showToastMessage("clicked label: " + position);
+//        showToastMessage("clicked label: " + position);
+//        rfabHelper.toggleContent();
+        if (position == 0) {
+            Intent intent = new Intent(this, SendSOS.class);
+            startActivity(intent);
+        } else
+        if (position == 1) {
+            Intent intent = new Intent(this, SendHelp.class);
+            startActivity(intent);
+        } else {
+            Intent intent = new Intent(this, SendQuestion.class);
+            startActivity(intent);
+        }
         rfabHelper.toggleContent();
     }
 
@@ -131,9 +143,8 @@ public class Home extends AIActionBarActivity implements RapidFloatingActionCont
 
     private void initViews() {
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        // toolbar.setLogo(R.drawable.ic_launcher);
-        mToolbar.setTitle("Ehelp");// 鏍囬鐨勬枃瀛楅渶鍦╯etSupportActionBar涔嬪墠锛屼笉鐒朵細鏃犳晥
-        // toolbar.setSubtitle("鍓爣棰�");
+        mToolbar.setTitle("Ehelp");
+        mToolbar.setTitleTextColor(0xffececec);
         setSupportActionBar(mToolbar);
 
         mToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
@@ -177,7 +188,7 @@ public class Home extends AIActionBarActivity implements RapidFloatingActionCont
             public void onPageScrollStateChanged(int arg0) {
             }
         });
-        initTabsValue();//*/
+        initTabsValue();
     }
 
     public void ContactList(View view) {
@@ -219,14 +230,14 @@ public class Home extends AIActionBarActivity implements RapidFloatingActionCont
         mPagerSlidingTabStrip.setBackgroundColor(Color.parseColor("#4876FF"));
         // tab搴曠嚎楂樺害
         mPagerSlidingTabStrip.setUnderlineHeight((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
-                1, getResources().getDisplayMetrics()));
+                (float)0.1, getResources().getDisplayMetrics()));
         // 娓告爣楂樺害
         mPagerSlidingTabStrip.setIndicatorHeight((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
                 5, getResources().getDisplayMetrics()));
         // 閫変腑鐨勬枃瀛楅鑹�
         mPagerSlidingTabStrip.setSelectedTextColor(Color.WHITE);
         // 姝ｅ父鏂囧瓧棰滆壊
-        mPagerSlidingTabStrip.setTextColor(Color.BLACK);
+        mPagerSlidingTabStrip.setTextColor(Color.parseColor("#A2B5FF"));
     }
 
     @Override

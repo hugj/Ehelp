@@ -82,4 +82,5 @@
     <string name="title_activity_setting">SettingActivity</string>
     <string name="title_activity_accountsafe">AccountsafeActivity</string>
     <string name="title_activity_changepassword">ChangepasswordActivity</string>
+    <string name="action_search">Search</string>
 </resources>
