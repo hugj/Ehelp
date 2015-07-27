@@ -88,7 +88,7 @@ public class SuperAwesomeCardFragment extends Fragment {
 
         FrameLayout fl = new FrameLayout(getActivity());
         fl.setLayoutParams(params);
-        //fl.setBackgroundResource(drawables[position]);
+        //fl.setBackgroundResource(R.drawable.background);
         final int margin = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 8, getResources()
                 .getDisplayMetrics());
 

@@ -39,13 +39,6 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="问题详情"
-            android:id="@+id/button15"
-            android:onClick="ques"
-            android:layout_alignParentTop="true" />
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:onClick="send_map1"
             android:text="接受求助信息以及回答"
             android:id="@+id/button4" />

@@ -16,11 +16,9 @@ import com.ehelp.map.recievesos_map;
 import com.ehelp.map.sendhelp_map;
 import com.ehelp.map.sendhelpcomeback_map;
 import com.ehelp.map.sendsos_map;
-import com.ehelp.receive.QuestionDetail;
 import com.ehelp.send.CountNum;
 import com.ehelp.send.SendHelp;
 import com.ehelp.send.SendQuestion;
-import com.ehelp.user.Myhistory;
 import com.wangjie.androidbucket.utils.ABTextUtil;
 import com.wangjie.androidbucket.utils.imageprocess.ABShape;
 import com.wangjie.androidinject.annotation.annotations.base.AILayout;
@@ -157,11 +155,6 @@ public class Test extends AIActionBarActivity implements RapidFloatingActionCont
     }
 
 
-    public void ques(View view) {
-        // Do something in response to button
-        Intent intent = new Intent(this, QuestionDetail.class);
-        startActivity(intent);
-    }
 
     public void goToMap(View view) {
         Intent intent = new Intent(this, recievehelp_map.class);
