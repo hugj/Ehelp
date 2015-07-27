@@ -64,6 +64,10 @@ public class Home extends AIActionBarActivity implements RapidFloatingActionCont
     }
 
     private void init() {
+        //极光推送初始化
+        JPushInterface.setDebugMode(true);
+        JPushInterface.init(this);
+
         SDKInitializer.initialize(getApplicationContext());
         initViews();
         RapidFloatingActionContentLabelList rfaContent = new RapidFloatingActionContentLabelList(context);
@@ -109,8 +113,8 @@ public class Home extends AIActionBarActivity implements RapidFloatingActionCont
                 rfaContent
         ).build();
 
-        JPushInterface.setDebugMode(true);
-        JPushInterface.init(this);
+        String str = JPushInterface.getRegistrationID(getApplicationContext());
+
     }
     @Override
     public void onRFACItemLabelClick(int position, RFACLabelItem item) {
