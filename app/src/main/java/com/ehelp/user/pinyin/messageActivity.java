@@ -2,7 +2,6 @@ package com.ehelp.user.pinyin;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
@@ -110,12 +109,6 @@ public class messageActivity extends ActionBarActivity {
             }
         });
         delete.create().show();
-    }
-
-    //test-------------------------------------------------------
-    public void test_click(View view) {
-        Intent intent = new Intent(this, UsermesActivity.class);
-        startActivity(intent);
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
