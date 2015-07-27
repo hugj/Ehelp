@@ -19,4 +19,9 @@ public class AccountsafeActivity extends ActionBarActivity {
         Intent intent = new Intent(this, ChangepasswordActivity.class);
         startActivity(intent);
     }
+    public void change_phone_page_click(View view) {
+        // Do something in response to button
+        Intent intent = new Intent(this, ChangephoneActivity.class);
+        startActivity(intent);
+    }
 }
