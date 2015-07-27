@@ -90,10 +90,8 @@ public class SuperAwesomeCardFragment extends Fragment {
         TextView v = new TextView(getActivity());
         params.setMargins(margin, margin, margin, margin);
         v.setLayoutParams(params);
-        v.setLayoutParams(params);
         v.setGravity(Gravity.TOP);
         if (position == 0) {
-            v.setText("应该显示地图还没加上来orz");
             mCurrentMode = MyLocationConfiguration.LocationMode.NORMAL;
             mMapView = new MapView(getActivity());
             mMapView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT,
@@ -153,7 +151,7 @@ public class SuperAwesomeCardFragment extends Fragment {
                 isFirstLoc = false;
                 LatLng ll = new LatLng(location.getLatitude(),
                         location.getLongitude());
-                MapStatusUpdate u = MapStatusUpdateFactory.newLatLng(ll);
+                MapStatusUpdate u = MapStatusUpdateFactory.newLatLngZoom(ll, 15); // 更新定位焦点与缩放级别;
                 mBaiduMap.animateMapStatus(u);
             }
         }
@@ -163,15 +161,21 @@ public class SuperAwesomeCardFragment extends Fragment {
     }
 
     public void onPause() {
-        //mMapView.onPause();
+        if (mMapView != null) {
+            mMapView.onPause();
+        }
         super.onPause();
     }
 
     @Override
     public void onResume() {
-        //mMapView.onResume();
+        if (mMapView != null) {
+            isFirstLoc = true; // 将画面焦点切换到定位点
+            mMapView.onResume();
+        }
         super.onResume();
     }
+
 
     @Override
     public void onDestroy() {
@@ -179,7 +183,6 @@ public class SuperAwesomeCardFragment extends Fragment {
         if (mMapView != null) {
             mLocClient.stop();
             // 关闭定位图层
-            mBaiduMap.setMyLocationEnabled(false);
             mMapView.onDestroy();
             mMapView = null;
         }

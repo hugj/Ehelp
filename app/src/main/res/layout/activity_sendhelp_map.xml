@@ -4,10 +4,13 @@
     android:layout_height="fill_parent"
     android:orientation="vertical" >
 
-    <RelativeLayout
+    <include layout="@layout/toolbar" />
+
+    <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="50dip"
+        android:layout_below="@+id/toolbar"
         android:orientation="horizontal"
         android:id="@+id/relativeLayout">
 
@@ -19,19 +22,29 @@
 
         <AutoCompleteTextView
             android:id="@+id/searchkey"
-            android:layout_width="fill_parent"
+            android:layout_width="290dp"
             android:layout_height="52sp"
-            android:layout_weight="0.88"
             android:hint="这里输入信息" />
-    </RelativeLayout>
+        <Button
+            android:id="@+id/search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="12"
+            android:onClick="searchButtonProcess"
+            android:padding="10dip"
+            android:text="搜索"
+            android:background="#003e4245"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true" />
+    </LinearLayout>
 
-    <RelativeLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="fill_parent"
-        android:layout_height="50dip"
-        android:orientation="horizontal" >
+    <!--<RelativeLayout-->
+        <!--xmlns:android="http://schemas.android.com/apk/res/android"-->
+        <!--android:layout_width="fill_parent"-->
+        <!--android:layout_height="50dip"-->
+        <!--android:orientation="horizontal" >-->
 
-    </RelativeLayout>
+    <!--</RelativeLayout>-->
 
     <fragment
         android:id="@+id/map"
@@ -41,17 +54,17 @@
         android:layout_below="@+id/relativeLayout"
         android:layout_alignParentStart="true" />
 
-    <Button
-        android:id="@+id/search"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="12"
-        android:onClick="searchButtonProcess"
-        android:padding="10dip"
-        android:text="搜索"
-        android:background="#003e4245"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true" />
+    <!--<Button-->
+        <!--android:id="@+id/search"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_weight="12"-->
+        <!--android:onClick="searchButtonProcess"-->
+        <!--android:padding="10dip"-->
+        <!--android:text="搜索"-->
+        <!--android:background="#003e4245"-->
+        <!--android:layout_alignParentTop="true"-->
+        <!--android:layout_alignParentEnd="true" />-->
 
     <Button
         style="?android:attr/buttonStyleSmall"
@@ -69,7 +82,7 @@
         android:text="取消求助"
         android:id="@+id/button3"
         android:layout_alignParentBottom="true"
-        android:layout_alignEnd="@+id/search" />
+        android:layout_alignParentEnd="true" />
 
     <Button
         style="?android:attr/buttonStyleSmall"
