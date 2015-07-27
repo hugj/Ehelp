@@ -25,6 +25,7 @@ import com.ehelp.send.SendSOS;
 import com.ehelp.user.Myhistory;
 import com.ehelp.user.pinyin.ContactlistActivity;
 import com.ehelp.user.pinyin.Health;
+import com.ehelp.user.pinyin.SettingActivity;
 import com.ehelp.user.pinyin.homepageActivity;
 import com.wangjie.androidbucket.utils.ABTextUtil;
 import com.wangjie.androidbucket.utils.imageprocess.ABShape;
@@ -200,7 +201,11 @@ public class Home extends AIActionBarActivity implements RapidFloatingActionCont
         Intent intent = new Intent(this, Myhistory.class);
         startActivity(intent);
     }
-
+    public void Setting_page_click(View view) {
+        // Do something in response to button
+        Intent intent = new Intent(this, SettingActivity.class);
+        startActivity(intent);
+    }
     /**
      * mPagerSlidingTabStrip榛樿鍊奸厤缃�
      *

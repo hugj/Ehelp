@@ -62,6 +62,11 @@
     <string name="mes_exit">退出登录</string>
     <string name="mes_change_password">修改密码</string>
     <string name="mes_change_phone">修改绑定手机号</string>
+    <string name="mes_present_account">当前账号</string>
+    <string name="mes_present_password">当前密码</string>
+    <string name="mes_new_password">新的密码</string>
+    <string name="mes_confirm_password">确认密码</string>
+    <string name="mes_confirm">确认</string>
     <string name="title_activity_mesnotename">MesnotenameActivity</string>
     <string name="title_activity_register_password">RegisterPassword</string>
     <string name="title_activity_health">Health</string>
@@ -76,4 +81,5 @@
     <string name="title_activity_home">Home</string>
     <string name="title_activity_setting">SettingActivity</string>
     <string name="title_activity_accountsafe">AccountsafeActivity</string>
+    <string name="title_activity_changepassword">ChangepasswordActivity</string>
 </resources>

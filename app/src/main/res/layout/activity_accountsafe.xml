@@ -37,7 +37,8 @@
         android:clickable="true"
         android:background="@drawable/preference_item"
         android:gravity="center_vertical"
-        android:id="@+id/accountsafe_password">
+        android:id="@+id/accountsafe_password"
+        android:onClick="change_password_page_click">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
