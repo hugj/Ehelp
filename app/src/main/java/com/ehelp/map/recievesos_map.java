@@ -96,7 +96,7 @@ public class recievesos_map extends ActionBarActivity implements BaiduMap.OnMapC
 
         //set toolbar
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        mToolbar.setTitle("求救信息详情");
+        //mToolbar.setTitle("求救信息详情");
         setSupportActionBar(mToolbar);
 
         init();
@@ -183,6 +183,29 @@ public class recievesos_map extends ActionBarActivity implements BaiduMap.OnMapC
 
     }
 
+    //设置TOOLBAR
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_send_help, menu);
+        return true;
+    }
+//toolbar设置结束
     /**
      * 发起路线规划搜索示例
      *
@@ -309,27 +332,6 @@ public class recievesos_map extends ActionBarActivity implements BaiduMap.OnMapC
         return false;
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_send_help, menu);
-        return true;
-    }
 
 //    @Override
 //    protected void onPause() {
@@ -342,6 +344,11 @@ public class recievesos_map extends ActionBarActivity implements BaiduMap.OnMapC
 //        mMapView.onResume();
 //        super.onResume();
 //    }
+@Override
+protected void onResume() {
+    // TODO Auto-generated method stub
+    super.onResume();
+}
 //
 //    @Override
 //    protected void onDestroy() {

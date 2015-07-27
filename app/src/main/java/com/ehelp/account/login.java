@@ -32,8 +32,15 @@ public class login extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Intent intent = getIntent();
+       // Intent intent = getIntent();
         setContentView(R.layout.activity_login);
+        //set toolbar
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        mToolbar.setTitle("登录");
+        setSupportActionBar(mToolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
         init();
     }
 
@@ -46,10 +53,7 @@ public class login extends ActionBarActivity {
                 detectLeakedSqlLiteObjects().detectLeakedClosableObjects().
                 penaltyLog().penaltyDeath().build());
 
-        //set toolbar
-        mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        mToolbar.setTitle("登录");
-        setSupportActionBar(mToolbar);
+
     }
 
     @Override

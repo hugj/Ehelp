@@ -4,6 +4,10 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -51,7 +55,7 @@ import android.media.AudioManager;
 //统计代码
 import cn.jpush.android.api.JPushInterface;
 
-public class sendsos_map extends Activity implements BaiduMap.OnMapClickListener,
+public class sendsos_map extends ActionBarActivity implements BaiduMap.OnMapClickListener,
         OnGetRoutePlanResultListener {
 
     //浏览路线节点相关
@@ -79,6 +83,9 @@ public class sendsos_map extends Activity implements BaiduMap.OnMapClickListener
     private Marker mMarker4;
     private InfoWindow mInfoWindow;
 
+    //toolbar
+    private Toolbar mToolbar;
+
     private Button button7;
     private SoundPool sp;
     private Vibrator vib;
@@ -105,6 +112,12 @@ public class sendsos_map extends Activity implements BaiduMap.OnMapClickListener
         mBaidumap = mMapView.getMap();
         int count = mMapView.getChildCount();
         init();
+
+        //set toolbar
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        mToolbar.setTitle("等待救援");
+        setSupportActionBar(mToolbar);
+
         // 去除无关图标
         for (int i = 0; i < count; i++) {
             View child = mMapView.getChildAt(i);
@@ -315,7 +328,29 @@ public class sendsos_map extends Activity implements BaiduMap.OnMapClickListener
     public boolean onMapPoiClick(MapPoi poi) {
         return false;
     }
+    //设置TOOLBAR
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
 
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_send_help, menu);
+        return true;
+    }
+    //toolbar设置结束
     @Override
     protected void onPause() {
         mMapView.onPause();
