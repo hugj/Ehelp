@@ -35,4 +35,6 @@ dependencies {
     compile files('libs/baidumapapi_v3_5_0.jar')
     compile files('libs/locSDK_5.2.jar')
     compile project(':AnimatedCircleLoading')
+    compile 'com.google.code.gson:gson:2.3.1'
+    compile 'com.loopj.android:android-async-http:1.4.8'
 }
