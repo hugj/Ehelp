@@ -1,4 +1,4 @@
-package com.ehelp.server;
+package com.ehelp.utils;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;

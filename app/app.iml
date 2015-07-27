@@ -93,6 +93,7 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" exported="" name="baidumapapi_v3_5_0" level="project" />
     <orderEntry type="library" exported="" name="pinyin4j-2.5.0" level="project" />
+    <orderEntry type="library" exported="" name="gson-2.3.1" level="project" />
     <orderEntry type="library" exported="" name="library-2.4.0" level="project" />
     <orderEntry type="library" exported="" name="locSDK_5.2" level="project" />
     <orderEntry type="library" exported="" name="jpush-sdk-release1.7.5" level="project" />
@@ -102,6 +103,7 @@
     <orderEntry type="library" exported="" name="appcompat-v7-22.2.0" level="project" />
     <orderEntry type="library" exported="" name="AndroidInject-1.0.6" level="project" />
     <orderEntry type="library" exported="" name="ShadowViewHelper-1.0.1" level="project" />
+    <orderEntry type="library" exported="" name="android-async-http-1.4.8" level="project" />
     <orderEntry type="library" exported="" name="SMSSDK-1.2.2" level="project" />
     <orderEntry type="library" exported="" name="AndroidBucket-1.0.4" level="project" />
     <orderEntry type="module" module-name="AnimatedCircleLoading" exported="" />

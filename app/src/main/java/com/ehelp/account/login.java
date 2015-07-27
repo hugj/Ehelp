@@ -13,7 +13,7 @@ import android.widget.Toast;
 
 import com.ehelp.R;
 import com.ehelp.home.Home;
-import com.ehelp.server.RequestHandler;
+import com.ehelp.utils.RequestHandler;
 
 import org.json.JSONException;
 import org.json.JSONObject;
