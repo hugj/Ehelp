@@ -41,6 +41,8 @@ import com.wangjie.rapidfloatingactionbutton.contentimpl.labellist.RapidFloating
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.jpush.android.api.JPushInterface;
+
 @AILayout(R.layout.activity_home)
 public class Home extends AIActionBarActivity implements RapidFloatingActionContentLabelList.OnRapidFloatingActionContentLabelListListener {
     @AIView(R.id.label_list_sample_rfal)
@@ -106,6 +108,9 @@ public class Home extends AIActionBarActivity implements RapidFloatingActionCont
                 rfaButton,
                 rfaContent
         ).build();
+
+        JPushInterface.setDebugMode(true);
+        JPushInterface.init(this);
     }
     @Override
     public void onRFACItemLabelClick(int position, RFACLabelItem item) {
