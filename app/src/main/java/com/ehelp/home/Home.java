@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.baidu.mapapi.SDKInitializer;
 import com.ehelp.R;
 import com.ehelp.home.widget.PagerSlidingTabStrip;
 import com.ehelp.send.SendHelp;
@@ -60,6 +61,7 @@ public class Home extends AIActionBarActivity implements RapidFloatingActionCont
     }
 
     private void init() {
+        SDKInitializer.initialize(getApplicationContext());
         initViews();
         RapidFloatingActionContentLabelList rfaContent = new RapidFloatingActionContentLabelList(context);
         rfaContent.setOnRapidFloatingActionContentLabelListListener(this);
