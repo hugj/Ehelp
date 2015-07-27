@@ -50,10 +50,18 @@ import com.ehelp.R;
 
 //手机振动与手机发声
 import android.os.Vibrator;
-import android.media.SoundPool;
-import android.media.AudioManager;
+//import android.media.SoundPool;
+//import android.media.AudioManager;
 //统计代码
 import cn.jpush.android.api.JPushInterface;
+//极光推送
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import javax.net.ssl.HttpsURLConnection;
+import java.net.URL;
+//严苛模式
+import android.os.StrictMode;
 
 public class sendsos_map extends ActionBarActivity implements BaiduMap.OnMapClickListener,
         OnGetRoutePlanResultListener {
@@ -82,12 +90,13 @@ public class sendsos_map extends ActionBarActivity implements BaiduMap.OnMapClic
     private Marker mMarker3;
     private Marker mMarker4;
     private InfoWindow mInfoWindow;
-
+    
     //toolbar
     private Toolbar mToolbar;
-
+    
+    //振动发声定义
     private Button button7;
-    private SoundPool sp;
+    //private SoundPool sp;
     private Vibrator vib;
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,11 +104,17 @@ public class sendsos_map extends ActionBarActivity implements BaiduMap.OnMapClic
         SDKInitializer.initialize(getApplicationContext());
         setContentView(R.layout.activity_sendsos_map);
 
+        //推送求救信息
+        sendPostRequest("https://api.jpush.cn/v3/push", "{\"platform\":\"all\",\"audience\":\"all\",\"notification\":{\"alert\":\"有人正在求救！\"}}");
+
         //sp = new SoundPool(10, AudioManager.STREAM_SYSTEM, 5);
         //sp.load(getApplicationContext(), R.raw.alarm, 1);
         button7 = (Button)findViewById(R.id.button7);
+
         //调用振动发声
         this.vibandsp();
+
+        //这个是取消求救按钮，谁接下来开发的记得重新定义
         button7.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -373,7 +388,6 @@ public class sendsos_map extends ActionBarActivity implements BaiduMap.OnMapClic
         mMapView.onDestroy();
         this.stopvands();
         super.onDestroy();
-        vib.cancel(); // 退出该页面则关闭震动提示
     }
 
 
@@ -433,6 +447,8 @@ public class sendsos_map extends ActionBarActivity implements BaiduMap.OnMapClic
         mMarker2 = (Marker) (mBaidumap.addOverlay(o2));
         mMarker3 = (Marker) (mBaidumap.addOverlay(o3));
     }
+
+    //开始振动发声
     private void vibandsp() {
         //手机振动发声
         //振动代码
@@ -448,8 +464,53 @@ public class sendsos_map extends ActionBarActivity implements BaiduMap.OnMapClic
         //t.show();
         //sp.play(1, 1, 1, 0, -1, 1);
     }
+
+    //停止振动发声
     private void stopvands() {
         vib.cancel();
-        sp.stop(1);
+        //sp.stop(1);
+    }
+
+    //极光推送
+    public static String sendPostRequest(String urlString, String jsondata){
+
+        try {
+
+            StrictMode.ThreadPolicy policy=new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+
+            URL url = new URL(urlString);
+            HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
+            conn.setDoInput(true); // permit to use the inputstream
+            conn.setDoOutput(true); // permit to use the outputstrem
+            conn.setUseCaches(false); // deny to use the cache
+            conn.setConnectTimeout(5000);
+            conn.setRequestMethod("POST");
+            String auth = "ODcyM2QxNjAzMGNhODZkNTMwYjM1ZTIyOjdkZmIxYmMzN2FiYjcyODBmNzdjMWNjNw==";
+            conn.setRequestProperty("Content-Type", "application/json");// set the request Content-Type
+            conn.setRequestProperty("Authorization", "Basic " + auth);
+
+            byte data[] = jsondata.getBytes("UTF-8"); // use utf-8 coding format to transformat string to a byte array
+            conn.getOutputStream().write(data);
+
+            StringBuffer sBuffer = new StringBuffer();
+            if(conn.getResponseCode() == HttpsURLConnection.HTTP_OK){
+                String line = null;
+                InputStream in = conn.getInputStream();
+                BufferedReader bReader = new BufferedReader(new InputStreamReader(in));
+                while((line = bReader.readLine()) != null) {
+                    sBuffer.append(line);
+                }
+                return sBuffer.toString();
+            }
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+            System.out.print("error");
+        }
+
+        return "false";
+
     }
 }
