@@ -4,23 +4,10 @@
     android:background="#ddd"
      android:layout_width="match_parent"
      android:layout_height="match_parent">
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="40dp"
-        android:id="@+id/setting_title"
-        android:background="#00CC33"
-        android:gravity="center_horizontal|center_vertical"
-        android:layout_marginBottom="25dp">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/mes_setting"
-            android:textSize="20sp"
-            android:textColor="#fff" />
-    </LinearLayout>
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="50dp"
+        android:layout_marginTop="30dp"
         android:clickable="true"
         android:background="@drawable/preference_item"
         android:gravity="center_vertical"
@@ -34,14 +21,13 @@
            android:textIsSelectable="true"
            android:textSize="18dp"
            android:id="@+id/setting_push1" />
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:scaleType="matrix"
-            android:layout_centerVertical="true"
+        <com.ehelp.user.pinyin.SlipButton
+            android:layout_width="60dip"
+            android:layout_height="25dip"
             android:layout_alignParentRight="true"
-            android:clickable="true"
-            android:src="@drawable/mm_submenu" />
+            android:layout_marginBottom="8dip"
+            android:layout_marginTop="8dip"
+            android:id="@+id/accept_push_or_not"/>
     </RelativeLayout>
     <View
         android:layout_marginLeft="20dp"
@@ -168,7 +154,8 @@
         android:clickable="true"
         android:background="@drawable/preference_item"
         android:gravity="center_vertical"
-        android:id="@+id/setting_exit">
+        android:id="@+id/setting_exit"
+        android:onClick="exit_click">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
