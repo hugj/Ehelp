@@ -60,8 +60,12 @@ public class SignUp extends ActionBarActivity implements OnClickListener {
 
         //set toolbar
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        mToolbar.setTitle("注册新用户");
+        mToolbar.setTitle("     注册新用户");
         setSupportActionBar(mToolbar);
+        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);//开启up button这个默认值是true
+        //getSupportActionBar().setHomeButtonEnabled(true);//
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
 
         inputCodeEt = (EditText) findViewById(R.id.edit_identify);//验证码
         requestCodeBtn = (Button) findViewById(R.id.request_code_btn);
@@ -261,7 +265,7 @@ public class SignUp extends ActionBarActivity implements OnClickListener {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_sign_up, menu);
+        getMenuInflater().inflate(R.menu.menu_login, menu);
         return true;
     }
 
