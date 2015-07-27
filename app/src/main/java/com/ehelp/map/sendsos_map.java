@@ -88,6 +88,8 @@ public class sendsos_map extends Activity implements BaiduMap.OnMapClickListener
         SDKInitializer.initialize(getApplicationContext());
         setContentView(R.layout.activity_sendsos_map);
 
+        //sp = new SoundPool(10, AudioManager.STREAM_SYSTEM, 5);
+        //sp.load(getApplicationContext(), R.raw.alarm, 1);
         button7 = (Button)findViewById(R.id.button7);
         //调用振动发声
         this.vibandsp();
@@ -320,18 +322,21 @@ public class sendsos_map extends Activity implements BaiduMap.OnMapClickListener
     protected void onPause() {
         mMapView.onPause();
         super.onPause();
+        JPushInterface.onPause(this);
     }
 
     @Override
     protected void onResume() {
         mMapView.onResume();
         super.onResume();
+        JPushInterface.onResume(this);
     }
 
     @Override
     protected void onDestroy() {
         mSearch.destroy();
         mMapView.onDestroy();
+        this.stopvands();
         super.onDestroy();
     }
 
@@ -400,9 +405,12 @@ public class sendsos_map extends Activity implements BaiduMap.OnMapClickListener
         vib.vibrate(pattern, 2);
 
         //发声代码
-        sp = new SoundPool(10, AudioManager.STREAM_SYSTEM, 5);
-        sp.load(getApplicationContext(), R.raw.alarm, 1);
-        sp.play(1, 1, 1, 0, -1, 1);
+        //sp = new SoundPool(10, AudioManager.STREAM_SYSTEM, 5);
+        //int i  = sp.load(getApplicationContext(), R.raw.alarm, 1);
+        //String s = String.valueOf(i);
+        //Toast t = Toast.makeText(getApplicationContext(), s, Toast.LENGTH_LONG);
+        //t.show();
+        //sp.play(1, 1, 1, 0, -1, 1);
     }
     private void stopvands() {
         vib.cancel();
