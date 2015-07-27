@@ -3,6 +3,8 @@ package com.ehelp.send;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.os.StrictMode;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -154,8 +156,7 @@ public class SendQuestion extends AIActionBarActivity implements RapidFloatingAc
     public void submit(View view) {
         init();
 
-        // temp id useed
-        int user_id = 17;
+
         Equestion = (EditText)findViewById(R.id.edit_message2);
         Edesc_ques = (EditText)findViewById(R.id.edit_message3);
         Eshare_money = (EditText)findViewById(R.id.edit_message4);
@@ -163,22 +164,41 @@ public class SendQuestion extends AIActionBarActivity implements RapidFloatingAc
         desc_ques = Edesc_ques.getText().toString();
         share_money = Eshare_money.getText().toString();
         if (!question.isEmpty()) {
-            String jsonStrng = "{" +
-                    "\"id\":" + user_id + ",\"type\":0," +
-                    "\"title\":\"" + question + "\"," +
-                    "\"content\":\"" + desc_ques + "\"" + "}";
-            String message = RequestHandler.sendPostRequest(
-                    "http://120.24.208.130:1501/event/add", jsonStrng);
-            if (message == "false") {
-                Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
-                        Toast.LENGTH_SHORT).show();
-                return;
-            }   else {
-                Toast.makeText(getApplicationContext(), message,  //测试
-                        Toast.LENGTH_SHORT).show();
-                // 这里是未完成的页面跳转
-                // getMenuInflater().inflate(R.menu.menu_send_help, menu);
-            }
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    handler.sendEmptyMessage(-9);
+                }
+            }).start();
         }
     }
+
+    /**
+     *
+     */
+    Handler handler = new Handler() {
+        public void handleMessage(Message msg) {
+            if (msg.what == -9) {
+                // temp id useed
+                int user_id = 3;
+                String jsonStrng = "{" +
+                        "\"id\":" + user_id + ",\"type\":0," +
+                        "\"title\":\"" + question + "\"," +
+                        "\"content\":\"" + desc_ques + "\"" + "}";
+                String message = RequestHandler.sendPostRequest(
+                        "http://120.24.208.130:1501/event/add", jsonStrng);
+                if (message == "false") {
+                    Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
+                            Toast.LENGTH_SHORT).show();
+                    return;
+                }   else {
+                    Toast.makeText(getApplicationContext(), message,  //测试
+                            Toast.LENGTH_SHORT).show();
+                    // 这里是未完成的页面跳转
+                    // getMenuInflater().inflate(R.menu.menu_send_help, menu);
+                }
+            }
+        }
+    };
+
 }
