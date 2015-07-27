@@ -62,9 +62,6 @@
             android:name=".account.SignUp"
             android:label="Sign up"
             android:parentActivityName=".account.login" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.ehelp.account.login" />
         </activity>
         <activity
             android:name=".account.FindPassword"
@@ -180,7 +177,10 @@
         <activity
             android:name=".user.pinyin.ContactlistActivity"
             android:label="@string/title_activity_contactlist"
-            android:parentActivityName=".Test" >
+            android:parentActivityName=".account.login" >
+
+        <!--android:parentActivityName=".Test" 改变这句话后通讯录的返回键就可以正常返回了。
+         android:value="com.ehelp.Test" 下面的meta-data似乎没有什么卵用-->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.ehelp.Test" />
@@ -252,23 +252,29 @@
         </activity>
         <activity
             android:name=".map.sendhelp_map"
-            android:label="@string/title_activity_sendhelp_map" >
+            android:label="@string/title_activity_sendhelp_map"
+            android:parentActivityName=".account.login" >
+            <!--！！！重点，这句parent可以让返回键可以正常使用,不过为什么是login??-->
         </activity>
         <activity
             android:name=".map.sendsos_map"
-            android:label="@string/title_activity_sendsos_map" >
+            android:label="@string/title_activity_sendsos_map"
+            android:parentActivityName=".account.login" >
         </activity>
         <activity
             android:name=".map.recievesos_map"
-            android:label="@string/title_activity_recievesos_map" >
+            android:label="@string/title_activity_recievesos_map"
+            android:parentActivityName=".account.login" >
         </activity>
         <activity
             android:name=".map.sendhelpcomeback_map"
-            android:label="@string/title_activity_sendhelpcomeback_map" >
+            android:label="@string/title_activity_sendhelpcomeback_map"
+            android:parentActivityName=".account.login" >
         </activity>
         <activity
             android:name=".map.recieve_help_ans_map"
-            android:label="@string/title_activity_recieve_help_ans_map" >
+            android:label="@string/title_activity_recieve_help_ans_map"
+            android:parentActivityName=".account.login" >
         </activity>
         <activity
             android:name=".home.Home"

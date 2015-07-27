@@ -1,9 +1,11 @@
 package com.ehelp.map;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -45,10 +47,11 @@ import com.baidu.mapapi.search.route.TransitRouteResult;
 import com.baidu.mapapi.search.route.WalkingRoutePlanOption;
 import com.baidu.mapapi.search.route.WalkingRouteResult;
 import com.ehelp.R;
+import com.ehelp.user.pinyin.ContactlistActivity;
 import com.wangjie.androidinject.annotation.present.AIActionBarActivity;
 
 
-public class recieve_help_ans_map extends AIActionBarActivity implements BaiduMap.OnMapClickListener,
+public class recieve_help_ans_map extends ActionBarActivity implements BaiduMap.OnMapClickListener,
         OnGetRoutePlanResultListener {
 
     ImageView Image;
@@ -85,8 +88,8 @@ public class recieve_help_ans_map extends AIActionBarActivity implements BaiduMa
         super.onCreate(savedInstanceState);
         SDKInitializer.initialize(getApplicationContext());
         setContentView(R.layout.activity_recieve_help_ans_map);
-        CharSequence titleLable = "路线规划";
-        setTitle(titleLable);
+        //CharSequence titleLable = "路线规划";
+        //setTitle(titleLable);
         // 初始化地图
         mMapView = (MapView) findViewById(R.id.map);
         mBaidumap = mMapView.getMap();
@@ -94,8 +97,16 @@ public class recieve_help_ans_map extends AIActionBarActivity implements BaiduMa
 
         //set toolbar
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        //mToolbar.setNavigationIcon(R.drawable.mm_submenu_normal);//设置图标样式,已经在toolbar.xml统一设过了
+
         mToolbar.setTitle("求助信息详情");
+
         setSupportActionBar(mToolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        //http://www.jcodecraeer.com/a/anzhuokaifa/androidkaifa/2014/1123/2050.html参考网址
+
 
         init();
         // 去除无关图标
@@ -178,6 +189,7 @@ public class recieve_help_ans_map extends AIActionBarActivity implements BaiduMa
                 return true;
             }
         });
+
 
     }
 
@@ -309,6 +321,8 @@ public class recieve_help_ans_map extends AIActionBarActivity implements BaiduMa
         return false;
     }
 
+
+    //toolbar设置
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -318,6 +332,8 @@ public class recieve_help_ans_map extends AIActionBarActivity implements BaiduMa
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            Intent intent = new Intent(this, ContactlistActivity.class);
+            startActivity(intent);
             return true;
         }
 
@@ -330,6 +346,7 @@ public class recieve_help_ans_map extends AIActionBarActivity implements BaiduMa
         getMenuInflater().inflate(R.menu.menu_send_help, menu);
         return true;
     }
+    //toolbar设置结束
 
 //    @Override
 //    protected void onPause() {

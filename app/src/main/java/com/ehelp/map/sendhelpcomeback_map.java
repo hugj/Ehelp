@@ -85,13 +85,16 @@ public class sendhelpcomeback_map extends ActionBarActivity implements BaiduMap.
         super.onCreate(savedInstanceState);
         SDKInitializer.initialize(getApplicationContext());
         setContentView(R.layout.activity_sendhelpcomeback_map);
-        CharSequence titleLable = "路线规划";
-        setTitle(titleLable);
 
         //set toolbar
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         mToolbar.setTitle("我的求助");
         setSupportActionBar(mToolbar);
+
+        CharSequence titleLable = "路线规划";
+        setTitle(titleLable);
+
+
         // 初始化地图
         mMapView = (MapView) findViewById(R.id.map);
         mBaidumap = mMapView.getMap();
@@ -307,7 +310,13 @@ public class sendhelpcomeback_map extends ActionBarActivity implements BaiduMap.
     public boolean onMapPoiClick(MapPoi poi) {
         return false;
     }
-
+//设置TOOLBAR
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_send_help, menu);
+        return true;
+    }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -323,12 +332,8 @@ public class sendhelpcomeback_map extends ActionBarActivity implements BaiduMap.
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_send_help, menu);
-        return true;
-    }
+
+//toolbar设置结束
 
 //    @Override
 //    protected void onPause() {
