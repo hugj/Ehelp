@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.ehelp.R;
+import com.ehelp.utils.MD5;
 import com.ehelp.utils.RequestHandler;
 
 import org.json.JSONException;

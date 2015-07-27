@@ -1,4 +1,4 @@
-package com.ehelp.account;
+package com.ehelp.utils;
 
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
