@@ -16,15 +16,14 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:layout_centerVertical="true"
+            android:id="@+id/phone_number"
             android:text="@string/mes_phone"/>
-        <ImageView
-            android:layout_width="wrap_content"
+        <TextView android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:scaleType="matrix"
             android:layout_centerVertical="true"
-            android:layout_alignParentRight="true"
-            android:clickable="true"
-            android:src="@drawable/mm_submenu" />
+            android:layout_marginLeft="50dp"
+            android:text="12345678"
+            android:layout_toRightOf="@+id/phone_number"/>
     </RelativeLayout>
     <View
         android:layout_marginLeft="20dp"
@@ -60,7 +59,8 @@
         android:clickable="true"
         android:background="@drawable/preference_item"
         android:gravity="center_vertical"
-        android:id="@+id/accountsafe_change_phone">
+        android:id="@+id/accountsafe_change_phone"
+        android:onClick="change_phone_page_click">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

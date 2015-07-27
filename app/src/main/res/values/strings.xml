@@ -67,6 +67,10 @@
     <string name="mes_new_password">新的密码</string>
     <string name="mes_confirm_password">确认密码</string>
     <string name="mes_confirm">确认</string>
+    <string name="mes_new_phone_number">新手机号</string>
+    <string name="mes_verification_code">发送验证码</string>
+    <string name="mes_input_verification_code">请输入验证码</string>
+    <string name="mes_verification">验证</string>
     <string name="title_activity_mesnotename">MesnotenameActivity</string>
     <string name="title_activity_register_password">RegisterPassword</string>
     <string name="title_activity_health">Health</string>
@@ -82,4 +86,5 @@
     <string name="title_activity_setting">SettingActivity</string>
     <string name="title_activity_accountsafe">AccountsafeActivity</string>
     <string name="title_activity_changepassword">ChangepasswordActivity</string>
+    <string name="title_activity_changephone">ChangephoneActivity</string>
 </resources>

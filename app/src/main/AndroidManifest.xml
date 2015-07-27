@@ -282,6 +282,10 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.ehelp.Test" />
         </activity>
+        <activity
+            android:name=".user.pinyin.ChangephoneActivity"
+            android:label="@string/title_activity_changephone" >
+        </activity>
     </application>
 
 </manifest>
