@@ -1,6 +1,8 @@
 package com.ehelp.send;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
@@ -180,8 +182,8 @@ public class SendQuestion extends AIActionBarActivity implements RapidFloatingAc
     Handler handler = new Handler() {
         public void handleMessage(Message msg) {
             if (msg.what == -9) {
-                // temp id useed
-                int user_id = 3;
+                SharedPreferences spf = SendQuestion.this.getSharedPreferences("user_id", Context.MODE_PRIVATE);
+                int user_id = spf.getInt("user_id", -1);
                 String jsonStrng = "{" +
                         "\"id\":" + user_id + ",\"type\":0," +
                         "\"title\":\"" + question + "\"," +
