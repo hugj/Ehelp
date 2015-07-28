@@ -130,7 +130,7 @@ public class sendsos_map extends ActionBarActivity implements BaiduMap.OnMapClic
 
         //set toolbar
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        //mToolbar.setTitle("");
+        mToolbar.setTitle("");
         setSupportActionBar(mToolbar);
         TextView tvv =(TextView) findViewById(R.id.titlefortoolbar);
         tvv.setText("等待救援");

@@ -61,7 +61,7 @@ public class FindPassword extends ActionBarActivity implements OnClickListener {
 
         //set toolbar
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
-       // mToolbar.setTitle("找回密码");
+        mToolbar.setTitle("");
         setSupportActionBar(mToolbar);
         TextView tvv =(TextView) findViewById(R.id.titlefortoolbar);
         tvv.setText("找回密码");

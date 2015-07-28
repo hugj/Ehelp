@@ -97,7 +97,7 @@ public class recievesos_map extends ActionBarActivity implements BaiduMap.OnMapC
 
         //set toolbar
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
-       // mToolbar.setTitle("");
+        mToolbar.setTitle("");
         setSupportActionBar(mToolbar);
         TextView tvv =(TextView) findViewById(R.id.titlefortoolbar);
         tvv.setText("求救信息详情");

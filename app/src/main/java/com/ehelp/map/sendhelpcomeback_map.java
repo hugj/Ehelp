@@ -94,8 +94,8 @@ public class sendhelpcomeback_map extends ActionBarActivity implements BaiduMap.
         TextView tvv =(TextView) findViewById(R.id.titlefortoolbar);
         tvv.setText("我的求助");
 
-        CharSequence titleLable = "路线规划";
-        setTitle(titleLable);
+        /*CharSequence titleLable = "路线规划";
+        setTitle(titleLable);*/
 
 
         // 初始化地图

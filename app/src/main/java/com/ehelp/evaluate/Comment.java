@@ -72,7 +72,7 @@ public class Comment extends AIActionBarActivity implements RapidFloatingActionC
 
         //set toolbar
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        //mToolbar.setTitle("                 评价");
+        mToolbar.setTitle("");
         setSupportActionBar(mToolbar);
         TextView tvv =(TextView) findViewById(R.id.titlefortoolbar);
         tvv.setText("评价");

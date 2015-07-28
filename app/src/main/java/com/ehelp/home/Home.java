@@ -176,7 +176,7 @@ public class Home extends AIActionBarActivity implements RapidFloatingActionCont
 
     private void initViews() {
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        //mToolbar.setTitle("");
+        mToolbar.setTitle("");
         //mToolbar.setTitleTextColor(0xffececec);
         setSupportActionBar(mToolbar);
         TextView tvv =(TextView) findViewById(R.id.titlefortoolbar);

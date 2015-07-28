@@ -48,7 +48,7 @@ public class SignUp extends ActionBarActivity implements OnClickListener {
        // Intent intent = getIntent();
         setContentView(R.layout.activity_sign_up);
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        //mToolbar.setTitle("");
+        mToolbar.setTitle("");
         setSupportActionBar(mToolbar);
         TextView tvv =(TextView) findViewById(R.id.titlefortoolbar);
         tvv.setText("注册新用户");

@@ -132,7 +132,7 @@ public class ContactlistActivity extends AIActionBarActivity implements RapidFlo
                 penaltyLog().penaltyDeath().build());
         //set toolbar
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        //mToolbar.setTitle("                      ");
+        mToolbar.setTitle("");
         setSupportActionBar(mToolbar);
         TextView tvv =(TextView) findViewById(R.id.titlefortoolbar);
         tvv.setText("通讯录");
