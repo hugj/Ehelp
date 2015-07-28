@@ -28,6 +28,7 @@ import com.ehelp.user.pinyin.ContactlistActivity;
 import com.ehelp.user.pinyin.Health;
 import com.ehelp.user.pinyin.SettingActivity;
 import com.ehelp.user.pinyin.homepageActivity;
+import com.ehelp.utils.ActivityCollector;
 import com.wangjie.androidbucket.utils.ABTextUtil;
 import com.wangjie.androidbucket.utils.imageprocess.ABShape;
 import com.wangjie.androidinject.annotation.annotations.base.AILayout;
@@ -132,6 +133,10 @@ public class Home extends AIActionBarActivity implements RapidFloatingActionCont
 
         //获取reg id
         //get_rid();
+
+
+        // 收集activity，以便退出登录时集中销毁
+        ActivityCollector.getInstance().addActivity(this);
     }
     @Override
     public void onRFACItemLabelClick(int position, RFACLabelItem item) {

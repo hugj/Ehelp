@@ -27,6 +27,7 @@ import com.wangjie.rapidfloatingactionbutton.RapidFloatingActionLayout;
 import com.wangjie.rapidfloatingactionbutton.contentimpl.labellist.RFACLabelItem;
 import com.wangjie.rapidfloatingactionbutton.contentimpl.labellist.RapidFloatingActionContentLabelList;
 import com.ehelp.home.Home;
+import com.ehelp.utils.ActivityCollector;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -91,13 +92,15 @@ public class SettingActivity extends AIActionBarActivity implements OnChangedLis
                 .setIconShadowColor(0xff888888)
                 .setIconShadowDy(ABTextUtil.dip2px(context, 5))
         ;
-
         rfabHelper = new RapidFloatingActionHelper(
                 context,
                 rfaLayout,
                 rfaButton,
                 rfaContent
         ).build();
+        
+        // 收集activity，以便退出登录时集中销毁
+        ActivityCollector.getInstance().addActivity(this);
     }
     @Override
     public void onRFACItemLabelClick(int position, RFACLabelItem item) {
@@ -153,6 +156,6 @@ public class SettingActivity extends AIActionBarActivity implements OnChangedLis
 
         Intent intent = new Intent(this, login.class);
         startActivity(intent);
-        this.finish();
+        ActivityCollector.getInstance().exit();
     }
 }
