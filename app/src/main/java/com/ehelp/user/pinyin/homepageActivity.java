@@ -65,8 +65,10 @@ public class homepageActivity extends AIActionBarActivity implements RapidFloati
     private void init() {
         //set toolbar
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        mToolbar.setTitle("个人信息");
+        //mToolbar.setTitle("");
         setSupportActionBar(mToolbar);
+        TextView tvv =(TextView) findViewById(R.id.titlefortoolbar);
+        tvv.setText("个人信息");
 
         Set_name = (TextView)findViewById(R.id.single_name2);
         Set_local = (TextView)findViewById(R.id.single_loacl2);
