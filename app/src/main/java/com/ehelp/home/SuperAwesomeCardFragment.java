@@ -56,6 +56,7 @@ public class SuperAwesomeCardFragment extends Fragment {
 
     MapView mMapView;
     BaiduMap mBaiduMap;
+    private int user_id;
 
     // UI相关
     boolean isFirstLoc = true;// 是否首次定位
@@ -81,6 +82,10 @@ public class SuperAwesomeCardFragment extends Fragment {
         position = getArguments().getInt(ARG_POSITION);
     }
 
+    public void getUserID(int id) {
+        user_id = id;
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -96,6 +101,7 @@ public class SuperAwesomeCardFragment extends Fragment {
         params.setMargins(margin, margin, margin, margin);
         v.setLayoutParams(params);
         v.setGravity(Gravity.TOP);
+        System.out.println(position);
         if (position == 0) {
             mCurrentMode = MyLocationConfiguration.LocationMode.NORMAL;
             mMapView = new MapView(getActivity());
@@ -128,19 +134,18 @@ public class SuperAwesomeCardFragment extends Fragment {
         if (position == 2) {
             v.setText("谁来帮帮我");
             fl.addView(v);
-        } else {
+        } else
+        if (position == 3) {
             ListView queList = new ListView(getActivity());
             queList.setLayoutParams(new LinearLayout.LayoutParams(-1, -1));
-            HomeAdapter que = new HomeAdapter(getActivity());
+            HomeAdapter que = new HomeAdapter(getActivity(), user_id);
             queList.setAdapter(que);
             fl.addView(queList);
             //绑定监听
             queList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 public void onItemClick(AdapterView<?> arg0, View arg1, int index, long arg3) {
-                    if (index == 0) {
                         Intent intent = new Intent(getActivity(), QuestionDetail.class);
                         startActivity(intent);
-                    }
                 }
             });
         }

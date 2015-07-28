@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -45,12 +46,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.jpush.android.api.JPushInterface;
-
-import android.os.StrictMode;
-
-import com.ehelp.utils.RequestHandler;
-import org.json.JSONObject;
-import org.json.JSONException;
 
 @AILayout(R.layout.activity_home)
 public class Home extends AIActionBarActivity implements RapidFloatingActionContentLabelList.OnRapidFloatingActionContentLabelListListener {
@@ -138,6 +133,9 @@ public class Home extends AIActionBarActivity implements RapidFloatingActionCont
 
         // 收集activity，以便退出登录时集中销毁
         ActivityCollector.getInstance().addActivity(this);
+
+        sharedPref = this.getSharedPreferences("user_id", Context.MODE_PRIVATE);
+        user_id = sharedPref.getInt("user_id", -1);
     }
     @Override
     public void onRFACItemLabelClick(int position, RFACLabelItem item) {
@@ -201,6 +199,7 @@ public class Home extends AIActionBarActivity implements RapidFloatingActionCont
         mDrawerToggle.syncState();
         mDrawerLayout.setDrawerListener(mDrawerToggle);
 ///*
+
         mPagerSlidingTabStrip = (PagerSlidingTabStrip) findViewById(R.id.tabs);
         mViewPager = (ViewPager) findViewById(R.id.pager);
         mViewPager.setAdapter(new MyPagerAdapter(getSupportFragmentManager()));
@@ -317,7 +316,9 @@ public class Home extends AIActionBarActivity implements RapidFloatingActionCont
 
         @Override
         public Fragment getItem(int position) {
-            return SuperAwesomeCardFragment.newInstance(position);
+            SuperAwesomeCardFragment it = SuperAwesomeCardFragment.newInstance(position);
+            it.getUserID(user_id);
+            return it;
         }
 
     }

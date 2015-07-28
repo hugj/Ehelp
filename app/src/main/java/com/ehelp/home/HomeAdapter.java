@@ -1,8 +1,6 @@
 package com.ehelp.home;
 
 import android.content.Context;
-import android.os.Handler;
-import android.os.Message;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -31,40 +29,41 @@ import java.util.Map;
  */
 public class HomeAdapter extends BaseAdapter {
 
-    Context context=null;
-    List<Map<String,Object>> list=null;
-    String tit;
-    double longitude;
-    double latitude;
+    private Context context=null;
+    private List<Map<String,Object>> list = new ArrayList<Map<String,Object>>();
+    private Map<String,Object> item;
+    private String tit;
+    private double longitude;
+    private double latitude;
+    private int user_id;
 
-    HomeAdapter(Context context){
+    HomeAdapter(Context context, int id){
         this.context=context;
-
+        user_id = id;
         //数据初始化
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                handler.sendEmptyMessage(-8);
-            }
-        }).start();
 
+        getList();
     }
 
     /**
      *
-     */
+
     Handler handler = new Handler() {
         public void handleMessage(Message msg) {
             if (msg.what == -8) {
-                // temp id useed
-                int user_id = 3;
+                list=new ArrayList<Map<String,Object>>();
+                Map<String,Object> item;
                 String jsonStrng = "{" +
                         "\"id\":" + user_id + "}";
                 String message = RequestHandler.sendPostRequest(
                         "http://120.24.208.130:1501/user/get_information", jsonStrng);
                 if (message == "false") {
-                    tit = "连接失败，请检查网络是否连接并重试";
-                    return;
+                    item=new HashMap<String,Object>();
+                    item.put("头像", R.drawable.icon);
+                    item.put("标题", "连接失败，请检查网络是否连接并重试");
+                    item.put("用户", "");
+                    item.put("悬赏", "10爱心币");
+                    list.add(item);
                 }   else {
                     try {
                         JSONObject jO = new JSONObject(message);
@@ -76,17 +75,19 @@ public class HomeAdapter extends BaseAdapter {
                         message = RequestHandler.sendPostRequest(
                                 "http://120.24.208.130:1501/event/get_nearby_event", jsonStrng);
                         if (message == "false") {
-                            tit = "连接失败，请检查网络是否连接并重试";
-                            return;
+                            item=new HashMap<String,Object>();
+                            item.put("头像", R.drawable.icon);
+                            item.put("标题", "连接失败，请检查网络是否连接并重试");
+                            item.put("用户", "");
+                            item.put("悬赏", "10爱心币");
+                            list.add(item);
                         } else {
-                            list=new ArrayList<Map<String,Object>>();
-                            Map<String,Object> item;
                             JSONArray j1 = new JSONArray(message);
                             for (int i = 0; i < j1.length(); i++) {
                                 item=new HashMap<String,Object>();
                                 item.put("头像", R.drawable.icon);
                                 item.put("标题", j1.getJSONObject(i).getString("content"));
-                                item.put("用户",j1.getJSONObject(i).getString("launcher"));
+                                item.put("用户", j1.getJSONObject(i).getString("launcher"));
                                 item.put("悬赏", "10爱心币");
                                 list.add(item);
                             }
@@ -98,6 +99,69 @@ public class HomeAdapter extends BaseAdapter {
             }
         }
     };
+     */
+
+
+    public void getList() {
+        /*
+        //数据初始化
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                handler.sendEmptyMessage(-8);
+            }
+        }).start();
+        */
+        ///*
+        String jsonStrng = "{" +
+                "\"id\":" + user_id + "}";
+        String message = RequestHandler.sendPostRequest(
+                "http://120.24.208.130:1501/user/get_information", jsonStrng);
+        if (message == "false") {
+            item=new HashMap<String,Object>();
+            item.put("头像", R.drawable.icon);
+            item.put("标题", "连接失败，请检查网络是否连接并重试");
+            item.put("用户", "");
+            item.put("悬赏", "10爱心币");
+            list.add(item);
+        }   else {
+            try {
+                JSONObject jO = new JSONObject(message);
+                longitude = jO.getDouble("longitude");
+                latitude = jO.getDouble("latitude");
+
+                jsonStrng = "{" +
+                        "\"longitude\":" + longitude +
+                        ",\"latitude\":" + latitude + ",\"state\":0," +
+                        "\"type\":0" + "}";
+
+                message = RequestHandler.sendPostRequest(
+                        "http://120.24.208.130:1501/event/get_nearby_event", jsonStrng);
+                if (message == "false") {
+                    item=new HashMap<String,Object>();
+                    item.put("头像", R.drawable.icon);
+                    item.put("标题", "连接失败，请检查网络是否连接并重试");
+                    item.put("用户", "");
+                    item.put("悬赏", "10爱心币");
+                    list.add(item);
+                } else {
+                    JSONObject j1 = new JSONObject(message);
+                    JSONArray eventList = j1.getJSONArray("event_list");
+                    for (int i = 0; i <= eventList.length(); i++) {
+                        item=new HashMap<String,Object>();
+                        item.put("头像", R.drawable.icon);
+                        item.put("标题", eventList.getJSONObject(i).getString("content"));
+                        item.put("用户", eventList.getJSONObject(i).getString("launcher"));
+                        item.put("悬赏", "10爱心币");
+                        list.add(item);
+                    }
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        //*/
+    }
 
     public int getCount() {return list.size();}
     public Object getItem(int position) {return position;}
