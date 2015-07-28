@@ -8,6 +8,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.ehelp.R;
 import com.ehelp.evaluate.Comment;
@@ -67,9 +68,12 @@ public class QuestionDetail extends AIActionBarActivity implements RapidFloating
 
         //set toolbar
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        mToolbar.setTitle("问题详情");
+        //mToolbar.setTitle("");
         //getActionBar().setDisplayHomeAsUpEnabled(true);
         setSupportActionBar(mToolbar);
+        TextView tvv =(TextView) findViewById(R.id.titlefortoolbar);
+        tvv.setText("问题详情");
+
         //set FAB
         RapidFloatingActionContentLabelList rfaContent = new RapidFloatingActionContentLabelList(context);
         rfaContent.setOnRapidFloatingActionContentLabelListListener(this);

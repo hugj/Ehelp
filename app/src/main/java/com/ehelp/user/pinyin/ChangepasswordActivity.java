@@ -5,6 +5,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.ehelp.R;
 
@@ -17,8 +18,11 @@ public class ChangepasswordActivity extends ActionBarActivity {
         setContentView(R.layout.activity_changepassword);
         //set toolbar
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        mToolbar.setTitle("修改密码");
+        //mToolbar.setTitle("");
         setSupportActionBar(mToolbar);
+        TextView tvv =(TextView) findViewById(R.id.titlefortoolbar);
+        tvv.setText("修改密码");
+
         //click on confirm button and finish this page
         Button confirm = (Button)findViewById(R.id.accountsafe_change_password10);
         confirm.setOnClickListener(new View.OnClickListener() {

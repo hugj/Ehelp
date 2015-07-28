@@ -88,4 +88,5 @@
     <string name="title_activity_changepassword">ChangepasswordActivity</string>
     <string name="action_search">Search</string>
     <string name="title_activity_changephone">ChangephoneActivity</string>
+    <string name="title_activity_add_friend">AddFriendActivity</string>
 </resources>

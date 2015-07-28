@@ -46,8 +46,10 @@ public class ChangephoneActivity extends ActionBarActivity implements View.OnCli
         setContentView(R.layout.activity_changephone);
         //set toolbar
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        mToolbar.setTitle("更改绑定账号");
+        //mToolbar.setTitle("");
         setSupportActionBar(mToolbar);
+        TextView tvv =(TextView) findViewById(R.id.titlefortoolbar);
+        tvv.setText("更改绑定账号");
         
         init();
     }

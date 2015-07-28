@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.RatingBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ehelp.R;
@@ -71,8 +72,11 @@ public class Comment extends AIActionBarActivity implements RapidFloatingActionC
 
         //set toolbar
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        mToolbar.setTitle("                      评价");
+        //mToolbar.setTitle("                 评价");
         setSupportActionBar(mToolbar);
+        TextView tvv =(TextView) findViewById(R.id.titlefortoolbar);
+        tvv.setText("评价");
+
 
         //添加按钮事件
         Button button  =(Button)findViewById(R.id.button_comment_send);
@@ -178,7 +182,7 @@ public class Comment extends AIActionBarActivity implements RapidFloatingActionC
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_recieve_help_ans_map, menu);
+        getMenuInflater().inflate(R.menu.menu_comment, menu);
         return true;
     }
     @Override

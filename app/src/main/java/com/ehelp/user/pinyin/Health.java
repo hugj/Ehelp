@@ -35,8 +35,10 @@ public class Health extends ActionBarActivity {
 
         //set toolbar
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        mToolbar.setTitle("健康卡");
+        //mToolbar.setTitle("");
         setSupportActionBar(mToolbar);
+        TextView tvv =(TextView) findViewById(R.id.titlefortoolbar);
+        tvv.setText("健康卡");
         //click on edit
         RelativeLayout myLay = (RelativeLayout) findViewById(R.id.allergy);
         myLay.setOnClickListener(new View.OnClickListener() {
