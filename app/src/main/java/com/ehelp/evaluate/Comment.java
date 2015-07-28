@@ -1,43 +1,74 @@
 package com.ehelp.evaluate;
 
-import android.app.Activity;
+import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
+import android.os.StrictMode;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ExpandableListView;
 import android.widget.RatingBar;
 import android.widget.Toast;
 
 import com.ehelp.R;
+import com.ehelp.send.SendQuestion;
+import com.ehelp.send.SendSOS;
+import com.ehelp.user.pinyin.AssortView;
+import com.ehelp.user.pinyin.PinyinAdapter;
+import com.wangjie.androidbucket.utils.ABTextUtil;
+import com.wangjie.androidbucket.utils.imageprocess.ABShape;
+import com.wangjie.androidinject.annotation.annotations.base.AILayout;
+import com.wangjie.androidinject.annotation.annotations.base.AIView;
+import com.wangjie.androidinject.annotation.present.AIActionBarActivity;
+import com.wangjie.rapidfloatingactionbutton.RapidFloatingActionButton;
+import com.wangjie.rapidfloatingactionbutton.RapidFloatingActionHelper;
+import com.wangjie.rapidfloatingactionbutton.RapidFloatingActionLayout;
+import com.wangjie.rapidfloatingactionbutton.contentimpl.labellist.RFACLabelItem;
+import com.wangjie.rapidfloatingactionbutton.contentimpl.labellist.RapidFloatingActionContentLabelList;
+
+import java.util.ArrayList;
+import java.util.List;
 
 //import android.view.View.OnLongClickListener;
 
 /**
  * Created by kyy on 2015/7/19.
  */
-public class Comment extends ActionBarActivity {
+@AILayout(R.layout.activity_comment)
+public class Comment extends AIActionBarActivity implements RapidFloatingActionContentLabelList.OnRapidFloatingActionContentLabelListListener {
+    @AIView(R.id.label_list_sample_rfal)
+    private RapidFloatingActionLayout rfaLayout;
+    @AIView(R.id.label_list_sample_rfab)
+    private RapidFloatingActionButton rfaButton;
+    private RapidFloatingActionHelper rfabHelper;
+    private Toolbar mToolbar;
     static int starnum = 1;//public static int starnumm =1;
 
-    private Toolbar mToolbar;
+    private PinyinAdapter adapter;
+    private ExpandableListView eListView;
+    private AssortView assortView;
+    private List<String> names;
+
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        init();
+    }
 
-        //setContentView(R.layout.fragment_activity);}
-
-        //requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
-        setContentView(R.layout.activity_comment);
-        //getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.title);
-        //http://www.cnblogs.com/salam/archive/2010/11/30/1892143.html
-
-        //button1.setOnClickListener(new button1());
+    private void init() {
+        StrictMode.setThreadPolicy(
+                new StrictMode.ThreadPolicy.Builder().
+                        detectDiskReads().detectDiskWrites().detectNetwork().penaltyLog().build());
+        StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder().
+                detectLeakedSqlLiteObjects().detectLeakedClosableObjects().
+                penaltyLog().penaltyDeath().build());
 
         //set toolbar
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        mToolbar.setTitle("评价");
+        mToolbar.setTitle("                      评价");
         setSupportActionBar(mToolbar);
 
         //添加按钮事件
@@ -54,7 +85,7 @@ public class Comment extends ActionBarActivity {
             }
         });
         RatingBar ratBar = (RatingBar)findViewById(R.id.ratingBar);
-        ratBar.setStepSize (1);//步进为1
+        ratBar.setStepSize(1);//步进为1
         ratBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
             @Override
             public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
@@ -63,7 +94,71 @@ public class Comment extends ActionBarActivity {
             }
         });
 
+        //FAB
+        RapidFloatingActionContentLabelList rfaContent = new RapidFloatingActionContentLabelList(context);
+        rfaContent.setOnRapidFloatingActionContentLabelListListener(this);
+        List<RFACLabelItem> items = new ArrayList<>();
+        items.add(new RFACLabelItem<Integer>()
+                        .setLabel("求救")
+                        .setResId(R.mipmap.ic_launcher)
+                        .setIconNormalColor(0xffd84315)
+                        .setIconPressedColor(0xffbf360c)
+                        .setWrapper(0)
+        );
+        items.add(new RFACLabelItem<Integer>()
+                        .setLabel("求助")
+//                        .setResId(R.mipmap.ico_test_c)
+                        .setDrawable(getResources().getDrawable(R.mipmap.ic_launcher))
+                        .setIconNormalColor(0xff4e342e)
+                        .setIconPressedColor(0xff3e2723)
+                        .setLabelColor(Color.WHITE)
+                        .setLabelSizeSp(14)
+                        .setLabelBackgroundDrawable(ABShape.generateCornerShapeDrawable(0xaa000000, ABTextUtil.dip2px(context, 4)))
+                        .setWrapper(1)
+        );
+        items.add(new RFACLabelItem<Integer>()
+                        .setLabel("提问")
+                        .setResId(R.mipmap.ic_launcher)
+                        .setIconNormalColor(0xff056f00)
+                        .setIconPressedColor(0xff0d5302)
+                        .setLabelColor(0xff056f00)
+                        .setWrapper(2)
+        );
+        rfaContent
+                .setItems(items)
+                .setIconShadowRadius(ABTextUtil.dip2px(context, 5))
+                .setIconShadowColor(0xff888888)
+                .setIconShadowDy(ABTextUtil.dip2px(context, 5))
+        ;
+
+        rfabHelper = new RapidFloatingActionHelper(
+                context,
+                rfaLayout,
+                rfaButton,
+                rfaContent
+        ).build();
     }
+    @Override
+    public void onRFACItemLabelClick(int position, RFACLabelItem item) {
+        showToastMessage("clicked label: " + position);
+        rfabHelper.toggleContent();
+    }
+
+    @Override
+    public void onRFACItemIconClick(int position, RFACLabelItem item) {
+        if (position == 0) {
+            Intent intent = new Intent(this, SendSOS.class);
+            startActivity(intent);
+        } else
+        if (position == 1) {
+            showToastMessage("您正在求助界面");
+        } else {
+            Intent intent = new Intent(this, SendQuestion.class);
+            startActivity(intent);
+        }
+        rfabHelper.toggleContent();
+    }
+
 
     //写一个返回星级INT类型的函数。
     /*public void btn_Listener(View v){
