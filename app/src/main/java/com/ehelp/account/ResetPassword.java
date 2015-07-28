@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.ehelp.R;
+import com.ehelp.utils.MD5;
 import com.ehelp.utils.RequestHandler;
 
 import org.json.JSONException;
@@ -80,38 +81,62 @@ public class ResetPassword extends ActionBarActivity {
         password = Epassword.getText().toString();
         Epassword2 = (EditText)findViewById(R.id.edit_password2);
         password2 = Epassword2.getText().toString();
+        // 在后台线程上进行联网验证
+        new Thread(runnable).start();
+    }
+
+    private void resetPassword_help() {
         if ((!password2.isEmpty()) &&(!password.isEmpty())) {
             if (password.length() < 6) {
-                Toast.makeText(getApplicationContext(), "密码应不少于6位",
-                        Toast.LENGTH_SHORT).show();
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(getApplicationContext(), "密码应不少于6位",
+                                Toast.LENGTH_SHORT).show();
+                    }
+                });
                 return;
             }
             if (!password.equals(password2)) {
-                Toast.makeText(getApplicationContext(), "密码不一致",
-                        Toast.LENGTH_SHORT).show();
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(getApplicationContext(), "密码不一致",
+                                Toast.LENGTH_SHORT).show();
+                    }
+                });
                 return;
             }
             String jsonStrng = "{" +
                     "\"account\":\"" + account + "\"," +
                     "\"password\":\"\"" +  "}";
-            //String jsonStrng = "";
             String message = RequestHandler.sendPostRequest(
                     "http://120.24.208.130:1501/account/login", jsonStrng);
             if (message == "false") {
-                Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
-                        Toast.LENGTH_SHORT).show();
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
+                                Toast.LENGTH_SHORT).show();
+                    }
+                });
                 return;
             }
             String salt;
             try {
                 JSONObject jO = new JSONObject(message);
                 if (jO.getInt("status") == 500) {
-                    Toast.makeText(getApplicationContext(), "用户名未注册",
-                            Toast.LENGTH_SHORT).show();
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(getApplicationContext(), "用户名未注册",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    });
                     return;
                 }
                 salt = jO.getString("salt");
-                String password2 = MD5.MD5_encode(password, salt);
+                String password2 = MD5.MD5_encode(MD5.MD5_encode(password, ""), salt);
                 jsonStrng = "{" +
                         "\"account\":\"" + account + "\"," +
                         "\"password\":\"" + password2 + "\"," +
@@ -119,28 +144,56 @@ public class ResetPassword extends ActionBarActivity {
                 message = RequestHandler.sendPostRequest(
                         "http://120.24.208.130:1501/account/modify_password", jsonStrng);
                 if (message == "false") {
-                    Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
-                            Toast.LENGTH_SHORT).show();
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    });
                     return;
                 }
                 jO = new JSONObject(message);
                 if (jO.getInt("status") == 500) {
-                    Toast.makeText(getApplicationContext(), "修改失败",
-                            Toast.LENGTH_SHORT).show();
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(getApplicationContext(), "提交密码与当前密码相同，修改失败",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    });
+
                 }
                 else {
-                    Toast.makeText(getApplicationContext(), "修改成功,请重新登录",
-                            Toast.LENGTH_SHORT).show();
-                    // 销毁该页面，即可返回到login界面
-                    ResetPassword.this.finish();
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(getApplicationContext(), "修改成功,请重新登录",
+                                    Toast.LENGTH_SHORT).show();
+                            // 销毁该页面，即可返回到login界面
+                            ResetPassword.this.finish();
+                        }
+                    });
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
             }
         } else {
-            Toast.makeText(getApplicationContext(), "新密码不能为空",
-                    Toast.LENGTH_SHORT).show();
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(getApplicationContext(), "新密码不能为空",
+                            Toast.LENGTH_SHORT).show();
+                }
+            });
         }
     }
+
+    Runnable runnable = new Runnable() {
+        @Override
+        public void run() {
+            resetPassword_help();
+        }
+    };
 
 }

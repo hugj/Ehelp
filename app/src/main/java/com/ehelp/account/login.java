@@ -13,12 +13,11 @@ import android.widget.Toast;
 
 import com.ehelp.R;
 import com.ehelp.home.Home;
+import com.ehelp.utils.MD5;
 import com.ehelp.utils.RequestHandler;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
-//import android.widget.Toolbar;
 
 
 public class login extends ActionBarActivity {
@@ -28,12 +27,19 @@ public class login extends ActionBarActivity {
     private EditText Eaccount;
     private String password;
     private String account;
+    private String jsonStrng;
+    private String message;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
        // Intent intent = getIntent();
         setContentView(R.layout.activity_login);
+        init();
+    }
+
+    // 完成初始化
+    private void init() {
         //set toolbar
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         mToolbar.setTitle("登录");
@@ -41,18 +47,6 @@ public class login extends ActionBarActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        init();
-    }
-
-    private void init() {
-        // 使用后台线程运行网络连接功能
-        StrictMode.setThreadPolicy(
-                new StrictMode.ThreadPolicy.Builder().
-                        detectDiskReads().detectDiskWrites().detectNetwork().penaltyLog().build());
-        StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder().
-                detectLeakedSqlLiteObjects().detectLeakedClosableObjects().
-                penaltyLog().penaltyDeath().build());
-
 
     }
 
@@ -96,28 +90,53 @@ public class login extends ActionBarActivity {
         Epassword = (EditText)findViewById(R.id.edit_password);
         account = Eaccount.getText().toString();
         password = Epassword.getText().toString();
+        // 在后台线程操作用户登录验证
+        new Thread(runnable).start();
+    }
+
+    Runnable runnable = new Runnable() {
+        @Override
+        public void run() {
+            login_help();
+        }
+    };
+
+    // 用户验证过程
+    private void login_help() {
         if ((!account.isEmpty()) &&(!password.isEmpty())) {
-            String jsonStrng = "{" +
+            jsonStrng = "{" +
                     "\"account\":\"" + account + "\"," +
                     "\"password\":\"\"" +  "}";
-            //String jsonStrng = "";
-            String message = RequestHandler.sendPostRequest(
+
+            message = RequestHandler.sendPostRequest(
                     "http://120.24.208.130:1501/account/login", jsonStrng);
             if (message == "false") {
-                Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
-                        Toast.LENGTH_SHORT).show();
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
+                                Toast.LENGTH_SHORT).show();
+                    }
+                });
                 return;
             }
             String salt;
             try {
                 JSONObject jO = new JSONObject(message);
                 if (jO.getInt("status") == 500) {
-                    Toast.makeText(getApplicationContext(), "用户未注册",
-                            Toast.LENGTH_SHORT).show();
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(getApplicationContext(), "用户未注册",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    });
+//                    Toast.makeText(getApplicationContext(), "用户未注册",
+//                            Toast.LENGTH_SHORT).show();
                     return;
                 }
                 salt = jO.getString("salt");
-                String password2 = MD5.MD5_encode(password, salt);
+                String password2 = MD5.MD5_encode(MD5.MD5_encode(password, ""), salt);
                 jsonStrng = "{" +
                         "\"account\":\"" + account + "\"," +
                         "\"password\":\"" + password2 + "\"," +
@@ -125,30 +144,49 @@ public class login extends ActionBarActivity {
                 message = RequestHandler.sendPostRequest(
                         "http://120.24.208.130:1501/account/login", jsonStrng);
                 if (message == "false") {
-                    Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
-                            Toast.LENGTH_SHORT).show();
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    });
                     return;
                 }
                 jO = new JSONObject(message);
                 if (jO.getInt("status") == 500) {
-                    Toast.makeText(getApplicationContext(), "密码错误，登录失败",
-                            Toast.LENGTH_SHORT).show();
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(getApplicationContext(), "密码错误，登录失败",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    });
                 }
                 else {
-                    String user_id = jO.getString("id");
-                    Toast.makeText(getApplicationContext(), "登录成功, 用户id:" + user_id,
-                            Toast.LENGTH_SHORT).show();
-                    Intent it = new Intent(this, Home.class);
-                    startActivity(it);
-                    login.this.finish();
+                    final String user_id = jO.getString("id");
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(getApplicationContext(), "登录成功, 用户id:" + user_id,
+                                    Toast.LENGTH_SHORT).show();
+                            Intent it = new Intent(login.this, Home.class);
+                            startActivity(it);
+                            login.this.finish();
+                        }
+                    });
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
             }
         } else {
-            Toast.makeText(getApplicationContext(), "用户名或密码不能为空",
-                    Toast.LENGTH_SHORT).show();
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(getApplicationContext(), "用户名或密码不能为空",
+                            Toast.LENGTH_SHORT).show();
+                }
+            });
         }
     }
-
 }
