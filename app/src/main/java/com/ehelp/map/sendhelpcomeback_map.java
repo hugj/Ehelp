@@ -310,7 +310,7 @@ public class sendhelpcomeback_map extends ActionBarActivity implements BaiduMap.
     public boolean onMapPoiClick(MapPoi poi) {
         return false;
     }
-//设置TOOLBAR
+/*/设置TOOLBAR
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -333,7 +333,7 @@ public class sendhelpcomeback_map extends ActionBarActivity implements BaiduMap.
     }
 
 
-//toolbar设置结束
+//toolbar设置结束*/
 
 //    @Override
 //    protected void onPause() {

@@ -51,7 +51,7 @@ public class RegisterPassword extends ActionBarActivity {
         mToolbar.setTitle("注册新用户");
         setSupportActionBar(mToolbar);
     }
-
+/*
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -73,7 +73,7 @@ public class RegisterPassword extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
-
+*/
 
     public void signUp(View view) {
         Epassword = (EditText)findViewById(R.id.edit_password);

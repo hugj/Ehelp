@@ -1,8 +1,11 @@
 package com.ehelp.user.pinyin;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.RelativeLayout;
@@ -13,7 +16,7 @@ import com.ehelp.R;
 
 import java.util.Calendar;
 
-public class Health extends Activity {
+public class Health extends ActionBarActivity {
 
     private AlertDialog EditnameDialog = null;
     private AlertDialog EditlocationDialog = null;
@@ -22,10 +25,18 @@ public class Health extends Activity {
     private TextView edt = null;
     private RelativeLayout brithday_edit = null;
     private Calendar c = null;
+
+    //TOOLbar
+    private Toolbar mToolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_health);
+
+        //set toolbar
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        mToolbar.setTitle("健康卡");
+        setSupportActionBar(mToolbar);
         //click on edit
         RelativeLayout myLay = (RelativeLayout) findViewById(R.id.allergy);
         myLay.setOnClickListener(new View.OnClickListener() {

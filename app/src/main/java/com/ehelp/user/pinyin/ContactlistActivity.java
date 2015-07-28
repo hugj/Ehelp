@@ -212,7 +212,7 @@ public class ContactlistActivity extends AIActionBarActivity implements RapidFlo
         super.onResume();
     }
 
-
+//toolbar设置
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -229,8 +229,10 @@ public class ContactlistActivity extends AIActionBarActivity implements RapidFlo
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            //添加好友。跳转至添加好友页面
             return true;
         }
         return super.onOptionsItemSelected(item);
     }
+    //toolbar设置结束
 }

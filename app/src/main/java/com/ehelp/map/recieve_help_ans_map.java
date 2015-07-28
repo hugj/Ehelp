@@ -344,7 +344,7 @@ public class recieve_help_ans_map extends ActionBarActivity implements BaiduMap.
         //noinspection SimplifiableIfStatement
         if ((id == R.id.action_ans)&&item.getTitle().toString().equals("回应")){
             item.setTitle("取消回应");
-            return super.onOptionsItemSelected(item);
+            return true;
         }
         if ((id == R.id.action_ans)&&(item.getTitle() =="取消回应")) {
 
@@ -353,7 +353,7 @@ public class recieve_help_ans_map extends ActionBarActivity implements BaiduMap.
             //it.setIcon(.....);无法改变图标就访问http://www.dewen.io/q/5332/寻找答案。
             //Intent intent = new Intent(this, ContactlistActivity.class);
             //startActivity(intent);
-            return super.onOptionsItemSelected(item);
+            return true;
 
         }
         return super.onOptionsItemSelected(item);

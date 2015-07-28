@@ -186,12 +186,12 @@
         <activity
             android:name=".user.pinyin.homepageActivity"
             android:label="@string/title_activity_homepage"
-            android:parentActivityName=".account.login">
+            android:parentActivityName=".home.Home">
         </activity>
         <activity
             android:name=".user.pinyin.messageActivity"
             android:label="@string/title_activity_message"
-            android:parentActivityName=".home.Home">
+            android:parentActivityName=".user.pinyin.ContactlistActivity">
         </activity>
         <activity
             android:name=".user.pinyin.SettingActivity"
@@ -201,12 +201,12 @@
         <activity
             android:name=".user.pinyin.AccountsafeActivity"
             android:label="@string/title_activity_accountsafe"
-            android:parentActivityName=".home.Home">
+            android:parentActivityName=".user.pinyin.SettingActivity">
         </activity>
         <activity
             android:name=".user.pinyin.ChangepasswordActivity"
             android:label="@string/title_activity_changepassword"
-            android:parentActivityName=".account.login">
+            android:parentActivityName=".user.pinyin.AccountsafeActivity">
         </activity>
         <activity
             android:name=".map.recievehelp_map"
@@ -241,12 +241,13 @@
         </activity>
         <activity
             android:name=".account.RegisterPassword"
-            android:label="@string/title_activity_register_password" >
+            android:label="@string/title_activity_register_password"
+            android:parentActivityName=".account.login">
         </activity>
         <activity
             android:name=".user.pinyin.Health"
             android:label="@string/title_activity_health"
-            android:parentActivityName=".account.login">
+            android:parentActivityName=".home.Home">
         </activity>
         <activity
             android:name=".receive.QuestionDetail"
@@ -293,7 +294,8 @@
         </activity>
         <activity
             android:name=".user.pinyin.ChangephoneActivity"
-            android:label="@string/title_activity_changephone" >
+            android:label="@string/title_activity_changephone"
+            android:parentActivityName=".user.pinyin.AccountsafeActivity">
         </activity>
     </application>
 

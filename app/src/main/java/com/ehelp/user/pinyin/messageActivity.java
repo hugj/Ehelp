@@ -120,6 +120,8 @@ public class messageActivity extends ActionBarActivity {
         });
         delete.create().show();
     }
+
+    /*/toolbar设置 此页面无需右上角按钮
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -134,4 +136,5 @@ public class messageActivity extends ActionBarActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+    //设置完毕*/
 }

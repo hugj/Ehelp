@@ -135,7 +135,7 @@ public class QuestionDetail extends AIActionBarActivity implements RapidFloating
         }
         rfabHelper.toggleContent();
     }
-
+//toolbar右上角键设置
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -152,14 +152,15 @@ public class QuestionDetail extends AIActionBarActivity implements RapidFloating
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            //跳转至回答页面
+        if (id == R.id.action_ans) {
+            //点击添加回答
             return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
-
+//设置完毕
+    /*
     private Toolbar.OnMenuItemClickListener onMenuItemClick = new Toolbar.OnMenuItemClickListener() {
         @Override
         public boolean onMenuItemClick(MenuItem menuItem) {
@@ -171,5 +172,5 @@ public class QuestionDetail extends AIActionBarActivity implements RapidFloating
             }
             return true;
         }
-    };
+    };*/
 }
