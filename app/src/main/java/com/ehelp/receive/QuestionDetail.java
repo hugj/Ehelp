@@ -68,7 +68,7 @@ public class QuestionDetail extends AIActionBarActivity implements RapidFloating
 
         //set toolbar
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        //mToolbar.setTitle("");
+        mToolbar.setTitle("");
         //getActionBar().setDisplayHomeAsUpEnabled(true);
         setSupportActionBar(mToolbar);
         TextView tvv =(TextView) findViewById(R.id.titlefortoolbar);

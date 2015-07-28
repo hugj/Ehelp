@@ -68,7 +68,7 @@ public class sendhelp_map extends ActionBarActivity implements
 
         //set toolbar
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        //mToolbar.setTitle("");
+        mToolbar.setTitle("");
         setSupportActionBar(mToolbar);
         TextView tvv =(TextView) findViewById(R.id.titlefortoolbar);
         tvv.setText("选择求助地点");

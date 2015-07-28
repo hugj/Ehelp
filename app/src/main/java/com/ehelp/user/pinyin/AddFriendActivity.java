@@ -20,7 +20,7 @@ public class AddFriendActivity extends ActionBarActivity {
         setContentView(R.layout.activity_add_friend);
         //set toolbar
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        //mToolbar.setTitle("");
+        mToolbar.setTitle("");
         setSupportActionBar(mToolbar);
         TextView tvv =(TextView) findViewById(R.id.titlefortoolbar);
         tvv.setText("添加好友");

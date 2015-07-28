@@ -100,7 +100,7 @@ public class recieve_help_ans_map extends ActionBarActivity implements BaiduMap.
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         //mToolbar.setNavigationIcon(R.drawable.mm_submenu_normal);//设置图标样式,已经在toolbar.xml统一设过了
 
-       // mToolbar.setTitle("");
+        mToolbar.setTitle("");
 
         setSupportActionBar(mToolbar);
         TextView tvv =(TextView) findViewById(R.id.titlefortoolbar);

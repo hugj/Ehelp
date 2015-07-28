@@ -240,7 +240,6 @@
 
         <activity
             android:name=".evaluate.Comment"
-            android:label="@string/title_activity_comment"
             android:parentActivityName=".account.login" >
         </activity>
         <activity
@@ -313,7 +312,6 @@
         </activity>
         <activity
             android:name=".user.pinyin.AddFriendActivity"
-            android:label="@string/title_activity_add_friend"
             android:parentActivityName=".user.pinyin.ContactlistActivity">
         </activity>
     </application>
