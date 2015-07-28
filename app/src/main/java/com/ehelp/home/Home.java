@@ -43,6 +43,12 @@ import java.util.List;
 
 import cn.jpush.android.api.JPushInterface;
 
+import android.os.StrictMode;
+
+import com.ehelp.utils.RequestHandler;
+import org.json.JSONObject;
+import org.json.JSONException;
+
 @AILayout(R.layout.activity_home)
 public class Home extends AIActionBarActivity implements RapidFloatingActionContentLabelList.OnRapidFloatingActionContentLabelListListener {
     @AIView(R.id.label_list_sample_rfal)
@@ -64,6 +70,14 @@ public class Home extends AIActionBarActivity implements RapidFloatingActionCont
     }
 
     private void init() {
+        // 使用后台线程运行网络连接功能
+        StrictMode.setThreadPolicy(
+                new StrictMode.ThreadPolicy.Builder().
+                        detectDiskReads().detectDiskWrites().detectNetwork().penaltyLog().build());
+        StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder().
+                detectLeakedSqlLiteObjects().detectLeakedClosableObjects().
+                penaltyLog().penaltyDeath().build());
+
         //极光推送初始化
         JPushInterface.setDebugMode(true);
         JPushInterface.init(this);
@@ -113,8 +127,8 @@ public class Home extends AIActionBarActivity implements RapidFloatingActionCont
                 rfaContent
         ).build();
 
-        String str = JPushInterface.getRegistrationID(getApplicationContext());
-
+        //获取reg id
+        //get_rid();
     }
     @Override
     public void onRFACItemLabelClick(int position, RFACLabelItem item) {
@@ -298,5 +312,32 @@ public class Home extends AIActionBarActivity implements RapidFloatingActionCont
         }
 
     }
+
+    /*private void get() {
+        String identity_id = JPushInterface.getRegistrationID(getApplicationContext());
+
+        String jsonString = "{" + "\"id\":\""+ id +"\"," + "\"identity_id\":\"" + identity_id + "\"" + "}";
+        String msg = RequestHandler.sendPostRequest("http://120.24.208.130:1501/user/modify_information", jsonString);
+        if (msg == "false") {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
+                            Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+
+    }
+    Runnable runnable = new Runnable() {
+        @Override
+        public void run() {
+            get();
+        }
+    };
+    public void get_rid() {
+        new Thread(runnable).start();
+    }*/
+
 
 }
