@@ -11,7 +11,7 @@ import android.widget.Toast;
 import com.ehelp.R;
 import com.ehelp.account.login;
 
-public class SettingActivity extends ActionBarActivity {
+public class SettingActivity extends ActionBarActivity implements OnChangedListener{
     //TOOLbar
     private Toolbar mToolbar;
 
@@ -20,21 +20,23 @@ public class SettingActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
 
-
-
         //set toolbar
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         mToolbar.setTitle("设置");
         setSupportActionBar(mToolbar);
+
+        SlipButton myBtn = (SlipButton)findViewById(R.id.accept_push_or_not);
+        myBtn.SetOnChangedListener(this);
+
     }
-    /*@Override
+    @Override
     public void OnChanged(boolean CheckState) {//当按钮状态被改变时
         // TODO Auto-generated method stub
         if(CheckState)
             Toast.makeText(this, "打开推送消息.", Toast.LENGTH_SHORT).show();
         else
             Toast.makeText(this,"关闭推送消息" , Toast.LENGTH_SHORT).show();
-    }*/
+    }
 
     //点击跳转到账户与安全界面
     public void Accountsafe_page_click (View v) {
