@@ -63,6 +63,10 @@ import java.net.URL;
 //严苛模式
 import android.os.StrictMode;
 
+import com.ehelp.utils.RequestHandler;
+
+
+
 public class sendsos_map extends ActionBarActivity implements BaiduMap.OnMapClickListener,
         OnGetRoutePlanResultListener {
 
@@ -109,7 +113,7 @@ public class sendsos_map extends ActionBarActivity implements BaiduMap.OnMapClic
         setContentView(R.layout.activity_sendsos_map);
 
         //推送求救信息
-        sendPostRequest("https://api.jpush.cn/v3/push", "{\"platform\":\"all\",\"audience\":\"all\",\"notification\":{\"alert\":\"有人正在求救！\"}}");
+        sendPush();
 
         this.vibandsp();
         //sp = new SoundPool(10, AudioManager.STREAM_SYSTEM, 5);
@@ -461,13 +465,35 @@ public class sendsos_map extends ActionBarActivity implements BaiduMap.OnMapClic
         //sp.play(1, 1, 1, 0, -1, 1);
     }
 
+    public void sendPush() {
+        StrictMode.setThreadPolicy(
+                new StrictMode.ThreadPolicy.Builder().
+                        detectDiskReads().detectDiskWrites().detectNetwork().penaltyLog().build());
+        StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder().
+                detectLeakedSqlLiteObjects().detectLeakedClosableObjects().
+                penaltyLog().penaltyDeath().build());
+
+        new Thread(runnable).start();
+    }
+
+    Runnable runnable = new Runnable() {
+        @Override
+        public void run() {
+            sendPush_();
+        }
+    };
+
+    private void sendPush_() {
+        sendPostRequest("https://api.jpush.cn/v3/push", "{\"platform\":\"all\",\"audience\":\"all\",\"notification\":{\"alert\":\"有人正在求救！\"}}");
+    }
+
     //极光推送
     public static String sendPostRequest(String urlString, String jsondata){
 
         try {
 
-            StrictMode.ThreadPolicy policy=new StrictMode.ThreadPolicy.Builder().permitAll().build();
-            StrictMode.setThreadPolicy(policy);
+            //StrictMode.ThreadPolicy policy=new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            //StrictMode.setThreadPolicy(policy);
 
             URL url = new URL(urlString);
             HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();

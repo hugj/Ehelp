@@ -1,5 +1,6 @@
 package com.ehelp.home;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -321,7 +322,13 @@ public class Home extends AIActionBarActivity implements RapidFloatingActionCont
 
     }
 
-    /*private void get() {
+    /*private void get_rid_() {
+        SharedPreferences spf = getApplicationContext().getSharedPreferences("user_id", Context.MODE_PRIVATE);
+        String id = spf.getString("user_id", "default");
+        if (id == "default") {
+            Toast.makeText(getApplicationContext(), "id获取失败", Toast.LENGTH_LONG).show();
+        }
+
         String identity_id = JPushInterface.getRegistrationID(getApplicationContext());
 
         String jsonString = "{" + "\"id\":\""+ id +"\"," + "\"identity_id\":\"" + identity_id + "\"" + "}";
@@ -335,12 +342,11 @@ public class Home extends AIActionBarActivity implements RapidFloatingActionCont
                 }
             });
         }
-
     }
     Runnable runnable = new Runnable() {
         @Override
         public void run() {
-            get();
+            get_rid_();
         }
     };
     public void get_rid() {
