@@ -2,7 +2,7 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"-->
 
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
@@ -10,6 +10,7 @@
     android:layout_height="match_parent"
 
     >
+    <include layout="@layout/toolbar" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -91,5 +92,5 @@
 
         android:layout_alignEnd="@+id/textView" />
     <!--android:onClick="btn_Listener"android:layout_below="@+id/imageButton3"-->
-</RelativeLayout>
+</LinearLayout>
     <!--/LinearLayout-->

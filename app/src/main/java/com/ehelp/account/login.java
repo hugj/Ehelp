@@ -49,7 +49,7 @@ public class login extends ActionBarActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
     }
-
+/*登录页右上角无需按钮
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -71,7 +71,7 @@ public class login extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
-
+*/
     public void signUp(View view) {
         // Do something in response to button
         Intent intent = new Intent(this, SignUp.class);

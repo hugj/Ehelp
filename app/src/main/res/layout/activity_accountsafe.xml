@@ -3,6 +3,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="#ddd">
+    <include layout="@layout/toolbar" />
+
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="50dp"

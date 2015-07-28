@@ -4,4 +4,6 @@
 
     <item android:id="@+id/action_ans" android:title="回答"
         android:orderInCategory="100" app:showAsAction="ifRoom" />
+    <!--属性说明：orderInCategory优先级，决定先显示哪个、showAsAction：always总是显示never不显示。。。icon图片、
+    android:showAsAction="ifRoom|withText"有空间的时候同时显示title标题-->
 </menu>

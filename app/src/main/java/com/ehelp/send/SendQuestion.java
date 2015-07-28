@@ -147,6 +147,7 @@ public class SendQuestion extends AIActionBarActivity implements RapidFloatingAc
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            //点击发送之后将问题信息传至数据库，跳转进入详情页
             return true;
         }
 

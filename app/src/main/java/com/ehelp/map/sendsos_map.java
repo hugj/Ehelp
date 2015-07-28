@@ -355,6 +355,8 @@ public class sendsos_map extends ActionBarActivity implements BaiduMap.OnMapClic
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            MenuItem it =(MenuItem)findViewById(R.id.action_ans);
+            it.setTitle("取消回应");
             return true;
         }
 
@@ -364,7 +366,7 @@ public class sendsos_map extends ActionBarActivity implements BaiduMap.OnMapClic
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_send_help, menu);
+        getMenuInflater().inflate(R.menu.menu_sendsos_map, menu);
         return true;
     }
     //toolbar设置结束

@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,10 +18,19 @@ public class messageActivity extends ActionBarActivity {
 
     private RelativeLayout myLay = null;
     private AlertDialog myDialog = null;
+
+    //TOOLbar
+    private Toolbar mToolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_message);
+
+        //set toolbar
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        mToolbar.setTitle("详细资料");
+        setSupportActionBar(mToolbar);
+
         //click on set name
         myLay = (RelativeLayout) findViewById(R.id.detail_setname);
         myLay.setOnClickListener(new View.OnClickListener() {
