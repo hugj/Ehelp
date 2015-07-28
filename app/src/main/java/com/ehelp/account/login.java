@@ -5,8 +5,6 @@ import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -47,7 +45,13 @@ public class login extends ActionBarActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-
+        // 使用后台线程运行网络连接功能
+        StrictMode.setThreadPolicy(
+                new StrictMode.ThreadPolicy.Builder().
+                        detectDiskReads().detectDiskWrites().detectNetwork().penaltyLog().build());
+        StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder().
+                detectLeakedSqlLiteObjects().detectLeakedClosableObjects().
+                penaltyLog().penaltyDeath().build());
     }
 /*登录页右上角无需按钮
     @Override
@@ -189,4 +193,5 @@ public class login extends ActionBarActivity {
             });
         }
     }
+
 }
