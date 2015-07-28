@@ -33,6 +33,7 @@
             android:layout_height="wrap_content"
             android:text="解除求救状态"
             android:id="@+id/button7"
+            android:onClick="Stopvands"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true" />
         
