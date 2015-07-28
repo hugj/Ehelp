@@ -96,7 +96,7 @@ public class recievesos_map extends ActionBarActivity implements BaiduMap.OnMapC
 
         //set toolbar
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        //mToolbar.setTitle("求救信息详情");
+        mToolbar.setTitle("求救信息详情");
         setSupportActionBar(mToolbar);
 
         init();
@@ -192,17 +192,27 @@ public class recievesos_map extends ActionBarActivity implements BaiduMap.OnMapC
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        if ((id == R.id.action_settings)&&item.getTitle().toString().equals("回应")){
+            item.setTitle("取消回应");
+            return super.onOptionsItemSelected(item);
         }
+        if ((id == R.id.action_settings)&&(item.getTitle() =="取消回应")) {
 
+            //MenuItem it =menu.findItem(R.id.action_ans);
+            item.setTitle("回应");
+            //it.setIcon(.....);无法改变图标就访问http://www.dewen.io/q/5332/寻找答案。
+            //Intent intent = new Intent(this, ContactlistActivity.class);
+            //startActivity(intent);
+            return super.onOptionsItemSelected(item);
+
+        }
         return super.onOptionsItemSelected(item);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_send_help, menu);
+        getMenuInflater().inflate(R.menu.menu_recievesos_map, menu);
         return true;
     }
 //toolbar设置结束

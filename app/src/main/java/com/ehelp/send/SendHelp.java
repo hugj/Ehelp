@@ -144,6 +144,7 @@ public class SendHelp extends AIActionBarActivity implements RapidFloatingAction
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            //点击发送按钮后要做的事。
             return true;
         }
 

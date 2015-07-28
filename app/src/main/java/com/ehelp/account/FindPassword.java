@@ -261,7 +261,7 @@ public class FindPassword extends ActionBarActivity implements OnClickListener {
         startActivity(intent);
         FindPassword.this.finish();
     }
-
+/*
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -283,4 +283,5 @@ public class FindPassword extends ActionBarActivity implements OnClickListener {
 
         return super.onOptionsItemSelected(item);
     }
+    */
 }

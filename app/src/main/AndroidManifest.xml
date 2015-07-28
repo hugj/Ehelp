@@ -53,10 +53,11 @@
 
         <activity
             android:name=".account.login"
-            android:label="@string/app_name" >
-            <meta-data
+            android:label="@string/app_name"
+            android:parentActivityName=".Test" >
+            <!--meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.ehelp.Test" />
+                android:value="com.ehelp.Test" /-->
         </activity>
         <activity
             android:name=".account.SignUp"
@@ -67,17 +68,17 @@
             android:name=".account.FindPassword"
             android:label="Find password"
             android:parentActivityName=".account.login" >
-            <meta-data
+            <!--meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.ehelp.account.login" />
+                android:value="com.ehelp.account.login" /-->
         </activity>
         <activity
             android:name=".account.ResetPassword"
             android:label="Reset password"
             android:parentActivityName=".account.login" >
-            <meta-data
+            <!--meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.ehelp.account.login" />
+                android:value="com.ehelp.account.login" /-->
         </activity>
         <!-- Required SDK核心功能 -->
         <activity
@@ -152,13 +153,6 @@
                 android:value="com.ehelp.Test" />
         </activity>
         <activity
-            android:name=".send.SendSOS"
-            android:label="@string/title_activity_send_sos" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.ehelp.Test" />
-        </activity>
-        <activity
             android:name=".send.SendHelp"
             android:label="@string/title_activity_send_help" >
             <meta-data
@@ -177,13 +171,13 @@
         <activity
             android:name=".user.pinyin.ContactlistActivity"
             android:label="@string/title_activity_contactlist"
-            android:parentActivityName=".account.login" >
+            android:parentActivityName=".home.Home" >
 
         <!--android:parentActivityName=".Test" 改变这句话后通讯录的返回键就可以正常返回了。
          android:value="com.ehelp.Test" 下面的meta-data似乎没有什么卵用-->
-            <meta-data
+            <!--meta-data 在这里设置是新页面切入，在上面设置是返回式切入
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.ehelp.Test" />
+                android:value="com.ehelp.home.Home" /-->
         </activity>
         <activity
             android:name=".user.pinyin.adapterchatActivity"
@@ -191,23 +185,28 @@
         </activity>
         <activity
             android:name=".user.pinyin.homepageActivity"
-            android:label="@string/title_activity_homepage" >
+            android:label="@string/title_activity_homepage"
+            android:parentActivityName=".account.login">
         </activity>
         <activity
             android:name=".user.pinyin.messageActivity"
-            android:label="@string/title_activity_message" >
+            android:label="@string/title_activity_message"
+            android:parentActivityName=".home.Home">
         </activity>
         <activity
             android:name=".user.pinyin.SettingActivity"
-            android:label="@string/title_activity_setting" >
+            android:label="@string/title_activity_setting"
+            android:parentActivityName=".home.Home">
         </activity>
         <activity
             android:name=".user.pinyin.AccountsafeActivity"
-            android:label="@string/title_activity_accountsafe" >
+            android:label="@string/title_activity_accountsafe"
+            android:parentActivityName=".home.Home">
         </activity>
         <activity
             android:name=".user.pinyin.ChangepasswordActivity"
-            android:label="@string/title_activity_changepassword" >
+            android:label="@string/title_activity_changepassword"
+            android:parentActivityName=".account.login">
         </activity>
         <activity
             android:name=".map.recievehelp_map"
@@ -228,11 +227,13 @@
 
         <activity
             android:name=".evaluate.Comment"
-            android:label="@string/title_activity_comment" >
+            android:label="@string/title_activity_comment"
+            android:parentActivityName=".account.login">
         </activity>
         <activity
             android:name=".user.Myhistory"
-            android:label="@string/title_activity_myhistory" >
+            android:label="@string/title_activity_myhistory"
+            android:parentActivityName=".account.login">
         </activity>
         <activity
             android:name=".user.pinyin.MessetnameActivity"
@@ -244,11 +245,13 @@
         </activity>
         <activity
             android:name=".user.pinyin.Health"
-            android:label="@string/title_activity_health" >
+            android:label="@string/title_activity_health"
+            android:parentActivityName=".account.login">
         </activity>
         <activity
             android:name=".receive.QuestionDetail"
-            android:label="@string/title_activity_question_detail" >
+            android:label="@string/title_activity_question_detail"
+            android:parentActivityName=".account.login">
         </activity>
         <activity
             android:name=".map.sendhelp_map"
