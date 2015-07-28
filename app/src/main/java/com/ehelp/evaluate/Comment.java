@@ -13,8 +13,9 @@ import android.widget.RatingBar;
 import android.widget.Toast;
 
 import com.ehelp.R;
+import com.ehelp.send.CountNum;
+import com.ehelp.send.SendHelp;
 import com.ehelp.send.SendQuestion;
-import com.ehelp.send.SendSOS;
 import com.ehelp.user.pinyin.AssortView;
 import com.ehelp.user.pinyin.PinyinAdapter;
 import com.wangjie.androidbucket.utils.ABTextUtil;
@@ -140,18 +141,29 @@ public class Comment extends AIActionBarActivity implements RapidFloatingActionC
     }
     @Override
     public void onRFACItemLabelClick(int position, RFACLabelItem item) {
-        showToastMessage("clicked label: " + position);
+        if (position == 0) {
+            Intent intent = new Intent(this, CountNum.class);
+            startActivity(intent);
+        } else
+        if (position == 1) {
+            Intent intent = new Intent(this, SendHelp.class);
+            startActivity(intent);
+        } else {
+            Intent intent = new Intent(this, SendQuestion.class);
+            startActivity(intent);
+        }
         rfabHelper.toggleContent();
     }
 
     @Override
     public void onRFACItemIconClick(int position, RFACLabelItem item) {
         if (position == 0) {
-            Intent intent = new Intent(this, SendSOS.class);
+            Intent intent = new Intent(this, CountNum.class);
             startActivity(intent);
         } else
         if (position == 1) {
-            showToastMessage("您正在求助界面");
+            Intent intent = new Intent(this, SendHelp.class);
+            startActivity(intent);
         } else {
             Intent intent = new Intent(this, SendQuestion.class);
             startActivity(intent);
