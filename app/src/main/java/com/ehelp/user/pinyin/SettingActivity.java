@@ -1,9 +1,12 @@
 package com.ehelp.user.pinyin;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.os.StrictMode;
+import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Toast;
@@ -23,6 +26,7 @@ import com.wangjie.rapidfloatingactionbutton.RapidFloatingActionHelper;
 import com.wangjie.rapidfloatingactionbutton.RapidFloatingActionLayout;
 import com.wangjie.rapidfloatingactionbutton.contentimpl.labellist.RFACLabelItem;
 import com.wangjie.rapidfloatingactionbutton.contentimpl.labellist.RapidFloatingActionContentLabelList;
+import com.ehelp.home.Home;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,13 +47,6 @@ public class SettingActivity extends AIActionBarActivity implements OnChangedLis
     }
 
     private void init() {
-        StrictMode.setThreadPolicy(
-                new StrictMode.ThreadPolicy.Builder().
-                        detectDiskReads().detectDiskWrites().detectNetwork().penaltyLog().build());
-        StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder().
-                detectLeakedSqlLiteObjects().detectLeakedClosableObjects().
-                penaltyLog().penaltyDeath().build());
-
         //set toolbar
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         mToolbar.setTitle("设置");
@@ -149,7 +146,13 @@ public class SettingActivity extends AIActionBarActivity implements OnChangedLis
         startActivity(intent);
     }
     public void exit_click (View v) {
+        SharedPreferences sharedPreferences = this.getSharedPreferences("user_id", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt("user_id", -1);
+        editor.commit();
+
         Intent intent = new Intent(this, login.class);
         startActivity(intent);
+        this.finish();
     }
 }
