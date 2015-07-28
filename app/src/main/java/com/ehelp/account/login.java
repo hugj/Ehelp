@@ -34,6 +34,8 @@ public class login extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        // 查询user_id信息，如已登陆，则user_id存在，跳过登陆直接进入主页
         sharedPref = this.getSharedPreferences("user_id", Context.MODE_PRIVATE);
         int default_ = -1;
         int id;
@@ -177,7 +179,8 @@ public class login extends ActionBarActivity {
                         public void run() {
                             Toast.makeText(getApplicationContext(), "登录成功, 用户id:" + user_id,
                                     Toast.LENGTH_SHORT).show();
-                            // 将用户信息存储，则下次无需登录即可进入主页
+
+                            // 将用户信息存储，以便之后无需登录直接进入主页
                             SharedPreferences.Editor editor = sharedPref.edit();
                             editor.putInt("user_id", user_id);
                             editor.commit();
