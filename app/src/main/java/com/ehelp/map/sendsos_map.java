@@ -90,7 +90,7 @@ public class sendsos_map extends ActionBarActivity implements BaiduMap.OnMapClic
     private Marker mMarker3;
     private Marker mMarker4;
     private InfoWindow mInfoWindow;
-    
+
     //toolbar
     private Toolbar mToolbar;
     
@@ -98,6 +98,10 @@ public class sendsos_map extends ActionBarActivity implements BaiduMap.OnMapClic
     private Button button7;
     //private SoundPool sp;
     private Vibrator vib;
+
+    public void Stopvands(View view) {
+        this.finish();
+    }
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -107,20 +111,9 @@ public class sendsos_map extends ActionBarActivity implements BaiduMap.OnMapClic
         //推送求救信息
         sendPostRequest("https://api.jpush.cn/v3/push", "{\"platform\":\"all\",\"audience\":\"all\",\"notification\":{\"alert\":\"有人正在求救！\"}}");
 
+        this.vibandsp();
         //sp = new SoundPool(10, AudioManager.STREAM_SYSTEM, 5);
         //sp.load(getApplicationContext(), R.raw.alarm, 1);
-        button7 = (Button)findViewById(R.id.button7);
-
-        //调用振动发声
-        this.vibandsp();
-
-        //这个是取消求救按钮，谁接下来开发的记得重新定义
-        button7.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                stopvands();
-            }
-        });
 
         CharSequence titleLable = "路线规划";
         setTitle(titleLable);
@@ -388,10 +381,9 @@ public class sendsos_map extends ActionBarActivity implements BaiduMap.OnMapClic
     protected void onDestroy() {
         mSearch.destroy();
         mMapView.onDestroy();
-        this.stopvands();
+        vib.cancel();
         super.onDestroy();
     }
-
 
     public class MyLocationListenner implements BDLocationListener {
 
@@ -465,12 +457,6 @@ public class sendsos_map extends ActionBarActivity implements BaiduMap.OnMapClic
         //Toast t = Toast.makeText(getApplicationContext(), s, Toast.LENGTH_LONG);
         //t.show();
         //sp.play(1, 1, 1, 0, -1, 1);
-    }
-
-    //停止振动发声
-    private void stopvands() {
-        vib.cancel();
-        //sp.stop(1);
     }
 
     //极光推送

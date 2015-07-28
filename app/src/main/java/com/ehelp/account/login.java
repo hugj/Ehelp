@@ -1,8 +1,9 @@
 package com.ehelp.account;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.StrictMode;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -27,12 +28,21 @@ public class login extends ActionBarActivity {
     private String account;
     private String jsonStrng;
     private String message;
+    private SharedPreferences sharedPref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-       // Intent intent = getIntent();
         setContentView(R.layout.activity_login);
+        sharedPref = this.getSharedPreferences("user_id", Context.MODE_PRIVATE);
+        int default_ = -1;
+        int id;
+        id = sharedPref.getInt("user_id", default_);
+        if (id != -1) {
+            Intent it = new Intent(this, Home.class);
+            startActivity(it);
+            login.this.finish();
+        }
         init();
     }
 
@@ -168,12 +178,17 @@ public class login extends ActionBarActivity {
                     });
                 }
                 else {
-                    final String user_id = jO.getString("id");
+                    final int user_id = jO.getInt("id");
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
                             Toast.makeText(getApplicationContext(), "登录成功, 用户id:" + user_id,
                                     Toast.LENGTH_SHORT).show();
+                            // 将用户信息存储，则下次无需登录即可进入主页
+                            SharedPreferences.Editor editor = sharedPref.edit();
+                            editor.putInt("user_id", user_id);
+                            editor.commit();
+
                             Intent it = new Intent(login.this, Home.class);
                             startActivity(it);
                             login.this.finish();

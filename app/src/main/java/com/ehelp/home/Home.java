@@ -1,6 +1,7 @@
 package com.ehelp.home;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -61,6 +62,8 @@ public class Home extends AIActionBarActivity implements RapidFloatingActionCont
     private PagerSlidingTabStrip mPagerSlidingTabStrip;
     private ViewPager mViewPager;
     private Toolbar mToolbar;
+    private int user_id;
+    private SharedPreferences sharedPref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
