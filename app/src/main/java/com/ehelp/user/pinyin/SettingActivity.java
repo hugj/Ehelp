@@ -32,6 +32,8 @@ import com.ehelp.utils.ActivityCollector;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.jpush.android.api.JPushInterface;
+
 @AILayout(R.layout.activity_setting)
 public class SettingActivity extends AIActionBarActivity implements OnChangedListener,RapidFloatingActionContentLabelList.OnRapidFloatingActionContentLabelListListener {
     @AIView(R.id.label_list_sample_rfal)
@@ -39,6 +41,7 @@ public class SettingActivity extends AIActionBarActivity implements OnChangedLis
     @AIView(R.id.label_list_sample_rfab)
     private RapidFloatingActionButton rfaButton;
     private RapidFloatingActionHelper rfabHelper;
+    //Toolbar
     private Toolbar mToolbar;
 
     @Override
@@ -137,10 +140,13 @@ public class SettingActivity extends AIActionBarActivity implements OnChangedLis
     @Override
     public void OnChanged(boolean CheckState) {//当按钮状态被改变时
         // TODO Auto-generated method stub
-        if(CheckState)
+        if(CheckState) {
             Toast.makeText(this, "打开推送消息.", Toast.LENGTH_SHORT).show();
-        else
-            Toast.makeText(this,"关闭推送消息" , Toast.LENGTH_SHORT).show();
+            JPushInterface.resumePush(getApplicationContext());
+        } else {
+            Toast.makeText(this, "关闭推送消息", Toast.LENGTH_SHORT).show();
+            JPushInterface.stopPush(getApplicationContext());
+        }
     }
 
     //点击跳转到账户与安全界面
