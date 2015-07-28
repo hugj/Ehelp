@@ -9,6 +9,7 @@ import android.os.StrictMode;
 import android.support.v7.app.ActionBarActivity;
 import android.text.TextUtils;
 import android.util.Log;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -37,10 +38,17 @@ public class ChangephoneActivity extends ActionBarActivity implements View.OnCli
     public final static String EXTRA_MESSAGE = "com.ehelp.MESSAGE";
 
     int i = 60;
+    //TOOLbar
+    private Toolbar mToolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_changephone);
+        //set toolbar
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        mToolbar.setTitle("更改绑定账号");
+        setSupportActionBar(mToolbar);
+        
         init();
     }
     private void init() {

@@ -52,7 +52,7 @@ public class ResetPassword extends ActionBarActivity {
         mToolbar.setTitle("重置密码");
         setSupportActionBar(mToolbar);
     }
-
+/*
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -74,7 +74,7 @@ public class ResetPassword extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
-
+*/
     public void resetPassword(View view) {
         // Do something in response to button
         Epassword = (EditText)findViewById(R.id.edit_password);

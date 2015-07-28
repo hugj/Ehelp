@@ -338,7 +338,9 @@ public class sendsos_map extends ActionBarActivity implements BaiduMap.OnMapClic
     public boolean onMapPoiClick(MapPoi poi) {
         return false;
     }
-    //设置TOOLBAR
+    /*/设置TOOLBAR
+    这个界面右上角无按钮
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -362,7 +364,7 @@ public class sendsos_map extends ActionBarActivity implements BaiduMap.OnMapClic
         getMenuInflater().inflate(R.menu.menu_sendsos_map, menu);
         return true;
     }
-    //toolbar设置结束
+    //toolbar设置结束    */
     @Override
     protected void onPause() {
         mMapView.onPause();

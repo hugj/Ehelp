@@ -67,7 +67,7 @@ public class sendhelp_map extends ActionBarActivity implements
 
         //set toolbar
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        mToolbar.setTitle("发起求助");
+        mToolbar.setTitle("选择求助地点");
         setSupportActionBar(mToolbar);
 
         // 初始化搜索模块，注册搜索事件监听
@@ -128,7 +128,7 @@ public class sendhelp_map extends ActionBarActivity implements
 
     }
 
-    /*/toolbar设置
+    //toolbar设置
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -138,6 +138,7 @@ public class sendhelp_map extends ActionBarActivity implements
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            //提交地址后到输入详细信息页面
             return true;
         }
 
@@ -150,7 +151,7 @@ public class sendhelp_map extends ActionBarActivity implements
         getMenuInflater().inflate(R.menu.menu_send_help, menu);
         return true;
     }
-    //toolbar设置结束*/
+    //toolbar设置结束
 
     @Override
     protected void onPause() {
