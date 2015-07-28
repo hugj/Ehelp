@@ -1,5 +1,6 @@
 package com.ehelp.map;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -7,6 +8,8 @@ import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -53,6 +56,7 @@ public class sendhelp_map extends ActionBarActivity implements
     private ArrayAdapter<String> sugAdapter = null;
     private int load_Index = 0;
 
+    //TOOLbar
     private Toolbar mToolbar;
 
     @Override
@@ -61,8 +65,9 @@ public class sendhelp_map extends ActionBarActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sendhelp_map);
 
+        //set toolbar
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        mToolbar.setTitle("确定求助地点");
+        mToolbar.setTitle("发起求助");
         setSupportActionBar(mToolbar);
 
         // 初始化搜索模块，注册搜索事件监听
@@ -122,6 +127,30 @@ public class sendhelp_map extends ActionBarActivity implements
         });
 
     }
+
+    /*/toolbar设置
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_send_help, menu);
+        return true;
+    }
+    //toolbar设置结束*/
 
     @Override
     protected void onPause() {

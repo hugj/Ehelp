@@ -44,8 +44,11 @@ public class SignUp extends ActionBarActivity implements OnClickListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Intent intent = getIntent();
+       // Intent intent = getIntent();
         setContentView(R.layout.activity_sign_up);
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        mToolbar.setTitle("注册新用户");
+        setSupportActionBar(mToolbar);
         init();
     }
 
@@ -59,12 +62,10 @@ public class SignUp extends ActionBarActivity implements OnClickListener {
                 penaltyLog().penaltyDeath().build());
 
         //set toolbar
-        mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        mToolbar.setTitle("     注册新用户");
-        setSupportActionBar(mToolbar);
+
         //getSupportActionBar().setDisplayHomeAsUpEnabled(true);//开启up button这个默认值是true
         //getSupportActionBar().setHomeButtonEnabled(true);//
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        //getSupportActionBar().setDisplayShowHomeEnabled(true);
 
 
         inputCodeEt = (EditText) findViewById(R.id.edit_identify);//验证码
@@ -261,7 +262,7 @@ public class SignUp extends ActionBarActivity implements OnClickListener {
         SMSSDK.unregisterAllEventHandler();
         super.onDestroy();
     }
-
+/*
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -283,4 +284,5 @@ public class SignUp extends ActionBarActivity implements OnClickListener {
 
         return super.onOptionsItemSelected(item);
     }
+    */
 }

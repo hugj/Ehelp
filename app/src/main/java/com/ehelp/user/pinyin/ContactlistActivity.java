@@ -49,16 +49,11 @@ public class ContactlistActivity extends ActionBarActivity {
 
         //set toolbar
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        mToolbar.setTitle("                      通讯录");
-
-        //Button btn  = new Button(this);
-
-        //mToolbar.addView(btn);
-        //setActionBar(mToolbar);
+        mToolbar.setTitle("通讯录");
         setSupportActionBar(mToolbar);
         //getSupportActionBar().setDisplayHomeAsUpEnabled(true);//开启up button这个默认值是true
         //getSupportActionBar().setHomeButtonEnabled(true);//
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        //getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         eListView = (ExpandableListView) findViewById(R.id.elist);
         assortView = (AssortView) findViewById(R.id.assort);

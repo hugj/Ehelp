@@ -2,6 +2,8 @@ package com.ehelp.evaluate;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,8 +17,11 @@ import com.ehelp.R;
 /**
  * Created by kyy on 2015/7/19.
  */
-public class Comment extends Activity {
+public class Comment extends ActionBarActivity {
     static int starnum = 1;//public static int starnumm =1;
+
+    private Toolbar mToolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,6 +34,12 @@ public class Comment extends Activity {
         //http://www.cnblogs.com/salam/archive/2010/11/30/1892143.html
 
         //button1.setOnClickListener(new button1());
+
+        //set toolbar
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        mToolbar.setTitle("评价");
+        setSupportActionBar(mToolbar);
+
         //添加按钮事件
         Button button  =(Button)findViewById(R.id.button_comment_send);
         button.setOnClickListener(new View.OnClickListener() {

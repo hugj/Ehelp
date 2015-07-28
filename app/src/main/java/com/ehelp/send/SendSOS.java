@@ -16,7 +16,7 @@ public class SendSOS extends ActionBarActivity {
         Intent intent = getIntent();
         setContentView(R.layout.activity_send_sos);
     }
-
+/*SOS右上角无按键。
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -38,4 +38,5 @@ public class SendSOS extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
+    */
 }
