@@ -57,7 +57,7 @@ public class SettingActivity extends AIActionBarActivity implements OnChangedLis
 
         SlipButton myBtn = (SlipButton)findViewById(R.id.accept_push_or_not);
         myBtn.SetOnChangedListener((OnChangedListener) this);
-        
+
         //FAB
         RapidFloatingActionContentLabelList rfaContent = new RapidFloatingActionContentLabelList(context);
         rfaContent.setOnRapidFloatingActionContentLabelListListener(this);
