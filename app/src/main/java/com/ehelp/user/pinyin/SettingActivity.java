@@ -1,12 +1,10 @@
 package com.ehelp.user.pinyin;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
@@ -17,6 +15,7 @@ import com.ehelp.account.login;
 import com.ehelp.send.CountNum;
 import com.ehelp.send.SendHelp;
 import com.ehelp.send.SendQuestion;
+import com.ehelp.utils.ActivityCollector;
 import com.wangjie.androidbucket.utils.ABTextUtil;
 import com.wangjie.androidbucket.utils.imageprocess.ABShape;
 import com.wangjie.androidinject.annotation.annotations.base.AILayout;
@@ -27,8 +26,6 @@ import com.wangjie.rapidfloatingactionbutton.RapidFloatingActionHelper;
 import com.wangjie.rapidfloatingactionbutton.RapidFloatingActionLayout;
 import com.wangjie.rapidfloatingactionbutton.contentimpl.labellist.RFACLabelItem;
 import com.wangjie.rapidfloatingactionbutton.contentimpl.labellist.RapidFloatingActionContentLabelList;
-import com.ehelp.home.Home;
-import com.ehelp.utils.ActivityCollector;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -144,10 +141,10 @@ public class SettingActivity extends AIActionBarActivity implements OnChangedLis
     public void OnChanged(boolean CheckState) {//当按钮状态被改变时
         // TODO Auto-generated method stub
         if(CheckState) {
-            Toast.makeText(this, "打开推送消息.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "关闭推送消息.", Toast.LENGTH_SHORT).show();
             JPushInterface.resumePush(getApplicationContext());
         } else {
-            Toast.makeText(this, "关闭推送消息", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "打开推送消息", Toast.LENGTH_SHORT).show();
             JPushInterface.stopPush(getApplicationContext());
         }
     }

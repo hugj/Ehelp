@@ -78,7 +78,7 @@
             android:padding="8dp" >
 
             <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="350dp"
+                android:layout_width="275dp"
                 android:layout_height="fill_parent"
                 android:scrollbarStyle="outsideOverlay">
                 <LinearLayout
@@ -109,13 +109,7 @@
                             android:textColor="#000" android:layout_centerVertical="true"
                             android:textSize="20sp" android:id="@+id/user_page3"
                             android:text="@string/mes_page"/>
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:scaleType="matrix"
-                            android:layout_centerVertical="true"
-                            android:layout_alignParentRight="true"
-                            android:src="@drawable/mm_submenu" />
+
                     </RelativeLayout>
                     <RelativeLayout
                         android:layout_width="fill_parent"
@@ -140,13 +134,7 @@
                             android:textColor="#000" android:layout_centerVertical="true"
                             android:textSize="20sp" android:id="@+id/user_friends3"
                             android:text="@string/mes_friends"/>
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:scaleType="matrix"
-                            android:layout_centerVertical="true"
-                            android:layout_alignParentRight="true"
-                            android:src="@drawable/mm_submenu" />
+
                     </RelativeLayout>
                     <RelativeLayout
                         android:layout_width="fill_parent"
@@ -171,13 +159,6 @@
                             android:textColor="#000" android:layout_centerVertical="true"
                             android:textSize="20sp" android:id="@+id/user_healthcard3"
                             android:text="健康卡"/>
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:scaleType="matrix"
-                            android:layout_centerVertical="true"
-                            android:layout_alignParentRight="true"
-                            android:src="@drawable/mm_submenu" />
                     </RelativeLayout>
                     <RelativeLayout
                         android:layout_width="fill_parent"
@@ -201,13 +182,6 @@
                             android:textColor="#000" android:layout_centerVertical="true"
                             android:textSize="20sp" android:id="@+id/user_bank3"
                             android:text="@string/mes_bank"/>
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:scaleType="matrix"
-                            android:layout_centerVertical="true"
-                            android:layout_alignParentRight="true"
-                            android:src="@drawable/mm_submenu" />
                     </RelativeLayout>
                     <RelativeLayout
                         android:layout_width="fill_parent"
@@ -232,18 +206,11 @@
                             android:textColor="#000" android:layout_centerVertical="true"
                             android:textSize="20sp" android:id="@+id/user_new3"
                             android:text="@string/mes_news"/>
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:scaleType="matrix"
-                            android:layout_centerVertical="true"
-                            android:layout_alignParentRight="true"
-                            android:src="@drawable/mm_submenu" />
                     </RelativeLayout>
                     <View  android:layout_height="7px"
                         android:layout_width="fill_parent"
                         android:layout_marginTop="60dp"
-                        android:background="#ee0044ee"/>
+                        android:background="#4876FF"/>
                     <RelativeLayout
                         android:layout_width="fill_parent"
                         android:layout_height="50dp"
@@ -267,13 +234,6 @@
                             android:textColor="#000" android:layout_centerVertical="true"
                             android:textSize="20sp" android:id="@+id/user_help3"
                             android:text="@string/mes_help"/>
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:scaleType="matrix"
-                            android:layout_centerVertical="true"
-                            android:layout_alignParentRight="true"
-                            android:src="@drawable/mm_submenu" />
                     </RelativeLayout>
                     <RelativeLayout
                         android:layout_width="fill_parent"
@@ -298,13 +258,6 @@
                             android:textColor="#000" android:layout_centerVertical="true"
                             android:textSize="20sp" android:id="@+id/user_setting3"
                             android:text="设置"/>
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:scaleType="matrix"
-                            android:layout_centerVertical="true"
-                            android:layout_alignParentRight="true"
-                            android:src="@drawable/mm_submenu" />
                     </RelativeLayout>
                 </LinearLayout>
             </ScrollView>
