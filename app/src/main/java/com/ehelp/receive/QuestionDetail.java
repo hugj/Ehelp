@@ -1,6 +1,8 @@
 package com.ehelp.receive;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.StrictMode;
@@ -11,7 +13,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.ehelp.R;
-import com.ehelp.evaluate.Comment;
+import com.ehelp.entity.Event;
+import com.ehelp.home.SuperAwesomeCardFragment;
 import com.ehelp.send.SendHelp;
 import com.ehelp.send.SendQuestion;
 import com.ehelp.send.SendSOS;
@@ -39,6 +42,7 @@ public class QuestionDetail extends AIActionBarActivity implements RapidFloating
     private Toolbar mToolbar;
 
     // submit()
+    private Event m_event;
     private EditText Equestion;
     private EditText Edesc_ques;
     private EditText Eshare_money;
@@ -50,12 +54,9 @@ public class QuestionDetail extends AIActionBarActivity implements RapidFloating
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();
+        m_event = (Event)intent.getSerializableExtra(SuperAwesomeCardFragment.EXTRA_MESSAGE);
         init();
-    }
-
-   // @Override
-    public void setmToolbar(){
-
+        setView();
     }
 
     private void init() {
@@ -140,6 +141,19 @@ public class QuestionDetail extends AIActionBarActivity implements RapidFloating
         rfabHelper.toggleContent();
     }
 //toolbar右上角键设置
+
+    public void setView(){
+        SharedPreferences sharedPref;
+        String nickname;
+        sharedPref = this.getSharedPreferences("user_id", Context.MODE_PRIVATE);
+        nickname = sharedPref.getString("nickname", "");
+        TextView tmp = (TextView)findViewById(R.id.user_name);
+        tmp.setText(nickname);
+        tmp = (TextView)findViewById(R.id.Title);
+        tmp.setText(m_event.getTitle());
+        tmp = (TextView)findViewById(R.id.Content);
+        tmp.setText(m_event.getContent());
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

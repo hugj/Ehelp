@@ -55,7 +55,7 @@ public class HomeAdapter extends BaseAdapter {
         //数据初始化
         setList();
     }
-    
+
 
     public void setList() {
         //数据初始化
@@ -68,7 +68,7 @@ public class HomeAdapter extends BaseAdapter {
             item.put("头像", R.drawable.icon);
             item.put("标题", "连接失败，请检查网络是否连接并重试");
             item.put("用户", "");
-            item.put("悬赏", "10爱心币");
+            item.put("悬赏", "");
             list.add(item);
         }   else {
             try {
@@ -88,7 +88,7 @@ public class HomeAdapter extends BaseAdapter {
                     item.put("头像", R.drawable.icon);
                     item.put("标题", "连接失败，请检查网络是否连接并重试");
                     item.put("用户", "");
-                    item.put("悬赏", "10爱心币");
+                    item.put("悬赏", "");
                     list.add(item);
                 } else {
                     JSONObject j1 = new JSONObject(message);

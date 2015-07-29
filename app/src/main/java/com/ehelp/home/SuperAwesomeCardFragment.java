@@ -59,6 +59,7 @@ public class SuperAwesomeCardFragment extends Fragment {
     BaiduMap mBaiduMap;
     private int user_id;
     private Event[] events;
+    public final static String EXTRA_MESSAGE = "com.ehelp.home.MESSAGE";
 
     // UI相关
     boolean isFirstLoc = true;// 是否首次定位
@@ -153,8 +154,9 @@ public class SuperAwesomeCardFragment extends Fragment {
             //绑定监听
             queList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 public void onItemClick(AdapterView<?> arg0, View arg1, int index, long arg3) {
-                        Intent intent = new Intent(getActivity(), QuestionDetail.class);
-                        startActivity(intent);
+                    Intent intent = new Intent(getActivity(), QuestionDetail.class);
+                    intent.putExtra(EXTRA_MESSAGE, events[index]);
+                    startActivity(intent);
                 }
             });
         }

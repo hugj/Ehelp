@@ -1,9 +1,11 @@
 package com.ehelp.entity;
 
+import java.io.Serializable;
+
 /**
  * Created by thetruthmyg on 2015/7/27.
  */
-public class Event {
+public class Event implements Serializable {
 
     private int follow_number;
     private double latitude;

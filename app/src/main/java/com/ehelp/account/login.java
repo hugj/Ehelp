@@ -174,20 +174,40 @@ public class login extends ActionBarActivity {
                 }
                 else {
                     final int user_id = jO.getInt("id");
+                    String jsonStrng = "{" +
+                            "\"id\":" + user_id + "}";
+                    final String message = RequestHandler.sendPostRequest(
+                            "http://120.24.208.130:1501/user/get_information", jsonStrng);
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
                             Toast.makeText(getApplicationContext(), "登录成功, 用户id:" + user_id,
                                     Toast.LENGTH_SHORT).show();
-
                             // 将用户信息存储，以便之后无需登录直接进入主页
-                            SharedPreferences.Editor editor = sharedPref.edit();
-                            editor.putInt("user_id", user_id);
-                            editor.commit();
 
-                            Intent it = new Intent(login.this, Home.class);
-                            startActivity(it);
-                            login.this.finish();
+                            if (message == "false") {
+                                Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
+                                        Toast.LENGTH_SHORT).show();
+                            }   else {
+                                try {
+                                    JSONObject jO = new JSONObject(message);
+                                    String nickname = jO.getString("nickname");
+                                    if (nickname.isEmpty()) {
+                                        nickname = account;
+                                    }
+                                    SharedPreferences.Editor editor = sharedPref.edit();
+                                    editor.putInt("user_id", user_id);
+                                    editor.putString("account", account);
+                                    editor.putString("nickname", nickname);
+                                    editor.commit();
+
+                                    Intent it = new Intent(login.this, Home.class);
+                                    startActivity(it);
+                                    login.this.finish();
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
                         }
                     });
                 }

@@ -44,7 +44,7 @@
             </RelativeLayout>
 
             <TextView
-                android:id="@+id/edit_message2"
+                android:id="@+id/Title"
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
                 android:layout_weight="1"
@@ -52,7 +52,7 @@
                 android:text="问题XXXX"/>
 
             <TextView
-                android:id="@+id/edit_message3"
+                android:id="@+id/Content"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_weight="1"
