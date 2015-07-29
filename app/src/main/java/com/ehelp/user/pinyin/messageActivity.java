@@ -5,11 +5,10 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,6 +21,7 @@ public class messageActivity extends ActionBarActivity {
 
     //TOOLbar
     private Toolbar mToolbar;
+    private TextView Setname;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,8 +34,9 @@ public class messageActivity extends ActionBarActivity {
         TextView tvv =(TextView) findViewById(R.id.titlefortoolbar);
         tvv.setText("详细资料");
 
-        //click on set name
+        //click on set name设置备注名
         myLay = (RelativeLayout) findViewById(R.id.detail_setname);
+        Setname = (TextView)findViewById(R.id.detail_setname2);
         myLay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
@@ -57,7 +58,10 @@ public class messageActivity extends ActionBarActivity {
                         .setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                Toast.makeText(getApplicationContext(), "set name sucessfully",
+                                EditText edit = (EditText)myDialog.getWindow()
+                                        .findViewById(R.id.setname4);
+                                Setname.setText(edit.getText().toString());
+                                Toast.makeText(getApplicationContext(), "备注名设置成功",
                                         Toast.LENGTH_SHORT).show();
                                 myDialog.dismiss();
                             }
