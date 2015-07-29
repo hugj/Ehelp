@@ -3,6 +3,7 @@ package com.ehelp.home;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
+import android.os.StrictMode;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -14,6 +15,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.ehelp.R;
+import com.ehelp.entity.Event;
 import com.ehelp.utils.RequestHandler;
 
 import org.json.JSONArray;
@@ -38,13 +40,22 @@ public class HomeAdapter extends BaseAdapter {
     private double longitude;
     private double latitude;
     private int user_id;
+    private Event[] events;
 
     HomeAdapter(Context context, int id){
         this.context=context;
         user_id = id;
-        //数据初始化
 
-        getList();
+        // 使用后台线程运行网络连接功能
+        StrictMode.setThreadPolicy(
+                new StrictMode.ThreadPolicy.Builder().
+                        detectDiskReads().detectDiskWrites().detectNetwork().penaltyLog().build());
+        StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder().
+                detectLeakedSqlLiteObjects().detectLeakedClosableObjects().
+                penaltyLog().penaltyDeath().build());
+
+        //数据初始化
+        setList();
     }
 
     /**
@@ -87,7 +98,14 @@ public class HomeAdapter extends BaseAdapter {
                         } else {
                             JSONObject j1 = new JSONObject(message);
                             JSONArray eventList = j1.getJSONArray("event_list");
-                            for (int i = 0; i <= eventList.length(); i++) {
+                           events = new Event[eventList.length()];
+                            for (int i = 0; i < eventList.length(); i++) {
+                                int id = eventList.getJSONObject(i).getInt("launcher_id");
+                                events[i] = new Event();
+                                events[i].setId(id);
+                                events[i].setTitle(eventList.getJSONObject(i).getString("title"));
+                                events[i].setContent(eventList.getJSONObject(i).getString("content"));
+                                events[i].setTime(eventList.getJSONObject(i).getString("time"));
                                 item=new HashMap<String,Object>();
                                 item.put("头像", R.drawable.icon);
                                 item.put("标题", eventList.getJSONObject(i).getString("content"));
@@ -106,7 +124,7 @@ public class HomeAdapter extends BaseAdapter {
 
 
 
-    public void getList() {
+    public void setList() {
 
         //数据初始化
         new Thread(new Runnable() {
@@ -115,6 +133,10 @@ public class HomeAdapter extends BaseAdapter {
                 handler.sendEmptyMessage(-8);
             }
         }).start();
+    }
+
+    public Event[] getEvent() {
+        return events;
     }
 
     public int getCount() {return list.size();}

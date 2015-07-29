@@ -45,6 +45,7 @@ import com.baidu.mapapi.map.MapView;
 import com.baidu.mapapi.map.MyLocationConfiguration;
 import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.model.LatLng;
+import com.ehelp.entity.Event;
 import com.ehelp.receive.QuestionDetail;
 
 public class SuperAwesomeCardFragment extends Fragment {
@@ -57,6 +58,7 @@ public class SuperAwesomeCardFragment extends Fragment {
     MapView mMapView;
     BaiduMap mBaiduMap;
     private int user_id;
+    private Event[] events;
 
     // UI相关
     boolean isFirstLoc = true;// 是否首次定位
@@ -141,6 +143,9 @@ public class SuperAwesomeCardFragment extends Fragment {
             HomeAdapter que = new HomeAdapter(getActivity(), user_id);
             queList.setAdapter(que);
             fl.addView(queList);
+
+            events = que.getEvent();
+
             //绑定监听
             queList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 public void onItemClick(AdapterView<?> arg0, View arg1, int index, long arg3) {

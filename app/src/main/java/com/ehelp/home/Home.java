@@ -71,14 +71,6 @@ public class Home extends AIActionBarActivity implements RapidFloatingActionCont
     }
 
     private void init() {
-        // 使用后台线程运行网络连接功能
-        StrictMode.setThreadPolicy(
-                new StrictMode.ThreadPolicy.Builder().
-                        detectDiskReads().detectDiskWrites().detectNetwork().penaltyLog().build());
-        StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder().
-                detectLeakedSqlLiteObjects().detectLeakedClosableObjects().
-                penaltyLog().penaltyDeath().build());
-
         //极光推送初始化
         JPushInterface.setDebugMode(true);
         JPushInterface.init(this);
