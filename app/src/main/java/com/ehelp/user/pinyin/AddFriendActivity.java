@@ -33,7 +33,9 @@ public class AddFriendActivity extends ActionBarActivity {
         str1=editText1.getText().toString();
         //return str1;
     }
-
+/*
+查询按钮监听事件：从后台获取用户信息放至该页面，
+ */
     public void chaxun(View v){
 
 
