@@ -91,13 +91,13 @@
         android:id="@+id/imageButton5"
         android:background="@drawable/kyy"/-->
 
-    <Button
+    <!--Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="提交"
         android:id="@+id/button_comment_send"
         android:layout_below="@+id/ratingBar"
-        android:layout_alignEnd="@+id/textView" />
+        android:layout_alignEnd="@+id/textView" /-->
 
         </LinearLayout>
 

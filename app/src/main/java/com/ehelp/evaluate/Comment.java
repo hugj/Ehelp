@@ -79,7 +79,7 @@ public class Comment extends AIActionBarActivity implements RapidFloatingActionC
 
 
         //添加按钮事件
-        Button button  =(Button)findViewById(R.id.button_comment_send);
+        /*Button button  =(Button)findViewById(R.id.button_comment_send);
         button.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -90,7 +90,7 @@ public class Comment extends AIActionBarActivity implements RapidFloatingActionC
                 //Intent intent = new Intent(activity_comment.this, activity_home.class);
                 //activity_comment.this.startActivity(intent);
             }
-        });
+        });*/
         RatingBar ratBar = (RatingBar)findViewById(R.id.ratingBar);
         ratBar.setStepSize(1);//步进为1
         ratBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
@@ -245,10 +245,10 @@ public class Comment extends AIActionBarActivity implements RapidFloatingActionC
     }*/
 
     //获取评论内容
-    public String getComment(){
+    /*public String getComment(){
         String str1="";
         EditText editText1 =(EditText)findViewById(R.id.editText_comment);
         str1=editText1.getText().toString();
         return str1;
-    }
+    }*/
 }

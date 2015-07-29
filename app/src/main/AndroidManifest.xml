@@ -185,12 +185,11 @@
             <!--
          android:parentActivityName=".Test" 改变这句话后通讯录的返回键就可以正常返回了。
          android:value="com.ehelp.Test" 下面的meta-data似乎没有什么卵用
+         在meta-dat设置是新页面切入，在上面设置是返回式切入
             -->
-            <!--
-                meta-data 在这里设置是新页面切入，在上面设置是返回式切入
+            <!--meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.ehelp.home.Home" /
-            -->
+                android:value="com.ehelp.evaluate.Comment" /-->
         </activity>
         <activity
             android:name=".user.pinyin.adapterchatActivity"
