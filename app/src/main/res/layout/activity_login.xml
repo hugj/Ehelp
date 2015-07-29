@@ -2,74 +2,89 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
-    <include layout="@layout/toolbar" />
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="75dp"
-        android:orientation="horizontal" >
+    android:orientation="vertical"
+    android:weightSum="1">
+    <!--<include layout="@layout/toolbar"/>-->
 
-        <EditText
-            android:id="@+id/edit_phoneNum"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:ems="10"
-            android:hint="手机号码"
-            android:inputType="phone" />
 
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+<!--        android:background="@drawable/background_2"
+-->
         <Button
-            android:id="@+id/button1"
-            android:layout_width="wrap_content"
+            android:id="@+id/button3"
+            android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="31dp"
             android:background="@color/button"
-            android:text="注册"
-            android:onClick="signUp"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="75dp"
-        android:orientation="horizontal" >
-
-        <EditText
-            android:id="@+id/edit_password"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:hint="密码"
-            android:inputType="textPassword" />
+            android:text="登录"
+            android:onClick="signIn"
+            android:layout_marginBottom="93dp"
+            android:layout_above="@+id/button2"
+            android:layout_centerHorizontal="true" />
 
         <Button
             android:id="@+id/button2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="31dp"
-            android:background="@color/button"
+            android:layout_marginLeft="60dp"
+            android:background="#00ffffff"
+            android:layout_marginBottom="0dp"
             android:text="忘记密码"
             android:onClick="findPassword"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true" />
-    </LinearLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+            android:layout_marginStart="40dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true" />
 
         <Button
-            android:id="@+id/button3"
+            android:id="@+id/button1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="31dp"
-            android:background="@color/button"
-            android:text="登录"
-            android:onClick="signIn"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true" />
+            android:layout_marginRight="60dp"
+            android:background="#00ffffff"
+            android:text="注册"
+            android:layout_marginBottom="0dp"
+            android:onClick="signUp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="43dp" />
 
+        <EditText
+            android:id="@+id/edit_phoneNum"
+            android:layout_width="400dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10"
+            android:hint="手机号码"
+            android:inputType="phone"
+            android:layout_below="@+id/imageView2"
+            android:layout_marginTop="60dp"
+            android:layout_alignStart="@+id/button3"
+            android:layout_alignEnd="@+id/button3" />
+
+        <EditText
+            android:id="@+id/edit_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="请输入密码"
+            android:inputType="textPassword"
+            android:layout_centerVertical="true"
+            android:layout_alignStart="@+id/edit_phoneNum"
+            android:layout_alignEnd="@+id/edit_phoneNum" />
+
+
+        <ImageView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:id="@+id/imageView2"
+
+            android:layout_alignParentTop="true"
+            android:layout_toStartOf="@+id/button1"
+            android:layout_marginTop="42dp" />
+<!--            android:background="@drawable/icon_log"
+-->
     </RelativeLayout>
 
 </LinearLayout>

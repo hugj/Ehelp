@@ -7,7 +7,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.WindowManager;
@@ -46,7 +45,6 @@ public class homepageActivity extends AIActionBarActivity implements RapidFloati
 
     private AlertDialog EditnameDialog = null;
     private AlertDialog EditlocationDialog = null;
-    //private AlertDialog EditbrithdayDialog = null;
     private final static int DATE_DIALOG = 0;
     private TextView edt = null;
     private RelativeLayout brithday_edit = null;
@@ -61,7 +59,6 @@ public class homepageActivity extends AIActionBarActivity implements RapidFloati
         super.onCreate(savedInstanceState);
         init();
     }
-
     private void init() {
         //set toolbar
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -159,7 +156,7 @@ public class homepageActivity extends AIActionBarActivity implements RapidFloati
                 EditnameDialog = new AlertDialog.Builder(homepageActivity.this).create();
                 EditnameDialog.show();
                 EditnameDialog.getWindow().setContentView(R.layout.edit_user_name);
-                //click on cancel
+                //click on cancel点击取消
                 EditnameDialog.getWindow().findViewById(R.id.edit_username5)
                         .setOnClickListener(new View.OnClickListener() {
                             @Override
@@ -167,13 +164,13 @@ public class homepageActivity extends AIActionBarActivity implements RapidFloati
                                 EditnameDialog.dismiss();
                             }
                         });
-                //click ensure
+                //click ensure点击确定
                 EditnameDialog.getWindow().findViewById(R.id.edit_username6)
                         .setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
                                 EditText Get_edittext = (EditText)EditnameDialog.getWindow()
-                                        .findViewById(R.id.edit_username4);
+                                      .findViewById(R.id.edit_username4);
                                 Set_name.setText(Get_edittext.getText().toString());
                                 Toast.makeText(getApplicationContext(), "用户名设置成功",
                                         Toast.LENGTH_SHORT).show();
@@ -183,6 +180,41 @@ public class homepageActivity extends AIActionBarActivity implements RapidFloati
                 EditnameDialog.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
                         | WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
                 EditnameDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams
+                        .SOFT_INPUT_STATE_VISIBLE);
+            }
+        });
+        //编辑所在地名
+        RelativeLayout location_choose = (RelativeLayout)findViewById(R.id.single_loacl);
+        location_choose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EditlocationDialog = new AlertDialog.Builder(homepageActivity.this).create();
+                EditlocationDialog.show();
+                EditlocationDialog.getWindow().setContentView(R.layout.edit_user_location);
+                //click on cancel点击取消
+                EditlocationDialog.getWindow().findViewById(R.id.edit_location5)
+                        .setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                EditlocationDialog.dismiss();
+                            }
+                        });
+                //click ensure点击确定
+                EditlocationDialog.getWindow().findViewById(R.id.edit_location6)
+                        .setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                EditText Get_edittext = (EditText)EditlocationDialog.getWindow()
+                                        .findViewById(R.id.edit_location4);
+                                Set_local.setText(Get_edittext.getText().toString());
+                                Toast.makeText(getApplicationContext(), "所在地设置成功",
+                                        Toast.LENGTH_SHORT).show();
+                                EditlocationDialog.dismiss();
+                            }
+                        });
+                EditlocationDialog.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
+                        | WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
+                EditlocationDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams
                         .SOFT_INPUT_STATE_VISIBLE);
             }
         });
@@ -205,41 +237,6 @@ public class homepageActivity extends AIActionBarActivity implements RapidFloati
                                 dialog.dismiss();
                             }
                         }).show();
-            }
-        });
-        //编辑所在地名
-        RelativeLayout location_choose = (RelativeLayout)findViewById(R.id.single_loacl);
-        location_choose.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                EditlocationDialog = new AlertDialog.Builder(homepageActivity.this).create();
-                EditlocationDialog.show();
-                EditlocationDialog.getWindow().setContentView(R.layout.edit_user_location);
-                //click on cancel
-                EditlocationDialog.getWindow().findViewById(R.id.edit_location5)
-                        .setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                EditlocationDialog.dismiss();
-                            }
-                        });
-                //click ensure
-                EditlocationDialog.getWindow().findViewById(R.id.edit_location6)
-                        .setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                EditText Get_edittext1 = (EditText)EditnameDialog.getWindow()
-                                        .findViewById(R.id.edit_location4);
-                                Set_local.setText(Get_edittext1.getText().toString());
-                                Toast.makeText(getApplicationContext(), "设置所在地成功",
-                                        Toast.LENGTH_SHORT).show();
-                                EditlocationDialog.dismiss();
-                            }
-                        });
-                EditlocationDialog.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
-                        | WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
-                EditlocationDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams
-                        .SOFT_INPUT_STATE_VISIBLE);
             }
         });
         //编辑生日

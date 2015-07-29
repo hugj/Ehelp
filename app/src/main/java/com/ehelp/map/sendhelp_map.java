@@ -151,7 +151,7 @@ public class sendhelp_map extends ActionBarActivity implements
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_send_help, menu);
+        getMenuInflater().inflate(R.menu.menu_sendhelp_map, menu);
         return true;
     }
     //toolbar设置结束
