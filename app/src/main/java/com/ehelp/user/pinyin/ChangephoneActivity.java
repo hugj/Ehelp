@@ -13,7 +13,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ehelp.R;
@@ -162,9 +161,9 @@ public class ChangephoneActivity extends ActionBarActivity implements View.OnCli
                     if (event == SMSSDK.EVENT_SUBMIT_VERIFICATION_CODE) {// 提交验证码成功
                         Toast.makeText(getApplicationContext(), "提交验证码成功",
                                 Toast.LENGTH_SHORT).show();
-                        //更改手机号
-                        TextView phonenum = (TextView)findViewById(R.id.phone_number);
-                        phonenum.setText(PhoneNumber);
+//                        //更改手机号
+//                        TextView phonenum = (TextView)findViewById(R.id.phone_number);
+//                        phonenum.setText(PhoneNumber);
                         //跳转到原页面
                         Intent intent = new Intent(ChangephoneActivity.this, AccountsafeActivity.class);
                         intent.putExtra(EXTRA_MESSAGE, PhoneNumber);

@@ -7,10 +7,12 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -52,7 +54,8 @@ public class homepageActivity extends AIActionBarActivity implements RapidFloati
 
     //TOOLbar
     private Toolbar mToolbar;
-
+    private TextView Set_name;
+    private TextView Set_local;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,6 +68,8 @@ public class homepageActivity extends AIActionBarActivity implements RapidFloati
         mToolbar.setTitle("个人信息");
         setSupportActionBar(mToolbar);
 
+        Set_name = (TextView)findViewById(R.id.single_name2);
+        Set_local = (TextView)findViewById(R.id.single_loacl2);
         editorInfo();
 
         //set FAB
@@ -165,11 +170,10 @@ public class homepageActivity extends AIActionBarActivity implements RapidFloati
                         .setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-//                                TextView Set_name = (TextView)findViewById(R.id.single_name2);
-//                                EditText Get_edittext = (EditText)findViewById(R.id.edit_username4);
-//                                String str = Get_edittext.getText().toString();
-//                                Set_name.setText(str);
-                                Toast.makeText(getApplicationContext(), "set name sucessfully",
+                                EditText Get_edittext = (EditText)EditnameDialog.getWindow()
+                                        .findViewById(R.id.edit_username4);
+                                Set_name.setText(Get_edittext.getText().toString());
+                                Toast.makeText(getApplicationContext(), "用户名设置成功",
                                         Toast.LENGTH_SHORT).show();
                                 EditnameDialog.dismiss();
                             }
@@ -222,7 +226,10 @@ public class homepageActivity extends AIActionBarActivity implements RapidFloati
                         .setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                Toast.makeText(getApplicationContext(), "set name sucessfully",
+                                EditText Get_edittext1 = (EditText)EditnameDialog.getWindow()
+                                        .findViewById(R.id.edit_location4);
+                                Set_local.setText(Get_edittext1.getText().toString());
+                                Toast.makeText(getApplicationContext(), "设置所在地成功",
                                         Toast.LENGTH_SHORT).show();
                                 EditlocationDialog.dismiss();
                             }

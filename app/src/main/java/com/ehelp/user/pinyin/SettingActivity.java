@@ -154,6 +154,7 @@ public class SettingActivity extends AIActionBarActivity implements OnChangedLis
         Intent intent = new Intent(this, AccountsafeActivity.class);
         startActivity(intent);
     }
+    //点击退出登录
     public void exit_click (View v) {
         SharedPreferences sharedPreferences = this.getSharedPreferences("user_id", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
