@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ehelp.R;
@@ -53,8 +54,10 @@ public class SettingActivity extends AIActionBarActivity implements OnChangedLis
     private void init() {
         //set toolbar
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        mToolbar.setTitle("设置");
+        mToolbar.setTitle("");
         setSupportActionBar(mToolbar);
+        TextView tvv =(TextView) findViewById(R.id.titlefortoolbar);
+        tvv.setText("设置");
 
         SlipButton myBtn = (SlipButton)findViewById(R.id.accept_push_or_not);
         myBtn.SetOnChangedListener((OnChangedListener) this);

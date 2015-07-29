@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ehelp.R;
@@ -60,8 +61,10 @@ public class FindPassword extends ActionBarActivity implements OnClickListener {
 
         //set toolbar
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        mToolbar.setTitle("找回密码");
+        mToolbar.setTitle("");
         setSupportActionBar(mToolbar);
+        TextView tvv =(TextView) findViewById(R.id.titlefortoolbar);
+        tvv.setText("找回密码");
 
         inputCodeEt = (EditText) findViewById(R.id.edit_identify);//验证码
         requestCodeBtn = (Button) findViewById(R.id.request_code_btn);

@@ -17,6 +17,7 @@ import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.baidu.mapapi.SDKInitializer;
@@ -173,9 +174,11 @@ public class Home extends AIActionBarActivity implements RapidFloatingActionCont
 
     private void initViews() {
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        mToolbar.setTitle("Ehelp");
-        mToolbar.setTitleTextColor(0xffececec);
+        mToolbar.setTitle("");
+        //mToolbar.setTitleTextColor(0xffececec);
         setSupportActionBar(mToolbar);
+        TextView tvv =(TextView) findViewById(R.id.titlefortoolbar);
+        tvv.setText("Ehelp");
 
         mToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override

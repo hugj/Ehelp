@@ -1,12 +1,17 @@
 package com.ehelp.user;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
@@ -18,22 +23,54 @@ import java.util.List;
 /**
  * Created by kyy on 2015/7/21.
  */
-public class Myhistory extends Activity {
+public class Myhistory extends ActionBarActivity {
 
     private ViewPager mPager;//页卡内容
     private List<View> listViews; // Tab页面列表
     private TextView t1, t2, t3;// 页卡头标
+
+    //toolbar
+    private Toolbar mToolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_myhistory);
+        //set toolbar
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        mToolbar.setTitle("");
+        setSupportActionBar(mToolbar);
+        TextView tvv =(TextView) findViewById(R.id.titlefortoolbar);
+        tvv.setText("等待救援");
 
         InitViewPager();
         InitTextView();
 
     }
+    //设置toolbar
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_myhistory, menu);
+        return true;
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            //点击发送之后将问题信息传至数据库，跳转进入详情页
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
     /**
      * 初始化头标
      */

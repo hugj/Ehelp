@@ -132,8 +132,10 @@ public class ContactlistActivity extends AIActionBarActivity implements RapidFlo
                 penaltyLog().penaltyDeath().build());
         //set toolbar
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        mToolbar.setTitle("                      通讯录");
+        mToolbar.setTitle("");
         setSupportActionBar(mToolbar);
+        TextView tvv =(TextView) findViewById(R.id.titlefortoolbar);
+        tvv.setText("通讯录");
         //FAB
         RapidFloatingActionContentLabelList rfaContent = new RapidFloatingActionContentLabelList(context);
         rfaContent.setOnRapidFloatingActionContentLabelListListener(this);
@@ -216,7 +218,7 @@ public class ContactlistActivity extends AIActionBarActivity implements RapidFlo
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_login, menu);
+        getMenuInflater().inflate(R.menu.menu_contactlist, menu);
         return true;
     }
 
@@ -230,6 +232,8 @@ public class ContactlistActivity extends AIActionBarActivity implements RapidFlo
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             //添加好友。跳转至添加好友页面
+            Intent intent = new Intent(this, AddFriendActivity.class);
+            startActivity(intent);
             return true;
         }
         return super.onOptionsItemSelected(item);
