@@ -87,7 +87,7 @@ public class HomeAdapter extends BaseAdapter {
                         } else {
                             JSONObject j1 = new JSONObject(message);
                             JSONArray eventList = j1.getJSONArray("event_list");
-                            for (int i = 0; i <= eventList.length(); i++) {
+                            for (int i = 0; i < eventList.length(); i++) {
                                 item=new HashMap<String,Object>();
                                 item.put("头像", R.drawable.icon);
                                 item.put("标题", eventList.getJSONObject(i).getString("content"));

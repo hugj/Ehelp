@@ -17,6 +17,7 @@ public class Event {
     private String time;
     private int state;
     private int launcher;
+    private String launcher_id;
     private double longitude;
 
     public void setFollow_number(int follow_number) {
@@ -65,6 +66,10 @@ public class Event {
 
     public void setLauncher(int launcher) {
         this.launcher = launcher;
+    }
+
+    public void setLauncher_id(String launcher_id) {
+        this.launcher_id = launcher_id;
     }
 
     public void setLongitude(double longitude) {
@@ -117,6 +122,10 @@ public class Event {
 
     public int getLauncher() {
         return launcher;
+    }
+
+    public String getLauncher_id() {
+        return launcher_id;
     }
 
     public double getLongitude() {
