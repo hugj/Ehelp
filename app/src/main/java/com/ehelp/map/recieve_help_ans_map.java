@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ZoomControls;
 
@@ -99,12 +100,14 @@ public class recieve_help_ans_map extends ActionBarActivity implements BaiduMap.
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         //mToolbar.setNavigationIcon(R.drawable.mm_submenu_normal);//设置图标样式,已经在toolbar.xml统一设过了
 
-        mToolbar.setTitle("求助信息详情");
+        mToolbar.setTitle("");
 
         setSupportActionBar(mToolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        TextView tvv =(TextView) findViewById(R.id.titlefortoolbar);
+        tvv.setText("求助信息详情");
+        /*getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);*/
         //http://www.jcodecraeer.com/a/anzhuokaifa/androidkaifa/2014/1123/2050.html参考网址
 
 

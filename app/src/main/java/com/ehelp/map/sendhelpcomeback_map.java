@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ZoomControls;
 
@@ -88,11 +89,13 @@ public class sendhelpcomeback_map extends ActionBarActivity implements BaiduMap.
 
         //set toolbar
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        mToolbar.setTitle("我的求助");
+        mToolbar.setTitle("");
         setSupportActionBar(mToolbar);
+        TextView tvv =(TextView) findViewById(R.id.titlefortoolbar);
+        tvv.setText("我的求助");
 
-        CharSequence titleLable = "路线规划";
-        setTitle(titleLable);
+        /*CharSequence titleLable = "路线规划";
+        setTitle(titleLable);*/
 
 
         // 初始化地图
