@@ -89,7 +89,7 @@ public class sendhelpcomeback_map extends ActionBarActivity implements BaiduMap.
 
         //set toolbar
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        //mToolbar.setTitle("");
+        mToolbar.setTitle("");
         setSupportActionBar(mToolbar);
         TextView tvv =(TextView) findViewById(R.id.titlefortoolbar);
         tvv.setText("我的求助");
