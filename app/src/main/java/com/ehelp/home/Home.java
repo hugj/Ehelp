@@ -48,6 +48,9 @@ import java.util.List;
 
 import cn.jpush.android.api.JPushInterface;
 
+import com.ehelp.utils.RequestHandler;
+import android.util.Log;
+
 @AILayout(R.layout.activity_home)
 public class Home extends AIActionBarActivity implements RapidFloatingActionContentLabelList.OnRapidFloatingActionContentLabelListListener {
     @AIView(R.id.label_list_sample_rfal)
@@ -122,6 +125,11 @@ public class Home extends AIActionBarActivity implements RapidFloatingActionCont
 
         //获取reg id
         //get_rid();
+        thread.start();
+        /*SharedPreferences spf = getApplicationContext().getSharedPreferences("user_id", Context.MODE_PRIVATE);
+        int id = spf.getInt("user_id", -1);
+        String s = String.valueOf(id);
+        Toast.makeText(getApplicationContext(), s, Toast.LENGTH_LONG).show();*/
 
 
         // 收集activity，以便退出登录时集中销毁
@@ -318,36 +326,63 @@ public class Home extends AIActionBarActivity implements RapidFloatingActionCont
 
     }
 
-    /*private void get_rid_() {
-        SharedPreferences spf = getApplicationContext().getSharedPreferences("user_id", Context.MODE_PRIVATE);
-        String id = spf.getString("user_id", "default");
-        if (id == "default") {
-            Toast.makeText(getApplicationContext(), "id获取失败", Toast.LENGTH_LONG).show();
-        }
-
-        String identity_id = JPushInterface.getRegistrationID(getApplicationContext());
-
-        String jsonString = "{" + "\"id\":\""+ id +"\"," + "\"identity_id\":\"" + identity_id + "\"" + "}";
-        String msg = RequestHandler.sendPostRequest("http://120.24.208.130:1501/user/modify_information", jsonString);
-        if (msg == "false") {
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
-                            Toast.LENGTH_SHORT).show();
-                }
-            });
-        }
-    }
-    Runnable runnable = new Runnable() {
+    /*Runnable runnable = new Runnable() {
         @Override
         public void run() {
-            get_rid_();
+            SharedPreferences spf = getApplicationContext().getSharedPreferences("user_id", Context.MODE_PRIVATE);
+            int id = spf.getInt("user_id", -1);
+            if (id == -1) {
+                Toast.makeText(getApplicationContext(), "id获取失败", Toast.LENGTH_LONG).show();
+            }
+
+            String identity_id = JPushInterface.getRegistrationID(getApplicationContext());
+
+            String jsonString = "{" + "\"id\":\""+ id +"\"," + "\"identity_id\":\"" + identity_id + "\"" + "}";
+            String msg = RequestHandler.sendPostRequest("http://120.24.208.130:1501/user/modify_information", jsonString);
+            if (msg == "false") {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
+                                Toast.LENGTH_SHORT).show();
+                    }
+                });
+            } else {
+                Toast.makeText(getApplicationContext(), identity_id, Toast.LENGTH_LONG).show();
+            }
         }
     };
     public void get_rid() {
         new Thread(runnable).start();
     }*/
 
+    Thread thread =new Thread(new Runnable() {
+        @Override
+        public void run() {
+            SharedPreferences spf = getApplicationContext().getSharedPreferences("user_id", Context.MODE_PRIVATE);
+            int id = spf.getInt("user_id", -1);
+            /*if (id == -1) {
+                Toast.makeText(getApplicationContext(), "id获取失败", Toast.LENGTH_LONG).show();
+            }*/
+            String s = String.valueOf(id);
+            Log.v("test", s);
 
+            String identity_id = JPushInterface.getRegistrationID(getApplicationContext());
+
+            String jsonString = "{" + "\"id\":"+ id +"," + "\"identity_id\":\"" + identity_id + "\"" + "}";
+            String s1 = RequestHandler.sendPostRequest("http://120.24.208.130:1501/user/modify_information", jsonString);
+            Log.v("test", s1);
+            /*if (msg == "false") {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
+                                Toast.LENGTH_SHORT).show();
+                    }
+                });
+            } else {
+                Toast.makeText(getApplicationContext(), identity_id, Toast.LENGTH_LONG).show();
+            }*/
+        }
+    });
 }
