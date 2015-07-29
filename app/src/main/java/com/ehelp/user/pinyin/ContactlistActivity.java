@@ -15,6 +15,8 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.ehelp.R;
+import com.ehelp.map.sendhelp_map;
+import com.ehelp.send.CountNum;
 import com.ehelp.send.SendQuestion;
 import com.ehelp.send.SendSOS;
 import com.wangjie.androidbucket.utils.ABTextUtil;
@@ -185,11 +187,12 @@ public class ContactlistActivity extends AIActionBarActivity implements RapidFlo
     @Override
     public void onRFACItemIconClick(int position, RFACLabelItem item) {
         if (position == 0) {
-            Intent intent = new Intent(this, SendSOS.class);
+            Intent intent = new Intent(this, CountNum.class);
             startActivity(intent);
         } else
         if (position == 1) {
-            showToastMessage("您正在求助界面");
+            Intent intent = new Intent(this, sendhelp_map.class);
+            startActivity(intent);
         } else {
             Intent intent = new Intent(this, SendQuestion.class);
             startActivity(intent);

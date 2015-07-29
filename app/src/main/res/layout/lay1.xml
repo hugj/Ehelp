@@ -10,7 +10,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/ic_preference_first_normal"
+        android:background="@drawable/preference_first_item"
         android:layout_weight="0.07">
         <ImageView
             android:layout_width="50dp"
@@ -59,7 +59,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/ic_preference_first_normal"
+        android:background="@drawable/card_item"
         android:layout_weight="0.07">
         <ImageView
             android:layout_width="50dp"
@@ -99,12 +99,7 @@
             android:layout_toEndOf="@+id/iView2"
             android:id="@+id/tView7" />
     </RelativeLayout>
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/ic_preference_last_normal">
 
-    </RelativeLayout>
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.ehelp.R;
@@ -13,6 +15,8 @@ public class AddFriendActivity extends ActionBarActivity {
 
     //toolbar
     private Toolbar mToolbar;
+
+    String str1="";//手机号码
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +28,16 @@ public class AddFriendActivity extends ActionBarActivity {
         setSupportActionBar(mToolbar);
         TextView tvv =(TextView) findViewById(R.id.titlefortoolbar);
         tvv.setText("添加好友");
+
+        EditText editText1 =(EditText)findViewById(R.id.editText_comment);
+        str1=editText1.getText().toString();
+        //return str1;
+    }
+
+    public void chaxun(View v){
+
+
+
     }
 /*
     @Override
