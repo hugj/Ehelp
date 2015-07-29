@@ -1,6 +1,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools" tools:context="com.ehelp.user.Myhistory">
+    xmlns:tools="http://schemas.android.com/tools" tools:context="com.ehelp.user.history.MyHistory">
     <item android:id="@+id/all" android:title="所有事件"
         android:orderInCategory="100" app:showAsAction="never" />
     <item android:id="@+id/sponsor" android:title="我发起的"
