@@ -66,6 +66,7 @@ import java.net.URL;
 import android.os.StrictMode;
 
 import com.ehelp.utils.RequestHandler;
+import android.util.Log;
 
 
 
@@ -594,23 +595,22 @@ public class sendsos_map extends ActionBarActivity implements BaiduMap.OnMapClic
     Thread thread =new Thread(new Runnable() {
         @Override
         public void run() {
-            /*SharedPreferences spf = getApplicationContext().getSharedPreferences("user_id", Context.MODE_PRIVATE);
+            SharedPreferences spf = getApplicationContext().getSharedPreferences("user_id", Context.MODE_PRIVATE);
             int id = spf.getInt("user_id", -1);
-            if (id == -1) {
+            /*if (id == -1) {
                 Toast.makeText(getApplicationContext(), "id获取失败", Toast.LENGTH_LONG).show();
-            }
+            }*/
 
-            if (longitude == 0 || latitude == 0) {
+            /*if (longitude == 0 || latitude == 0) {
                 Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
                         Toast.LENGTH_SHORT).show();
-            }
+            }*/
 
-            String locmsg = "{" + "\"id\":\"" + id + "\","
-                    + "\"longitude\":\"" + longitude + "\","
-                    + "\"latitude\":\"" + latitude + "\"}";
+            /*String locmsg = "{" + "\"id\":" + id + "}";
             String msg = RequestHandler.sendPostRequest(
                     "http://120.24.208.130:1501/user/neighbor", locmsg);
-            if (msg == "false") {
+            Log.v("Ehelp", msg);*/
+            /*if (msg == "false") {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -619,15 +619,15 @@ public class sendsos_map extends ActionBarActivity implements BaiduMap.OnMapClic
                     }
                 });
                 return;
-            }
+            }*/
 
-            String jsonStringPart1 = "{" + "\"platform\":\"android\","
-                    + "\"audience\":{\"registration_id\":[";
+            //String jsonStringPart1 = "{" + "\"platform\":\"android\","
+            //        + "\"audience\":{\"registration_id\":[";
 
-            String jsonStringPart2 = jsonStringPart1 ;
+            //String jsonStringPart2 = jsonStringPart1 + msg;
 
-            String jsonString = jsonStringPart2 + "]},\"notification\":{\"alert\":\"有人正在求救！\"}}";
-            */
+            //String jsonString = jsonStringPart2 + "]},\"notification\":{\"alert\":\"有人正在求救！\"}}";
+
             sendPostRequest("https://api.jpush.cn/v3/push", "{\"platform\":\"all\",\"audience\":\"all\",\"notification\":{\"alert\":\"有人正在求救！\"}}");
         }
     });
