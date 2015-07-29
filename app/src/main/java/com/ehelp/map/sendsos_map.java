@@ -2,6 +2,7 @@ package com.ehelp.map;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -96,6 +97,10 @@ public class sendsos_map extends ActionBarActivity implements BaiduMap.OnMapClic
     private Marker mMarker4;
     private InfoWindow mInfoWindow;
 
+    //经纬度
+    private double longitude = 0;
+    private double latitude = 0;
+
     //toolbar
     private Toolbar mToolbar;
     
@@ -116,12 +121,12 @@ public class sendsos_map extends ActionBarActivity implements BaiduMap.OnMapClic
         SDKInitializer.initialize(getApplicationContext());
         setContentView(R.layout.activity_sendsos_map);
 
-        //推送求救信息
-        sendPush();
-
-        this.vibandsp();
-        //sp = new SoundPool(10, AudioManager.STREAM_SYSTEM, 5);
-        //sp.load(getApplicationContext(), R.raw.alarm, 1);
+        StrictMode.setThreadPolicy(
+                new StrictMode.ThreadPolicy.Builder().
+                        detectDiskReads().detectDiskWrites().detectNetwork().penaltyLog().build());
+        StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder().
+                detectLeakedSqlLiteObjects().detectLeakedClosableObjects().
+                penaltyLog().penaltyDeath().build());
 
         CharSequence titleLable = "路线规划";
         setTitle(titleLable);
@@ -224,6 +229,14 @@ public class sendsos_map extends ActionBarActivity implements BaiduMap.OnMapClic
             }
         });
 
+        //推送求救信息
+        String s = String.valueOf(longitude);
+        Toast.makeText(getApplicationContext(), s, Toast.LENGTH_LONG).show();
+        thread.start();
+
+        vibandsp();
+        //sp = new SoundPool(10, AudioManager.STREAM_SYSTEM, 5);
+        //sp.load(getApplicationContext(), R.raw.alarm, 1);
     }
 
     /**
@@ -425,6 +438,10 @@ public class sendsos_map extends ActionBarActivity implements BaiduMap.OnMapClic
             LatLng pt1 = new LatLng(location.getLatitude(),
                     location.getLongitude());
             stNode = PlanNode.withLocation(pt1);
+
+            longitude = location.getLongitude();
+            latitude = location.getLatitude();
+
         }
         public void onReceivePoi(BDLocation poiLocation) {}
     }
@@ -475,7 +492,7 @@ public class sendsos_map extends ActionBarActivity implements BaiduMap.OnMapClic
         //sp.play(1, 1, 1, 0, -1, 1);
     }
 
-    public void sendPush() {
+    /*public void sendPush() {
         StrictMode.setThreadPolicy(
                 new StrictMode.ThreadPolicy.Builder().
                         detectDiskReads().detectDiskWrites().detectNetwork().penaltyLog().build());
@@ -491,11 +508,45 @@ public class sendsos_map extends ActionBarActivity implements BaiduMap.OnMapClic
         public void run() {
             sendPush_();
         }
-    };
+    };*/
 
-    private void sendPush_() {
+    /*private void sendPush_() {
+        SharedPreferences spf = getApplicationContext().getSharedPreferences("user_id", Context.MODE_PRIVATE);
+        String id = spf.getString("user_id", "default");
+        if (id == "default") {
+            Toast.makeText(getApplicationContext(), "id获取失败", Toast.LENGTH_LONG).show();
+        }
+
+        if (longitude == 0 || latitude == 0) {
+            Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
+                    Toast.LENGTH_SHORT).show();
+        }
+
+        String locmsg = "{" + "\"id\":\"" + id + "\","
+                            + "\"longitude\":\"" + longitude + "\","
+                            + "\"latitude\":\"" + latitude + "\"}";
+        String msg = RequestHandler.sendPostRequest(
+                "http://120.24.208.130:1501/user/neighbor", locmsg);
+        if (msg == "false") {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
+                            Toast.LENGTH_SHORT).show();
+                }
+            });
+            return;
+        }
+
+        String jsonStringPart1 = "{" + "\"platform\":\"android\","
+                                + "\"audience\":{\"registration_id\":[";
+
+        String jsonStringPart2 = jsonStringPart1 ;
+
+        String jsonString = jsonStringPart2 + "]},\"notification\":{\"alert\":\"有人正在求救！\"}}";
+
         sendPostRequest("https://api.jpush.cn/v3/push", "{\"platform\":\"all\",\"audience\":\"all\",\"notification\":{\"alert\":\"有人正在求救！\"}}");
-    }
+    }*/
 
     //极光推送
     public static String sendPostRequest(String urlString, String jsondata){
@@ -539,4 +590,46 @@ public class sendsos_map extends ActionBarActivity implements BaiduMap.OnMapClic
         return "false";
 
     }
+
+    Thread thread =new Thread(new Runnable() {
+        @Override
+        public void run() {
+            /*SharedPreferences spf = getApplicationContext().getSharedPreferences("user_id", Context.MODE_PRIVATE);
+            int id = spf.getInt("user_id", -1);
+            if (id == -1) {
+                Toast.makeText(getApplicationContext(), "id获取失败", Toast.LENGTH_LONG).show();
+            }
+
+            if (longitude == 0 || latitude == 0) {
+                Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
+                        Toast.LENGTH_SHORT).show();
+            }
+
+            String locmsg = "{" + "\"id\":\"" + id + "\","
+                    + "\"longitude\":\"" + longitude + "\","
+                    + "\"latitude\":\"" + latitude + "\"}";
+            String msg = RequestHandler.sendPostRequest(
+                    "http://120.24.208.130:1501/user/neighbor", locmsg);
+            if (msg == "false") {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
+                                Toast.LENGTH_SHORT).show();
+                    }
+                });
+                return;
+            }
+
+            String jsonStringPart1 = "{" + "\"platform\":\"android\","
+                    + "\"audience\":{\"registration_id\":[";
+
+            String jsonStringPart2 = jsonStringPart1 ;
+
+            String jsonString = jsonStringPart2 + "]},\"notification\":{\"alert\":\"有人正在求救！\"}}";
+            */
+            sendPostRequest("https://api.jpush.cn/v3/push", "{\"platform\":\"all\",\"audience\":\"all\",\"notification\":{\"alert\":\"有人正在求救！\"}}");
+        }
+    });
+
 }
