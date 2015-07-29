@@ -19,7 +19,7 @@
         android:layout_height="50dp"
         android:layout_marginTop="30dp"
         android:clickable="true"
-        android:background="@drawable/preference_item"
+        android:background="@drawable/ic_preference_normal"
         android:gravity="center_vertical"
         android:id="@+id/setting_push">
        <TextView
