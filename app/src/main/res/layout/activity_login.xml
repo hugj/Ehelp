@@ -10,9 +10,9 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
+        android:background="@drawable/background_2"
         android:layout_height="match_parent">
-<!--        android:background="@drawable/background_2"
--->
+
         <Button
             android:id="@+id/button3"
             android:layout_width="300dp"
@@ -79,12 +79,12 @@
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:id="@+id/imageView2"
+            android:background="@drawable/icon_log"
 
             android:layout_alignParentTop="true"
             android:layout_toStartOf="@+id/button1"
             android:layout_marginTop="42dp" />
-<!--            android:background="@drawable/icon_log"
--->
+
     </RelativeLayout>
 
 </LinearLayout>

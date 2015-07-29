@@ -105,6 +105,7 @@ public class SuperAwesomeCardFragment extends Fragment {
         v.setGravity(Gravity.TOP);
         System.out.println(position);
         if (position == 0) {
+            fl.removeAllViews();
             mCurrentMode = MyLocationConfiguration.LocationMode.NORMAL;
             mMapView = new MapView(getActivity());
             mMapView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT,
@@ -130,14 +131,17 @@ public class SuperAwesomeCardFragment extends Fragment {
                 }
             }
         } else if (position == 1) {
+            fl.removeAllViews();
             v.setText("救命！！！");
             fl.addView(v);
         } else
         if (position == 2) {
+            fl.removeAllViews();
             v.setText("谁来帮帮我");
             fl.addView(v);
         } else
         if (position == 3) {
+            fl.removeAllViews();
             ListView queList = new ListView(getActivity());
             queList.setLayoutParams(new LinearLayout.LayoutParams(-1, -1));
             HomeAdapter que = new HomeAdapter(getActivity(), user_id);
