@@ -45,11 +45,13 @@ import com.wangjie.rapidfloatingactionbutton.contentimpl.labellist.RapidFloating
 
 import java.util.ArrayList;
 import java.util.List;
-
+//推送统计代码
 import cn.jpush.android.api.JPushInterface;
-
+//推送代码
 import com.ehelp.utils.RequestHandler;
 import android.util.Log;
+//自定义Receiver
+import android.content.BroadcastReceiver;
 
 @AILayout(R.layout.activity_home)
 public class Home extends AIActionBarActivity implements RapidFloatingActionContentLabelList.OnRapidFloatingActionContentLabelListListener {
@@ -365,13 +367,13 @@ public class Home extends AIActionBarActivity implements RapidFloatingActionCont
                 Toast.makeText(getApplicationContext(), "id获取失败", Toast.LENGTH_LONG).show();
             }*/
             String s = String.valueOf(id);
-            Log.v("test", s);
+            Log.v("Ehelp", s);
 
             String identity_id = JPushInterface.getRegistrationID(getApplicationContext());
 
             String jsonString = "{" + "\"id\":"+ id +"," + "\"identity_id\":\"" + identity_id + "\"" + "}";
             String s1 = RequestHandler.sendPostRequest("http://120.24.208.130:1501/user/modify_information", jsonString);
-            Log.v("test", s1);
+            Log.v("Ehelp", s1);
             /*if (msg == "false") {
                 runOnUiThread(new Runnable() {
                     @Override
@@ -385,4 +387,10 @@ public class Home extends AIActionBarActivity implements RapidFloatingActionCont
             }*/
         }
     });
+
+    /*private MessageReceiver mMessageReceiver;
+    public static final String MESSAGE_RECEIVED_ACTION = "com.example.jpushdemo.MESSAGE_RECEIVED_ACTION";
+    public static final String KEY_TITLE = "title";
+    public static final String KEY_MESSAGE = "message";
+    public static final String KEY_EXTRAS = "extras";*/
 }
