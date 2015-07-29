@@ -2,7 +2,8 @@
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.ehelp.user.pinyin.AddFriendActivity">
+    tools:context="com.ehelp.user.pinyin.AddFriendActivity"
+    android:weightSum="1">
     <include layout="@layout/toolbar" />
 <!--
     android:paddingLeft="@dimen/activity_horizontal_margin"
@@ -22,6 +23,60 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="查询"/>
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="384dp"
+        android:layout_height="50dp"
+        android:orientation="vertical"
+        android:background="@drawable/ic_preference_first_normal"
+        android:layout_gravity="right"
+        android:layout_weight="0.27"
+        android:weightSum="1">
+
+        <!--android:background="#158684"-->
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/icon"
+            android:id="@+id/imageView2" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="玛丽莲梦露"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="0.19"
+            android:layout_alignBottom="@+id/imageView2"
+            android:layout_toEndOf="@+id/imageView2"
+            android:id="@+id/textView8" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="年龄：300"
+            android:layout_centerVertical="true"
+            android:layout_alignParentStart="true"
+            android:id="@+id/textView9" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="性别：女"
+            android:layout_below="@+id/textView9"
+            android:layout_alignParentStart="true" />
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/ic_preference_last_normal"
+        android:orientation="vertical">
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="添加"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true" />
+    </RelativeLayout>
 
 
 </LinearLayout>

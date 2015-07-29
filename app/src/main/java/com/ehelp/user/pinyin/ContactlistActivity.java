@@ -52,14 +52,7 @@ public class ContactlistActivity extends AIActionBarActivity implements RapidFlo
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         init();
-
-        //set toolbar
-        mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        mToolbar.setTitle("通讯录");
-        setSupportActionBar(mToolbar);
-        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);//开启up button这个默认值是true
-        //getSupportActionBar().setHomeButtonEnabled(true);//
-        //getSupportActionBar().setDisplayShowHomeEnabled(true);
+        
 
         eListView = (ExpandableListView) findViewById(R.id.elist);
         assortView = (AssortView) findViewById(R.id.assort);
@@ -132,10 +125,13 @@ public class ContactlistActivity extends AIActionBarActivity implements RapidFlo
                 penaltyLog().penaltyDeath().build());
         //set toolbar
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        mToolbar.setTitle("");
+        mToolbar.setTitle("  ");
         setSupportActionBar(mToolbar);
         TextView tvv =(TextView) findViewById(R.id.titlefortoolbar);
         tvv.setText("通讯录");
+        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);//开启up button这个默认值是true
+        //getSupportActionBar().setHomeButtonEnabled(true);//
+        //getSupportActionBar().setDisplayShowHomeEnabled(true);
         //FAB
         RapidFloatingActionContentLabelList rfaContent = new RapidFloatingActionContentLabelList(context);
         rfaContent.setOnRapidFloatingActionContentLabelListListener(this);

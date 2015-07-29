@@ -243,11 +243,6 @@
             android:parentActivityName=".account.login" >
         </activity>
         <activity
-            android:name=".user.Myhistory"
-            android:label="@string/title_activity_myhistory"
-            android:parentActivityName=".home.Home" >
-        </activity>
-        <activity
             android:name=".user.pinyin.MessetnameActivity"
             android:label="@string/title_activity_mesnotename" >
         </activity>
@@ -312,7 +307,12 @@
         </activity>
         <activity
             android:name=".user.pinyin.AddFriendActivity"
-            android:parentActivityName=".user.pinyin.ContactlistActivity">
+            android:parentActivityName=".user.pinyin.ContactlistActivity" >
+        </activity>
+        <activity
+            android:name=".user.history.MyHistory"
+            android:label="@string/title_activity_my_history"
+            android:parentActivityName=".home.Home">
         </activity>
     </application>
 

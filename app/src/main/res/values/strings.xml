@@ -89,4 +89,5 @@
     <string name="action_search">Search</string>
     <string name="title_activity_changephone">ChangephoneActivity</string>
     <string name="title_activity_add_friend">AddFriendActivity</string>
+    <string name="title_activity_my_history">MyHistory</string>
 </resources>
