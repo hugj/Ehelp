@@ -48,7 +48,7 @@ import com.baidu.mapapi.search.route.WalkingRoutePlanOption;
 import com.baidu.mapapi.search.route.WalkingRouteResult;
 import com.ehelp.R;
 
-
+//这个事demo，没有引入
 public class recievehelp_map extends ActionBarActivity implements BaiduMap.OnMapClickListener,
         OnGetRoutePlanResultListener {
 
