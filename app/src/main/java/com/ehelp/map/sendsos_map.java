@@ -104,6 +104,9 @@ public class sendsos_map extends ActionBarActivity implements BaiduMap.OnMapClic
     //private SoundPool sp;
     private Vibrator vib;
 
+    public double jingdu;
+    public double weidu;
+
     public void Stopvands(View view) {
         this.finish();
     }
@@ -158,6 +161,8 @@ public class sendsos_map extends ActionBarActivity implements BaiduMap.OnMapClic
         option.setScanSpan(1000);
         mLocClient.setLocOption(option);
         mLocClient.start();
+
+
         //-----------------------
 
         mBaidumap.setOnMarkerClickListener(new BaiduMap.OnMarkerClickListener() {
@@ -418,7 +423,6 @@ public class sendsos_map extends ActionBarActivity implements BaiduMap.OnMapClic
                     location.getLongitude());
             stNode = PlanNode.withLocation(pt1);
         }
-
         public void onReceivePoi(BDLocation poiLocation) {}
     }
 
