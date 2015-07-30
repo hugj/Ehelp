@@ -1,5 +1,5 @@
 package com.ehelp.send;
-
+//这个代码并无用处
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;

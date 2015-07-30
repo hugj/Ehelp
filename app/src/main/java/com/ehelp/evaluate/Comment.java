@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ehelp.R;
+import com.ehelp.map.sendhelp_map;
 import com.ehelp.send.CountNum;
 import com.ehelp.send.SendHelp;
 import com.ehelp.send.SendQuestion;
@@ -97,6 +98,7 @@ public class Comment extends AIActionBarActivity implements RapidFloatingActionC
             @Override
             public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
                 //doing actions
+                starnum =(int) rating;
                 //rating是传入的星级。
             }
         });
@@ -152,7 +154,7 @@ public class Comment extends AIActionBarActivity implements RapidFloatingActionC
             startActivity(intent);
         } else
         if (position == 1) {
-            Intent intent = new Intent(this, SendHelp.class);
+            Intent intent = new Intent(this, sendhelp_map.class);
             startActivity(intent);
         } else {
             Intent intent = new Intent(this, SendQuestion.class);
@@ -168,7 +170,7 @@ public class Comment extends AIActionBarActivity implements RapidFloatingActionC
             startActivity(intent);
         } else
         if (position == 1) {
-            Intent intent = new Intent(this, SendHelp.class);
+            Intent intent = new Intent(this, sendhelp_map.class);
             startActivity(intent);
         } else {
             Intent intent = new Intent(this, SendQuestion.class);
@@ -192,7 +194,6 @@ public class Comment extends AIActionBarActivity implements RapidFloatingActionC
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-
         //noinspection SimplifiableIfStatement
         if ((id == R.id.action_settings)){
             return true;
@@ -202,44 +203,9 @@ public class Comment extends AIActionBarActivity implements RapidFloatingActionC
     }
 
 
-    //写一个返回星级INT类型的函数。
-    /*public void btn_Listener(View v){
-        //<提交>后的跳转用intent实现。
-        Toast.makeText(getApplicationContext(), "xml代码内调用实现tijiao",
-                Toast.LENGTH_SHORT).show();
-    }*/
-   /* public void btn1_Listener(View v){
-        //1星后的跳转用intent实现。
-        Toast.makeText(getApplicationContext(), "xml代码内调用实现1",
-                Toast.LENGTH_SHORT).show();
-        starnum = 1;
-    }
-    public void btn2_Listener(View v){
-        //2星后的跳转用intent实现。
-        Toast.makeText(getApplicationContext(), "xml代码内调用实现2",
-                Toast.LENGTH_SHORT).show();
-        starnum = 2;
-    }
-    public void btn3_Listener(View v){
-        //3星后的跳转用intent实现。
-        Toast.makeText(getApplicationContext(), "xml代码内调用实现3",
-                Toast.LENGTH_SHORT).show();
-        starnum = 3;
-    }
-    public void btn4_Listener(View v){
-        //4星后的跳转用intent实现。
-        Toast.makeText(getApplicationContext(), "xml代码内调用实现4",
-                Toast.LENGTH_SHORT).show();
-        starnum = 4;
-    }
-    public void btn5_Listener(View v){
-        //5星后的跳转用intent实现。
-        Toast.makeText(getApplicationContext(), "xml代码内调用实现5",
-                Toast.LENGTH_SHORT).show();
-                starnum = 5;
-    }
 
-//获取星级
+
+/*/获取星级
     public int getStarnum(){
         return starnum;
     }*/

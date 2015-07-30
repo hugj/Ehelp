@@ -291,17 +291,17 @@
         <activity
             android:name=".map.recievesos_map"
             android:label="@string/title_activity_recievesos_map"
-            android:parentActivityName=".account.login" >
+            android:parentActivityName=".home.Home" >
         </activity>
         <activity
             android:name=".map.sendhelpcomeback_map"
             android:label="@string/title_activity_sendhelpcomeback_map"
-            android:parentActivityName=".account.login" >
+            android:parentActivityName=".home.Home" >
         </activity>
         <activity
             android:name=".map.recieve_help_ans_map"
             android:label="@string/title_activity_recieve_help_ans_map"
-            android:parentActivityName=".account.login" >
+            android:parentActivityName=".home.Home" >
         </activity>
         <activity
             android:name=".home.Home"
