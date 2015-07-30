@@ -25,8 +25,7 @@
             android:id="@+id/accountsafe_change_phone3"
             android:layout_toRightOf="@+id/accountsafe_change_phone2"
             android:layout_marginLeft="50dp"
-            android:layout_centerVertical="true"
-            android:text="12345678"/>
+            android:layout_centerVertical="true" />
     </RelativeLayout>
     <RelativeLayout
         android:layout_width="fill_parent"
