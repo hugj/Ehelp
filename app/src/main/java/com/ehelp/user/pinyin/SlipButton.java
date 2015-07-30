@@ -15,11 +15,10 @@ import com.ehelp.R;
 
 public class SlipButton extends View implements OnTouchListener{
 
-    private boolean NowChoose = true;//记录当前按钮是否打开,true为打开,flase为关闭
+    private boolean NowChoose = false;//记录当前按钮是否打开,true为打开,flase为关闭
     private boolean OnSlip = false;//记录用户是否在滑动的变量
     private float DownX,NowX;//按下时的x,当前的x,
-    private Rect Btn_On,Btn_Off;//打开和关闭状态下,游标的Rect  
-
+    private Rect Btn_On,Btn_Off;//打开和关闭状态下,游标的Rect
     private boolean isChgLsnOn = false;
     private OnChangedListener ChgLsn;
 
