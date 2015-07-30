@@ -12,8 +12,8 @@ import android.widget.Toast;
 
 import com.ehelp.R;
 import com.ehelp.account.login;
+import com.ehelp.map.sendhelp_map;
 import com.ehelp.send.CountNum;
-import com.ehelp.send.SendHelp;
 import com.ehelp.send.SendQuestion;
 import com.ehelp.utils.ActivityCollector;
 import com.wangjie.androidbucket.utils.ABTextUtil;
@@ -60,6 +60,13 @@ public class SettingActivity extends AIActionBarActivity implements OnChangedLis
         myBtn.SetOnChangedListener((OnChangedListener) this);
 
         //FAB
+        fab();
+        
+        // 收集activity，以便退出登录时集中销毁
+        ActivityCollector.getInstance().addActivity(this);
+    }
+
+    private void fab(){
         RapidFloatingActionContentLabelList rfaContent = new RapidFloatingActionContentLabelList(context);
         rfaContent.setOnRapidFloatingActionContentLabelListListener(this);
         List<RFACLabelItem> items = new ArrayList<>();
@@ -101,9 +108,6 @@ public class SettingActivity extends AIActionBarActivity implements OnChangedLis
                 rfaButton,
                 rfaContent
         ).build();
-        
-        // 收集activity，以便退出登录时集中销毁
-        ActivityCollector.getInstance().addActivity(this);
     }
     @Override
     public void onRFACItemLabelClick(int position, RFACLabelItem item) {
@@ -112,7 +116,7 @@ public class SettingActivity extends AIActionBarActivity implements OnChangedLis
             startActivity(intent);
         } else
         if (position == 1) {
-            Intent intent = new Intent(this, SendHelp.class);
+            Intent intent = new Intent(this, sendhelp_map.class);
             startActivity(intent);
         } else {
             Intent intent = new Intent(this, SendQuestion.class);
@@ -128,7 +132,7 @@ public class SettingActivity extends AIActionBarActivity implements OnChangedLis
             startActivity(intent);
         } else
         if (position == 1) {
-            Intent intent = new Intent(this, SendHelp.class);
+            Intent intent = new Intent(this, sendhelp_map.class);
             startActivity(intent);
         } else {
             Intent intent = new Intent(this, SendQuestion.class);

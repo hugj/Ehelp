@@ -83,6 +83,25 @@ public class Home extends AIActionBarActivity implements RapidFloatingActionCont
 
         SDKInitializer.initialize(getApplicationContext());
         initViews();
+        fab();
+
+        //获取reg id
+        //get_rid();
+        thread.start();
+        /*SharedPreferences spf = getApplicationContext().getSharedPreferences("user_id", Context.MODE_PRIVATE);
+        int id = spf.getInt("user_id", -1);
+        String s = String.valueOf(id);
+        Toast.makeText(getApplicationContext(), s, Toast.LENGTH_LONG).show();*/
+
+
+        // 收集activity，以便退出登录时集中销毁
+        ActivityCollector.getInstance().addActivity(this);
+
+        sharedPref = this.getSharedPreferences("user_id", Context.MODE_PRIVATE);
+        user_id = sharedPref.getInt("user_id", -1);
+    }
+
+    private void fab(){
         RapidFloatingActionContentLabelList rfaContent = new RapidFloatingActionContentLabelList(context);
         rfaContent.setOnRapidFloatingActionContentLabelListListener(this);
         List<RFACLabelItem> items = new ArrayList<>();
@@ -125,21 +144,6 @@ public class Home extends AIActionBarActivity implements RapidFloatingActionCont
                 rfaButton,
                 rfaContent
         ).build();
-
-        //获取reg id
-        //get_rid();
-        thread.start();
-        /*SharedPreferences spf = getApplicationContext().getSharedPreferences("user_id", Context.MODE_PRIVATE);
-        int id = spf.getInt("user_id", -1);
-        String s = String.valueOf(id);
-        Toast.makeText(getApplicationContext(), s, Toast.LENGTH_LONG).show();*/
-
-
-        // 收集activity，以便退出登录时集中销毁
-        ActivityCollector.getInstance().addActivity(this);
-
-        sharedPref = this.getSharedPreferences("user_id", Context.MODE_PRIVATE);
-        user_id = sharedPref.getInt("user_id", -1);
     }
     @Override
     public void onRFACItemLabelClick(int position, RFACLabelItem item) {
