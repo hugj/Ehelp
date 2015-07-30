@@ -24,6 +24,7 @@
     <string name="title_activity_usermes">UsermesActivity</string>
     <string name="title_activity_message">messageActivity</string>
     <string name= "mes_username">用户名</string>
+    <string name="mes_nickname">昵称</string>
     <string name="mes_title">个人信息</string>
     <string name="mes_file">性别</string>
     <string name="mes_user1">男</string>

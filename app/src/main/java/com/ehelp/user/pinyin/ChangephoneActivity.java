@@ -1,6 +1,8 @@
 package com.ehelp.user.pinyin;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
@@ -33,6 +35,9 @@ public class ChangephoneActivity extends ActionBarActivity implements View.OnCli
     private Button btn_verification;
     private String PhoneNumber;
     private EditText Input_phone_number;
+    private TextView Account;
+    String account;
+    private SharedPreferences sharedPref;
 
 
     public final static String EXTRA_MESSAGE = "com.ehelp.MESSAGE";
@@ -50,6 +55,11 @@ public class ChangephoneActivity extends ActionBarActivity implements View.OnCli
         setSupportActionBar(mToolbar);
         TextView tvv =(TextView) findViewById(R.id.titlefortoolbar);
         tvv.setText("更改绑定账号");
+        //显示当前用户的手机号
+        Account = (TextView)findViewById(R.id.accountsafe_change_phone3);
+        sharedPref = this.getSharedPreferences("user_id", Context.MODE_PRIVATE);
+        account = sharedPref.getString("account", "");
+        Account.setText(account);
         init();
     }
     private void init() {
