@@ -62,7 +62,7 @@ public class AnsAdapter extends BaseAdapter {
         //数据初始化
         try {
             String jsonStrng = "{" +
-                    "\"event_id\":" + 12 + "}";
+                    "\"event_id\":" + event_id + "}";
             String message = RequestHandler.sendPostRequest(
                     "http://120.24.208.130:1501/event/anslist", jsonStrng);
             if (message == "false") {
