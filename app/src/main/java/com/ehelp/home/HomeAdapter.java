@@ -73,6 +73,7 @@ public class HomeAdapter extends BaseAdapter {
                 item.put("头像", R.drawable.icon);
                 item.put("标题", "连接失败，请检查网络是否连接并重试");
                 item.put("用户", "");
+                item.put("时间", "");
                 item.put("悬赏", "");
                 list.add(item);
             } else {
@@ -90,6 +91,7 @@ public class HomeAdapter extends BaseAdapter {
                     item.put("头像", R.drawable.icon);
                     item.put("标题", eventList.getJSONObject(i).getString("title"));
                     item.put("用户", eventList.getJSONObject(i).getString("launcher"));
+                    item.put("时间", eventList.getJSONObject(i).getString("time"));
                     item.put("悬赏", "10爱心币");
                     list.add(item);
                 }
@@ -110,46 +112,60 @@ public class HomeAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         //头像
         ImageView iv=new ImageView(context);
-        RelativeLayout.LayoutParams lp_iv=new RelativeLayout.LayoutParams(70,70);
+        RelativeLayout.LayoutParams lp_iv=new RelativeLayout.LayoutParams(80,80);
         lp_iv.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
         iv.setLayoutParams(lp_iv);
         iv.setScaleType(ScaleType.CENTER_INSIDE);
-        iv.setImageResource((Integer)((list.get(position)).get("头像")));
+        iv.setImageResource((Integer) ((list.get(position)).get("头像")));
         //标题
-        TextView name=new TextView(context);
+        TextView title=new TextView(context);
         RelativeLayout.LayoutParams lp_tv=new RelativeLayout.LayoutParams(-2,-2);
-        lp_tv.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
-        name.setLayoutParams(lp_tv);
-        name.setTextSize(name.getTextSize()+10);
-        name.setText((String)(list.get(position).get("标题")));
+        lp_tv.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
+        title.setLayoutParams(lp_tv);
+        title.setTextSize(title.getTextSize());
+        title.setText((String) (list.get(position).get("标题")));
         //用户
-        TextView sex=new TextView(context);
+        TextView user=new TextView(context);
         RelativeLayout.LayoutParams lp_sex=new RelativeLayout.LayoutParams(-2,-2);
         lp_sex.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
-        sex.setLayoutParams(lp_sex);
-        sex.setText((String)(list.get(position).get("用户")));
+        user.setLayoutParams(lp_sex);
+        user.setText((String)(list.get(position).get("用户")));
+        //时间
+        TextView time=new TextView(context);
+        RelativeLayout.LayoutParams lp_time=new RelativeLayout.LayoutParams(-2,-2);
+        lp_sex.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
+        time.setLayoutParams(lp_sex);
+        time.setText((String)(list.get(position).get("时间")));
         //悬赏
-        TextView  age=new TextView(context);
+        TextView  Reward=new TextView(context);
         RelativeLayout.LayoutParams lp_age=new RelativeLayout.LayoutParams(-2,-2);
         lp_age.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
-        age.setLayoutParams(lp_age);
-        age.setText((String)(list.get(position).get("悬赏")));
+        Reward.setLayoutParams(lp_age);
+        Reward.setText((String) (list.get(position).get("悬赏")));
+
+        //线性布局1
+        LinearLayout l11=new LinearLayout(context);
+        l11.setLayoutParams(new LinearLayout.LayoutParams(-1, -2));
+        l11.setOrientation(LinearLayout.VERTICAL);
+        l11.addView(user);
+        l11.addView(time);
+        //线性布局2
+        LinearLayout l12=new LinearLayout(context);
+        l12.setLayoutParams(new LinearLayout.LayoutParams(-1, -2));
+        l12.setOrientation(LinearLayout.HORIZONTAL);
+        l12.addView(iv);
+        l12.addView(l11);
         //相对布局1
         RelativeLayout rl1=new RelativeLayout(context);
         rl1.setLayoutParams(new RelativeLayout.LayoutParams(-1,-2));
-        rl1.addView(iv);
-        rl1.addView(name);
-        //相对布局2
-        RelativeLayout rl2=new RelativeLayout(context);
-        rl2.setLayoutParams(new LinearLayout.LayoutParams(-1,-2));
-        rl2.addView(sex);
-        rl2.addView(age);
+        rl1.addView(l12);
+        rl1.addView(Reward);
         //返回视图
         LinearLayout returnView=new LinearLayout(context);
         returnView.setLayoutParams(new ListView.LayoutParams(-1,-2));//注意:ListView.LayoutParams
         returnView.setOrientation(LinearLayout.VERTICAL);
         returnView.addView(rl1);
-        returnView.addView(rl2);
+        returnView.addView(title);
 
         return returnView;
     }
