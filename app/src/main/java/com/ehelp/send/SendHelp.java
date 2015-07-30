@@ -7,14 +7,12 @@ import android.os.StrictMode;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ehelp.R;
 import com.ehelp.home.Home;
-import com.ehelp.map.sendhelpcomeback_map;
 import com.ehelp.utils.RequestHandler;
 import com.wangjie.androidbucket.utils.ABTextUtil;
 import com.wangjie.androidbucket.utils.imageprocess.ABShape;
@@ -150,40 +148,36 @@ public class SendHelp extends AIActionBarActivity implements RapidFloatingAction
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             //点击发送按钮后要做的事。
-            Intent intent = new Intent(this, sendhelpcomeback_map.class);
-            startActivity(intent);
+            init();
+            int user_id = 17;
+            Eevents = (EditText)findViewById(R.id.edit_message2);
+            Edesc_event = (EditText)findViewById(R.id.edit_message3);
+            Eshare_money = (EditText)findViewById(R.id.edit_message4);
+            event = Eevents.getText().toString();
+            desc_event = Edesc_event.getText().toString();
+            share_money = Eshare_money.getText().toString();
+            if (!event.isEmpty()) {
+                String jsonStrng = "{" +
+                        "\"id\":" + user_id + ",\"type\":1," +
+                        "\"title\":\"" + event + "\"," +
+                        "\"content\":\"" + desc_event + "\"" + "}";
+                String message = RequestHandler.sendPostRequest(
+                        "http://120.24.208.130:1501/event/add", jsonStrng);
+                if (message == "false") {
+                    Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
+                            Toast.LENGTH_SHORT).show();
+                    return false;
+                }   else {
+                    Toast.makeText(getApplicationContext(), message,
+                            Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(this, Home.class);
+                    startActivity(intent);
+                    SendHelp.this.finish();
+                }
+            }
             return true;
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    public void submit(View view) {
-        init();
-        int user_id = 17;
-        Eevents = (EditText)findViewById(R.id.edit_message2);
-        Edesc_event = (EditText)findViewById(R.id.edit_message3);
-        Eshare_money = (EditText)findViewById(R.id.edit_message4);
-        event = Eevents.getText().toString();
-        desc_event = Edesc_event.getText().toString();
-        share_money = Eshare_money.getText().toString();
-        if (!event.isEmpty()) {
-            String jsonStrng = "{" +
-                    "\"id\":" + user_id + ",\"type\":1," +
-                    "\"title\":\"" + event + "\"," +
-                    "\"content\":\"" + desc_event + "\"" + "}";
-            String message = RequestHandler.sendPostRequest(
-                    "http://120.24.208.130:1501/event/add", jsonStrng);
-            if (message == "false") {
-                Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
-                        Toast.LENGTH_SHORT).show();
-                return;
-            }   else {
-                Toast.makeText(getApplicationContext(), message,
-                        Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(this, Home.class);
-                startActivity(intent);
-            }
-        }
     }
 }

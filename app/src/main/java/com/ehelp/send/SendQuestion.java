@@ -11,7 +11,6 @@ import android.os.StrictMode;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -19,7 +18,6 @@ import android.widget.Toast;
 import com.ehelp.R;
 import com.ehelp.home.Home;
 import com.ehelp.map.sendhelp_map;
-import com.ehelp.receive.QuestionDetail;
 import com.ehelp.utils.RequestHandler;
 import com.wangjie.androidbucket.utils.ABTextUtil;
 import com.wangjie.androidbucket.utils.imageprocess.ABShape;
@@ -156,33 +154,26 @@ public class SendQuestion extends AIActionBarActivity implements RapidFloatingAc
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             //点击发送之后将问题信息传至数据库，跳转进入详情页
+            init();
 
-            Intent intent = new Intent(this, QuestionDetail.class);
-            startActivity(intent);
+            Equestion = (EditText)findViewById(R.id.edit_message2);
+            Edesc_ques = (EditText)findViewById(R.id.edit_message3);
+            Eshare_money = (EditText)findViewById(R.id.edit_message4);
+            question = Equestion.getText().toString();
+            desc_ques = Edesc_ques.getText().toString();
+            share_money = Eshare_money.getText().toString();
+            if (!question.isEmpty()) {
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        handler.sendEmptyMessage(-9);
+                    }
+                }).start();
+            }
             return true;
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    public void submit(View view) {
-        init();
-
-
-        Equestion = (EditText)findViewById(R.id.edit_message2);
-        Edesc_ques = (EditText)findViewById(R.id.edit_message3);
-        Eshare_money = (EditText)findViewById(R.id.edit_message4);
-        question = Equestion.getText().toString();
-        desc_ques = Edesc_ques.getText().toString();
-        share_money = Eshare_money.getText().toString();
-        if (!question.isEmpty()) {
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    handler.sendEmptyMessage(-9);
-                }
-            }).start();
-        }
     }
 
     /**
@@ -208,6 +199,7 @@ public class SendQuestion extends AIActionBarActivity implements RapidFloatingAc
                             Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(SendQuestion.this, Home.class);
                     startActivity(intent);
+                    SendQuestion.this.finish();
                 }
             }
         }
