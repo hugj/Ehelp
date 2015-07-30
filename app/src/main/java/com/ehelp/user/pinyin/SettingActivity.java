@@ -141,7 +141,7 @@ public class SettingActivity extends AIActionBarActivity implements OnChangedLis
     public void OnChanged(boolean CheckState) {//当按钮状态被改变时
         // TODO Auto-generated method stub
         if(CheckState) {
-            Toast.makeText(this, "关闭推送消息.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "关闭推送消息", Toast.LENGTH_SHORT).show();
             JPushInterface.resumePush(getApplicationContext());
         } else {
             Toast.makeText(this, "打开推送消息", Toast.LENGTH_SHORT).show();
