@@ -25,9 +25,8 @@ import com.ehelp.R;
 import com.ehelp.home.widget.PagerSlidingTabStrip;
 import com.ehelp.map.sendhelp_map;
 import com.ehelp.send.CountNum;
-import com.ehelp.send.SendHelp;
 import com.ehelp.send.SendQuestion;
-import com.ehelp.send.SendSOS;
+import com.ehelp.user.history.MyHistory;
 import com.ehelp.user.pinyin.ContactlistActivity;
 import com.ehelp.user.pinyin.Health;
 import com.ehelp.user.pinyin.SettingActivity;
@@ -248,11 +247,11 @@ public class Home extends AIActionBarActivity implements RapidFloatingActionCont
         startActivity(intent);
     }
 
-//    public void history(View view) {
-//        // Do something in response to button
-//        Intent intent = new Intent(this, MyHistory.class);
-//        startActivity(intent);
-//    }
+    public void history(View view) {
+        // Do something in response to button
+        Intent intent = new Intent(this, MyHistory.class);
+        startActivity(intent);
+    }
     public void Setting_page_click(View view) {
         // Do something in response to button
         Intent intent = new Intent(this, SettingActivity.class);
