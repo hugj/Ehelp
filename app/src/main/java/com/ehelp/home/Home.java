@@ -23,6 +23,8 @@ import android.widget.Toast;
 import com.baidu.mapapi.SDKInitializer;
 import com.ehelp.R;
 import com.ehelp.home.widget.PagerSlidingTabStrip;
+import com.ehelp.map.sendhelp_map;
+import com.ehelp.send.CountNum;
 import com.ehelp.send.SendHelp;
 import com.ehelp.send.SendQuestion;
 import com.ehelp.send.SendSOS;
@@ -145,11 +147,11 @@ public class Home extends AIActionBarActivity implements RapidFloatingActionCont
 //        showToastMessage("clicked label: " + position);
 //        rfabHelper.toggleContent();
         if (position == 0) {
-            Intent intent = new Intent(this, SendSOS.class);
+            Intent intent = new Intent(this, CountNum.class);
             startActivity(intent);
         } else
         if (position == 1) {
-            Intent intent = new Intent(this, SendHelp.class);
+            Intent intent = new Intent(this, sendhelp_map.class);
             startActivity(intent);
         } else {
             Intent intent = new Intent(this, SendQuestion.class);
@@ -161,11 +163,11 @@ public class Home extends AIActionBarActivity implements RapidFloatingActionCont
     @Override
     public void onRFACItemIconClick(int position, RFACLabelItem item) {
         if (position == 0) {
-            Intent intent = new Intent(this, SendSOS.class);
+            Intent intent = new Intent(this, CountNum.class);
             startActivity(intent);
         } else
         if (position == 1) {
-            Intent intent = new Intent(this, SendHelp.class);
+            Intent intent = new Intent(this, sendhelp_map.class);
             startActivity(intent);
         } else {
             Intent intent = new Intent(this, SendQuestion.class);

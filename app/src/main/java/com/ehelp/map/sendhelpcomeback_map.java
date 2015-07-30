@@ -117,12 +117,7 @@ public class sendhelpcomeback_map extends AIActionBarActivity implements BaiduMa
         SDKInitializer.initialize(getApplicationContext());
         setContentView(R.layout.activity_sendhelpcomeback_map);
 
-        //set toolbar
-        mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        mToolbar.setTitle("");
-        setSupportActionBar(mToolbar);
-        TextView tvv =(TextView) findViewById(R.id.titlefortoolbar);
-        tvv.setText("我的求助");
+
 
         /*CharSequence titleLable = "路线规划";
         setTitle(titleLable);*/
@@ -417,6 +412,13 @@ public class sendhelpcomeback_map extends AIActionBarActivity implements BaiduMa
     }
 
     public void init() {
+        //set toolbar
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        mToolbar.setTitle("");
+        setSupportActionBar(mToolbar);
+        TextView tvv =(TextView) findViewById(R.id.titlefortoolbar);
+        tvv.setText("我的求助");
+
         LatLngBounds.Builder builder = new LatLngBounds.Builder();
         // 暂时提供三个点标注在地图上作为例子
         LatLng pt4 = new LatLng(23.063309, 113.394004);
@@ -451,10 +453,6 @@ public class sendhelpcomeback_map extends AIActionBarActivity implements BaiduMa
                 detectLeakedSqlLiteObjects().detectLeakedClosableObjects().
                 penaltyLog().penaltyDeath().build());
 
-        //set toolbar
-        mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        mToolbar.setTitle("提问信息");
-        setSupportActionBar(mToolbar);
 
         //set FAB
         RapidFloatingActionContentLabelList rfaContent = new RapidFloatingActionContentLabelList(context);

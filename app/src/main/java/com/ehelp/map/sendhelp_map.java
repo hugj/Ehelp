@@ -2,6 +2,7 @@ package com.ehelp.map;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.ActionBarActivity;
@@ -39,6 +40,7 @@ import com.baidu.mapapi.search.sug.SuggestionResult;
 import com.baidu.mapapi.search.sug.SuggestionSearch;
 import com.baidu.mapapi.search.sug.SuggestionSearchOption;
 import com.ehelp.R;
+import com.ehelp.send.SendHelp;
 
 /**
  * 演示poi搜索功能
@@ -142,6 +144,8 @@ public class sendhelp_map extends ActionBarActivity implements
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             //提交地址后到输入详细信息页面
+            Intent intent = new Intent(this, SendHelp.class);
+            startActivity(intent);
             return true;
         }
 

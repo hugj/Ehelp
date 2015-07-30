@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.ehelp.R;
 import com.ehelp.home.Home;
+import com.ehelp.map.sendhelpcomeback_map;
 import com.ehelp.utils.RequestHandler;
 import com.wangjie.androidbucket.utils.ABTextUtil;
 import com.wangjie.androidbucket.utils.imageprocess.ABShape;
@@ -120,7 +121,7 @@ public class SendHelp extends AIActionBarActivity implements RapidFloatingAction
     @Override
     public void onRFACItemIconClick(int position, RFACLabelItem item) {
         if (position == 0) {
-            Intent intent = new Intent(this, SendSOS.class);
+            Intent intent = new Intent(this, CountNum.class);
             startActivity(intent);
         } else
         if (position == 1) {
@@ -149,6 +150,8 @@ public class SendHelp extends AIActionBarActivity implements RapidFloatingAction
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             //点击发送按钮后要做的事。
+            Intent intent = new Intent(this, sendhelpcomeback_map.class);
+            startActivity(intent);
             return true;
         }
 
