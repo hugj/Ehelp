@@ -39,12 +39,18 @@ import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.baidu.mapapi.map.BaiduMap;
 import com.baidu.mapapi.map.BitmapDescriptor;
+import com.baidu.mapapi.map.BitmapDescriptorFactory;
 import com.baidu.mapapi.map.MapStatusUpdate;
 import com.baidu.mapapi.map.MapStatusUpdateFactory;
 import com.baidu.mapapi.map.MapView;
+import com.baidu.mapapi.map.Marker;
+import com.baidu.mapapi.map.MarkerOptions;
 import com.baidu.mapapi.map.MyLocationConfiguration;
 import com.baidu.mapapi.map.MyLocationData;
+import com.baidu.mapapi.map.OverlayOptions;
 import com.baidu.mapapi.model.LatLng;
+import com.baidu.mapapi.model.LatLngBounds;
+import com.ehelp.R;
 import com.ehelp.entity.Event;
 import com.ehelp.map.recieve_help_ans_map;
 import com.ehelp.map.recievesos_map;
@@ -70,6 +76,14 @@ public class SuperAwesomeCardFragment extends Fragment {
 
     private int position;
     //private static final int[] drawables = { R.drawable.f, R.drawable.fi, R.drawable.f, R.drawable.fo};
+
+    //test point
+    private Marker mMarker1;
+    private Marker mMarker2;
+    private Marker mMarker3;
+    private Marker mMarker4;
+    private Marker mMarker5;
+    private Marker mMarker6;
 
     public static SuperAwesomeCardFragment newInstance(int position) {
         SuperAwesomeCardFragment f = new SuperAwesomeCardFragment();
@@ -126,6 +140,7 @@ public class SuperAwesomeCardFragment extends Fragment {
             option.setScanSpan(1000);
             mLocClient.setLocOption(option);
             mLocClient.start();
+            init();
             int count = mMapView.getChildCount();
             for (int i = 0; i < count; i++) {
                 View child = mMapView.getChildAt(i);
@@ -250,6 +265,47 @@ public class SuperAwesomeCardFragment extends Fragment {
             mMapView = null;
         }
         super.onDestroy();
+    }
+
+    public void init() {
+        LatLngBounds.Builder builder = new LatLngBounds.Builder();
+        // 暂时提供三个点标注在地图上作为例子
+        LatLng pt1 = new LatLng(23.063309, 113.394004);
+        LatLng pt2 = new LatLng(23.052578, 113.410821);
+        LatLng pt3 = new LatLng(23.075286, 113.425934);
+        LatLng pt4 = new LatLng(23.055286, 113.435934);
+        LatLng pt5 = new LatLng(23.045286, 113.415934);
+        LatLng pt6 = new LatLng(23.245286, 113.435934);
+
+        BitmapDescriptor bd = BitmapDescriptorFactory.fromResource(R.drawable.icon_gcoding);
+        OverlayOptions o1 = new MarkerOptions().icon(bd).position(pt1);
+        OverlayOptions o2 = new MarkerOptions().icon(bd).position(pt2);
+        OverlayOptions o3 = new MarkerOptions().icon(bd).position(pt3);
+        OverlayOptions o4 = new MarkerOptions().icon(bd).position(pt4);
+        OverlayOptions o5 = new MarkerOptions().icon(bd).position(pt5);
+        OverlayOptions o6 = new MarkerOptions().icon(bd).position(pt6);
+
+        mBaiduMap.addOverlay(o1);
+        mBaiduMap.addOverlay(o2);
+        mBaiduMap.addOverlay(o3);
+        mBaiduMap.addOverlay(o4);
+        mBaiduMap.addOverlay(o5);
+        mBaiduMap.addOverlay(o6);
+
+        builder.include(pt1);
+        builder.include(pt2);
+        builder.include(pt3);
+        builder.include(pt4);
+        builder.include(pt5);
+        builder.include(pt6);
+
+
+        mMarker1 = (Marker) (mBaiduMap.addOverlay(o1));
+        mMarker2 = (Marker) (mBaiduMap.addOverlay(o2));
+        mMarker3 = (Marker) (mBaiduMap.addOverlay(o3));
+        mMarker4 = (Marker) (mBaiduMap.addOverlay(o3));
+        mMarker5 = (Marker) (mBaiduMap.addOverlay(o3));
+        mMarker6 = (Marker) (mBaiduMap.addOverlay(o3));
     }
 
 }

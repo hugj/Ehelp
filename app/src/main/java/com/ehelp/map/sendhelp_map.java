@@ -25,6 +25,7 @@ import com.baidu.mapapi.map.BaiduMap;
 import com.baidu.mapapi.map.MapFragment;
 import com.baidu.mapapi.map.MapView;
 import com.baidu.mapapi.map.SupportMapFragment;
+import com.baidu.mapapi.model.LatLng;
 import com.baidu.mapapi.overlayutil.PoiOverlay;
 import com.baidu.mapapi.search.core.CityInfo;
 import com.baidu.mapapi.search.core.PoiInfo;
@@ -61,6 +62,8 @@ public class sendhelp_map extends ActionBarActivity implements
 
     //TOOLbar
     private Toolbar mToolbar;
+
+    LatLng ll;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -144,11 +147,25 @@ public class sendhelp_map extends ActionBarActivity implements
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             //提交地址后到输入详细信息页面
-            Intent intent = new Intent(this, SendHelp.class);
+//            Toast.makeText(sendhelp_map.this, "here is test", Toast.LENGTH_SHORT).show();
+
+            Intent intent=new Intent(sendhelp_map.this,SendHelp.class);
+            //传值
+            String a = Double.toString(ll.latitude);
+            String b = Double.toString(ll.longitude);
+
+            Bundle bundle = new Bundle();
+            bundle.putString("longitude", a);
+            bundle.putString("latitude", b);
+            intent.putExtras(bundle);
             startActivity(intent);
+
+//            Toast.makeText(sendhelp_map.this, a + ":" + b, Toast.LENGTH_SHORT)
+//                    .show();
+//
             return true;
         }
-
+        
         return super.onOptionsItemSelected(item);
     }
 
@@ -201,10 +218,10 @@ public class sendhelp_map extends ActionBarActivity implements
                 .pageNum(load_Index));
     }
 
-    public void goToNextPage(View v) {
-        load_Index++;
-        searchButtonProcess(null);
-    }
+//    public void goToNextPage(View v) {
+//        load_Index++;
+//        searchButtonProcess(null);
+//    }
 
     public void onGetPoiResult(PoiResult result) {
         if (result == null
@@ -241,8 +258,9 @@ public class sendhelp_map extends ActionBarActivity implements
             Toast.makeText(sendhelp_map.this, "抱歉，未找到结果", Toast.LENGTH_SHORT)
                     .show();
         } else {
-            Toast.makeText(sendhelp_map.this, result.getName() + ": " + result.getAddress(), Toast.LENGTH_SHORT)
+            Toast.makeText(sendhelp_map.this, result.getLocation() + "," + "\n" + result.getName() + ": " + result.getAddress(), Toast.LENGTH_SHORT)
                     .show();
+            ll = result.getLocation();
         }
     }
 

@@ -99,8 +99,8 @@ public class sendsos_map extends ActionBarActivity implements BaiduMap.OnMapClic
     private InfoWindow mInfoWindow;
 
     //经纬度
-    private double longitude = 0;
-    private double latitude = 0;
+    private double longitude;
+    private double latitude;
 
     //toolbar
     private Toolbar mToolbar;
@@ -435,13 +435,15 @@ public class sendsos_map extends ActionBarActivity implements BaiduMap.OnMapClic
                         location.getLongitude());
                 MapStatusUpdate u = MapStatusUpdateFactory.newLatLng(ll);
                 mBaidumap.animateMapStatus(u);
+                longitude = location.getLatitude();
+                latitude = location.getLatitude();
             }
             LatLng pt1 = new LatLng(location.getLatitude(),
                     location.getLongitude());
             stNode = PlanNode.withLocation(pt1);
 
-            longitude = location.getLongitude();
-            latitude = location.getLatitude();
+//            longitude = location.getLongitude();
+//            latitude = location.getLatitude();
 
         }
         public void onReceivePoi(BDLocation poiLocation) {}
