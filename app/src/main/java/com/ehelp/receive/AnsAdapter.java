@@ -86,8 +86,6 @@ public class AnsAdapter extends BaseAdapter {
                 }
                 String st = j1.getString("answer_list");
                 answerList = gson.fromJson(st, new TypeToken<List<answer>>(){}.getType());
-                answer bb = answerList.get(0);
-                String aa = answerList.get(0).getContent();
                 for (int i = 0; i < answerList.size(); i++) {
                     item=new HashMap<String,Object>();
                     item.put("头像", R.drawable.icon);
