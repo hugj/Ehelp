@@ -78,28 +78,6 @@
             android:layout_alignTop="@+id/imageView"
             android:layout_alignParentEnd="true" />
 
-        <Button
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="100sp"
-            android:layout_height="50sp"
-            android:text="回应"
-            android:id="@+id/button9"
-            android:layout_marginRight="0sp"
-            android:layout_marginBottom="5sp"
-            android:layout_alignParentBottom="true"
-            android:layout_alignEnd="@+id/textView" />
-
-        <Button
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="100sp"
-            android:layout_height="50sp"
-            android:text="评论"
-            android:id="@+id/button12"
-            android:layout_marginRight="50dp"
-            android:layout_marginBottom="5sp"
-            android:layout_alignParentBottom="true"
-            android:layout_alignEnd="@+id/drive" />
-
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
