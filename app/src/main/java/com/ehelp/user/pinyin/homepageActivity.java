@@ -17,8 +17,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ehelp.R;
+import com.ehelp.map.sendhelp_map;
 import com.ehelp.send.CountNum;
-import com.ehelp.send.SendHelp;
 import com.ehelp.send.SendQuestion;
 import com.wangjie.androidbucket.utils.ABTextUtil;
 import com.wangjie.androidbucket.utils.imageprocess.ABShape;
@@ -72,6 +72,10 @@ public class homepageActivity extends AIActionBarActivity implements RapidFloati
         editorInfo();
 
         //set FAB
+        fab();
+    }
+
+    private void fab(){
         RapidFloatingActionContentLabelList rfaContent = new RapidFloatingActionContentLabelList(context);
         rfaContent.setOnRapidFloatingActionContentLabelListListener(this);
         List<RFACLabelItem> items = new ArrayList<>();
@@ -122,7 +126,7 @@ public class homepageActivity extends AIActionBarActivity implements RapidFloati
             startActivity(intent);
         } else
         if (position == 1) {
-            Intent intent = new Intent(this, SendHelp.class);
+            Intent intent = new Intent(this, sendhelp_map.class);
             startActivity(intent);
         } else {
             Intent intent = new Intent(this, SendQuestion.class);
@@ -138,7 +142,7 @@ public class homepageActivity extends AIActionBarActivity implements RapidFloati
             startActivity(intent);
         } else
         if (position == 1) {
-            Intent intent = new Intent(this, SendHelp.class);
+            Intent intent = new Intent(this, sendhelp_map.class);
             startActivity(intent);
         } else {
             Intent intent = new Intent(this, SendQuestion.class);
