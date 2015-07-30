@@ -322,13 +322,14 @@
         </activity>
         <activity
             android:name=".user.pinyin.AddFriendActivity"
+            android:label="@string/title_activity_add_friend"
             android:parentActivityName=".user.pinyin.ContactlistActivity" >
         </activity>
-        <!--<activity-->
-            <!--android:name=".user.history.MyHistory"-->
-            <!--android:label="@string/title_activity_my_history"-->
-            <!--android:parentActivityName=".home.Home">-->
-        <!--</activity>-->
+        <activity
+            android:name=".user.history.MyHistory"
+            android:label="@string/title_activity_my_history"
+            android:parentActivityName=".home.Home">
+        </activity>
     </application>
 
 </manifest>
