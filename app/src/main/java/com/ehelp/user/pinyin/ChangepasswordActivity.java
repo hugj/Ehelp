@@ -1,6 +1,7 @@
 package com.ehelp.user.pinyin;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -11,6 +12,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ehelp.R;
+import com.ehelp.account.login;
+import com.ehelp.utils.ActivityCollector;
 import com.ehelp.utils.MD5;
 import com.ehelp.utils.RequestHandler;
 
@@ -62,7 +65,7 @@ public class ChangepasswordActivity extends ActionBarActivity {
             verify();
         }
     };
-   //验证过程,利用登陆接口获取盐值
+   //验证过程,利用登陆接口验证密码是否正确
    private void verify() {
        if ((!account.isEmpty()) &&(!password.isEmpty())) {
            jsonString = "{" +
@@ -112,7 +115,6 @@ public class ChangepasswordActivity extends ActionBarActivity {
                    });
                    return;
                }
-               jO = new JSONObject(message);
                if (jO.getInt("status") == 500) {
                    runOnUiThread(new Runnable() {
                        @Override
@@ -121,24 +123,36 @@ public class ChangepasswordActivity extends ActionBarActivity {
                                    Toast.LENGTH_SHORT).show();
                        }
                    });
-               }
-               else {
-
-                   if ((new_password1.isEmpty()) || (new_password2.isEmpty())) {
-                       Toast.makeText(getApplicationContext(), "新输入密码不能为空",
-                               Toast.LENGTH_SHORT).show();
+                   return;
+               } else {
+                   if ((new_password1.isEmpty()) || (new_password2.isEmpty())) { //判断输入是否为空
+                       runOnUiThread(new Runnable() {
+                           @Override
+                           public void run() {
+                               Toast.makeText(getApplicationContext(), "新输入密码不能为空",
+                                       Toast.LENGTH_SHORT).show();
+                           }
+                       });
                        return;
-                   }
-                   //判断两次密码是否一致
-                   if (new_password1.compareTo(new_password2)!= 0) {
-                       Toast.makeText(getApplicationContext(), "两次密码输入不一致，请重新输入",
-                               Toast.LENGTH_SHORT).show();
+                   } else if (new_password1.compareTo(new_password2)!= 0) {   //判断两次密码是否一致
+                       runOnUiThread(new Runnable() {
+                           @Override
+                           public void run() {
+                               Toast.makeText(getApplicationContext(), "新密码两次输入不一致，请重新输入",
+                                       Toast.LENGTH_SHORT).show();
+                           }
+                       });
                        return;
                    } else {
                        //密码长度要求
                        if ((new_password1.length()>40)||(new_password1.length()<6)) {
-                           Toast.makeText(getApplicationContext(), "密码长度应为6-40位",
-                                   Toast.LENGTH_SHORT).show();
+                           runOnUiThread(new Runnable() {
+                               @Override
+                               public void run() {
+                                   Toast.makeText(getApplicationContext(), "密码长度应设为6~40位",
+                                           Toast.LENGTH_SHORT).show();
+                               }
+                           });
                            return;
                        }
                        //修改用户的密码
@@ -149,7 +163,7 @@ public class ChangepasswordActivity extends ActionBarActivity {
                        jsonString = "{" +
                                "\"account\":\"" + account + "\"," +
                                "\"password\":\"" + new_password + "\"," +
-                               "\"salt\":\"" + salt + "\" " +  "}";
+                               "\"salt\":\"" + salt1 + "\" " +  "}";
                        message = RequestHandler.sendPostRequest(
                                "http://120.24.208.130:1501/account/modify_password", jsonString);
                        if (message == "false") {
@@ -172,14 +186,22 @@ public class ChangepasswordActivity extends ActionBarActivity {
                                    return;
                                }
                            });
-
-                       }
-                       else {
+                       } else {
                            runOnUiThread(new Runnable() {
                                @Override
                                public void run() {
                                    Toast.makeText(getApplicationContext(), "修改成功,请重新登录",
                                            Toast.LENGTH_SHORT).show();
+                                   //修改完跳转到登陆界面，退出登陆状态重新登陆
+                                   SharedPreferences sharedPreferences = ChangepasswordActivity.this
+                                           .getSharedPreferences("user_id", Context.MODE_PRIVATE);
+                                   SharedPreferences.Editor editor = sharedPreferences.edit();
+                                   editor.putInt("user_id", -1);
+                                   editor.commit();
+
+                                   Intent intent = new Intent(ChangepasswordActivity.this, login.class);
+                                   startActivity(intent);
+                                   ActivityCollector.getInstance().exit();
                                    // 销毁该页面
                                    ChangepasswordActivity.this.finish();
                                }
