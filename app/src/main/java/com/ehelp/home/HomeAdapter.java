@@ -38,11 +38,13 @@ public class HomeAdapter extends BaseAdapter {
     private double longitude;
     private double latitude;
     private int user_id;
+    private int type;
     private Event[] events;
 
-    HomeAdapter(Context context, int id){
+    HomeAdapter(Context context, int id, int type_){
         this.context=context;
         user_id = id;
+        type = type_;
 
         // 使用后台线程运行网络连接功能
         StrictMode.setThreadPolicy(
@@ -79,7 +81,7 @@ public class HomeAdapter extends BaseAdapter {
                 jsonStrng = "{" +
                         "\"longitude\":" + longitude +
                         ",\"latitude\":" + latitude + ",\"state\":0," +
-                        "\"type\":0" + "}";
+                        "\"type\":" + type + "}";
 
                 message = RequestHandler.sendPostRequest(
                         "http://120.24.208.130:1501/event/get_nearby_event", jsonStrng);
@@ -103,7 +105,7 @@ public class HomeAdapter extends BaseAdapter {
                         events[i].setTime(eventList.getJSONObject(i).getString("time"));
                         item=new HashMap<String,Object>();
                         item.put("头像", R.drawable.icon);
-                        item.put("标题", eventList.getJSONObject(i).getString("content"));
+                        item.put("标题", eventList.getJSONObject(i).getString("title"));
                         item.put("用户", eventList.getJSONObject(i).getString("launcher"));
                         item.put("悬赏", "10爱心币");
                         list.add(item);

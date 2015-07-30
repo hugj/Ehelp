@@ -1,12 +1,12 @@
 package com.ehelp.map;
 
-import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v7.widget.Toolbar;
-import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -50,9 +50,10 @@ import com.baidu.mapapi.search.route.TransitRouteResult;
 import com.baidu.mapapi.search.route.WalkingRoutePlanOption;
 import com.baidu.mapapi.search.route.WalkingRouteResult;
 import com.ehelp.R;
+import com.ehelp.entity.Event;
+import com.ehelp.home.SuperAwesomeCardFragment;
 import com.ehelp.send.SendQuestion;
 import com.ehelp.send.SendSOS;
-import com.ehelp.user.pinyin.ContactlistActivity;
 import com.ehelp.utils.RequestHandler;
 import com.wangjie.androidbucket.utils.ABTextUtil;
 import com.wangjie.androidbucket.utils.imageprocess.ABShape;
@@ -86,6 +87,7 @@ public class recieve_help_ans_map extends AIActionBarActivity implements BaiduMa
     private String ans  =null;
     private double jingdu;
     private double weidu;
+    private Event m_event;
 
 
     //
@@ -137,6 +139,11 @@ public class recieve_help_ans_map extends AIActionBarActivity implements BaiduMa
 
 
         init();
+
+        Intent intent = getIntent();
+        m_event = (Event)intent.getSerializableExtra(SuperAwesomeCardFragment.EXTRA_MESSAGE);
+        setView();
+
         // 去除无关图标
         for (int i = 0; i < count; i++) {
             View child = mMapView.getChildAt(i);
@@ -220,7 +227,18 @@ public class recieve_help_ans_map extends AIActionBarActivity implements BaiduMa
 
 
     }
-
+    public void setView(){
+        SharedPreferences sharedPref;
+        String nickname;
+        sharedPref = this.getSharedPreferences("user_id", Context.MODE_PRIVATE);
+        nickname = sharedPref.getString("nickname", "");
+        TextView tmp = (TextView)findViewById(R.id.user_name);
+        tmp.setText(nickname);
+        tmp = (TextView)findViewById(R.id.Title);
+        tmp.setText(m_event.getTitle());
+        tmp = (TextView)findViewById(R.id.Content);
+        tmp.setText(m_event.getContent());
+    }
     /**
      * 发起路线规划搜索示例
      *
@@ -232,6 +250,7 @@ public class recieve_help_ans_map extends AIActionBarActivity implements BaiduMa
         mBaidumap.clear();
         // 处理搜索按钮响应
         init();
+        setView();
         LatLng pt2 = new LatLng(23.03777, 113.496627); //LatLng代表地图上经纬度提供的位置
         PlanNode enNode = PlanNode.withLocation(pt2);
         BitmapDescriptor bd = BitmapDescriptorFactory.fromResource(R.drawable.icon_gcoding);

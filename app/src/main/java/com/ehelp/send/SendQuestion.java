@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ehelp.R;
+import com.ehelp.home.Home;
 import com.ehelp.utils.RequestHandler;
 import com.wangjie.androidbucket.utils.ABTextUtil;
 import com.wangjie.androidbucket.utils.imageprocess.ABShape;
@@ -200,8 +201,8 @@ public class SendQuestion extends AIActionBarActivity implements RapidFloatingAc
                 }   else {
                     Toast.makeText(getApplicationContext(), message,  //测试
                             Toast.LENGTH_SHORT).show();
-                    // 这里是未完成的页面跳转
-                    // getMenuInflater().inflate(R.menu.menu_send_help, menu);
+                    Intent intent = new Intent(SendQuestion.this, Home.class);
+                    startActivity(intent);
                 }
             }
         }

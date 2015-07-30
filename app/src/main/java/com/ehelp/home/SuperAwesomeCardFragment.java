@@ -46,6 +46,8 @@ import com.baidu.mapapi.map.MyLocationConfiguration;
 import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.model.LatLng;
 import com.ehelp.entity.Event;
+import com.ehelp.map.recieve_help_ans_map;
+import com.ehelp.map.recievesos_map;
 import com.ehelp.receive.QuestionDetail;
 
 public class SuperAwesomeCardFragment extends Fragment {
@@ -133,19 +135,47 @@ public class SuperAwesomeCardFragment extends Fragment {
             }
         } else if (position == 1) {
             fl.removeAllViews();
-            v.setText("救命！！！");
-            fl.addView(v);
+            ListView queList = new ListView(getActivity());
+            queList.setLayoutParams(new LinearLayout.LayoutParams(-1, -1));
+            HomeAdapter que = new HomeAdapter(getActivity(), user_id, 2);
+            queList.setAdapter(que);
+            fl.addView(queList);
+
+            events = que.getEvent();
+
+            //绑定监听
+            queList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                public void onItemClick(AdapterView<?> arg0, View arg1, int index, long arg3) {
+                    Intent intent = new Intent(getActivity(), recievesos_map.class);
+                    intent.putExtra(EXTRA_MESSAGE, events[index]);
+                    startActivity(intent);
+                }
+            });
         } else
         if (position == 2) {
             fl.removeAllViews();
-            v.setText("谁来帮帮我");
-            fl.addView(v);
+            ListView queList = new ListView(getActivity());
+            queList.setLayoutParams(new LinearLayout.LayoutParams(-1, -1));
+            HomeAdapter que = new HomeAdapter(getActivity(), user_id, 1);
+            queList.setAdapter(que);
+            fl.addView(queList);
+
+            events = que.getEvent();
+
+            //绑定监听
+            queList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                public void onItemClick(AdapterView<?> arg0, View arg1, int index, long arg3) {
+                    Intent intent = new Intent(getActivity(), recieve_help_ans_map.class);
+                    intent.putExtra(EXTRA_MESSAGE, events[index]);
+                    startActivity(intent);
+                }
+            });
         } else
         if (position == 3) {
             fl.removeAllViews();
             ListView queList = new ListView(getActivity());
             queList.setLayoutParams(new LinearLayout.LayoutParams(-1, -1));
-            HomeAdapter que = new HomeAdapter(getActivity(), user_id);
+            HomeAdapter que = new HomeAdapter(getActivity(), user_id, 0);
             queList.setAdapter(que);
             fl.addView(queList);
 
