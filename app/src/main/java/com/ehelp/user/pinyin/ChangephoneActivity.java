@@ -50,7 +50,6 @@ public class ChangephoneActivity extends ActionBarActivity implements View.OnCli
         setSupportActionBar(mToolbar);
         TextView tvv =(TextView) findViewById(R.id.titlefortoolbar);
         tvv.setText("更改绑定账号");
-        
         init();
     }
     private void init() {
@@ -147,7 +146,7 @@ public class ChangephoneActivity extends ActionBarActivity implements View.OnCli
                 break;
         }
     }
-    //handler
+    //handler句柄
     Handler handler = new Handler() {
         public void handleMessage(Message msg) {
             if (msg.what == -9) {
