@@ -31,6 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.jpush.android.api.JPushInterface;
+import android.content.SharedPreferences;
 
 @AILayout(R.layout.activity_setting)
 public class SettingActivity extends AIActionBarActivity implements OnChangedListener,RapidFloatingActionContentLabelList.OnRapidFloatingActionContentLabelListListener {
@@ -41,6 +42,8 @@ public class SettingActivity extends AIActionBarActivity implements OnChangedLis
     private RapidFloatingActionHelper rfabHelper;
     //Toolbar
     private Toolbar mToolbar;
+
+    private SharedPreferences SharedPref;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -56,6 +59,9 @@ public class SettingActivity extends AIActionBarActivity implements OnChangedLis
         TextView tvv =(TextView) findViewById(R.id.titlefortoolbar);
         tvv.setText("设置");
 
+        SharedPref = this.getSharedPreferences("slip_button", Context.MODE_PRIVATE);
+        SharedPreferences.Editor edi = SharedPref.edit();
+        edi.putBoolean("slip_button", false);
         SlipButton myBtn = (SlipButton)findViewById(R.id.accept_push_or_not);
         myBtn.SetOnChangedListener((OnChangedListener) this);
 

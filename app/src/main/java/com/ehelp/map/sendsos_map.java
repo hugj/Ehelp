@@ -495,62 +495,6 @@ public class sendsos_map extends ActionBarActivity implements BaiduMap.OnMapClic
         //sp.play(1, 1, 1, 0, -1, 1);
     }
 
-    /*public void sendPush() {
-        StrictMode.setThreadPolicy(
-                new StrictMode.ThreadPolicy.Builder().
-                        detectDiskReads().detectDiskWrites().detectNetwork().penaltyLog().build());
-        StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder().
-                detectLeakedSqlLiteObjects().detectLeakedClosableObjects().
-                penaltyLog().penaltyDeath().build());
-
-        new Thread(runnable).start();
-    }
-
-    Runnable runnable = new Runnable() {
-        @Override
-        public void run() {
-            sendPush_();
-        }
-    };*/
-
-    /*private void sendPush_() {
-        SharedPreferences spf = getApplicationContext().getSharedPreferences("user_id", Context.MODE_PRIVATE);
-        String id = spf.getString("user_id", "default");
-        if (id == "default") {
-            Toast.makeText(getApplicationContext(), "id获取失败", Toast.LENGTH_LONG).show();
-        }
-
-        if (longitude == 0 || latitude == 0) {
-            Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
-                    Toast.LENGTH_SHORT).show();
-        }
-
-        String locmsg = "{" + "\"id\":\"" + id + "\","
-                            + "\"longitude\":\"" + longitude + "\","
-                            + "\"latitude\":\"" + latitude + "\"}";
-        String msg = RequestHandler.sendPostRequest(
-                "http://120.24.208.130:1501/user/neighbor", locmsg);
-        if (msg == "false") {
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
-                            Toast.LENGTH_SHORT).show();
-                }
-            });
-            return;
-        }
-
-        String jsonStringPart1 = "{" + "\"platform\":\"android\","
-                                + "\"audience\":{\"registration_id\":[";
-
-        String jsonStringPart2 = jsonStringPart1 ;
-
-        String jsonString = jsonStringPart2 + "]},\"notification\":{\"alert\":\"有人正在求救！\"}}";
-
-        sendPostRequest("https://api.jpush.cn/v3/push", "{\"platform\":\"all\",\"audience\":\"all\",\"notification\":{\"alert\":\"有人正在求救！\"}}");
-    }*/
-
     //极光推送
     public static String sendPostRequest(String urlString, String jsondata){
 
@@ -599,6 +543,8 @@ public class sendsos_map extends ActionBarActivity implements BaiduMap.OnMapClic
         public void run() {
             SharedPreferences spf = getApplicationContext().getSharedPreferences("user_id", Context.MODE_PRIVATE);
             int id = spf.getInt("user_id", -1);
+            String s1 = String.valueOf(id);
+            Log.v("sendposttest", s1);
             /*if (id == -1) {
                 Toast.makeText(getApplicationContext(), "id获取失败", Toast.LENGTH_LONG).show();
             }*/
@@ -608,10 +554,13 @@ public class sendsos_map extends ActionBarActivity implements BaiduMap.OnMapClic
                         Toast.LENGTH_SHORT).show();
             }*/
 
-            /*String locmsg = "{" + "\"id\":" + id + "}";
+            //String locmsg = "{" + "\"id\":" + id + "}";
+            //String s2 = "37";
+            String locmsg = "{\"id\":"+ s1 + "}";
             String msg = RequestHandler.sendPostRequest(
                     "http://120.24.208.130:1501/user/neighbor", locmsg);
-            Log.v("Ehelp", msg);*/
+            //Log.v("Ehelp", msg);
+            Log.v("sendposttest", msg);
             /*if (msg == "false") {
                 runOnUiThread(new Runnable() {
                     @Override
@@ -622,15 +571,29 @@ public class sendsos_map extends ActionBarActivity implements BaiduMap.OnMapClic
                 });
                 return;
             }*/
+            String jsonString;
+            int t1 = msg.indexOf("]");
+            int t2 = msg.indexOf("[");
+            String ss1 = String.valueOf(t1);
+            String ss2 = String.valueOf(t2);
+            Log.v("sendposttest", ss1);
+            Log.v("sendposttest", ss2);
+            if (msg.indexOf("]") - msg.indexOf("[") == 1) {
+                 jsonString = "{\"platform\":\"android\",\"audience\":\"all\",\"notification\":{\"alert\":\"有人正在求救！\"}}";
+            } else {
+                msg = msg.substring(msg.indexOf("[") + 1, msg.indexOf("]"));
+                Log.v("sendposttest", msg);
+                String jsonStringPart1 = "{" + "\"platform\":\"android\","
+                        + "\"audience\":{\"registration_id\":[";
 
-            //String jsonStringPart1 = "{" + "\"platform\":\"android\","
-            //        + "\"audience\":{\"registration_id\":[";
+                String jsonStringPart2 = jsonStringPart1 + msg;
 
-            //String jsonStringPart2 = jsonStringPart1 + msg;
-
-            //String jsonString = jsonStringPart2 + "]},\"notification\":{\"alert\":\"有人正在求救！\"}}";
-
-            sendPostRequest("https://api.jpush.cn/v3/push", "{\"platform\":\"all\",\"audience\":\"all\",\"notification\":{\"alert\":\"有人正在求救！\"}}");
+                jsonString = jsonStringPart2 + "]},\"notification\":{\"alert\":\"有人正在求救！\"}}";
+                Log.v("sendposttest", jsonString);
+            }
+            Log.v("sendposttest", jsonString);
+            sendPostRequest("https://api.jpush.cn/v3/push", jsonString);
+            //sendPostRequest("https://api.jpush.cn/v3/push", "{\"platform\":\"all\",\"audience\":\"all\",\"notification\":{\"alert\":\"有人正在求救！\"}}");
         }
     });
 

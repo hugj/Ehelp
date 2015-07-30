@@ -24,7 +24,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="50dp"
-            android:text="12345678"
+            android:id="@+id/phone_number1"
             android:layout_toRightOf="@+id/phone_number"/>
     </RelativeLayout>
     <View

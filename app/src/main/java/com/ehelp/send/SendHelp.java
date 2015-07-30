@@ -45,14 +45,12 @@ public class SendHelp extends AIActionBarActivity implements RapidFloatingAction
     private EditText Edesc_event;
     private EditText Eshare_money;
     private EditText Eneed_peo;
-    private EditText Ehelp_time;
     private String event;
     private String share_money;
     private String desc_event;
     public String jingdu;
     public String weidu;
     public String need_peo;
-    public String help_time;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -177,60 +175,62 @@ public class SendHelp extends AIActionBarActivity implements RapidFloatingAction
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-        init();
-        int user_id = 12;
-        Eevents = (EditText)findViewById(R.id.edit_message2);
-        Edesc_event = (EditText)findViewById(R.id.edit_message3);
-        Eshare_money = (EditText)findViewById(R.id.edit_message4);
-        Eneed_peo = (EditText)findViewById(R.id.edit_message5);
-        event = Eevents.getText().toString();
-        desc_event = Edesc_event.getText().toString();
-        share_money = Eshare_money.getText().toString();
-        need_peo = Eneed_peo.getText().toString();
-        help_time = Ehelp_time.getText().toString();
-        if (!event.isEmpty() && !need_peo.isEmpty() && !help_time.isEmpty()) {
-            double Djingdu = Double.valueOf(jingdu.toString());
-            double Dweidu = Double.valueOf(weidu.toString());
-            int Ishare_money = Integer.parseInt(share_money);
-            int Ineed_peo = Integer.parseInt(need_peo);
+            init();
+            int user_id = 12;
+            Eevents = (EditText)findViewById(R.id.edit_message2);
+            Edesc_event = (EditText)findViewById(R.id.edit_message3);
+            Eshare_money = (EditText)findViewById(R.id.edit_message4);
+            Eneed_peo = (EditText)findViewById(R.id.edit_message5);
+            event = Eevents.getText().toString();
+            desc_event = Edesc_event.getText().toString();
+            share_money = Eshare_money.getText().toString();
+            need_peo = Eneed_peo.getText().toString();
+            if (!event.isEmpty() && !need_peo.isEmpty()) {
+                double Djingdu = Double.valueOf(jingdu.toString());
+                double Dweidu = Double.valueOf(weidu.toString());
+                int Ishare_money = Integer.parseInt(share_money);
+                int Ineed_peo = Integer.parseInt(need_peo);
 
-            String jsonStrng = "{" +
-                    "\"id\":" + user_id + ",\"type\":1," +
-                    "\"title\":\"" + event + "\"," +
-                    "\"content\":\"" + desc_event + "\"," +
-                    "\"longitude\":" +  Djingdu + "," +
-                    "\"latitude\":" + Dweidu + "," +
-                    "\"love_coin\":" + Ishare_money + "," +
-                    "\"demand_number\":" + Ineed_peo + " " + "}";
-            String message = RequestHandler.sendPostRequest(
-                    "http://120.24.208.130:1501/event/add", jsonStrng);
-            if (message == "false") {
-                Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
+                String jsonStrng = "{" +
+                        "\"id\":" + user_id + ",\"type\":1," +
+                        "\"title\":\"" + event + "\"," +
+                        "\"content\":\"" + desc_event + "\"," +
+                        "\"longitude\":" +  Djingdu + "," +
+                        "\"latitude\":" + Dweidu + "," +
+                        "\"love_coin\":" + Ishare_money + "," +
+                        "\"demand_number\":" + Ineed_peo + " " + "}";
+                Toast.makeText(getApplicationContext(), user_id + "," + event + ","
+                                + desc_event + "," + Djingdu + ",",
                         Toast.LENGTH_SHORT).show();
-                return false;
-            } else {
-                JSONObject jO = null;
-                try {
-                    jO = new JSONObject(message);
-                    if (jO.getInt("status") == 500) {
-                        if (jO.getInt("value") == -2) {
-                            Toast.makeText(getApplicationContext(), "爱心币不足",
-                                    Toast.LENGTH_SHORT).show();
+                String message = RequestHandler.sendPostRequest(
+                        "http://120.24.208.130:1501/event/add", jsonStrng);
+                if (message == "false") {
+                    Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
+                            Toast.LENGTH_SHORT).show();
+                    return false;
+                } else {
+                    JSONObject jO = null;
+                    try {
+                        jO = new JSONObject(message);
+                        if (jO.getInt("status") == 500) {
+                            if (jO.getInt("value") == -2) {
+                                Toast.makeText(getApplicationContext(), "爱心币不足",
+                                        Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(getApplicationContext(), "提交失败",
+                                        Toast.LENGTH_SHORT).show();
+                            }
                         } else {
-                            Toast.makeText(getApplicationContext(), "提交失败",
-                                    Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(this, Home.class);
+                            startActivity(intent);
+                            SendHelp.this.finish();
                         }
-                    } else {
-                        Intent intent = new Intent(this, Home.class);
-                        startActivity(intent);
-                        SendHelp.this.finish();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
-                } catch (JSONException e) {
-                    e.printStackTrace();
                 }
             }
-        }
-        return true;
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }
