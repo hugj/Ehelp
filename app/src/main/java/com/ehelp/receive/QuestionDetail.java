@@ -10,19 +10,15 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.ehelp.R;
 import com.ehelp.entity.Event;
-import com.ehelp.entity.answer;
 import com.ehelp.home.SuperAwesomeCardFragment;
 import com.ehelp.map.sendhelp_map;
 import com.ehelp.send.CountNum;
 import com.ehelp.send.SendQuestion;
-import com.ehelp.utils.RequestHandler;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.wangjie.androidbucket.utils.ABTextUtil;
 import com.wangjie.androidbucket.utils.imageprocess.ABShape;
 import com.wangjie.androidinject.annotation.annotations.base.AILayout;
@@ -33,10 +29,6 @@ import com.wangjie.rapidfloatingactionbutton.RapidFloatingActionHelper;
 import com.wangjie.rapidfloatingactionbutton.RapidFloatingActionLayout;
 import com.wangjie.rapidfloatingactionbutton.contentimpl.labellist.RFACLabelItem;
 import com.wangjie.rapidfloatingactionbutton.contentimpl.labellist.RapidFloatingActionContentLabelList;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,8 +41,6 @@ public class QuestionDetail extends AIActionBarActivity implements RapidFloating
     private RapidFloatingActionButton rfaButton;
     private RapidFloatingActionHelper rfabHelper;
     private Toolbar mToolbar;
-    private List<answer> answerList;
-    private Gson gson = new Gson();
 
     // submit()
     private Event m_event;
@@ -169,6 +159,7 @@ public class QuestionDetail extends AIActionBarActivity implements RapidFloating
 //toolbar右上角键设置
 
     public void setView(){
+        //问题详情
         SharedPreferences sharedPref;
         String nickname;
         sharedPref = this.getSharedPreferences("user_id", Context.MODE_PRIVATE);
@@ -179,35 +170,13 @@ public class QuestionDetail extends AIActionBarActivity implements RapidFloating
         tmp.setText(m_event.getTitle());
         tmp = (TextView)findViewById(R.id.Content);
         tmp.setText(m_event.getContent());
-    }
 
-    public List<answer> getAnsList(){
+        //回答列表
+        ListView ansList = (ListView)findViewById(R.id.answerList);
         int event_id = m_event.getEventId();
-        String jsonStrng = "{" +
-                "\"event_id\":" + event_id + "}";
+        AnsAdapter ans = new AnsAdapter(this, event_id);
+        ansList.setAdapter(ans);
 
-        String message = RequestHandler.sendPostRequest(
-                "http://120.24.208.130:1501/event/anslist", jsonStrng);
-        if (message == "false") {
-            Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
-                    Toast.LENGTH_SHORT).show();
-        } else{
-            JSONObject j1 = null;
-            try {
-                j1 = new JSONObject(message);
-                if (j1.getInt("status") == 500) {
-                    Toast.makeText(getApplicationContext(), "因为迷之原因拉取不到回答。。。",
-                            Toast.LENGTH_SHORT).show();
-                } else {
-                    String st = j1.getString("answer_list");
-                    answerList = gson.fromJson(st, new TypeToken<List<Event>>(){}.getType());
-                    JSONArray eventList = j1.getJSONArray("event_list");
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
-        return answerList;
     }
 
     @Override

@@ -11,11 +11,6 @@ public class answer {
     private String time;
     private int is_adopted;
     private int liking_num;
-    private int status;
-
-    public void setStatus(int status) {
-        this.status = status;
-    }
 
     public void setId(int id) {
         this.id = id;
@@ -70,6 +65,4 @@ public class answer {
     public String getTime() {
         return time;
     }
-
-    public int getStatus() { return status; }
 }
