@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.ehelp.R;
 import com.ehelp.entity.answer;
+import com.ehelp.home.Home;
 import com.ehelp.map.sendhelp_map;
 import com.ehelp.send.CountNum;
 import com.ehelp.send.SendQuestion;
@@ -181,11 +182,17 @@ public class AddAns extends AIActionBarActivity implements RapidFloatingActionCo
             String ans = edit_ans.getText().toString();
             sharedPref = this.getSharedPreferences("user_id", Context.MODE_PRIVATE);
             user_id = sharedPref.getInt("user_id", -1);
-            String jsonStrng = "{" +
-                    "\"author_id\":" + user_id +
+            String jsonStrng =  "{" +
+                    "\"author_id\":" + 12 +
                     ",\"event_id\":" + 8 +
+                    ",\"content\":\"今天你吃药了么\"" +
+                    "}";
+                    /*
+                    "{" +
+                    "\"author_id\":" + user_id +
+                    ",\"event_id\":" + 12 +
                     ",\"content\":" + ans + "}";
-
+*/
             String message = RequestHandler.sendPostRequest(
                     "http://120.24.208.130:1501/event/add_ans", jsonStrng);
             if (message == "false") {
@@ -200,7 +207,9 @@ public class AddAns extends AIActionBarActivity implements RapidFloatingActionCo
                     } else {
                         Gson gson = new Gson();
                         answer m_answer = gson.fromJson(message, answer.class);
-                        Intent intent = new Intent(this, QuestionDetail.class);
+                        Toast.makeText(getApplicationContext(), "发送失败",
+                                Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(this, Home.class);
                         startActivity(intent);
                         AddAns.this.finish();
                     }

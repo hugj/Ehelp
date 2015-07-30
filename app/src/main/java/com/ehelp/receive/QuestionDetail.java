@@ -1,8 +1,6 @@
 package com.ehelp.receive;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.StrictMode;
@@ -12,6 +10,7 @@ import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ehelp.R;
 import com.ehelp.entity.Event;
@@ -19,6 +18,7 @@ import com.ehelp.home.SuperAwesomeCardFragment;
 import com.ehelp.map.sendhelp_map;
 import com.ehelp.send.CountNum;
 import com.ehelp.send.SendQuestion;
+import com.ehelp.utils.RequestHandler;
 import com.wangjie.androidbucket.utils.ABTextUtil;
 import com.wangjie.androidbucket.utils.imageprocess.ABShape;
 import com.wangjie.androidinject.annotation.annotations.base.AILayout;
@@ -29,6 +29,9 @@ import com.wangjie.rapidfloatingactionbutton.RapidFloatingActionHelper;
 import com.wangjie.rapidfloatingactionbutton.RapidFloatingActionLayout;
 import com.wangjie.rapidfloatingactionbutton.contentimpl.labellist.RFACLabelItem;
 import com.wangjie.rapidfloatingactionbutton.contentimpl.labellist.RapidFloatingActionContentLabelList;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -160,10 +163,23 @@ public class QuestionDetail extends AIActionBarActivity implements RapidFloating
 
     public void setView(){
         //问题详情
-        SharedPreferences sharedPref;
-        String nickname;
-        sharedPref = this.getSharedPreferences("user_id", Context.MODE_PRIVATE);
-        nickname = sharedPref.getString("nickname", "");
+        final int user_id = m_event.getLauncherId();
+        String nickname = "";
+        String jsonStrng = "{" +
+                "\"id\":" + user_id + "}";
+        final String message = RequestHandler.sendPostRequest(
+                "http://120.24.208.130:1501/user/get_information", jsonStrng);
+        if (message == "false") {
+            Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
+                    Toast.LENGTH_SHORT).show();
+        }   else {
+            try {
+                JSONObject jO = new JSONObject(message);
+                nickname = jO.getString("nickname");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
         TextView tmp = (TextView)findViewById(R.id.user_name);
         tmp.setText(nickname);
         tmp = (TextView)findViewById(R.id.Title);
