@@ -555,6 +555,7 @@ public class sendsos_map extends ActionBarActivity implements BaiduMap.OnMapClic
             }*/
 
             //String locmsg = "{" + "\"id\":" + id + "}";
+            //String s2 = "37";
             String locmsg = "{\"id\":"+ s1 + "}";
             String msg = RequestHandler.sendPostRequest(
                     "http://120.24.208.130:1501/user/neighbor", locmsg);
@@ -570,17 +571,27 @@ public class sendsos_map extends ActionBarActivity implements BaiduMap.OnMapClic
                 });
                 return;
             }*/
-            msg = msg.substring(msg.indexOf("[") + 1, msg.indexOf("]"));
-            Log.v("sendposttest", msg);
+            String jsonString;
+            int t1 = msg.indexOf("]");
+            int t2 = msg.indexOf("[");
+            String ss1 = String.valueOf(t1);
+            String ss2 = String.valueOf(t2);
+            Log.v("sendposttest", ss1);
+            Log.v("sendposttest", ss2);
+            if (msg.indexOf("]") - msg.indexOf("[") == 1) {
+                 jsonString = "{\"platform\":\"android\",\"audience\":\"all\",\"notification\":{\"alert\":\"有人正在求救！\"}}";
+            } else {
+                msg = msg.substring(msg.indexOf("[") + 1, msg.indexOf("]"));
+                Log.v("sendposttest", msg);
+                String jsonStringPart1 = "{" + "\"platform\":\"android\","
+                        + "\"audience\":{\"registration_id\":[";
 
-            String jsonStringPart1 = "{" + "\"platform\":\"android\","
-                    + "\"audience\":{\"registration_id\":[";
+                String jsonStringPart2 = jsonStringPart1 + msg;
 
-            String jsonStringPart2 = jsonStringPart1 + msg;
-
-            String jsonString = jsonStringPart2 + "]},\"notification\":{\"alert\":\"有人正在求救！\"}}";
+                jsonString = jsonStringPart2 + "]},\"notification\":{\"alert\":\"有人正在求救！\"}}";
+                Log.v("sendposttest", jsonString);
+            }
             Log.v("sendposttest", jsonString);
-
             sendPostRequest("https://api.jpush.cn/v3/push", jsonString);
             //sendPostRequest("https://api.jpush.cn/v3/push", "{\"platform\":\"all\",\"audience\":\"all\",\"notification\":{\"alert\":\"有人正在求救！\"}}");
         }
