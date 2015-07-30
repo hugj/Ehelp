@@ -116,7 +116,6 @@ public class login extends ActionBarActivity {
             jsonStrng = "{" +
                     "\"account\":\"" + account + "\"," +
                     "\"password\":\"\"" +  "}";
-
             message = RequestHandler.sendPostRequest(
                     "http://120.24.208.130:1501/account/login", jsonStrng);
             if (message == "false") {

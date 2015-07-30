@@ -7,18 +7,14 @@ import android.os.StrictMode;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.RatingBar;
 import android.widget.TextView;
-import android.widget.Toast;
+
 
 import com.ehelp.R;
 import com.ehelp.map.sendhelp_map;
 import com.ehelp.send.CountNum;
-import com.ehelp.send.SendHelp;
 import com.ehelp.send.SendQuestion;
 import com.ehelp.user.pinyin.AssortView;
 import com.ehelp.user.pinyin.PinyinAdapter;
@@ -104,6 +100,10 @@ public class Comment extends AIActionBarActivity implements RapidFloatingActionC
         });
 
         //FAB
+        fab();
+    }
+
+    private void fab(){
         RapidFloatingActionContentLabelList rfaContent = new RapidFloatingActionContentLabelList(context);
         rfaContent.setOnRapidFloatingActionContentLabelListListener(this);
         List<RFACLabelItem> items = new ArrayList<>();

@@ -82,6 +82,10 @@ public class SendHelp extends AIActionBarActivity implements RapidFloatingAction
         TextView tvv =(TextView) findViewById(R.id.titlefortoolbar);
         tvv.setText("发送求助信息");
         //FAB
+        fab();
+    }
+
+    private void fab(){
         RapidFloatingActionContentLabelList rfaContent = new RapidFloatingActionContentLabelList(context);
         rfaContent.setOnRapidFloatingActionContentLabelListListener(this);
         List<RFACLabelItem> items = new ArrayList<>();
@@ -127,7 +131,16 @@ public class SendHelp extends AIActionBarActivity implements RapidFloatingAction
     }
     @Override
     public void onRFACItemLabelClick(int position, RFACLabelItem item) {
-        showToastMessage("clicked label: " + position);
+        if (position == 0) {
+            Intent intent = new Intent(this, CountNum.class);
+            startActivity(intent);
+        } else
+        if (position == 1) {
+            showToastMessage("您正在求助界面");
+        } else {
+            Intent intent = new Intent(this, SendQuestion.class);
+            startActivity(intent);
+        }
         rfabHelper.toggleContent();
     }
 
