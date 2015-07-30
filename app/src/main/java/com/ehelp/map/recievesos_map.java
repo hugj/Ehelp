@@ -3,14 +3,17 @@ package com.ehelp.map;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -49,6 +52,12 @@ import com.baidu.mapapi.search.route.TransitRouteResult;
 import com.baidu.mapapi.search.route.WalkingRoutePlanOption;
 import com.baidu.mapapi.search.route.WalkingRouteResult;
 import com.ehelp.R;
+import com.ehelp.home.Home;
+import com.ehelp.send.SendHelp;
+import com.ehelp.utils.RequestHandler;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 
 public class recievesos_map extends ActionBarActivity implements BaiduMap.OnMapClickListener,
@@ -60,6 +69,9 @@ public class recievesos_map extends ActionBarActivity implements BaiduMap.OnMapC
     OverlayManager routeOverlay = null;
     boolean useDefaultIcon = false;
     PlanNode stNode = null;
+
+    private EditText Eans;
+    private String ans;
 
 
     //
@@ -79,11 +91,13 @@ public class recievesos_map extends ActionBarActivity implements BaiduMap.OnMapC
     private Marker mMarker3;
     private Marker mMarker4;
     private InfoWindow mInfoWindow;
+    LatLng loc;
 
     //TOOLbar
     private Toolbar mToolbar;
 
     protected void onCreate(Bundle savedInstanceState) {
+        init2();
         super.onCreate(savedInstanceState);
         SDKInitializer.initialize(getApplicationContext());
         setContentView(R.layout.activity_recievesos_map);
@@ -197,6 +211,37 @@ public class recievesos_map extends ActionBarActivity implements BaiduMap.OnMapC
         //noinspection SimplifiableIfStatement
         if ((id == R.id.action_settings)&&item.getTitle().toString().equals("回应")){
             item.setTitle("取消回应");
+            Eans = (EditText)findViewById(R.id.editText2);
+            ans = Eans.getText().toString();
+            init2();
+            int idcode = 12;
+            String jsonStrng = "{" +
+                    "\"id\":" + idcode + ",\"type\":2," +
+                    "\"content\":\"" + ans + "\"," +
+                    "\"longitude\":" +  loc.longitude + "," +
+                    "\"latitude\":" + loc.latitude + " " + "}";
+            String message = RequestHandler.sendPostRequest(
+                    "http://120.24.208.130:1501/event/add", jsonStrng);
+            if (message == "false") {
+                Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
+                        Toast.LENGTH_SHORT).show();
+                return false;
+            } else {
+                JSONObject jO = null;
+                try {
+                    jO = new JSONObject(message);
+                    if (jO.getInt("status") == 500) {
+                            Toast.makeText(getApplicationContext(), "提交失败",
+                                    Toast.LENGTH_SHORT).show();
+                    } else {
+                        Intent intent = new Intent(this, Home.class);
+                        startActivity(intent);
+                        recievesos_map.this.finish();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
             return true;
         }
         if ((id == R.id.action_settings)&&(item.getTitle() =="取消回应")) {
@@ -394,6 +439,7 @@ protected void onResume() {
             LatLng pt1 = new LatLng(location.getLatitude(),
                     location.getLongitude());
             stNode = PlanNode.withLocation(pt1);
+            loc = pt1;
         }
 
         public void onReceivePoi(BDLocation poiLocation) {}
@@ -426,5 +472,13 @@ protected void onResume() {
         mMarker1 = (Marker) (mBaidumap.addOverlay(o1));
         mMarker2 = (Marker) (mBaidumap.addOverlay(o2));
         mMarker3 = (Marker) (mBaidumap.addOverlay(o3));
+    }
+    public void init2() {
+        StrictMode.setThreadPolicy(
+                new StrictMode.ThreadPolicy.Builder().
+                        detectDiskReads().detectDiskWrites().detectNetwork().penaltyLog().build());
+        StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder().
+                detectLeakedSqlLiteObjects().detectLeakedClosableObjects().
+                penaltyLog().penaltyDeath().build());
     }
 }
