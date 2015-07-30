@@ -203,8 +203,8 @@ public class SendQuestion extends AIActionBarActivity implements RapidFloatingAc
                 String jsonStrng = "{" +
                         "\"id\":" + user_id + ",\"type\":0," +
                         "\"title\":\"" + question + "\"," +
-                        "\"content\":\"" + desc_ques + "\"" +
-                        "\"love_coin\":" + share_money + "," +"}";
+                        "\"content\":\"" + desc_ques + "\"," +
+                        "\"love_coin\":" + share_money +"}";
                 String message = RequestHandler.sendPostRequest(
                         "http://120.24.208.130:1501/event/add", jsonStrng);
                 if (message == "false") {
