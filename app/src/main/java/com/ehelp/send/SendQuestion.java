@@ -30,6 +30,9 @@ import com.wangjie.rapidfloatingactionbutton.RapidFloatingActionLayout;
 import com.wangjie.rapidfloatingactionbutton.contentimpl.labellist.RFACLabelItem;
 import com.wangjie.rapidfloatingactionbutton.contentimpl.labellist.RapidFloatingActionContentLabelList;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -187,7 +190,8 @@ public class SendQuestion extends AIActionBarActivity implements RapidFloatingAc
                 String jsonStrng = "{" +
                         "\"id\":" + user_id + ",\"type\":0," +
                         "\"title\":\"" + question + "\"," +
-                        "\"content\":\"" + desc_ques + "\"" + "}";
+                        "\"content\":\"" + desc_ques + "\"" +
+                        "\"love_coin\":" + share_money + "," +"}";
                 String message = RequestHandler.sendPostRequest(
                         "http://120.24.208.130:1501/event/add", jsonStrng);
                 if (message == "false") {
@@ -195,11 +199,25 @@ public class SendQuestion extends AIActionBarActivity implements RapidFloatingAc
                             Toast.LENGTH_SHORT).show();
                     return;
                 }   else {
-                    Toast.makeText(getApplicationContext(), message,  //测试
-                            Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(SendQuestion.this, Home.class);
-                    startActivity(intent);
-                    SendQuestion.this.finish();
+                    JSONObject jO = null;
+                    try {
+                        jO = new JSONObject(message);
+                        if (jO.getInt("status") == 500) {
+                            if (jO.getInt("value") == -2) {
+                                Toast.makeText(getApplicationContext(), "爱心币不足",
+                                        Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(getApplicationContext(), "提交失败",
+                                        Toast.LENGTH_SHORT).show();
+                            }
+                        } else {
+                            Intent intent = new Intent(SendQuestion.this, Home.class);
+                            startActivity(intent);
+                            SendQuestion.this.finish();
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         }

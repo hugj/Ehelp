@@ -61,59 +61,41 @@ public class HomeAdapter extends BaseAdapter {
 
     public void setList() {
         //数据初始化
-        String jsonStrng = "{" +
-                "\"id\":" + user_id + "}";
-        String message = RequestHandler.sendPostRequest(
-                "http://120.24.208.130:1501/user/get_information", jsonStrng);
-        if (message == "false") {
-            item=new HashMap<String,Object>();
-            item.put("头像", R.drawable.icon);
-            item.put("标题", "连接失败，请检查网络是否连接并重试");
-            item.put("用户", "");
-            item.put("悬赏", "");
-            list.add(item);
-        }   else {
-            try {
-                JSONObject jO = new JSONObject(message);
-                longitude = jO.getDouble("longitude");
-                latitude = jO.getDouble("latitude");
+        try {
+            String jsonStrng = "{" +
+                    "\"id\":" + user_id + ",\"state\":0," +
+                    "\"type\":" + type + "}";
 
-                jsonStrng = "{" +
-                        "\"longitude\":" + longitude +
-                        ",\"latitude\":" + latitude + ",\"state\":0," +
-                        "\"type\":" + type + "}";
-
-                message = RequestHandler.sendPostRequest(
-                        "http://120.24.208.130:1501/event/get_nearby_event", jsonStrng);
-                if (message == "false") {
+            String message = RequestHandler.sendPostRequest(
+                    "http://120.24.208.130:1501/event/get_nearby_event", jsonStrng);
+            if (message == "false") {
+                item=new HashMap<String,Object>();
+                item.put("头像", R.drawable.icon);
+                item.put("标题", "连接失败，请检查网络是否连接并重试");
+                item.put("用户", "");
+                item.put("悬赏", "");
+                list.add(item);
+            } else {
+                JSONObject j1 = new JSONObject(message);
+                JSONArray eventList = j1.getJSONArray("event_list");
+                events = new Event[eventList.length()];
+                for (int i = 0; i < eventList.length(); i++) {
+                    int id = eventList.getJSONObject(i).getInt("launcher_id");
+                    events[i] = new Event();
+                    events[i].setId(id);
+                    events[i].setTitle(eventList.getJSONObject(i).getString("title"));
+                    events[i].setContent(eventList.getJSONObject(i).getString("content"));
+                    events[i].setTime(eventList.getJSONObject(i).getString("time"));
                     item=new HashMap<String,Object>();
                     item.put("头像", R.drawable.icon);
-                    item.put("标题", "连接失败，请检查网络是否连接并重试");
-                    item.put("用户", "");
-                    item.put("悬赏", "");
+                    item.put("标题", eventList.getJSONObject(i).getString("title"));
+                    item.put("用户", eventList.getJSONObject(i).getString("launcher"));
+                    item.put("悬赏", "10爱心币");
                     list.add(item);
-                } else {
-                    JSONObject j1 = new JSONObject(message);
-                    JSONArray eventList = j1.getJSONArray("event_list");
-                    events = new Event[eventList.length()];
-                    for (int i = 0; i < eventList.length(); i++) {
-                        int id = eventList.getJSONObject(i).getInt("launcher_id");
-                        events[i] = new Event();
-                        events[i].setId(id);
-                        events[i].setTitle(eventList.getJSONObject(i).getString("title"));
-                        events[i].setContent(eventList.getJSONObject(i).getString("content"));
-                        events[i].setTime(eventList.getJSONObject(i).getString("time"));
-                        item=new HashMap<String,Object>();
-                        item.put("头像", R.drawable.icon);
-                        item.put("标题", eventList.getJSONObject(i).getString("title"));
-                        item.put("用户", eventList.getJSONObject(i).getString("launcher"));
-                        item.put("悬赏", "10爱心币");
-                        list.add(item);
-                    }
                 }
-            } catch (JSONException e) {
-                e.printStackTrace();
             }
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
     }
 

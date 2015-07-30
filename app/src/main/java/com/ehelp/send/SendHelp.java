@@ -7,7 +7,6 @@ import android.os.StrictMode;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,6 +24,9 @@ import com.wangjie.rapidfloatingactionbutton.RapidFloatingActionHelper;
 import com.wangjie.rapidfloatingactionbutton.RapidFloatingActionLayout;
 import com.wangjie.rapidfloatingactionbutton.contentimpl.labellist.RFACLabelItem;
 import com.wangjie.rapidfloatingactionbutton.contentimpl.labellist.RapidFloatingActionContentLabelList;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -168,7 +170,6 @@ public class SendHelp extends AIActionBarActivity implements RapidFloatingAction
         Edesc_event = (EditText)findViewById(R.id.edit_message3);
         Eshare_money = (EditText)findViewById(R.id.edit_message4);
         Eneed_peo = (EditText)findViewById(R.id.edit_message5);
-        Ehelp_time = (EditText)findViewById(R.id.edit_message6);
         event = Eevents.getText().toString();
         desc_event = Edesc_event.getText().toString();
         share_money = Eshare_money.getText().toString();
@@ -194,14 +195,26 @@ public class SendHelp extends AIActionBarActivity implements RapidFloatingAction
                 Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
                         Toast.LENGTH_SHORT).show();
                 return false;
-            }   else {
-                Toast.makeText(getApplicationContext(), message,
-                        Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(this, Home.class);
-                startActivity(intent);
-                SendHelp.this.finish();
-                // 这里是未完成的页面跳转
-                // getMenuInflater().inflate(R.menu.menu_send_help, menu);
+            } else {
+                JSONObject jO = null;
+                try {
+                    jO = new JSONObject(message);
+                    if (jO.getInt("status") == 500) {
+                        if (jO.getInt("value") == -2) {
+                            Toast.makeText(getApplicationContext(), "爱心币不足",
+                                    Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(getApplicationContext(), "提交失败",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    } else {
+                        Intent intent = new Intent(this, Home.class);
+                        startActivity(intent);
+                        SendHelp.this.finish();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         }
         return true;
