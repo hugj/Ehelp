@@ -18,7 +18,6 @@ import com.ehelp.R;
 import com.ehelp.map.sendhelp_map;
 import com.ehelp.send.CountNum;
 import com.ehelp.send.SendQuestion;
-import com.ehelp.send.SendSOS;
 import com.wangjie.androidbucket.utils.ABTextUtil;
 import com.wangjie.androidbucket.utils.imageprocess.ABShape;
 import com.wangjie.androidinject.annotation.annotations.base.AILayout;
@@ -131,10 +130,12 @@ public class ContactlistActivity extends AIActionBarActivity implements RapidFlo
         setSupportActionBar(mToolbar);
         TextView tvv =(TextView) findViewById(R.id.titlefortoolbar);
         tvv.setText("通讯录");
-        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);//开启up button这个默认值是true
-        //getSupportActionBar().setHomeButtonEnabled(true);//
-        //getSupportActionBar().setDisplayShowHomeEnabled(true);
+
         //FAB
+        fab();
+    }
+
+    private void fab(){
         RapidFloatingActionContentLabelList rfaContent = new RapidFloatingActionContentLabelList(context);
         rfaContent.setOnRapidFloatingActionContentLabelListListener(this);
         List<RFACLabelItem> items = new ArrayList<>();
@@ -180,7 +181,17 @@ public class ContactlistActivity extends AIActionBarActivity implements RapidFlo
     }
     @Override
     public void onRFACItemLabelClick(int position, RFACLabelItem item) {
-        showToastMessage("clicked label: " + position);
+        if (position == 0) {
+            Intent intent = new Intent(this, CountNum.class);
+            startActivity(intent);
+        } else
+        if (position == 1) {
+            Intent intent = new Intent(this, sendhelp_map.class);
+            startActivity(intent);
+        } else {
+            Intent intent = new Intent(this, SendQuestion.class);
+            startActivity(intent);
+        }
         rfabHelper.toggleContent();
     }
 

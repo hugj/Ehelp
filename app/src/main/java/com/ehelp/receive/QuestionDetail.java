@@ -15,9 +15,9 @@ import android.widget.TextView;
 import com.ehelp.R;
 import com.ehelp.entity.Event;
 import com.ehelp.home.SuperAwesomeCardFragment;
-import com.ehelp.send.SendHelp;
+import com.ehelp.map.sendhelp_map;
+import com.ehelp.send.CountNum;
 import com.ehelp.send.SendQuestion;
-import com.ehelp.send.SendSOS;
 import com.wangjie.androidbucket.utils.ABTextUtil;
 import com.wangjie.androidbucket.utils.imageprocess.ABShape;
 import com.wangjie.androidinject.annotation.annotations.base.AILayout;
@@ -76,6 +76,10 @@ public class QuestionDetail extends AIActionBarActivity implements RapidFloating
         tvv.setText("问题详情");
 
         //set FAB
+        fab();
+    }
+
+    private void fab(){
         RapidFloatingActionContentLabelList rfaContent = new RapidFloatingActionContentLabelList(context);
         rfaContent.setOnRapidFloatingActionContentLabelListListener(this);
         List<RFACLabelItem> items = new ArrayList<>();
@@ -121,18 +125,28 @@ public class QuestionDetail extends AIActionBarActivity implements RapidFloating
     }
     @Override
     public void onRFACItemLabelClick(int position, RFACLabelItem item) {
-        showToastMessage("clicked label: " + position);
+        if (position == 0) {
+            Intent intent = new Intent(this, CountNum.class);
+            startActivity(intent);
+        } else
+        if (position == 1) {
+            Intent intent = new Intent(this, sendhelp_map.class);
+            startActivity(intent);
+        } else {
+            Intent intent = new Intent(this, SendQuestion.class);
+            startActivity(intent);
+        }
         rfabHelper.toggleContent();
     }
 
     @Override
     public void onRFACItemIconClick(int position, RFACLabelItem item) {
         if (position == 0) {
-            Intent intent = new Intent(this, SendSOS.class);
+            Intent intent = new Intent(this, CountNum.class);
             startActivity(intent);
         } else
         if (position == 1) {
-            Intent intent = new Intent(this, SendHelp.class);
+            Intent intent = new Intent(this, sendhelp_map.class);
             startActivity(intent);
         } else {
             Intent intent = new Intent(this, SendQuestion.class);

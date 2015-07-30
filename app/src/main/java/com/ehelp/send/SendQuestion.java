@@ -76,6 +76,10 @@ public class SendQuestion extends AIActionBarActivity implements RapidFloatingAc
         tvv.setText("提问信息");
 
         //set FAB
+        fab();
+    }
+
+    private void fab(){
         RapidFloatingActionContentLabelList rfaContent = new RapidFloatingActionContentLabelList(context);
         rfaContent.setOnRapidFloatingActionContentLabelListListener(this);
         List<RFACLabelItem> items = new ArrayList<>();
@@ -121,7 +125,16 @@ public class SendQuestion extends AIActionBarActivity implements RapidFloatingAc
     }
     @Override
     public void onRFACItemLabelClick(int position, RFACLabelItem item) {
-        showToastMessage("clicked label: " + position);
+        if (position == 0) {
+            Intent intent = new Intent(this, CountNum.class);
+            startActivity(intent);
+        } else
+        if (position == 1) {
+            Intent intent = new Intent(this, sendhelp_map.class);
+            startActivity(intent);
+        } else {
+            showToastMessage("您正在提问界面");
+        }
         rfabHelper.toggleContent();
     }
 
