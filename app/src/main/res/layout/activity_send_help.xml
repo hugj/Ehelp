@@ -46,14 +46,6 @@
                 android:hint="所需人数"/>
 
             <EditText
-                android:id="@+id/edit_message6"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:layout_weight="1"
-                android:ems="10"
-                android:hint="帮助时间"/>
-
-            <EditText
                 android:id="@+id/edit_message4"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
