@@ -37,8 +37,8 @@ public class SlipButton extends View implements OnTouchListener{
     }
     private void init(){//初始化  
         //载入图片资源  
-        bg_on = BitmapFactory.decodeResource(getResources(), R.drawable.split_on);
-        bg_off = BitmapFactory.decodeResource(getResources(), R.drawable.split_off);
+        bg_off = BitmapFactory.decodeResource(getResources(), R.drawable.split_on);
+        bg_on = BitmapFactory.decodeResource(getResources(), R.drawable.split_off);
         slip_btn = BitmapFactory.decodeResource(getResources(), R.drawable.split_button);
         //获得需要的Rect数据,绘制的矩形
         Btn_Off = new Rect(0,0,slip_btn.getWidth(),slip_btn.getHeight());
