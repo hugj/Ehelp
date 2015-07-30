@@ -11,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -68,6 +69,8 @@ import android.os.StrictMode;
 import com.ehelp.utils.RequestHandler;
 import android.util.Log;
 
+import org.json.JSONObject;
+import org.json.JSONException;
 
 
 public class sendsos_map extends ActionBarActivity implements BaiduMap.OnMapClickListener,
@@ -101,6 +104,11 @@ public class sendsos_map extends ActionBarActivity implements BaiduMap.OnMapClic
     //经纬度
     private double longitude;
     private double latitude;
+    //存储事件id
+    private int event_id;
+
+    //求救页面信息框
+    private EditText et1;
 
     //toolbar
     private Toolbar mToolbar;
@@ -110,9 +118,7 @@ public class sendsos_map extends ActionBarActivity implements BaiduMap.OnMapClic
     //private SoundPool sp;
     private Vibrator vib;
 
-    public double jingdu;
-    public double weidu;
-
+    //停止振动发声
     public void Stopvands(View view) {
         this.finish();
     }
@@ -121,6 +127,8 @@ public class sendsos_map extends ActionBarActivity implements BaiduMap.OnMapClic
         super.onCreate(savedInstanceState);
         SDKInitializer.initialize(getApplicationContext());
         setContentView(R.layout.activity_sendsos_map);
+
+        this.sendBroadcast(getIntent());
 
         StrictMode.setThreadPolicy(
                 new StrictMode.ThreadPolicy.Builder().
@@ -231,11 +239,17 @@ public class sendsos_map extends ActionBarActivity implements BaiduMap.OnMapClic
         });
 
         //推送求救信息
-        String s = String.valueOf(longitude);
-        Toast.makeText(getApplicationContext(), s, Toast.LENGTH_LONG).show();
         thread.start();
 
+        //振动发声
         vibandsp();
+
+        //发送求救信息到后台
+        try {
+            sendsos();
+        } catch (JSONException j) {
+            j.printStackTrace();
+        }
         //sp = new SoundPool(10, AudioManager.STREAM_SYSTEM, 5);
         //sp.load(getApplicationContext(), R.raw.alarm, 1);
     }
@@ -408,11 +422,13 @@ public class sendsos_map extends ActionBarActivity implements BaiduMap.OnMapClic
         JPushInterface.onResume(this);
     }
 
+    //摧毁页面
     @Override
     protected void onDestroy() {
         mSearch.destroy();
         mMapView.onDestroy();
         vib.cancel();
+        cancelsos();
         super.onDestroy();
     }
 
@@ -442,9 +458,9 @@ public class sendsos_map extends ActionBarActivity implements BaiduMap.OnMapClic
                     location.getLongitude());
             stNode = PlanNode.withLocation(pt1);
 
-//            longitude = location.getLongitude();
-//            latitude = location.getLatitude();
-
+            //获取当前经纬度
+            longitude = location.getLongitude();
+            latitude = location.getLatitude();
         }
         public void onReceivePoi(BDLocation poiLocation) {}
     }
@@ -538,6 +554,7 @@ public class sendsos_map extends ActionBarActivity implements BaiduMap.OnMapClic
 
     }
 
+    //在新的线程中推送信息
     Thread thread =new Thread(new Runnable() {
         @Override
         public void run() {
@@ -597,4 +614,41 @@ public class sendsos_map extends ActionBarActivity implements BaiduMap.OnMapClic
         }
     });
 
+    //向后台发送求救信息
+    public void sendsos() throws JSONException{
+        String url = "http://120.24.208.130:1501/event/add";
+        int type = 2;
+
+        SharedPreferences sp = getSharedPreferences("user_id", MODE_PRIVATE);
+        int id = sp.getInt("user_id", -1);
+        String tests1 = String.valueOf(id);
+        Log.v("sendsostest", tests1);
+
+        String send = "{\"id\":" + id + ",\"type\":" + type
+                + ",\"title\":\"sos\",\"longitude\":" + longitude
+                + ",\"latitude\":" + latitude +"}";
+
+        String msg = RequestHandler.sendPostRequest(
+                url, send);
+        JSONObject jo = new JSONObject(msg);
+        Log.v("sendsostest", msg);
+        event_id =  jo.getInt("event_id");
+        String tests2 = String.valueOf(event_id);
+        Log.v("sendsostest", tests2);
+    }
+    //向后台取消求救信息
+    public void cancelsos() {
+        String url = "http://120.24.208.130:1501/event/modify";
+
+        SharedPreferences sp = getSharedPreferences("user_id", MODE_PRIVATE);
+        int id = sp.getInt("user_id", -1);
+        String tests1 = String.valueOf(id);
+        Log.v("sendsostest", tests1);
+
+        String send = "{\"id\":" + id + ",\"event_id\":" + event_id + "}";
+
+        String msg = RequestHandler.sendPostRequest(
+                url, send);
+        Log.v("sendsostest", msg);
+    }
 }

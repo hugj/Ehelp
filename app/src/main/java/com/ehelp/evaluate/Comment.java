@@ -7,6 +7,7 @@ import android.os.StrictMode;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -45,7 +46,11 @@ public class Comment extends AIActionBarActivity implements RapidFloatingActionC
     private RapidFloatingActionButton rfaButton;
     private RapidFloatingActionHelper rfabHelper;
     private Toolbar mToolbar;
-    static int starnum = 1;//public static int starnumm =1;
+    //static int starnum = 1;//public static int starnumm =1;
+    private int starnum = 1;
+    private String comment;
+
+    private String url = "http://120.24.208.130:1501/event/modify";
 
     private PinyinAdapter adapter;
     private ExpandableListView eListView;
@@ -196,25 +201,18 @@ public class Comment extends AIActionBarActivity implements RapidFloatingActionC
 
         //noinspection SimplifiableIfStatement
         if ((id == R.id.action_settings)){
+
+
             return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
 
-
-
-
-/*/获取星级
-    public int getStarnum(){
-        return starnum;
-    }*/
-
     //获取评论内容
-    /*public String getComment(){
-        String str1="";
+    public String getComment(){
         EditText editText1 =(EditText)findViewById(R.id.editText_comment);
-        str1=editText1.getText().toString();
-        return str1;
-    }*/
+        comment=editText1.getText().toString();
+        return comment;
+    }
 }
