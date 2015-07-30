@@ -8,6 +8,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,6 +19,9 @@ import com.ehelp.utils.RequestHandler;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.content.SharedPreferences;
+
+
 public class AddFriendActivity extends ActionBarActivity {
 
     //toolbar
@@ -24,6 +29,8 @@ public class AddFriendActivity extends ActionBarActivity {
     String phone="";//手机号码
     private String message;
     private String jsonStrng;
+    private int idd;
+    private SharedPreferences SharedPref;
 
 
     @Override
@@ -37,11 +44,13 @@ public class AddFriendActivity extends ActionBarActivity {
         TextView tvv =(TextView) findViewById(R.id.titlefortoolbar);
         tvv.setText("添加好友");
 
+        SharedPref = this.getSharedPreferences("user_id", MODE_PRIVATE);
+
         //return str1;
     }
-/*
-查询按钮监听事件：从后台获取用户信息放至该页面，
- */
+    /*
+    查询按钮监听事件：从后台获取用户信息放至该页面，
+     */
 //public void chaxun(View v){}
     public void chaxun(View v){
         EditText editText1 =(EditText)findViewById(R.id.editText_comment);
@@ -51,7 +60,7 @@ public class AddFriendActivity extends ActionBarActivity {
                     "\"phone\":\"" + phone + "\"}";
             message = RequestHandler.sendPostRequest(
                     "http://120.24.208.130:1501/user/get_information", jsonStrng);
-            Log.v("addfatest", message);
+            //Log.v("addfatest", message);
             if (message == "false") {
                 runOnUiThread(new Runnable() {
                     @Override
@@ -78,6 +87,27 @@ public class AddFriendActivity extends ActionBarActivity {
                 }else {
                     Toast.makeText(getApplicationContext(), "萌萌哒",
                             Toast.LENGTH_SHORT).show();
+                    //LinearLayout tvv =(LinearLayout) findViewById(R.id.parently);
+                    RelativeLayout rlll = (RelativeLayout) findViewById(R.id.rll);
+                    rlll.setVisibility(View.VISIBLE);
+                    //tvv.addView(rlll);
+                    //修改显示的名字
+                    TextView tv =(TextView) findViewById(R.id.name);
+                    if(jO.getString("nickname") !="") {
+                        tv.setText(jO.getString("nickname"));
+                    }else {
+                        tv.setText(jO.getString("name"));
+                    }
+                    //修改显示的年龄
+                    TextView tv1 =(TextView) findViewById(R.id.age);
+                    tv1.setText("年龄："+jO.getInt("age"));
+                    //修改显示的性别
+                    TextView tv2 =(TextView) findViewById(R.id.gender);
+                    if(jO.getInt("gender")==1) {
+                        tv2.setText("性别：男");
+                    }
+                    idd = jO.getInt("id");
+
                 }
 
             }catch (JSONException e) {
@@ -88,6 +118,52 @@ public class AddFriendActivity extends ActionBarActivity {
                     Toast.LENGTH_SHORT).show();
         }
 
+
+    }
+
+    public void addfriend(View v){
+        //int id =0;//让这个id等于当前用户的id就好了。
+        int id = SharedPref.getInt("user_id", -1);
+
+        jsonStrng = "{" +
+                "\"id\":" + id + "," +
+                "\"user_id\":" + idd + "," +
+                "\"operation\":" + 1 + "," +
+                "\"type\":" + 2 + "}";
+        message = RequestHandler.sendPostRequest(
+                "http://120.24.208.130:1501/user/relation_manage" , jsonStrng);
+        if (message == "false") {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
+                            Toast.LENGTH_SHORT).show();
+                }
+            });
+            return;
+        }
+        try{
+            JSONObject jO = new JSONObject(message);
+            if (jO.getInt("status") == 500) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        //未获取到
+                        Toast.makeText(getApplicationContext(), "添加失败",
+                                Toast.LENGTH_SHORT).show();
+                    }
+                });
+//                    Toast.makeText(getApplicationContext(), "用户未注册",
+//                            Toast.LENGTH_SHORT).show();
+                return;
+            }else {
+                //当获取到
+                Toast.makeText(getApplicationContext(), "添加成功",
+                        Toast.LENGTH_SHORT).show();
+            }
+        }catch (JSONException e) {
+            e.printStackTrace();
+        }
 
     }
 
