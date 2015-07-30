@@ -123,21 +123,6 @@ public class recieve_help_ans_map extends AIActionBarActivity implements BaiduMa
         mBaidumap = mMapView.getMap();
         int count = mMapView.getChildCount();
 
-        //set toolbar
-        mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        //mToolbar.setNavigationIcon(R.drawable.mm_submenu_normal);//设置图标样式,已经在toolbar.xml统一设过了
-
-        mToolbar.setTitle("");
-
-        setSupportActionBar(mToolbar);
-        TextView tvv =(TextView) findViewById(R.id.titlefortoolbar);
-        tvv.setText("求助信息详情");
-        /*getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeButtonEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);*/
-        //http://www.jcodecraeer.com/a/anzhuokaifa/androidkaifa/2014/1123/2050.html参考网址
-
-
         init();
 
         Intent intent = getIntent();
@@ -500,6 +485,10 @@ public class recieve_help_ans_map extends AIActionBarActivity implements BaiduMa
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         mToolbar.setTitle("发送求助信息");
         setSupportActionBar(mToolbar);
+        TextView tvv =(TextView) findViewById(R.id.titlefortoolbar);
+        tvv.setText("求助信息详情");
+        //http://www.jcodecraeer.com/a/anzhuokaifa/androidkaifa/2014/1123/2050.html参考网址
+
         //FAB
         fab();
     }

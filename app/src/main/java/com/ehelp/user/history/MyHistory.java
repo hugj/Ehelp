@@ -14,15 +14,26 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.ehelp.R;
+import com.ehelp.utils.RequestHandler;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import android.content.SharedPreferences;
+import android.widget.Toast;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class MyHistory extends ActionBarActivity {
-    
+
     private ViewPager mPager;//页卡内容
     private List<View> listViews; // Tab页面列表
     private TextView t1, t2, t3;// 页卡头标
+    //后台连接
+    private SharedPreferences SharedPref;
+    private String message;
+    private String jsonStrng;
 
     //toolbar
     private Toolbar mToolbar;
@@ -38,6 +49,7 @@ public class MyHistory extends ActionBarActivity {
         TextView tvv =(TextView) findViewById(R.id.titlefortoolbar);
         tvv.setText("我的历史记录");
 
+        SharedPref = this.getSharedPreferences("user_id", MODE_PRIVATE);
         InitViewPager();
         InitTextView();
     }
@@ -183,18 +195,21 @@ public class MyHistory extends ActionBarActivity {
                     tv2.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
                     tv3.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
                     //添加该页面可能的事项。比如跳转之类
+                    findformyhelp();
                     break;
                 case 1:
 
                     tv.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
                     tv2.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
                     tv3.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                    //findformySos();
 
                     break;
                 case 2:
                     tv.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
                     tv2.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
                     tv3.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+                    //findformyques();
                     break;
             }
 
@@ -208,5 +223,51 @@ public class MyHistory extends ActionBarActivity {
         @Override
         public void onPageScrollStateChanged(int arg0) {
         }
+    }
+    private void findformyhelp(){
+        int id = SharedPref.getInt("user_id", -1);
+        if(id != -1){
+            jsonStrng = "{" +
+                    "\"id\":\"" + id + "\"," +"\"type\":\""+"1"+"\"}";
+            message = RequestHandler.sendPostRequest(
+                    "http://120.24.208.130:1501/event/query_launch", jsonStrng);
+            if (message == "false") {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
+                                Toast.LENGTH_SHORT).show();
+                    }
+                });
+                return;
+            }
+            try{
+                JSONObject jO = new JSONObject(message);
+                if (jO.getInt("status") == 500) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            //未获取到
+                            Toast.makeText(getApplicationContext(), "未查找到相关信息",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    });
+//                    Toast.makeText(getApplicationContext(), "用户未注册",
+//                            Toast.LENGTH_SHORT).show();
+                    return;
+                }else {
+                    //当获取到
+                    Toast.makeText(getApplicationContext(), "萌萌哒",
+                            Toast.LENGTH_SHORT).show();
+                }
+
+            }catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }else{
+            Toast.makeText(getApplicationContext(), "未登录",
+                    Toast.LENGTH_SHORT).show();
+        }
+
     }
 }
