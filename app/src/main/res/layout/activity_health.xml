@@ -42,10 +42,18 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/allergy2"
+                android:layout_marginLeft="30dp"
                 android:textColor="#000" android:layout_centerVertical="true"
                 android:layout_toRightOf="@id/allergy1"
-                android:text="         无"/>
-
+                android:text="无"/>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:scaleType="matrix"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:clickable="true"
+                android:src="@drawable/mm_submenu" />
         </RelativeLayout>
         <RelativeLayout
             android:layout_width="fill_parent"
@@ -65,9 +73,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/medicine2"
+                android:layout_marginLeft="30dp"
                 android:textColor="#000" android:layout_centerVertical="true"
                 android:layout_toRightOf="@id/medicine"
-                android:text="         无"/>
+                android:text="无"/>
         </RelativeLayout>
         <RelativeLayout
             android:layout_width="fill_parent"
@@ -87,9 +96,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/bloodType2"
+                android:layout_marginLeft="70dp"
                 android:textColor="#000" android:layout_centerVertical="true"
                 android:layout_toRightOf="@id/bloodType"
-                android:text="     A"/>
+                android:text="A"/>
 
         </RelativeLayout>
 
@@ -110,9 +120,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/mediHistory2"
+                android:layout_marginLeft="70dp"
                 android:textColor="#000" android:layout_centerVertical="true"
                 android:layout_toRightOf="@id/mediHistory"
-                android:text="        蛇精病"/>
+                android:text="蛇精病"/>
 
         </RelativeLayout>
         <RelativeLayout
@@ -128,14 +139,15 @@
                 android:layout_centerVertical="true"
                 android:textSize="20sp"
                 android:id="@+id/height"
-                android:text="身高"/>
+                android:text="身高(cm)"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/height2"
+                android:layout_marginLeft="30dp"
                 android:textColor="#000" android:layout_centerVertical="true"
                 android:layout_toRightOf="@id/height"
-                android:text="           250"/>
+                android:text="180"/>
         </RelativeLayout>
         <RelativeLayout
             android:layout_width="fill_parent"
@@ -150,13 +162,14 @@
                 android:layout_centerVertical="true"
                 android:textSize="20sp"
                 android:id="@+id/weight"
-                android:text="体重"/>
+                android:text="体重(kg)"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/weight2"
                 android:textColor="#000"
-                android:text="250"
+                android:layout_marginLeft="30dp"
+                android:text="120"
                 android:layout_alignBottom="@+id/weight"
                 android:layout_toEndOf="@+id/weight"
                 android:layout_marginStart="69dp" />

@@ -4,6 +4,7 @@
     android:orientation="vertical"
     android:background="#ddd"
     android:id="@+id/accountsafe_change_phone">
+    <include layout="@layout/toolbar" />
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="50dp"
