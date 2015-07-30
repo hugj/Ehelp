@@ -52,13 +52,7 @@ public class ChangepasswordActivity extends ActionBarActivity {
         password = Password.getText().toString();
         new_password1 = New_password1.getText().toString();
         new_password2 = New_password2.getText().toString();
-        //判断两次密码是否一致
-        if (new_password1.compareTo(new_password2)!= 0) {
-            Toast.makeText(getApplicationContext(), "两次密码输入不一致，请重试",
-                    Toast.LENGTH_SHORT).show();
-            return;
-        }
-        // 创建新的线程并开启它，在后台线程操作用户验证，验证密码是否正确
+        // 创建新的线程并开启它，在后台线程操作用户验证，验证密码是否正确,并修改密码
         new Thread(runnable).start();
     }
     Runnable runnable = new Runnable() {
@@ -88,9 +82,18 @@ public class ChangepasswordActivity extends ActionBarActivity {
            }
            String salt;
            try {
-               //获取状态码，200 OK 500 ERROR
                JSONObject jO = new JSONObject(message);
-               salt = jO.getString("salt"); //获取盐值
+               if (jO.getInt("status") == 500) {
+                   runOnUiThread(new Runnable() {
+                       @Override
+                       public void run() {
+                           Toast.makeText(getApplicationContext(), "用户未注册",
+                                   Toast.LENGTH_SHORT).show();
+                       }
+                   });
+                   return;
+               }
+               salt = jO.getString("salt"); //密码加密的盐值
                //MD5加密
                String password2 = MD5.MD5_encode(MD5.MD5_encode(password, ""), salt);
                jsonString = "{" +
@@ -99,45 +102,90 @@ public class ChangepasswordActivity extends ActionBarActivity {
                        "\"salt\":\"" + salt + "\" " +  "}";
                message = RequestHandler.sendPostRequest(
                        "http://120.24.208.130:1501/account/login", jsonString);
-//               if (message == "false") {
-//                   runOnUiThread(new Runnable() {
-//                       @Override
-//                       public void run() {
-//                           Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
-//                                   Toast.LENGTH_SHORT).show();
-//                       }
-//                   });
-//                   return;
-//               }
+               if (message == "false") {
+                   runOnUiThread(new Runnable() {
+                       @Override
+                       public void run() {
+                           Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
+                                   Toast.LENGTH_SHORT).show();
+                       }
+                   });
+                   return;
+               }
                jO = new JSONObject(message);
                if (jO.getInt("status") == 500) {
                    runOnUiThread(new Runnable() {
                        @Override
                        public void run() {
-                           Toast.makeText(getApplicationContext(), "输入密码错误",
+                           Toast.makeText(getApplicationContext(), "密码错误，请重新输入密码",
                                    Toast.LENGTH_SHORT).show();
                        }
                    });
                }
                else {
-                  // final int user_id = jO.getInt("id");
-                   runOnUiThread(new Runnable() {
-                       @Override
-                       public void run() {
-//                           Toast.makeText(getApplicationContext(), "登录成功, 用户id:" + user_id,
-//                                   Toast.LENGTH_SHORT).show();
 
-                           // 将用户信息存储，以便之后无需登录直接进入主页
-//                           SharedPreferences.Editor editor = sharedPref.edit();
-//                           editor.putInt("user_id", user_id);
-//                           editor.commit();
-//
-//                           Intent it = new Intent(login.this, Home.class);
-//                           startActivity(it);
-//                           login.this.finish();
+                   if ((new_password1.isEmpty()) || (new_password2.isEmpty())) {
+                       Toast.makeText(getApplicationContext(), "新输入密码不能为空",
+                               Toast.LENGTH_SHORT).show();
+                       return;
+                   }
+                   //判断两次密码是否一致
+                   if (new_password1.compareTo(new_password2)!= 0) {
+                       Toast.makeText(getApplicationContext(), "两次密码输入不一致，请重新输入",
+                               Toast.LENGTH_SHORT).show();
+                       return;
+                   } else {
+                       //密码长度要求
+                       if ((new_password1.length()>40)||(new_password1.length()<6)) {
+                           Toast.makeText(getApplicationContext(), "密码长度应为6-40位",
+                                   Toast.LENGTH_SHORT).show();
+                           return;
+                       }
+                       //修改用户的密码
+                       String salt1;
+                       salt1 = jO.getString("salt"); //密码加密的盐值
+                       //MD5加密
+                       String new_password = MD5.MD5_encode(MD5.MD5_encode(new_password1, ""), salt1);
+                       jsonString = "{" +
+                               "\"account\":\"" + account + "\"," +
+                               "\"password\":\"" + new_password + "\"," +
+                               "\"salt\":\"" + salt + "\" " +  "}";
+                       message = RequestHandler.sendPostRequest(
+                               "http://120.24.208.130:1501/account/modify_password", jsonString);
+                       if (message == "false") {
+                           runOnUiThread(new Runnable() {
+                               @Override
+                               public void run() {
+                                   Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
+                                           Toast.LENGTH_SHORT).show();
+                               }
+                           });
+                           return;
+                       }
+                       jO = new JSONObject(message);
+                       if (jO.getInt("status") == 500) {
+                           runOnUiThread(new Runnable() {
+                               @Override
+                               public void run() {
+                                   Toast.makeText(getApplicationContext(), "提交密码与当前密码相同，修改失败",
+                                           Toast.LENGTH_SHORT).show();
+                                   return;
+                               }
+                           });
 
                        }
-                   });
+                       else {
+                           runOnUiThread(new Runnable() {
+                               @Override
+                               public void run() {
+                                   Toast.makeText(getApplicationContext(), "修改成功,请重新登录",
+                                           Toast.LENGTH_SHORT).show();
+                                   // 销毁该页面
+                                   ChangepasswordActivity.this.finish();
+                               }
+                           });
+                       }
+                   }
                }
            } catch (JSONException e) {
                e.printStackTrace();
@@ -148,6 +196,7 @@ public class ChangepasswordActivity extends ActionBarActivity {
                public void run() {
                    Toast.makeText(getApplicationContext(), "密码不能为空",
                            Toast.LENGTH_SHORT).show();
+                   return;
                }
            });
        }
