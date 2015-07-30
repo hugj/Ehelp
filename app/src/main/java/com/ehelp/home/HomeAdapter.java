@@ -15,6 +15,8 @@ import android.widget.TextView;
 import com.ehelp.R;
 import com.ehelp.entity.Event;
 import com.ehelp.utils.RequestHandler;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -39,7 +41,8 @@ public class HomeAdapter extends BaseAdapter {
     private double latitude;
     private int user_id;
     private int type;
-    private Event[] events;
+    private List<Event> events;
+    Gson gson = new Gson();
 
     HomeAdapter(Context context, int id, int type_){
         this.context=context;
@@ -78,15 +81,10 @@ public class HomeAdapter extends BaseAdapter {
                 list.add(item);
             } else {
                 JSONObject j1 = new JSONObject(message);
+                String st = j1.getString("event_list");
+                events = gson.fromJson(st, new TypeToken<List<Event>>(){}.getType());
                 JSONArray eventList = j1.getJSONArray("event_list");
-                events = new Event[eventList.length()];
                 for (int i = 0; i < eventList.length(); i++) {
-                    int id = eventList.getJSONObject(i).getInt("launcher_id");
-                    events[i] = new Event();
-                    events[i].setId(id);
-                    events[i].setTitle(eventList.getJSONObject(i).getString("title"));
-                    events[i].setContent(eventList.getJSONObject(i).getString("content"));
-                    events[i].setTime(eventList.getJSONObject(i).getString("time"));
                     item=new HashMap<String,Object>();
                     item.put("头像", R.drawable.icon);
                     item.put("标题", eventList.getJSONObject(i).getString("title"));
@@ -101,7 +99,7 @@ public class HomeAdapter extends BaseAdapter {
         }
     }
 
-    public Event[] getEvent() {
+    public List<Event> getEvent() {
         return events;
     }
 

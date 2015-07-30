@@ -15,10 +15,11 @@ public class Event implements Serializable {
     private double group_pts;
     private int support_number;
     private String last_time;
-    private int id;
+    private int event_id;
+    private int launcher_id;
     private String time;
     private int state;
-    private int launcher;
+    private String launcher;
     private double longitude;
 
     public void setFollow_number(int follow_number) {
@@ -53,8 +54,12 @@ public class Event implements Serializable {
         this.last_time = last_time;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setEventId(int event_id) {
+        this.event_id = event_id;
+    }
+
+    public void setLauncherId(int launcher_id) {
+        this.launcher_id = launcher_id;
     }
 
     public void setTime(String time) {
@@ -65,7 +70,7 @@ public class Event implements Serializable {
         this.state = state;
     }
 
-    public void setLauncher(int launcher) {
+    public void setLauncher(String launcher) {
         this.launcher = launcher;
     }
 
@@ -105,9 +110,11 @@ public class Event implements Serializable {
         return last_time;
     }
 
-    public int getId() {
-        return id;
+    public int getEventId() {
+        return event_id;
     }
+
+    public int getLauncherId() { return launcher_id; }
 
     public String getTime() {
         return time;
@@ -117,11 +124,12 @@ public class Event implements Serializable {
         return state;
     }
 
-    public int getLauncher() {
+    public String getLauncher() {
         return launcher;
     }
 
     public double getLongitude() {
         return longitude;
     }
+
 }

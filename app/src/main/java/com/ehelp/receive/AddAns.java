@@ -14,15 +14,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ehelp.R;
-import com.ehelp.entity.Event;
 import com.ehelp.entity.answer;
-import com.ehelp.home.SuperAwesomeCardFragment;
 import com.ehelp.map.sendhelp_map;
 import com.ehelp.send.CountNum;
 import com.ehelp.send.SendQuestion;
 import com.ehelp.utils.RequestHandler;
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.wangjie.androidbucket.utils.ABTextUtil;
 import com.wangjie.androidbucket.utils.imageprocess.ABShape;
 import com.wangjie.androidinject.annotation.annotations.base.AILayout;
@@ -34,41 +31,38 @@ import com.wangjie.rapidfloatingactionbutton.RapidFloatingActionLayout;
 import com.wangjie.rapidfloatingactionbutton.contentimpl.labellist.RFACLabelItem;
 import com.wangjie.rapidfloatingactionbutton.contentimpl.labellist.RapidFloatingActionContentLabelList;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@AILayout(R.layout.activity_question_detail)
-public class QuestionDetail extends AIActionBarActivity implements RapidFloatingActionContentLabelList.OnRapidFloatingActionContentLabelListListener {
+@AILayout(R.layout.activity_add_ans)
+public class AddAns extends AIActionBarActivity implements RapidFloatingActionContentLabelList.OnRapidFloatingActionContentLabelListListener {
     @AIView(R.id.label_list_sample_rfal)
     private RapidFloatingActionLayout rfaLayout;
     @AIView(R.id.label_list_sample_rfab)
     private RapidFloatingActionButton rfaButton;
     private RapidFloatingActionHelper rfabHelper;
     private Toolbar mToolbar;
-    private List<answer> answerList;
-    private Gson gson = new Gson();
+    private int user_id;
+    private SharedPreferences sharedPref;
 
     // submit()
-    private Event m_event;
+    private int eventId;
     private EditText Equestion;
     private EditText Edesc_ques;
     private EditText Eshare_money;
     private String question;
     private String share_money;
     private String desc_ques;
-    public final static String EXTRA_MESSAGE = "com.ehelp.receive.MESSAGE";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();
-        m_event = (Event)intent.getSerializableExtra(SuperAwesomeCardFragment.EXTRA_MESSAGE);
+        eventId = intent.getIntExtra(QuestionDetail.EXTRA_MESSAGE, -1);
         init();
-        setView();
     }
 
     private void init() {
@@ -85,7 +79,7 @@ public class QuestionDetail extends AIActionBarActivity implements RapidFloating
         //getActionBar().setDisplayHomeAsUpEnabled(true);
         setSupportActionBar(mToolbar);
         TextView tvv =(TextView) findViewById(R.id.titlefortoolbar);
-        tvv.setText("问题详情");
+        tvv.setText("添加回答");
 
         //set FAB
         fab();
@@ -166,54 +160,11 @@ public class QuestionDetail extends AIActionBarActivity implements RapidFloating
         }
         rfabHelper.toggleContent();
     }
-//toolbar右上角键设置
-
-    public void setView(){
-        SharedPreferences sharedPref;
-        String nickname;
-        sharedPref = this.getSharedPreferences("user_id", Context.MODE_PRIVATE);
-        nickname = sharedPref.getString("nickname", "");
-        TextView tmp = (TextView)findViewById(R.id.user_name);
-        tmp.setText(nickname);
-        tmp = (TextView)findViewById(R.id.Title);
-        tmp.setText(m_event.getTitle());
-        tmp = (TextView)findViewById(R.id.Content);
-        tmp.setText(m_event.getContent());
-    }
-
-    public List<answer> getAnsList(){
-        int event_id = m_event.getEventId();
-        String jsonStrng = "{" +
-                "\"event_id\":" + event_id + "}";
-
-        String message = RequestHandler.sendPostRequest(
-                "http://120.24.208.130:1501/event/anslist", jsonStrng);
-        if (message == "false") {
-            Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
-                    Toast.LENGTH_SHORT).show();
-        } else{
-            JSONObject j1 = null;
-            try {
-                j1 = new JSONObject(message);
-                if (j1.getInt("status") == 500) {
-                    Toast.makeText(getApplicationContext(), "因为迷之原因拉取不到回答。。。",
-                            Toast.LENGTH_SHORT).show();
-                } else {
-                    String st = j1.getString("answer_list");
-                    answerList = gson.fromJson(st, new TypeToken<List<Event>>(){}.getType());
-                    JSONArray eventList = j1.getJSONArray("event_list");
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
-        return answerList;
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_question_detail, menu);
+        getMenuInflater().inflate(R.menu.menu_add_ans, menu);
         return true;
     }
 
@@ -225,28 +176,41 @@ public class QuestionDetail extends AIActionBarActivity implements RapidFloating
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_ans) {
-            //点击添加回答
-            Intent intent = new Intent(this, AddAns.class);
-            intent.putExtra(EXTRA_MESSAGE, m_event.getEventId());
-            startActivity(intent);
+        if (id == R.id.action_settings) {
+            EditText edit_ans = (EditText)findViewById(R.id.edit_ans);
+            String ans = edit_ans.getText().toString();
+            sharedPref = this.getSharedPreferences("user_id", Context.MODE_PRIVATE);
+            user_id = sharedPref.getInt("user_id", -1);
+            String jsonStrng = "{" +
+                    "\"author_id\":" + user_id +
+                    ",\"event_id\":" + 8 +
+                    ",\"content\":" + ans + "}";
+
+            String message = RequestHandler.sendPostRequest(
+                    "http://120.24.208.130:1501/event/add_ans", jsonStrng);
+            if (message == "false") {
+                Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
+                        Toast.LENGTH_SHORT).show();
+            } else {
+                try {
+                    JSONObject jO = new JSONObject(message);
+                    if (jO.getInt("status") == 500) {
+                        Toast.makeText(getApplicationContext(), "发送失败",
+                                Toast.LENGTH_SHORT).show();
+                    } else {
+                        Gson gson = new Gson();
+                        answer m_answer = gson.fromJson(message, answer.class);
+                        Intent intent = new Intent(this, QuestionDetail.class);
+                        startActivity(intent);
+                        AddAns.this.finish();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
             return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
-//设置完毕
-    /*
-    private Toolbar.OnMenuItemClickListener onMenuItemClick = new Toolbar.OnMenuItemClickListener() {
-        @Override
-        public boolean onMenuItemClick(MenuItem menuItem) {
-            String msg = "";
-            switch (menuItem.getItemId()) {
-                case R.id.action_ans:
-                    msg += "Click edit";
-                    break;
-            }
-            return true;
-        }
-    };*/
 }

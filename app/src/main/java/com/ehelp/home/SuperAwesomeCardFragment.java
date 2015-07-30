@@ -56,6 +56,8 @@ import com.ehelp.map.recieve_help_ans_map;
 import com.ehelp.map.recievesos_map;
 import com.ehelp.receive.QuestionDetail;
 
+import java.util.List;
+
 public class SuperAwesomeCardFragment extends Fragment {
     // 定位相关
     LocationClient mLocClient;
@@ -66,7 +68,7 @@ public class SuperAwesomeCardFragment extends Fragment {
     MapView mMapView;
     BaiduMap mBaiduMap;
     private int user_id;
-    private Event[] events;
+    private List<Event> events;
     public final static String EXTRA_MESSAGE = "com.ehelp.home.MESSAGE";
 
     // UI相关
@@ -162,7 +164,7 @@ public class SuperAwesomeCardFragment extends Fragment {
             queList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 public void onItemClick(AdapterView<?> arg0, View arg1, int index, long arg3) {
                     Intent intent = new Intent(getActivity(), recievesos_map.class);
-                    intent.putExtra(EXTRA_MESSAGE, events[index]);
+                    intent.putExtra(EXTRA_MESSAGE, events.get(index));
                     startActivity(intent);
                 }
             });
@@ -181,7 +183,7 @@ public class SuperAwesomeCardFragment extends Fragment {
             queList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 public void onItemClick(AdapterView<?> arg0, View arg1, int index, long arg3) {
                     Intent intent = new Intent(getActivity(), recieve_help_ans_map.class);
-                    intent.putExtra(EXTRA_MESSAGE, events[index]);
+                    intent.putExtra(EXTRA_MESSAGE, events.get(index));
                     startActivity(intent);
                 }
             });
@@ -200,7 +202,7 @@ public class SuperAwesomeCardFragment extends Fragment {
             queList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 public void onItemClick(AdapterView<?> arg0, View arg1, int index, long arg3) {
                     Intent intent = new Intent(getActivity(), QuestionDetail.class);
-                    intent.putExtra(EXTRA_MESSAGE, events[index]);
+                    intent.putExtra(EXTRA_MESSAGE, events.get(index));
                     startActivity(intent);
                 }
             });
