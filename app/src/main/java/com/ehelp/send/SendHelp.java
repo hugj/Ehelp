@@ -1,5 +1,6 @@
 package com.ehelp.send;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -59,6 +60,7 @@ public class SendHelp extends AIActionBarActivity implements RapidFloatingAction
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        sharedPref = this.getSharedPreferences("user_id", Context.MODE_PRIVATE);
         super.onCreate(savedInstanceState);
         //setContentView(R.layout.activity_test);
         Intent intent = getIntent();
