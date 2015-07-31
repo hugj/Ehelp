@@ -1,5 +1,6 @@
 package com.ehelp.receive;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -19,6 +20,7 @@ import com.ehelp.home.Home;
 import com.ehelp.map.sendhelp_map;
 import com.ehelp.send.CountNum;
 import com.ehelp.send.SendQuestion;
+import com.ehelp.utils.ActivityCollector;
 import com.ehelp.utils.RequestHandler;
 import com.google.gson.Gson;
 import com.wangjie.androidbucket.utils.ABTextUtil;
@@ -64,6 +66,8 @@ public class AddAns extends AIActionBarActivity implements RapidFloatingActionCo
         Intent intent = getIntent();
         eventId = intent.getIntExtra(QuestionDetail.EXTRA_MESSAGE, -1);
         init();
+
+        ActivityCollector.getInstance().addActivity(this);
     }
 
     private void init() {
@@ -182,17 +186,11 @@ public class AddAns extends AIActionBarActivity implements RapidFloatingActionCo
             String ans = edit_ans.getText().toString();
             sharedPref = this.getSharedPreferences("user_id", Context.MODE_PRIVATE);
             user_id = sharedPref.getInt("user_id", -1);
-            String jsonStrng =  "{" +
-                    "\"author_id\":" + 12 +
-                    ",\"event_id\":" + 8 +
-                    ",\"content\":\"今天你吃药了么\"" +
-                    "}";
-                    /*
-                    "{" +
+            String jsonStrng = "{" +
                     "\"author_id\":" + user_id +
-                    ",\"event_id\":" + 12 +
-                    ",\"content\":" + ans + "}";
-*/
+                    ",\"event_id\":" + 8 +
+                    ",\"content\":\"" + ans + "\"}";
+
             String message = RequestHandler.sendPostRequest(
                     "http://120.24.208.130:1501/event/add_ans", jsonStrng);
             if (message == "false") {
@@ -207,11 +205,11 @@ public class AddAns extends AIActionBarActivity implements RapidFloatingActionCo
                     } else {
                         Gson gson = new Gson();
                         answer m_answer = gson.fromJson(message, answer.class);
-                        Toast.makeText(getApplicationContext(), "发送失败",
+                        Toast.makeText(getApplicationContext(), "发送成功",
                                 Toast.LENGTH_SHORT).show();
+                        ActivityCollector.getInstance().exit();
                         Intent intent = new Intent(this, Home.class);
                         startActivity(intent);
-                        AddAns.this.finish();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();

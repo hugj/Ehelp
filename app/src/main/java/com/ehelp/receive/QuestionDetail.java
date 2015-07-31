@@ -18,6 +18,7 @@ import com.ehelp.home.SuperAwesomeCardFragment;
 import com.ehelp.map.sendhelp_map;
 import com.ehelp.send.CountNum;
 import com.ehelp.send.SendQuestion;
+import com.ehelp.utils.ActivityCollector;
 import com.ehelp.utils.RequestHandler;
 import com.wangjie.androidbucket.utils.ABTextUtil;
 import com.wangjie.androidbucket.utils.imageprocess.ABShape;
@@ -62,6 +63,7 @@ public class QuestionDetail extends AIActionBarActivity implements RapidFloating
         m_event = (Event)intent.getSerializableExtra(SuperAwesomeCardFragment.EXTRA_MESSAGE);
         init();
         setView();
+        ActivityCollector.getInstance().addActivity(this);
     }
 
     private void init() {

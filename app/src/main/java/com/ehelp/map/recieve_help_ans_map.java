@@ -89,8 +89,6 @@ public class recieve_help_ans_map extends AIActionBarActivity implements BaiduMa
     private double weidu;
     private Event m_event;
 
-
-    //
     MapView mMapView = null;    // map View
     BaiduMap mBaidumap = null;
     //搜索相关
@@ -108,7 +106,7 @@ public class recieve_help_ans_map extends AIActionBarActivity implements BaiduMa
     private Marker mMarker4;
     private InfoWindow mInfoWindow;
 
-    //TOOLbar
+    //Toolbar
     private Toolbar mToolbar;
 
 
@@ -123,11 +121,18 @@ public class recieve_help_ans_map extends AIActionBarActivity implements BaiduMa
         mBaidumap = mMapView.getMap();
         int count = mMapView.getChildCount();
 
-        init();
-
         Intent intent = getIntent();
         m_event = (Event)intent.getSerializableExtra(SuperAwesomeCardFragment.EXTRA_MESSAGE);
         setView();
+
+        init();
+
+        //set toolbar
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        mToolbar.setTitle("");
+        setSupportActionBar(mToolbar);
+        TextView tvv =(TextView) findViewById(R.id.titlefortoolbar);
+        tvv.setText("求助信息详情");
 
         // 去除无关图标
         for (int i = 0; i < count; i++) {
@@ -481,12 +486,6 @@ public class recieve_help_ans_map extends AIActionBarActivity implements BaiduMa
         StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder().
                 detectLeakedSqlLiteObjects().detectLeakedClosableObjects().
                 penaltyLog().penaltyDeath().build());
-        //set toolbar
-        mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        mToolbar.setTitle("发送求助信息");
-        setSupportActionBar(mToolbar);
-        TextView tvv =(TextView) findViewById(R.id.titlefortoolbar);
-        tvv.setText("求助信息详情");
         //http://www.jcodecraeer.com/a/anzhuokaifa/androidkaifa/2014/1123/2050.html参考网址
 
         //FAB

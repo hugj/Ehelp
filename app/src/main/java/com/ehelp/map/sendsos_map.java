@@ -82,8 +82,6 @@ public class sendsos_map extends ActionBarActivity implements BaiduMap.OnMapClic
     boolean useDefaultIcon = false;
     PlanNode stNode = null;
 
-
-    //
     MapView mMapView = null;    // map View
     BaiduMap mBaidumap = null;
     //搜索相关
@@ -110,7 +108,7 @@ public class sendsos_map extends ActionBarActivity implements BaiduMap.OnMapClic
     //求救页面信息框
     private EditText et1;
 
-    //toolbar
+    //Toolbar
     private Toolbar mToolbar;
     
     //振动发声定义
