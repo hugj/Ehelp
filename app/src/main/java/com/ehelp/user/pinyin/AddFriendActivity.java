@@ -1,5 +1,6 @@
 package com.ehelp.user.pinyin;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -46,6 +47,7 @@ public class AddFriendActivity extends ActionBarActivity {
 
         SharedPref = this.getSharedPreferences("user_id", MODE_PRIVATE);
 
+
         //return str1;
     }
     /*
@@ -60,7 +62,7 @@ public class AddFriendActivity extends ActionBarActivity {
                     "\"phone\":\"" + phone + "\"}";
             message = RequestHandler.sendPostRequest(
                     "http://120.24.208.130:1501/user/get_information", jsonStrng);
-            //Log.v("addfatest", message);
+            Log.v("addfatest", message);
             if (message == "false") {
                 runOnUiThread(new Runnable() {
                     @Override
@@ -131,7 +133,7 @@ public class AddFriendActivity extends ActionBarActivity {
                 "\"operation\":" + 1 + "," +
                 "\"type\":" + 2 + "}";
         message = RequestHandler.sendPostRequest(
-                "http://120.24.208.130:1501/user/relation_manage" , jsonStrng);
+                "http://120.24.208.130:1501/user/relation_manage", jsonStrng);
         if (message == "false") {
             runOnUiThread(new Runnable() {
                 @Override
@@ -167,4 +169,10 @@ public class AddFriendActivity extends ActionBarActivity {
 
     }
 
+    public void detail(View v){
+        Intent intent = new Intent(this, messageActivity.class);
+        intent.putExtra("type",0);//1表示非好友
+        intent.putExtra("id",idd);
+        startActivity(intent);
+    }
 }
