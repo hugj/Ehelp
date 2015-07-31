@@ -53,15 +53,15 @@ public class messageActivity extends ActionBarActivity {
         tvv.setText("详细资料");
 
         Intent intent = getIntent();
-        type = intent.getIntExtra("type",0);//默认非好友。1表示好友，2表示紧急联系人
-        idd = intent.getIntExtra("id",-1);
+        type = intent.getIntExtra("type",0);//默认0非好友。1表示好友，2表示紧急联系人
+        idd = intent.getIntExtra("id",-1);//intent时传入的id
         SharedPref = this.getSharedPreferences("user_id", MODE_PRIVATE);
         id = SharedPref.getInt("user_id", -1);
 
         //根据用户类型初始化页面
         init();
 
-        //根据用户ID显示信息详情
+        //根据用户ID从后台获取数据显示信息详情
         show123();
 
         //click on set name设置备注名
@@ -314,7 +314,7 @@ public class messageActivity extends ActionBarActivity {
 
 
     public void manage_relation(int a,int b){
-        //a代表0删除或1添加
+        //a代表0删除关系或1添加关系
         //b代表0紧急联系人操作2好友操作
         int id = SharedPref.getInt("user_id", -1);
 
@@ -341,16 +341,14 @@ public class messageActivity extends ActionBarActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        //未获取到
+                        //返回500
                         Toast.makeText(getApplicationContext(), "操作失败",
                                 Toast.LENGTH_SHORT).show();
                     }
                 });
-//                    Toast.makeText(getApplicationContext(), "用户未注册",
-//                            Toast.LENGTH_SHORT).show();
                 return;
             }else {
-                //当获取到
+                //返回200
                 Toast.makeText(getApplicationContext(), "操作成功",
                         Toast.LENGTH_SHORT).show();
             }
