@@ -3,6 +3,7 @@ package com.ehelp.user.pinyin;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
@@ -31,10 +32,13 @@ public class messageActivity extends ActionBarActivity {
 
     private int type = 0;//传进来的参数，用户的类型，0非好友，1好友，2紧急联系人
     private int idd;//要查看的用户的id
+    private int id;//当前用户id
 
 //与后台联系的变量
     private String message;
     private String jsonStrng;
+    private SharedPreferences SharedPref;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +55,8 @@ public class messageActivity extends ActionBarActivity {
         Intent intent = getIntent();
         type = intent.getIntExtra("type",0);//默认非好友。1表示好友，2表示紧急联系人
         idd = intent.getIntExtra("id",-1);
+        SharedPref = this.getSharedPreferences("user_id", MODE_PRIVATE);
+        id = SharedPref.getInt("user_id", -1);
 
         //根据用户类型初始化页面
         init();
@@ -207,48 +213,150 @@ public class messageActivity extends ActionBarActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         if(type == 2){
             builder.setMessage("是否删除紧急联系人（保留好友）？");
+            builder.setPositiveButton("确认", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                    manage_relation(0,0);
+                    manage_relation(1,2);
+                    //刷新当前页面
+                    Intent intent = new Intent(messageActivity.this, messageActivity.class);
+                    intent.putExtra("type",1);//0表示非好友1表示好友2表示紧急联系人
+                    intent.putExtra("id",idd);
+                    startActivity(intent);
+                    messageActivity.this.finish();
 
+
+                }
+            });
+            builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            });
+            builder.create().show();
         }else {
             builder.setMessage("是否添加为紧急联系人？");
+            builder.setPositiveButton("确认", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                    manage_relation(1, 0);
+                    //刷新当前页面
+                    Intent intent = new Intent(messageActivity.this, messageActivity.class);
+                    intent.putExtra("type",2);//0表示非好友1表示好友2表示紧急联系人
+                    intent.putExtra("id",idd);
+                    startActivity(intent);
+                    messageActivity.this.finish();
+                }
+            });
+            builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            });
+            builder.create().show();
         }
-        builder.setPositiveButton("确认", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-                messageActivity.this.finish();
-            }
-        });
-        builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-            }
-        });
-        builder.create().show();
+
     }
     //删除好友
     protected void delete_dialog() {
         AlertDialog.Builder delete = new AlertDialog.Builder(this);
         if(type == 0){
             delete.setMessage("确定添加为好友？");
+            delete.setPositiveButton("确认", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                    manage_relation(1, 2);
+                    //刷新当前页面
+                    Intent intent = new Intent(messageActivity.this, messageActivity.class);
+                    intent.putExtra("type",1);//0表示非好友1表示好友2表示紧急联系人
+                    intent.putExtra("id",idd);
+                    startActivity(intent);
+                    messageActivity.this.finish();
+                }
+            });
+            delete.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            });
+            delete.create().show();
         }else {
             delete.setMessage("确定删除此好友？");
+            delete.setPositiveButton("确认", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                    manage_relation(0, 2);
+                    //刷新当前页面
+                    Intent intent = new Intent(messageActivity.this, messageActivity.class);
+                    intent.putExtra("type",0);//0表示非好友1表示好友2表示紧急联系人
+                    intent.putExtra("id",idd);
+                    startActivity(intent);
+                    messageActivity.this.finish();
+                }
+            });
+            delete.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            });
+            delete.create().show();
         }
-        delete.setPositiveButton("确认", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-                messageActivity.this.finish();
-            }
-        });
-        delete.setNegativeButton("取消", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-            }
-        });
-        delete.create().show();
+
     }
 
 
+    public void manage_relation(int a,int b){
+        //a代表0删除或1添加
+        //b代表0紧急联系人操作2好友操作
+        int id = SharedPref.getInt("user_id", -1);
+
+        jsonStrng = "{" +
+                "\"id\":" + id + "," +
+                "\"user_id\":" + idd + "," +
+                "\"operation\":" + a + "," +
+                "\"type\":" + b + "}";
+        message = RequestHandler.sendPostRequest(
+                "http://120.24.208.130:1501/user/relation_manage", jsonStrng);
+        if (message == "false") {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
+                            Toast.LENGTH_SHORT).show();
+                }
+            });
+            return;
+        }
+        try{
+            JSONObject jO = new JSONObject(message);
+            if (jO.getInt("status") == 500) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        //未获取到
+                        Toast.makeText(getApplicationContext(), "操作失败",
+                                Toast.LENGTH_SHORT).show();
+                    }
+                });
+//                    Toast.makeText(getApplicationContext(), "用户未注册",
+//                            Toast.LENGTH_SHORT).show();
+                return;
+            }else {
+                //当获取到
+                Toast.makeText(getApplicationContext(), "操作成功",
+                        Toast.LENGTH_SHORT).show();
+            }
+        }catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+    }
 }
