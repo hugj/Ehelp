@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.ehelp.R;
 import com.ehelp.home.Home;
+import com.ehelp.utils.ActivityCollector;
 import com.ehelp.utils.RequestHandler;
 import com.wangjie.androidbucket.utils.ABTextUtil;
 import com.wangjie.androidbucket.utils.imageprocess.ABShape;
@@ -58,6 +59,8 @@ public class SendHelp extends AIActionBarActivity implements RapidFloatingAction
         //setContentView(R.layout.activity_test);
         Intent intent = getIntent();
         init();
+
+        ActivityCollector.getInstance().addActivity(this);
 
         //get the information of sendhelp_map location
         Bundle bunde = this.getIntent().getExtras();
@@ -221,9 +224,10 @@ public class SendHelp extends AIActionBarActivity implements RapidFloatingAction
                                         Toast.LENGTH_SHORT).show();
                             }
                         } else {
+                            ActivityCollector.getInstance().exit();
                             Intent intent = new Intent(this, Home.class);
                             startActivity(intent);
-                            SendHelp.this.finish();
+//                            SendHelp.this.finish();
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();

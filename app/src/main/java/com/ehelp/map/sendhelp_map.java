@@ -42,6 +42,7 @@ import com.baidu.mapapi.search.sug.SuggestionSearch;
 import com.baidu.mapapi.search.sug.SuggestionSearchOption;
 import com.ehelp.R;
 import com.ehelp.send.SendHelp;
+import com.ehelp.utils.ActivityCollector;
 
 /**
  * 演示poi搜索功能
@@ -70,6 +71,8 @@ public class sendhelp_map extends ActionBarActivity implements
         SDKInitializer.initialize(getApplicationContext());
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sendhelp_map);
+
+        ActivityCollector.getInstance().addActivity(this);
 
         //set toolbar
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
