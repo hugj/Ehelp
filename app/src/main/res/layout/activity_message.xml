@@ -179,26 +179,7 @@
         <View  android:layout_height="1px"
             android:layout_width="match_parent"
             android:background="#9d9d9d"/>
-        <RelativeLayout
-            android:layout_width="fill_parent"
-            android:layout_height="40dp"
-            android:gravity="center_vertical"
-            android:clickable="true"
-            android:id="@+id/detail_birth">
-            <TextView android:layout_width="wrap_content"
-                android:layout_height="wrap_content" android:textColor="#000"
-                android:layout_centerVertical="true"
-                android:textSize="18sp" android:id="@+id/detail_birth1"
-                android:text="@string/mes_birth"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/detail_birth2"
-                android:textSize="18sp"
-                android:textColor="#000" android:layout_centerVertical="true"
-                android:layout_marginLeft="68dp"
-                android:text="2000-11-28"/>
-        </RelativeLayout>
+
         <View  android:layout_height="1px"
             android:layout_width="match_parent"
             android:background="#9d9d9d"/>

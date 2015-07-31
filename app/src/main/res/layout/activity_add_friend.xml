@@ -38,6 +38,7 @@
         android:layout_weight="0.27"
         android:weightSum="1"
         android:id="@+id/rll"
+        android:onClick="detail"
         android:visibility="invisible">
         <!--android:background="#158684"-->
         <ImageView
