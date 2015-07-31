@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.StrictMode;
+import android.os.Vibrator;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -50,6 +52,7 @@ import com.baidu.mapapi.search.route.TransitRouteResult;
 import com.baidu.mapapi.search.route.WalkingRoutePlanOption;
 import com.baidu.mapapi.search.route.WalkingRouteResult;
 import com.ehelp.R;
+import com.ehelp.utils.RequestHandler;
 
 //手机振动与手机发声
 import android.os.Vibrator;
@@ -66,11 +69,19 @@ import java.net.URL;
 //严苛模式
 import android.os.StrictMode;
 
+import javax.net.ssl.HttpsURLConnection;
 import com.ehelp.utils.RequestHandler;
 import android.util.Log;
-
+import cn.jpush.android.api.JPushInterface;
 import org.json.JSONObject;
 import org.json.JSONException;
+
+//手机振动与手机发声
+//import android.media.SoundPool;
+//import android.media.AudioManager;
+//统计代码
+//极光推送
+//严苛模式
 
 
 public class sendsos_map extends ActionBarActivity implements BaiduMap.OnMapClickListener{
@@ -110,6 +121,8 @@ public class sendsos_map extends ActionBarActivity implements BaiduMap.OnMapClic
     private Button button7;
     //private SoundPool sp;
     private Vibrator vib;
+
+    private Thread thr;
 
     //停止振动发声
     public void Stopvands(View view) {
@@ -449,6 +462,38 @@ public class sendsos_map extends ActionBarActivity implements BaiduMap.OnMapClic
         }
     });
 
+    Runnable runnable = new Runnable() {
+        @Override
+        public void run() {
+            try{
+                Thread.sleep(2000);
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            String url = "http://120.24.208.130:1501/event/add";
+            int type = 2;
+
+            SharedPreferences sp = getSharedPreferences("user_id", MODE_PRIVATE);
+            int id = sp.getInt("user_id", -1);
+//            String tests1 = String.valueOf(id);
+//            Log.v("sendsostest", tests1);
+
+            String send = "{\"id\":" + id + ",\"type\":" + type
+                    + ",\"title\":\"sos\",\"longitude\":" + longitude
+                    + ",\"latitude\":" + latitude +"}";
+
+            String msg = RequestHandler.sendPostRequest(
+                    url, send);
+//            JSONObject jo = new JSONObject(msg);
+//            Log.v("sendsostest", msg);
+//            event_id =  jo.getInt("event_id");
+//            String tests2 = String.valueOf(event_id);
+//            Log.v("sendsostest", tests2);
+        }
+    };
+
     //向后台发送求救信息
     public void sendsos() throws JSONException{
         String url = "http://120.24.208.130:1501/event/add";
@@ -464,17 +509,18 @@ public class sendsos_map extends ActionBarActivity implements BaiduMap.OnMapClic
         Log.v("sendsostest", ss1);
         Log.v("sendsostest", ss2);
 
-        String send = "{\"id\":" + id + ",\"type\":" + type
-                + ",\"title\":\"sos\",\"longitude\":" + longitude
-                + ",\"latitude\":" + latitude +"}";
         /*String send = "{\"id\":" + id + ",\"type\":" + type
-                + ",\"title\":\"sos\"}";*/
+                + ",\"title\":\"sos\",\"longitude\":" + longitude
+                + ",\"latitude\":" + latitude +"}";*/
+        String send = "{\"id\":" + id + ",\"type\":" + type
+                + ",\"title\":\"sos\"}";
 
         String msg = RequestHandler.sendPostRequest(
                 url, send);
         JSONObject jo = new JSONObject(msg);
         Log.v("sendsostest2", msg);
-        event_id = jo.getInt("event_id");
+        JSONObject value = jo.getJSONObject("value");
+        event_id = value.getInt("event_id");
         String s = String.valueOf(event_id);
         Log.v("sendposttest1", s);
         String tests2 = String.valueOf(event_id);
@@ -488,7 +534,8 @@ public class sendsos_map extends ActionBarActivity implements BaiduMap.OnMapClic
         int id = sp.getInt("user_id", -1);
         String tests1 = String.valueOf(id);
         Log.v("sendsostest", tests1);
-
+        String ss1 = String.valueOf(event_id);
+        Log.v("sendsostest", ss1);
         String send = "{\"id\":" + id + ",\"event_id\":" + event_id + "}";
 
         String msg = RequestHandler.sendPostRequest(

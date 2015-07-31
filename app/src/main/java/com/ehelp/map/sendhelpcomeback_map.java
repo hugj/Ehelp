@@ -1,6 +1,7 @@
 package com.ehelp.map;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.StrictMode;
@@ -46,6 +47,8 @@ import com.baidu.mapapi.search.route.TransitRouteResult;
 import com.baidu.mapapi.search.route.WalkingRoutePlanOption;
 import com.baidu.mapapi.search.route.WalkingRouteResult;
 import com.ehelp.R;
+import com.ehelp.evaluate.Comment;
+import com.ehelp.home.Home;
 import com.ehelp.send.CountNum;
 import com.ehelp.send.SendQuestion;
 import com.ehelp.utils.RequestHandler;
@@ -107,11 +110,24 @@ public class sendhelpcomeback_map extends AIActionBarActivity implements BaiduMa
     private EditText Eevents;
     private String events;
 
+    private int event_id;
+
+    public final static String EXTRA_MESSAGE = "com.ehelp.user.history.MESSAGE";
+    private SharedPreferences sharedPref;
+
+
+
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         SDKInitializer.initialize(getApplicationContext());
         setContentView(R.layout.activity_sendhelpcomeback_map);
+
+        Bundle bunde = this.getIntent().getExtras();
+        event_id = bunde.getInt(EXTRA_MESSAGE);
+
+        Toast.makeText(sendhelpcomeback_map.this, event_id, Toast.LENGTH_SHORT).show();
+
 
 
 
@@ -528,25 +544,54 @@ public class sendhelpcomeback_map extends AIActionBarActivity implements BaiduMa
         rfabHelper.toggleContent();
     }
 
-    public void submit() {
+    public void cancelHelp() {
         init();
-        Eevents = (EditText)findViewById(R.id.message2);
-        events = Eevents.getText().toString();
-        if (!events.isEmpty()) {
-            String jsonStrng = "{" +
-                    "\"content\":" + events + ",\"type\":1," + "}";
-            String message = RequestHandler.sendPostRequest(
-                    "http://120.24.208.130:1501/event/add", jsonStrng);
-            if (message == "false") {
-                Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
-                        Toast.LENGTH_SHORT).show();
-                return;
-            }   else {
-                Toast.makeText(getApplicationContext(), message,
-                        Toast.LENGTH_SHORT).show();
-                // 这里是未完成的页面跳转
-                // getMenuInflater().inflate(R.menu.menu_send_help, menu);
-            }
+        int default_ = -1;
+        int user_id;
+        user_id = sharedPref.getInt("user_id", default_);
+        String jsonStrng = "{" +
+                "\"id\":" + user_id + ",\"event_id\":1," + "}";
+        String message = RequestHandler.sendPostRequest(
+                "http://120.24.208.130:1501/event/remove", jsonStrng);
+        if (message == "false") {
+            Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
+                    Toast.LENGTH_SHORT).show();
+            return;
+        }   else {
+            Toast.makeText(getApplicationContext(), message,
+                    Toast.LENGTH_SHORT).show();
+            Intent intent=new Intent(this,Home.class);
+            startActivity(intent);
+
+            // 这里是未完成的页面跳转
+            // getMenuInflater().inflate(R.menu.menu_send_help, menu);
+        }
+    }
+
+    public void endHelp() {
+        init();
+        int default_ = -1;
+        int user_id;
+        user_id = sharedPref.getInt("user_id", default_);
+        String jsonStrng = "{" +
+                "\"state\":1" + ",\"type\":1," +
+                "\"id\":" + user_id +
+                "\"event_id\":"  + "}";
+        String message = RequestHandler.sendPostRequest(
+                "http://120.24.208.130:1501/event/modify", jsonStrng);
+        if (message == "false") {
+            Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
+                    Toast.LENGTH_SHORT).show();
+            return;
+        }   else {
+            Toast.makeText(getApplicationContext(), message,
+                    Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(sendhelpcomeback_map.this, Comment.class);
+            intent.putExtra(EXTRA_MESSAGE, event_id);
+            startActivity(intent);
+
+            // 这里是未完成的页面跳转
+            // getMenuInflater().inflate(R.menu.menu_send_help, menu);
         }
     }
 }
