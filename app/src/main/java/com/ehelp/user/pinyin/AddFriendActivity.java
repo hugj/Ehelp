@@ -171,7 +171,7 @@ public class AddFriendActivity extends ActionBarActivity {
 
     public void detail(View v){
         Intent intent = new Intent(this, messageActivity.class);
-        intent.putExtra("type",0);//1表示非好友
+        intent.putExtra("type",0);//0表示非好友1表示好友2表示紧急联系人
         intent.putExtra("id",idd);
         startActivity(intent);
     }
