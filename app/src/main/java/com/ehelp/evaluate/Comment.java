@@ -2,9 +2,11 @@ package com.ehelp.evaluate;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.nfc.Tag;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
@@ -19,6 +21,7 @@ import com.ehelp.send.CountNum;
 import com.ehelp.send.SendQuestion;
 import com.ehelp.user.pinyin.AssortView;
 import com.ehelp.user.pinyin.PinyinAdapter;
+import com.ehelp.utils.RequestHandler;
 import com.wangjie.androidbucket.utils.ABTextUtil;
 import com.wangjie.androidbucket.utils.imageprocess.ABShape;
 import com.wangjie.androidinject.annotation.annotations.base.AILayout;
@@ -32,6 +35,8 @@ import com.wangjie.rapidfloatingactionbutton.contentimpl.labellist.RapidFloating
 
 import java.util.ArrayList;
 import java.util.List;
+
+import android.content.SharedPreferences;
 
 //import android.view.View.OnLongClickListener;
 
@@ -51,6 +56,9 @@ public class Comment extends AIActionBarActivity implements RapidFloatingActionC
     private String comment;
 
     private String url = "http://120.24.208.130:1501/event/modify";
+    private int user_id;
+    private int event_id;
+    private SharedPreferences sp;
 
     private PinyinAdapter adapter;
     private ExpandableListView eListView;
@@ -106,6 +114,9 @@ public class Comment extends AIActionBarActivity implements RapidFloatingActionC
 
         //FAB
         fab();
+
+        sp = this.getSharedPreferences("user_id", MODE_PRIVATE);
+        user_id = sp.getInt("user_id", -1);
     }
 
     private void fab(){
@@ -201,7 +212,14 @@ public class Comment extends AIActionBarActivity implements RapidFloatingActionC
 
         //noinspection SimplifiableIfStatement
         if ((id == R.id.action_settings)){
-
+            /*int state = 1;
+            getComment();
+            String send = "{\"id\":" + id + ",\"event_id\":"
+                    + event_id + ",\"group_pts\":" + starnum + ",\"comment\":\"" + comment
+                    + "\",\"state\":" + state + "}";
+            String msg = RequestHandler.sendPostRequest(
+                    url, send);
+            Log.v("myowntest", msg);*/
 
             return true;
         }
@@ -210,9 +228,8 @@ public class Comment extends AIActionBarActivity implements RapidFloatingActionC
     }
 
     //获取评论内容
-    public String getComment(){
+    public void getComment(){
         EditText editText1 =(EditText)findViewById(R.id.editText_comment);
         comment=editText1.getText().toString();
-        return comment;
     }
 }
