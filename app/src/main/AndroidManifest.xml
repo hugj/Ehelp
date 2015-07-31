@@ -258,7 +258,11 @@
         <service
             android:name="com.baidu.location.f"
             android:enabled="true"
-            android:process=":remote" >
+            android:process=":remote"
+            android:permission="android.permission.BAIDU_LOCATION_SERVICE">
+            <intent-filter>
+                <action android:name="com.baidu.location.service_v2.6"></action>
+            </intent-filter>
         </service>
 
         <activity
