@@ -389,7 +389,7 @@ public class homepageActivity extends AIActionBarActivity implements RapidFloati
                                         "\"age\":" + emp1 + "}";
                                 String message = RequestHandler.sendPostRequest(
                                         "http://120.24.208.130:1501/user/modify_information", jsonString);
-                                Age.setText(emp1);
+                                Age.setText(String.valueOf(emp1));
                                 Toast.makeText(getApplicationContext(), "用户年龄修改成功",
                                         Toast.LENGTH_SHORT).show();
                                 EditageDialog.dismiss();
