@@ -12,7 +12,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.ehelp.R;
-import com.ehelp.entity.answer;
+import com.ehelp.entity.Event;
 import com.ehelp.utils.RequestHandler;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -36,14 +36,15 @@ public class HistoryAdapter extends BaseAdapter {
     private String tit;
     private double longitude;
     private double latitude;
-    private int event_id;
+    private int user_id;
     private int type;
-    private List<answer> answerList;
+    private List<Event> HisList;
     Gson gson = new Gson();
 
-    HistoryAdapter(Context context, int id){
+    HistoryAdapter(Context context, int id, int io, int type_){
         this.context=context;
-        event_id = id;
+        user_id = id;
+        type = type_;
 
         // 使用后台线程运行网络连接功能
         StrictMode.setThreadPolicy(
@@ -54,17 +55,23 @@ public class HistoryAdapter extends BaseAdapter {
                 penaltyLog().penaltyDeath().build());
 
         //数据初始化
-        setList();
+
+        if (io == 1) { //发起的事件
+            setListo();
+        } else { //接受的事件
+            setListi();
+        }
     }
 
 
-    public void setList() {
+    public void setListo() {
         //数据初始化
         try {
             String jsonStrng = "{" +
-                    "\"event_id\":" + event_id + "}";
+                    "\"id\":" + user_id +
+                    ",\"type\":" + type +"}";
             String message = RequestHandler.sendPostRequest(
-                    "http://120.24.208.130:1501/event/anslist", jsonStrng);
+                    "http://120.24.208.130:1501/event/query_launch", jsonStrng);
             if (message == "false") {
                 item=new HashMap<String,Object>();
                 item.put("头像", R.drawable.icon);
@@ -78,17 +85,17 @@ public class HistoryAdapter extends BaseAdapter {
                 if (j1.getInt("status") == 500) {
                     item=new HashMap<String,Object>();
                     item.put("头像", R.drawable.icon);
-                    item.put("内容", "因为迷之原因拉取不到回答。。。");
+                    item.put("内容", "因为迷之原因拉取不到。。。");
                     item.put("用户", "");
                     item.put("时间", "");
                     item.put("采纳", "");
                     list.add(item);
                 }
-                String st = j1.getString("answer_list");
-                answerList = gson.fromJson(st, new TypeToken<List<answer>>(){}.getType());
-                for (int i = 0; i < answerList.size(); i++) {
+                String st = j1.getString("event_list");
+                HisList = gson.fromJson(st, new TypeToken<List<Event>>(){}.getType());
+                for (int i = 0; i < HisList.size(); i++) {
                     //获取昵称
-                    final int user_id = answerList.get(i).getAuthoridId();
+                    final int user_id = HisList.get(i).getLauncherId();
                     String nickname = "";
                     String jsonStrng1 = "{" +
                             "\"id\":" + user_id + "}";
@@ -107,12 +114,9 @@ public class HistoryAdapter extends BaseAdapter {
                     //添加条目
                     item=new HashMap<String,Object>();
                     item.put("头像", R.drawable.icon);
-                    item.put("内容", answerList.get(i).getContent());
+                    item.put("内容", HisList.get(i).getContent());
                     item.put("用户", nickname);
-                    item.put("时间", answerList.get(i).getTime());
-                    if (answerList.get(i).getIs_adopted() == 1) {
-                        item.put("采纳", "被采纳答案");
-                    }
+                    item.put("时间", HisList.get(i).getTime());
                     item.put("采纳", "");
                     list.add(item);
                 }
@@ -121,6 +125,8 @@ public class HistoryAdapter extends BaseAdapter {
             e.printStackTrace();
         }
     }
+
+    public void setListi() {}
 
     public int getCount() {return list.size();}
     public Object getItem(int position) {return position;}

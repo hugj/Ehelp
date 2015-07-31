@@ -1,5 +1,6 @@
 package com.ehelp.user.history;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -13,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -45,6 +47,9 @@ public class MyHistory extends AIActionBarActivity implements RapidFloatingActio
     @AIView(R.id.label_list_sample_rfab)
     private RapidFloatingActionButton rfaButton;
     private RapidFloatingActionHelper rfabHelper;
+
+    private SharedPreferences sharedPref;
+    private int user_id;
 
     private ViewPager mPager;//页卡内容
     private List<View> listViews; // Tab页面列表
@@ -81,7 +86,8 @@ public class MyHistory extends AIActionBarActivity implements RapidFloatingActio
         TextView tvv =(TextView) findViewById(R.id.titlefortoolbar);
         tvv.setText("我的历史记录");
 
-        SharedPref = this.getSharedPreferences("user_id", MODE_PRIVATE);
+        sharedPref = this.getSharedPreferences("user_id", Context.MODE_PRIVATE);
+        user_id = sharedPref.getInt("user_id", -1);
         InitViewPager();
         InitTextView();
 
@@ -180,21 +186,15 @@ public class MyHistory extends AIActionBarActivity implements RapidFloatingActio
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.all) {
-            //change to all
-            wha = 1;
-            return true;
-        }
-        //noinspection SimplifiableIfStatement
         if (id == R.id.sponsor) {
-            //change to my
-            wha = 2;
+            //change to my luancd
+            wha = 1;
             return true;
         }
         //noinspection SimplifiableIfStatement
         if (id == R.id.accept) {
             //change to what i accepted
-            wha = 3;
+            wha = 2;
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -309,52 +309,32 @@ public class MyHistory extends AIActionBarActivity implements RapidFloatingActio
                     tv2.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
                     tv3.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
                     //添加该页面可能的事项。比如跳转之类
-                    if(wha == 1){
 
-                    }
-                    if(wha == 2) {
-                        findformylaunch(1);
-//                        
-                    }
-                    if(wha == 3) {
-                        findformyreceive(1);
-
-                    }
+                    ListView hisList = (ListView)findViewById(R.id.lay1);
+                    //wha 1代表发起的 2代表接受的
+                    HistoryAdapter his = new HistoryAdapter(MyHistory.this, user_id, wha, 1);
+                    hisList.setAdapter(his);
                     break;
                 case 1:
 
                     tv.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
                     tv2.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
                     tv3.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-                    //findformySos();
-                    if(wha == 1){
 
-                    }
-                    if(wha == 2) {
-                        findformylaunch(2);
-                    }
-                    if(wha == 3) {
-                        findformyreceive(2);
-                    }
+                    ListView hisList2 = (ListView)findViewById(R.id.lay2);
+                    //wha 1代表发起的 2代表接受的
+                    HistoryAdapter his2 = new HistoryAdapter(MyHistory.this, user_id, wha, 2);
+                    hisList2.setAdapter(his2);
                     break;
                 case 2:
                     tv.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
                     tv2.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
                     tv3.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
-                    //findformyques();
-                    if(wha == 1){
 
-                    }
-                    if(wha == 2) {
-                        findformylaunch(0);//参数0代表全部，1我发起的，2我接收的
-
-
-                        //LinearLayout lyy = (LinearLayout)findViewById(R.id.lyyyy);
-                        //lyy.addView(rlll);
-                    }
-                    if(wha == 3) {
-                        findformyreceive(0);
-                    }
+                    ListView hisList3 = (ListView)findViewById(R.id.lay3);
+                    //wha 1代表发起的 2代表接受的
+                    HistoryAdapter his3 = new HistoryAdapter(MyHistory.this, user_id, wha, 0);
+                    hisList3.setAdapter(his3);
                     break;
             }
 
