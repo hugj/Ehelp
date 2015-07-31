@@ -54,8 +54,7 @@
         <activity
             android:name=".account.login"
             android:label="@string/app_name"
-            android:parentActivityName=".Test" >
-
+            android:parentActivityName=".account.login" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -178,17 +177,14 @@
 
         <activity
             android:name=".send.SendQuestion"
-            android:label="@string/title_activity_send_question" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.ehelp.Test" />
+            android:label="@string/title_activity_send_question"
+            android:parentActivityName=".account.login" >
+
         </activity>
         <activity
             android:name=".send.SendHelp"
-            android:label="@string/title_activity_send_help" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.ehelp.Test" />
+            android:label="@string/title_activity_send_help"
+            android:parentActivityName=".account.login" >
         </activity>
         <activity
             android:name=".Test"
@@ -202,17 +198,11 @@
         <activity
             android:name=".user.pinyin.ContactlistActivity"
             android:label="@string/title_activity_contactlist"
-            android:parentActivityName=".home.Home" >
+            android:parentActivityName=".account.login" >
 
             <!--
          android:parentActivityName=".Test" 改变这句话后通讯录的返回键就可以正常返回了。
          android:value="com.ehelp.Test" 下面的meta-data似乎没有什么卵用
-         在meta-dat设置是新页面切入，在上面设置是返回式切入
-            -->
-            <!--
-                meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.ehelp.evaluate.Comment" /
             -->
         </activity>
         <activity
@@ -222,37 +212,34 @@
         <activity
             android:name=".user.pinyin.homepageActivity"
             android:label="@string/title_activity_homepage"
-            android:parentActivityName=".home.Home" >
+            android:parentActivityName=".account.login" >
         </activity>
         <activity
             android:name=".user.pinyin.messageActivity"
             android:label="@string/title_activity_message"
-            android:parentActivityName=".user.pinyin.ContactlistActivity" >
+            android:parentActivityName=".account.login" >
         </activity>
         <activity
             android:name=".user.pinyin.SettingActivity"
             android:label="@string/title_activity_setting"
-            android:parentActivityName=".home.Home" >
+            android:parentActivityName=".account.login" >
         </activity>
         <activity
             android:name=".user.pinyin.AccountsafeActivity"
             android:label="@string/title_activity_accountsafe"
-            android:parentActivityName=".user.pinyin.SettingActivity" >
+            android:parentActivityName=".account.login" >
         </activity>
         <activity
             android:name=".user.pinyin.ChangepasswordActivity"
             android:label="@string/title_activity_changepassword"
-            android:parentActivityName=".user.pinyin.AccountsafeActivity" >
+            android:parentActivityName=".account.login" >
         </activity>
         <activity
             android:name=".map.recievehelp_map"
             android:configChanges="orientation|keyboardHidden"
             android:label="@string/title_activity_bmap_api_demo_main"
-            android:parentActivityName=".Test"
+            android:parentActivityName=".account.login"
             android:screenOrientation="portrait" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.ehelp.Test" />
         </activity>
 
         <service
@@ -281,7 +268,7 @@
         <activity
             android:name=".user.pinyin.Health"
             android:label="@string/title_activity_health"
-            android:parentActivityName=".home.Home" >
+            android:parentActivityName=".account.login" >
         </activity>
         <activity
             android:name=".receive.QuestionDetail"
@@ -303,17 +290,17 @@
         <activity
             android:name=".map.recievesos_map"
             android:label="@string/title_activity_recievesos_map"
-            android:parentActivityName=".home.Home" >
+            android:parentActivityName=".account.login" >
         </activity>
         <activity
             android:name=".map.sendhelpcomeback_map"
             android:label="@string/title_activity_sendhelpcomeback_map"
-            android:parentActivityName=".home.Home" >
+            android:parentActivityName=".account.login" >
         </activity>
         <activity
             android:name=".map.recieve_help_ans_map"
             android:label="@string/title_activity_recieve_help_ans_map"
-            android:parentActivityName=".home.Home" >
+            android:parentActivityName=".account.login" >
         </activity>
         <activity
             android:name=".home.Home"
@@ -322,39 +309,28 @@
         <activity
             android:name=".send.CountNum"
             android:label="@string/title_activity_count_num"
-            android:parentActivityName=".Test" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.ehelp.Test" />
+            android:parentActivityName=".account.login" >
         </activity>
         <activity
             android:name=".user.pinyin.ChangephoneActivity"
             android:label="@string/title_activity_changephone"
-            android:parentActivityName=".user.pinyin.AccountsafeActivity" >
+            android:parentActivityName=".account.login" >
         </activity>
         <activity
             android:name=".user.pinyin.AddFriendActivity"
             android:label="@string/title_activity_add_friend"
-            android:parentActivityName=".user.pinyin.ContactlistActivity" >
+            android:parentActivityName=".account.login" >
         </activity>
         <activity
             android:name=".user.history.MyHistory"
             android:label="@string/title_activity_my_history"
-            android:parentActivityName=".home.Home">
+            android:parentActivityName=".account.login">
         </activity>
-        <!-- <activity -->
-        <!-- android:name=".user.history.MyHistory" -->
-        <!-- android:label="@string/title_activity_my_history" -->
-        <!-- android:parentActivityName=".home.Home"> -->
-        <!-- </activity> -->
         <activity
             android:name=".receive.AddAns"
-            android:label="@string/title_activity_add_ans" >
-        </activity>
-        <activity
-            android:name=".user.history.MyHistory"
-            android:label="@string/title_activity_my_history"
-            android:parentActivityName=".home.Home">
+            android:label="@string/title_activity_add_ans"
+            android:parentActivityName=".account.login">
+
         </activity>
     </application>
 
