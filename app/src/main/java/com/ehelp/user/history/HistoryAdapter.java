@@ -55,23 +55,36 @@ public class HistoryAdapter extends BaseAdapter {
                 penaltyLog().penaltyDeath().build());
 
         //数据初始化
-
-        if (io == 1) { //发起的事件
-            setListo();
-        } else { //接受的事件
-            setListi();
-        }
+        setList(io);
     }
 
-
-    public void setListo() {
+    public String setListo() {
         //数据初始化
+        String jsonStrng = "{" +
+                "\"id\":" + user_id +
+                ",\"type\":" + type +"}";
+        String message = RequestHandler.sendPostRequest(
+                "http://120.24.208.130:1501/event/query_launch", jsonStrng);
+        return message;
+    }
+
+    public String setListi() {
+        //数据初始化
+        String jsonStrng = "{" +
+                "\"id\":" + user_id + "}";
+        String message = RequestHandler.sendPostRequest(
+                "http://120.24.208.130:1501/event/query_join", jsonStrng);
+        return message;
+    }
+
+    public void setList(int io) {
         try {
-            String jsonStrng = "{" +
-                    "\"id\":" + user_id +
-                    ",\"type\":" + type +"}";
-            String message = RequestHandler.sendPostRequest(
-                    "http://120.24.208.130:1501/event/query_launch", jsonStrng);
+            String message;
+            if (io == 1) { //发起的事件
+                message = setListo();
+            } else { //接受的事件
+                message = setListi();
+            }
             if (message == "false") {
                 item=new HashMap<String,Object>();
                 item.put("头像", R.drawable.icon);
@@ -117,7 +130,11 @@ public class HistoryAdapter extends BaseAdapter {
                     item.put("内容", HisList.get(i).getContent());
                     item.put("用户", nickname);
                     item.put("时间", HisList.get(i).getTime());
-                    item.put("采纳", "");
+                    if (HisList.get(i).getState() == 0) {
+                        item.put("采纳", "进行中");
+                    } else {
+                        item.put("采纳", "已结束");
+                    }
                     list.add(item);
                 }
             }
@@ -125,8 +142,6 @@ public class HistoryAdapter extends BaseAdapter {
             e.printStackTrace();
         }
     }
-
-    public void setListi() {}
 
     public List<Event> getEvent() {
         return HisList;
