@@ -235,19 +235,18 @@ public class sendsos_map extends ActionBarActivity implements BaiduMap.OnMapClic
                 return true;
             }
         });
-
-        //推送求救信息
-        thread.start();
-
-        //振动发声
-        vibandsp();
-
         //发送求救信息到后台
         try {
             sendsos();
         } catch (JSONException j) {
             j.printStackTrace();
         }
+
+        //推送求救信息
+        thread.start();
+
+        //振动发声
+        vibandsp();
         //sp = new SoundPool(10, AudioManager.STREAM_SYSTEM, 5);
         //sp.load(getApplicationContext(), R.raw.alarm, 1);
     }
@@ -594,7 +593,7 @@ public class sendsos_map extends ActionBarActivity implements BaiduMap.OnMapClic
             Log.v("sendposttest", ss1);
             Log.v("sendposttest", ss2);
             if (msg.indexOf("]") - msg.indexOf("[") == 1) {
-                 jsonString = "{\"platform\":\"android\",\"audience\":\"all\",\"notification\":{\"alert\":\"有人正在求救！\"}}";
+                 jsonString = "{\"platform\":\"android\",\"audience\":\"all\",\"notification\":{\"alert\":\"有人正在求救！事件号：" + event_id + "\"}}";
             } else {
                 msg = msg.substring(msg.indexOf("[") + 1, msg.indexOf("]"));
                 Log.v("sendposttest", msg);
@@ -603,7 +602,7 @@ public class sendsos_map extends ActionBarActivity implements BaiduMap.OnMapClic
 
                 String jsonStringPart2 = jsonStringPart1 + msg;
 
-                jsonString = jsonStringPart2 + "]},\"notification\":{\"alert\":\"有人正在求救！\"}}";
+                jsonString = jsonStringPart2 + "]},\"notification\":{\"alert\":\"有人正在求救！事件号：" + event_id + "\"}}";
                 Log.v("sendposttest", jsonString);
             }
             Log.v("sendposttest", jsonString);

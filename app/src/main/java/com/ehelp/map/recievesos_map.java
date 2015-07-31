@@ -59,6 +59,9 @@ import com.ehelp.utils.RequestHandler;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.util.Log;
+import android.content.SharedPreferences;
+
 
 public class recievesos_map extends ActionBarActivity implements BaiduMap.OnMapClickListener,
         OnGetRoutePlanResultListener {
@@ -96,11 +99,20 @@ public class recievesos_map extends ActionBarActivity implements BaiduMap.OnMapC
     //TOOLbar
     private Toolbar mToolbar;
 
+    private int event_id;
+    private int user_id;
+    private String url = "http://120.24.208.130:1501/user/event_manage";
+    private SharedPreferences sp;
+
     protected void onCreate(Bundle savedInstanceState) {
         init2();
         super.onCreate(savedInstanceState);
         SDKInitializer.initialize(getApplicationContext());
         setContentView(R.layout.activity_recievesos_map);
+
+        event_id = this.getIntent().getIntExtra("event_id", -1);
+        String s = String.valueOf(event_id);
+        Log.v("receiversostest", s);
 
         CharSequence titleLable = "路线规划";
         setTitle(titleLable);
@@ -198,6 +210,8 @@ public class recievesos_map extends ActionBarActivity implements BaiduMap.OnMapC
             }
         });
 
+        sp = this.getSharedPreferences("user_id", MODE_PRIVATE);
+        user_id = sp.getInt("user_id", -1);
     }
 
     //设置TOOLBAR
@@ -211,48 +225,23 @@ public class recievesos_map extends ActionBarActivity implements BaiduMap.OnMapC
         //noinspection SimplifiableIfStatement
         if ((id == R.id.action_settings)&&item.getTitle().toString().equals("回应")){
             item.setTitle("取消回应");
-            Eans = (EditText)findViewById(R.id.editText2);
-            ans = Eans.getText().toString();
-            init2();
-            int idcode = 12;
-            String jsonStrng = "{" +
-                    "\"id\":" + idcode + ",\"type\":2," +
-                    "\"content\":\"" + ans + "\"," +
-                    "\"longitude\":" +  loc.longitude + "," +
-                    "\"latitude\":" + loc.latitude + " " + "}";
-            String message = RequestHandler.sendPostRequest(
-                    "http://120.24.208.130:1501/event/add", jsonStrng);
-            if (message == "false") {
-                Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
-                        Toast.LENGTH_SHORT).show();
-                return false;
-            } else {
-                JSONObject jO = null;
-                try {
-                    jO = new JSONObject(message);
-                    if (jO.getInt("status") == 500) {
-                            Toast.makeText(getApplicationContext(), "提交失败",
-                                    Toast.LENGTH_SHORT).show();
-                    } else {
-                        Intent intent = new Intent(this, Home.class);
-                        startActivity(intent);
-                        recievesos_map.this.finish();
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
+            int operation = 2;
+            String send = "{\"id\":" + user_id + ",\"event_id\":"
+                    + event_id + ",\"operation\":" + operation + "}";
+            String msg = RequestHandler.sendPostRequest(
+                    url, send);
+            Log.v("receiversostest", msg);
             return true;
         }
         if ((id == R.id.action_settings)&&(item.getTitle() =="取消回应")) {
-
-            //MenuItem it =menu.findItem(R.id.action_ans);
             item.setTitle("回应");
-            //it.setIcon(.....);无法改变图标就访问http://www.dewen.io/q/5332/寻找答案。
-            //Intent intent = new Intent(this, ContactlistActivity.class);
-            //startActivity(intent);
+            int operation = 0;
+            String send = "{\"id\":" + user_id + ",\"event_id\":"
+                    + event_id + ",\"operation\":" + operation + "}";
+            String msg = RequestHandler.sendPostRequest(
+                    url, send);
+            Log.v("receiversostest", msg);
             return true;
-
         }
         return super.onOptionsItemSelected(item);
     }
