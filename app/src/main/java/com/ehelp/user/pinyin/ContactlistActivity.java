@@ -214,6 +214,7 @@ public class ContactlistActivity extends AIActionBarActivity implements RapidFlo
 
     public void getMessagePage(View view) {
         Intent intent = new Intent(this, messageActivity.class);
+        intent.putExtra("id","14");
         startActivity(intent);
     }
 

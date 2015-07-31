@@ -11,6 +11,8 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.ehelp.R;
@@ -37,6 +39,8 @@ public class MyHistory extends ActionBarActivity {
 
     //toolbar
     private Toolbar mToolbar;
+
+    private int wha = 2;//1代表全部，2代表发起，3代表接收
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,16 +75,19 @@ public class MyHistory extends ActionBarActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.all) {
             //change to all
+            wha = 1;
             return true;
         }
         //noinspection SimplifiableIfStatement
         if (id == R.id.sponsor) {
-            //change to my 
+            //change to my
+            wha = 2;
             return true;
         }
         //noinspection SimplifiableIfStatement
         if (id == R.id.accept) {
             //change to what i accepted
+            wha = 3;
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -195,7 +202,17 @@ public class MyHistory extends ActionBarActivity {
                     tv2.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
                     tv3.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
                     //添加该页面可能的事项。比如跳转之类
-                    findformyhelp();
+                    if(wha == 1){
+
+                    }
+                    if(wha == 2) {
+                        findformylaunch(1);
+//                        
+                    }
+                    if(wha == 3) {
+                        findformyreceive(1);
+
+                    }
                     break;
                 case 1:
 
@@ -203,13 +220,34 @@ public class MyHistory extends ActionBarActivity {
                     tv2.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
                     tv3.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
                     //findformySos();
+                    if(wha == 1){
 
+                    }
+                    if(wha == 2) {
+                        findformylaunch(2);
+                    }
+                    if(wha == 3) {
+                        findformyreceive(2);
+                    }
                     break;
                 case 2:
                     tv.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
                     tv2.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
                     tv3.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
                     //findformyques();
+                    if(wha == 1){
+
+                    }
+                    if(wha == 2) {
+                        findformylaunch(0);//参数0代表全部，1我发起的，2我接收的
+
+
+                        //LinearLayout lyy = (LinearLayout)findViewById(R.id.lyyyy);
+                        //lyy.addView(rlll);
+                    }
+                    if(wha == 3) {
+                        findformyreceive(0);
+                    }
                     break;
             }
 
@@ -224,11 +262,12 @@ public class MyHistory extends ActionBarActivity {
         public void onPageScrollStateChanged(int arg0) {
         }
     }
-    private void findformyhelp(){
+    private void findformylaunch(int ty){
         int id = SharedPref.getInt("user_id", -1);
+
         if(id != -1){
             jsonStrng = "{" +
-                    "\"id\":\"" + id + "\"," +"\"type\":\""+"1"+"\"}";
+                    "\"id\":" + id + "," +"\"type\":\""+ty+"\"}";
             message = RequestHandler.sendPostRequest(
                     "http://120.24.208.130:1501/event/query_launch", jsonStrng);
             if (message == "false") {
@@ -264,6 +303,54 @@ public class MyHistory extends ActionBarActivity {
             }catch (JSONException e) {
                 e.printStackTrace();
             }
+        }else{
+            Toast.makeText(getApplicationContext(), "未登录",
+                    Toast.LENGTH_SHORT).show();
+        }
+
+    }
+
+    private void findformyreceive(int ty){
+        int id = SharedPref.getInt("user_id", -1);
+        if(id != -1){
+        jsonStrng = "{" +
+                "\"id\":" + id + "," +"\"type\":\""+2+"\"}";
+        if (message == "false") {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
+                            Toast.LENGTH_SHORT).show();
+                }
+            });
+            return;
+        }
+        try{
+            JSONObject jO = new JSONObject(message);
+            if (jO.getInt("status") == 500) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        //未获取到
+                        Toast.makeText(getApplicationContext(), "未查找到相关信息",
+                                Toast.LENGTH_SHORT).show();
+                    }
+                });
+//                    Toast.makeText(getApplicationContext(), "用户未注册",
+//                            Toast.LENGTH_SHORT).show();
+                return;
+            }else {
+                //当获取到
+                Toast.makeText(getApplicationContext(), "萌萌哒",
+                        Toast.LENGTH_SHORT).show();
+                //根据返回的type值与ty来比较，然后决定显示哪些
+
+
+            }
+
+        }catch (JSONException e) {
+            e.printStackTrace();
+        }
         }else{
             Toast.makeText(getApplicationContext(), "未登录",
                     Toast.LENGTH_SHORT).show();

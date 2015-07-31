@@ -2,6 +2,7 @@ package com.ehelp.user.pinyin;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
@@ -14,6 +15,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ehelp.R;
+import com.ehelp.utils.RequestHandler;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class messageActivity extends ActionBarActivity {
 
     private RelativeLayout myLay = null;
@@ -22,6 +28,14 @@ public class messageActivity extends ActionBarActivity {
     //TOOLbar
     private Toolbar mToolbar;
     private TextView Setname;
+
+    private int type = 0;//传进来的参数，用户的类型，0非好友，1好友，2紧急联系人
+    private int idd;//要查看的用户的id
+
+//与后台联系的变量
+    private String message;
+    private String jsonStrng;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,6 +47,16 @@ public class messageActivity extends ActionBarActivity {
         setSupportActionBar(mToolbar);
         TextView tvv =(TextView) findViewById(R.id.titlefortoolbar);
         tvv.setText("详细资料");
+
+        Intent intent = getIntent();
+        type = intent.getIntExtra("type",0);//默认非好友。1表示好友，2表示紧急联系人
+        idd = intent.getIntExtra("id",-1);
+
+        //根据用户类型初始化页面
+        init();
+
+        //根据用户ID显示信息详情
+        show123();
 
         //click on set name设置备注名
         myLay = (RelativeLayout) findViewById(R.id.detail_setname);
@@ -89,10 +113,104 @@ public class messageActivity extends ActionBarActivity {
             }
         });
     }
+
+    protected void init(){
+        if(type == 0){
+            Button btn = (Button)findViewById(R.id.addexcontact);
+            btn.setVisibility(View.INVISIBLE);
+            Button btn2 = (Button)findViewById(R.id.delete_contact);
+            btn2.setText("添加为好友");
+        }else if(type == 1){
+
+        }else if(type == 2){
+            Button btn = (Button)findViewById(R.id.addexcontact);
+            btn.setText("删除紧急联系人");
+            Button btn2 = (Button)findViewById(R.id.delete_contact);
+            btn2.setVisibility(View.INVISIBLE);
+        }else {
+            Toast.makeText(getApplicationContext(), "参数传入错误",
+                    Toast.LENGTH_SHORT).show();
+        }
+
+    }
+
+    protected void show123(){
+        if(idd != -1){
+            jsonStrng = "{" +
+                    "\"id\":" + idd + "}";
+            message = RequestHandler.sendPostRequest(
+                    "http://120.24.208.130:1501/user/get_information", jsonStrng);
+            if (message == "false") {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
+                                Toast.LENGTH_SHORT).show();
+                    }
+                });
+                return;
+            }
+            try{
+                JSONObject jO = new JSONObject(message);
+                if (jO.getInt("status") == 500) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(getApplicationContext(), "查询数据库错误",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    });
+//                    Toast.makeText(getApplicationContext(), "用户未注册",
+//                            Toast.LENGTH_SHORT).show();
+                    return;
+                }else {
+                    Toast.makeText(getApplicationContext(), "查询数据库成功",
+                            Toast.LENGTH_SHORT).show();
+                    //修改显示的用户名
+                    TextView tv =(TextView) findViewById(R.id.detail_name2);
+                    if(jO.getString("nickname") !="") {
+                        tv.setText(jO.getString("nickname"));
+                    }else {
+                        tv.setText(jO.getString("name"));
+                    }
+                    //修改显示的手机号
+                    TextView tv1 =(TextView) findViewById(R.id.detail_phone2);
+                    tv1.setText(jO.getString("phone"));
+                    //修改显示的备注姓名
+                    TextView tv2 =(TextView) findViewById(R.id.detail_setname2);
+                    tv2.setText("");
+                    //修改显示的性别
+                    TextView tv3 =(TextView) findViewById(R.id.detail_file2);
+                    if(jO.getInt("gender")==1) {
+                        tv3.setText("男");
+                    }
+                    //修改显示的所在地
+                    TextView tv4 =(TextView) findViewById(R.id.detail_loacl2);
+                    tv4.setText(jO.getString("location"));
+                    //修改显示的年龄
+                    TextView tv5 =(TextView) findViewById(R.id.detail_age2);
+                    tv5.setText(String.valueOf(jO.getInt("age")));
+                    return;
+                }
+
+            }catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }else {
+            Toast.makeText(getApplicationContext(), "无此用户",
+                    Toast.LENGTH_SHORT).show();
+        }
+    }
+
     //add ex contact
     protected void add_dialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("是否添加为紧急联系人？");
+        if(type == 2){
+            builder.setMessage("是否删除紧急联系人（保留好友）？");
+
+        }else {
+            builder.setMessage("是否添加为紧急联系人？");
+        }
         builder.setPositiveButton("确认", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -111,7 +229,11 @@ public class messageActivity extends ActionBarActivity {
     //删除好友
     protected void delete_dialog() {
         AlertDialog.Builder delete = new AlertDialog.Builder(this);
-        delete.setMessage("确定删除此好友？");
+        if(type == 0){
+            delete.setMessage("确定添加为好友？");
+        }else {
+            delete.setMessage("确定删除此好友？");
+        }
         delete.setPositiveButton("确认", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -128,20 +250,5 @@ public class messageActivity extends ActionBarActivity {
         delete.create().show();
     }
 
-    /*/toolbar设置 此页面无需右上角按钮
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_message, menu);
-        return true;
-    }
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-    //设置完毕*/
+
 }
