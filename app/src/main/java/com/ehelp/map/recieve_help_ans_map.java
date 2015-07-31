@@ -66,6 +66,9 @@ import com.wangjie.rapidfloatingactionbutton.RapidFloatingActionLayout;
 import com.wangjie.rapidfloatingactionbutton.contentimpl.labellist.RFACLabelItem;
 import com.wangjie.rapidfloatingactionbutton.contentimpl.labellist.RapidFloatingActionContentLabelList;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -218,16 +221,39 @@ public class recieve_help_ans_map extends AIActionBarActivity implements BaiduMa
 
     }
     public void setView(){
-        SharedPreferences sharedPref;
-        String nickname;
-        sharedPref = this.getSharedPreferences("user_id", Context.MODE_PRIVATE);
-        nickname = sharedPref.getString("nickname", "");
+        //获取nickname
+        final int user_id = m_event.getLauncherId();
+        String nickname = "";
+        String jsonStrng = "{" +
+                "\"id\":" + user_id + "}";
+        final String message = RequestHandler.sendPostRequest(
+                "http://120.24.208.130:1501/user/get_information", jsonStrng);
+        if (message == "false") {
+            Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
+                    Toast.LENGTH_SHORT).show();
+        }   else {
+            try {
+                JSONObject jO = new JSONObject(message);
+                nickname = jO.getString("nickname");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
         TextView tmp = (TextView)findViewById(R.id.user_name);
         tmp.setText(nickname);
         tmp = (TextView)findViewById(R.id.Title);
         tmp.setText(m_event.getTitle());
         tmp = (TextView)findViewById(R.id.Content);
         tmp.setText(m_event.getContent());
+
+        SharedPreferences sharedPref;
+        int user2;
+        sharedPref = this.getSharedPreferences("user_id", Context.MODE_PRIVATE);
+        user2 = sharedPref.getInt("user_id", -1);
+        if (user_id == user2){
+            //add button
+        }
     }
     /**
      * 发起路线规划搜索示例
