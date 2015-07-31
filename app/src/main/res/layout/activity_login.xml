@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@drawable/background_2"
     android:weightSum="1">
     <!--<include layout="@layout/toolbar"/>-->
 
@@ -78,7 +79,7 @@
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:id="@+id/imageView2"
-
+            android:background="@drawable/icon_log"
 
             android:layout_alignParentTop="true"
             android:layout_toStartOf="@+id/button1"
