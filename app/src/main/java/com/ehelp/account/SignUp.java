@@ -56,7 +56,7 @@ public class SignUp extends ActionBarActivity implements OnClickListener {
     }
 
     private void init() {
-        // 使用后台线程运行网络连接功能
+        // 使用严谨模式
         StrictMode.setThreadPolicy(
                 new StrictMode.ThreadPolicy.Builder().
                         detectDiskReads().detectDiskWrites().detectNetwork().penaltyLog().build());
