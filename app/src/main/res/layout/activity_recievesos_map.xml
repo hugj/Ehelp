@@ -38,11 +38,11 @@
             android:layout_above="@+id/drive"
             android:layout_alignEnd="@+id/drive" />
 
-        <EditText
+        <TextView
             android:layout_width="fill_parent"
             android:layout_height="100sp"
             android:inputType="textPersonName"
-            android:hint="已经去世了"
+            android:hint="SOS"
             android:ems="10"
             android:id="@+id/editText2"
             android:layout_alignParentBottom="true"
@@ -56,15 +56,15 @@
             android:layout_marginTop="330sp"
             android:layout_marginLeft="10sp"
             android:layout_alignParentStart="true"
-            android:src="@drawable/ic_launcher" />
+            android:src="@drawable/icon" />
 
         <TextView
             android:layout_width="70sp"
             android:layout_height="30sp"
-            android:text="你大爷"
-            android:id="@+id/textView"
+            android:text="悟能"
+            android:id="@+id/SOSusername"
             android:layout_alignTop="@+id/imageView"
-            android:layout_marginRight="240sp"
+            android:layout_marginRight="200sp"
             android:layout_marginTop="20sp"
             android:layout_alignParentEnd="true" />
 
@@ -72,7 +72,7 @@
             android:layout_width="100sp"
             android:layout_height="20sp"
             android:text="这里是天堂"
-            android:id="@+id/textView2"
+            android:id="@+id/SOSlocation"
             android:layout_marginRight="0sp"
             android:layout_marginTop="70sp"
             android:layout_alignTop="@+id/imageView"
@@ -82,10 +82,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="2005年7月18日   13点25分37秒"
-            android:id="@+id/textView3"
+            android:id="@+id/SOStime"
             android:layout_marginBottom = "80sp"
             android:layout_alignBottom="@+id/editText2"
-            android:layout_alignEnd="@+id/textView2" />
+            android:layout_alignEnd="@+id/SOSlocation" />
 
     </RelativeLayout>
 
