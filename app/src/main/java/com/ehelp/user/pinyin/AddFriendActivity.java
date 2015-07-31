@@ -5,11 +5,8 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,11 +24,14 @@ public class AddFriendActivity extends ActionBarActivity {
 
     //toolbar
     private Toolbar mToolbar;
-    String phone="";//手机号码
+    //用于后台数据交互
     private String message;
     private String jsonStrng;
-    private int idd;
+    //用于获取当前登录id
     private SharedPreferences SharedPref;
+
+    private int idd;//查询的用户ID
+    String phone="";//要查询的手机号码
 
 
     @Override
@@ -44,20 +44,20 @@ public class AddFriendActivity extends ActionBarActivity {
         setSupportActionBar(mToolbar);
         TextView tvv =(TextView) findViewById(R.id.titlefortoolbar);
         tvv.setText("添加好友");
+        //toolbar设置结束
 
+        //获取当前登录用户id
         SharedPref = this.getSharedPreferences("user_id", MODE_PRIVATE);
-
-
-        //return str1;
     }
+
     /*
     查询按钮监听事件：从后台获取用户信息放至该页面，
      */
-//public void chaxun(View v){}
     public void chaxun(View v){
         EditText editText1 =(EditText)findViewById(R.id.editText_comment);
         phone=editText1.getText().toString();
-        if(!phone.isEmpty()) {
+
+        if(!phone.isEmpty()) {//当输入的手机号不为空
             jsonStrng = "{" +
                     "\"phone\":\"" + phone + "\"}";
             message = RequestHandler.sendPostRequest(
@@ -83,17 +83,15 @@ public class AddFriendActivity extends ActionBarActivity {
                                     Toast.LENGTH_SHORT).show();
                         }
                     });
-//                    Toast.makeText(getApplicationContext(), "用户未注册",
-//                            Toast.LENGTH_SHORT).show();
                     return;
                 }else {
-                    Toast.makeText(getApplicationContext(), "萌萌哒",
+                    Toast.makeText(getApplicationContext(), "查询成功",
                             Toast.LENGTH_SHORT).show();
-                    //LinearLayout tvv =(LinearLayout) findViewById(R.id.parently);
+                    //使隐藏的页卡显示
                     RelativeLayout rlll = (RelativeLayout) findViewById(R.id.rll);
                     rlll.setVisibility(View.VISIBLE);
-                    //tvv.addView(rlll);
-                    //修改显示的名字
+
+                    //修改页卡中显示的名字
                     TextView tv =(TextView) findViewById(R.id.name);
                     if(jO.getString("nickname") !="") {
                         tv.setText(jO.getString("nickname"));
@@ -108,8 +106,8 @@ public class AddFriendActivity extends ActionBarActivity {
                     if(jO.getInt("gender")==1) {
                         tv2.setText("性别：男");
                     }
+                    //获取查询的用户的id
                     idd = jO.getInt("id");
-
                 }
 
             }catch (JSONException e) {
@@ -124,7 +122,7 @@ public class AddFriendActivity extends ActionBarActivity {
     }
 
     public void addfriend(View v){
-        //int id =0;//让这个id等于当前用户的id就好了。
+        //这个id等于当前登录用户的id
         int id = SharedPref.getInt("user_id", -1);
 
         jsonStrng = "{" +
@@ -150,16 +148,14 @@ public class AddFriendActivity extends ActionBarActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        //未获取到
+                        //返回500
                         Toast.makeText(getApplicationContext(), "添加失败",
                                 Toast.LENGTH_SHORT).show();
                     }
                 });
-//                    Toast.makeText(getApplicationContext(), "用户未注册",
-//                            Toast.LENGTH_SHORT).show();
                 return;
             }else {
-                //当获取到
+                //返回200
                 Toast.makeText(getApplicationContext(), "添加成功",
                         Toast.LENGTH_SHORT).show();
             }
