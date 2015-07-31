@@ -1,18 +1,22 @@
 package com.ehelp.map;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.os.Vibrator;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ZoomControls;
 
 import com.baidu.location.BDLocation;
@@ -34,20 +38,43 @@ import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.map.OverlayOptions;
 import com.baidu.mapapi.model.LatLng;
 import com.baidu.mapapi.model.LatLngBounds;
+import com.baidu.mapapi.overlayutil.DrivingRouteOverlay;
+import com.baidu.mapapi.overlayutil.OverlayManager;
+import com.baidu.mapapi.overlayutil.WalkingRouteOverlay;
+import com.baidu.mapapi.search.core.RouteLine;
+import com.baidu.mapapi.search.core.SearchResult;
+import com.baidu.mapapi.search.route.DrivingRoutePlanOption;
+import com.baidu.mapapi.search.route.DrivingRouteResult;
+import com.baidu.mapapi.search.route.OnGetRoutePlanResultListener;
+import com.baidu.mapapi.search.route.PlanNode;
+import com.baidu.mapapi.search.route.RoutePlanSearch;
+import com.baidu.mapapi.search.route.TransitRouteResult;
+import com.baidu.mapapi.search.route.WalkingRoutePlanOption;
+import com.baidu.mapapi.search.route.WalkingRouteResult;
 import com.ehelp.R;
 import com.ehelp.utils.RequestHandler;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
+//手机振动与手机发声
+import android.os.Vibrator;
+//import android.media.SoundPool;
+//import android.media.AudioManager;
+//统计代码
+import cn.jpush.android.api.JPushInterface;
+//极光推送
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import javax.net.ssl.HttpsURLConnection;
 import java.net.URL;
+//严苛模式
+import android.os.StrictMode;
 
 import javax.net.ssl.HttpsURLConnection;
-
+import com.ehelp.utils.RequestHandler;
+import android.util.Log;
 import cn.jpush.android.api.JPushInterface;
+import org.json.JSONObject;
+import org.json.JSONException;
 
 //手机振动与手机发声
 //import android.media.SoundPool;
@@ -156,22 +183,17 @@ public class sendsos_map extends ActionBarActivity implements BaiduMap.OnMapClic
 
         //-----------------------
 
+        //发送求救信息到后台
+        try {
+            sendsos();
+        } catch (JSONException j) {
+            j.printStackTrace();
+        }
 
         //推送求救信息
         thread.start();
-
         //振动发声
         vibandsp();
-
-        //发送求救信息到后台
-
-        new Thread(runnable).start();
-
-//        try {
-//            sendsos();
-//        } catch (JSONException j) {
-//            j.printStackTrace();
-//        }
         //sp = new SoundPool(10, AudioManager.STREAM_SYSTEM, 5);
         //sp.load(getApplicationContext(), R.raw.alarm, 1);
     }
@@ -422,7 +444,7 @@ public class sendsos_map extends ActionBarActivity implements BaiduMap.OnMapClic
             Log.v("sendposttest", ss1);
             Log.v("sendposttest", ss2);
             if (msg.indexOf("]") - msg.indexOf("[") == 1) {
-                jsonString = "{\"platform\":\"android\",\"audience\":\"all\",\"notification\":{\"alert\":\"有人正在求救！\"}}";
+                jsonString = "{\"platform\":\"android\",\"audience\":\"all\",\"notification\":{\"alert\":\"有人正在求救！事件号：" + event_id + "\"}}";
             } else {
                 msg = msg.substring(msg.indexOf("[") + 1, msg.indexOf("]"));
                 Log.v("sendposttest", msg);
@@ -431,7 +453,7 @@ public class sendsos_map extends ActionBarActivity implements BaiduMap.OnMapClic
 
                 String jsonStringPart2 = jsonStringPart1 + msg;
 
-                jsonString = jsonStringPart2 + "]},\"notification\":{\"alert\":\"有人正在求救！\"}}";
+                jsonString = jsonStringPart2 + "]},\"notification\":{\"alert\":\"有人正在求救！事件号：" + event_id + "\"}}";
                 Log.v("sendposttest", jsonString);
             }
             Log.v("sendposttest", jsonString);
@@ -482,15 +504,25 @@ public class sendsos_map extends ActionBarActivity implements BaiduMap.OnMapClic
         String tests1 = String.valueOf(id);
         Log.v("sendsostest", tests1);
 
-        String send = "{\"id\":" + id + ",\"type\":" + type
+        String ss1 = String.valueOf(longitude);
+        String ss2 = String.valueOf(latitude);
+        Log.v("sendsostest", ss1);
+        Log.v("sendsostest", ss2);
+
+        /*String send = "{\"id\":" + id + ",\"type\":" + type
                 + ",\"title\":\"sos\",\"longitude\":" + longitude
-                + ",\"latitude\":" + latitude +"}";
+                + ",\"latitude\":" + latitude +"}";*/
+        String send = "{\"id\":" + id + ",\"type\":" + type
+                + ",\"title\":\"sos\"}";
 
         String msg = RequestHandler.sendPostRequest(
                 url, send);
         JSONObject jo = new JSONObject(msg);
-        Log.v("sendsostest", msg);
-        event_id =  jo.getInt("event_id");
+        Log.v("sendsostest2", msg);
+        JSONObject value = jo.getJSONObject("value");
+        event_id = value.getInt("event_id");
+        String s = String.valueOf(event_id);
+        Log.v("sendposttest1", s);
         String tests2 = String.valueOf(event_id);
         Log.v("sendsostest", tests2);
     }
@@ -502,7 +534,8 @@ public class sendsos_map extends ActionBarActivity implements BaiduMap.OnMapClic
         int id = sp.getInt("user_id", -1);
         String tests1 = String.valueOf(id);
         Log.v("sendsostest", tests1);
-
+        String ss1 = String.valueOf(event_id);
+        Log.v("sendsostest", ss1);
         String send = "{\"id\":" + id + ",\"event_id\":" + event_id + "}";
 
         String msg = RequestHandler.sendPostRequest(
