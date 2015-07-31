@@ -1,6 +1,5 @@
 package com.ehelp.receive;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -52,7 +51,7 @@ public class AddAns extends AIActionBarActivity implements RapidFloatingActionCo
     private SharedPreferences sharedPref;
 
     // submit()
-    private int eventId;
+    private int event_id;
     private EditText Equestion;
     private EditText Edesc_ques;
     private EditText Eshare_money;
@@ -64,7 +63,7 @@ public class AddAns extends AIActionBarActivity implements RapidFloatingActionCo
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();
-        eventId = intent.getIntExtra(QuestionDetail.EXTRA_MESSAGE, -1);
+        event_id = intent.getIntExtra(QuestionDetail.EXTRA_MESSAGE, -1);
         init();
 
         ActivityCollector.getInstance().addActivity(this);
@@ -188,7 +187,7 @@ public class AddAns extends AIActionBarActivity implements RapidFloatingActionCo
             user_id = sharedPref.getInt("user_id", -1);
             String jsonStrng = "{" +
                     "\"author_id\":" + user_id +
-                    ",\"event_id\":" + 8 +
+                    ",\"event_id\":" + event_id +
                     ",\"content\":\"" + ans + "\"}";
 
             String message = RequestHandler.sendPostRequest(

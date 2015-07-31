@@ -87,12 +87,33 @@ public class AnsAdapter extends BaseAdapter {
                 String st = j1.getString("answer_list");
                 answerList = gson.fromJson(st, new TypeToken<List<answer>>(){}.getType());
                 for (int i = 0; i < answerList.size(); i++) {
+                    //获取昵称
+                    final int user_id = answerList.get(i).getAuthoridId();
+                    String nickname = "";
+                    String jsonStrng1 = "{" +
+                            "\"id\":" + user_id + "}";
+                    final String message1 = RequestHandler.sendPostRequest(
+                            "http://120.24.208.130:1501/user/get_information", jsonStrng1);
+                    if (message1 == "false") {
+                        nickname = "联网失败找不到昵称了。。。";
+                    }   else {
+                        try {
+                            JSONObject jO = new JSONObject(message1);
+                            nickname = jO.getString("nickname");
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    //添加条目
                     item=new HashMap<String,Object>();
                     item.put("头像", R.drawable.icon);
                     item.put("内容", answerList.get(i).getContent());
-                    item.put("用户", answerList.get(i).getAuthoridId());
+                    item.put("用户", nickname);
                     item.put("时间", answerList.get(i).getTime());
-                    item.put("采纳", answerList.get(i).getIs_adopted());
+                    if (answerList.get(i).getIs_adopted() == 1) {
+                        item.put("采纳", "被采纳答案");
+                    }
+                    item.put("采纳", "");
                     list.add(item);
                 }
             }
@@ -141,19 +162,19 @@ public class AnsAdapter extends BaseAdapter {
 
         //线性布局1
         LinearLayout l11=new LinearLayout(context);
-        l11.setLayoutParams(new LinearLayout.LayoutParams(-1, -2));
+        l11.setLayoutParams(new LinearLayout.LayoutParams(300, 100));
         l11.setOrientation(LinearLayout.VERTICAL);
         l11.addView(user);
         l11.addView(time);
         //线性布局2
         LinearLayout l12=new LinearLayout(context);
-        l12.setLayoutParams(new LinearLayout.LayoutParams(-1, -2));
+        l12.setLayoutParams(new LinearLayout.LayoutParams(400, -2));
         l12.setOrientation(LinearLayout.HORIZONTAL);
         l12.addView(iv);
         l12.addView(l11);
         //相对布局1
         RelativeLayout rl1=new RelativeLayout(context);
-        rl1.setLayoutParams(new RelativeLayout.LayoutParams(-1,-2));
+        rl1.setLayoutParams(new RelativeLayout.LayoutParams(700,-2));
         rl1.addView(l12);
         rl1.addView(Reward);
         //返回视图
