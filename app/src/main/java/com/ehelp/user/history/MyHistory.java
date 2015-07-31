@@ -68,7 +68,7 @@ public class MyHistory extends AIActionBarActivity implements RapidFloatingActio
     //toolbar
     private Toolbar mToolbar;
 
-    private int wha = 2;//1代表全部，2代表发起，3代表接收
+    private int wha = 1;//1代表发起，2代表接收
     public final static String EXTRA_MESSAGE = "com.ehelp.user.history.MESSAGE";
 
     @Override
