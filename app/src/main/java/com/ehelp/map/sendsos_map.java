@@ -73,19 +73,12 @@ import org.json.JSONObject;
 import org.json.JSONException;
 
 
-public class sendsos_map extends ActionBarActivity implements BaiduMap.OnMapClickListener,
-        OnGetRoutePlanResultListener {
+public class sendsos_map extends ActionBarActivity implements BaiduMap.OnMapClickListener{
 
-    //浏览路线节点相关
-    RouteLine route = null;
-    OverlayManager routeOverlay = null;
-    boolean useDefaultIcon = false;
-    PlanNode stNode = null;
 
     MapView mMapView = null;    // map View
     BaiduMap mBaidumap = null;
-    //搜索相关
-    RoutePlanSearch mSearch = null;    // 搜索模块，也可去掉地图模块独立使用
+
 
     //定位相关
     LocationClient mLocClient;
@@ -97,6 +90,8 @@ public class sendsos_map extends ActionBarActivity implements BaiduMap.OnMapClic
     private Marker mMarker2;
     private Marker mMarker3;
     private Marker mMarker4;
+    private Marker mMarker5;
+    private Marker mMarker6;
     private InfoWindow mInfoWindow;
 
     //经纬度
@@ -110,7 +105,7 @@ public class sendsos_map extends ActionBarActivity implements BaiduMap.OnMapClic
 
     //Toolbar
     private Toolbar mToolbar;
-    
+
     //振动发声定义
     private Button button7;
     //private SoundPool sp;
@@ -135,8 +130,6 @@ public class sendsos_map extends ActionBarActivity implements BaiduMap.OnMapClic
                 detectLeakedSqlLiteObjects().detectLeakedClosableObjects().
                 penaltyLog().penaltyDeath().build());
 
-        CharSequence titleLable = "路线规划";
-        setTitle(titleLable);
         // 初始化地图
         mMapView = (MapView) findViewById(R.id.map);
         mBaidumap = mMapView.getMap();
@@ -162,9 +155,6 @@ public class sendsos_map extends ActionBarActivity implements BaiduMap.OnMapClic
         }
         // 地图点击事件处理
         mBaidumap.setOnMapClickListener(this);
-        // 初始化搜索模块，注册事件监听
-        mSearch = RoutePlanSearch.newInstance();
-        mSearch.setOnGetRoutePlanResultListener(this);
 
         // 定位相关
         mBaidumap.setMyLocationEnabled(true);
@@ -180,73 +170,19 @@ public class sendsos_map extends ActionBarActivity implements BaiduMap.OnMapClic
 
         //-----------------------
 
-        mBaidumap.setOnMarkerClickListener(new BaiduMap.OnMarkerClickListener() {
-            public boolean onMarkerClick(final Marker marker) {
-                Button button = new Button(getApplicationContext());
-                button.setBackgroundResource(R.drawable.popup);
-                InfoWindow.OnInfoWindowClickListener listener = null;
-                if (marker == mMarker1) {
-                    button.setText("这里是跳转");
-                    button.setTextColor(Color.BLACK);
-                    /*这里是跳转button
-                    listener = new InfoWindow.OnInfoWindowClickListener() {
-                        public void onInfoWindowClick() {
-                            LatLng ll = marker.getPosition();
-                            LatLng llNew = new LatLng(ll.latitude + 0.005,
-                                    ll.longitude + 0.005);
-                            marker.setPosition(llNew);
-                            mBaidumap.hideInfoWindow();
-                        }
-                    };
-                    */
-                    LatLng ll = marker.getPosition();
-                    mInfoWindow = new InfoWindow(BitmapDescriptorFactory.fromView(button), ll, -47, listener);
-                    mBaidumap.showInfoWindow(mInfoWindow);
-                } else if (marker == mMarker2) {
-                    button.setText("这里是跳转");
-                    button.setTextColor(Color.BLACK);
-                    /*这里是跳转button
-                    button.setOnClickListener(new View.OnClickListener() {
-                        public void onClick(View v) {
-                            marker.setIcon(bd);
-                            mBaiduMap.hideInfoWindow();
-                        }
-
-                    });
-                    */
-                    LatLng ll = marker.getPosition();
-                    mInfoWindow = new InfoWindow(button, ll, -47);
-                    mBaidumap.showInfoWindow(mInfoWindow);
-                } else if (marker == mMarker3) {
-                    button.setText("这里是跳转");
-                    button.setTextColor(Color.BLACK);
-                    /*这里是跳转button
-                    button.setOnClickListener(new View.OnClickListener() {
-                        public void onClick(View v) {
-                            marker.remove();
-                            mBaidumap.hideInfoWindow();
-                        }
-                    });
-                    */
-                    LatLng ll = marker.getPosition();
-                    mInfoWindow = new InfoWindow(button, ll, -47);
-                    mBaidumap.showInfoWindow(mInfoWindow);
-                }
-                return true;
-            }
-        });
-        //发送求救信息到后台
-        try {
-            sendsos();
-        } catch (JSONException j) {
-            j.printStackTrace();
-        }
 
         //推送求救信息
         thread.start();
 
         //振动发声
         vibandsp();
+
+        //发送求救信息到后台
+        try {
+            sendsos();
+        } catch (JSONException j) {
+            j.printStackTrace();
+        }
         //sp = new SoundPool(10, AudioManager.STREAM_SYSTEM, 5);
         //sp.load(getApplicationContext(), R.raw.alarm, 1);
     }
@@ -256,118 +192,12 @@ public class sendsos_map extends ActionBarActivity implements BaiduMap.OnMapClic
      *
      * @param v
      */
-    public void SearchButtonProcess(View v) {
-        //重置浏览节点的路线数据
-        route = null;
-        mBaidumap.clear();
-        // 处理搜索按钮响应
-        init();
-        LatLng pt2 = new LatLng(23.03777, 113.496627); //LatLng代表地图上经纬度提供的位置
-        PlanNode enNode = PlanNode.withLocation(pt2);
-        BitmapDescriptor bd = BitmapDescriptorFactory.fromResource(R.drawable.icon_gcoding);
-        OverlayOptions o2 = new MarkerOptions().icon(bd).position(pt2);
-        mBaidumap.addOverlay(o2);
-
-
-        // 实际使用中请对起点终点城市进行正确的设定
-        if (v.getId() == R.id.drive) {
-            mSearch.drivingSearch((new DrivingRoutePlanOption())
-                    .from(stNode)
-                    .to(enNode));
-        } else if (v.getId() == R.id.walk) {
-            mSearch.walkingSearch((new WalkingRoutePlanOption())
-                    .from(stNode)
-                    .to(enNode));
-        }
-    }
 
     /**
      * 切换路线图标，刷新地图使其生效
      * 注意： 起终点图标使用中心对齐.
      */
 
-
-    @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-    }
-
-    @Override
-    public void onGetWalkingRouteResult(WalkingRouteResult result) {
-        if (result == null || result.error != SearchResult.ERRORNO.NO_ERROR) {
-            Toast.makeText(sendsos_map.this, "抱歉，未找到结果", Toast.LENGTH_SHORT).show();
-        }
-        if (result.error == SearchResult.ERRORNO.AMBIGUOUS_ROURE_ADDR) {
-            //起终点或途经点地址有岐义，通过以下接口获取建议查询信息
-            //result.getSuggestAddrInfo()
-            return;
-        }
-        if (result.error == SearchResult.ERRORNO.NO_ERROR) {
-            route = result.getRouteLines().get(0);
-            WalkingRouteOverlay overlay = new MyWalkingRouteOverlay(mBaidumap);
-            mBaidumap.setOnMarkerClickListener(overlay);
-            routeOverlay = overlay;
-            overlay.setData(result.getRouteLines().get(0));
-            overlay.addToMap();
-            overlay.zoomToSpan();
-        }
-
-    }
-
-    @Override
-    public void onGetTransitRouteResult(TransitRouteResult result) {}
-
-    @Override
-    public void onGetDrivingRouteResult(DrivingRouteResult result) {
-        if (result == null || result.error != SearchResult.ERRORNO.NO_ERROR) {
-            Toast.makeText(sendsos_map.this, "抱歉，未找到结果", Toast.LENGTH_SHORT).show();
-        }
-        if (result.error == SearchResult.ERRORNO.AMBIGUOUS_ROURE_ADDR) {
-            //起终点或途经点地址有岐义，通过以下接口获取建议查询信息
-            //result.getSuggestAddrInfo()
-            return;
-        }
-        if (result.error == SearchResult.ERRORNO.NO_ERROR) {
-            route = result.getRouteLines().get(0);
-            DrivingRouteOverlay overlay = new MyDrivingRouteOverlay(mBaidumap);
-            routeOverlay = overlay;
-            mBaidumap.setOnMarkerClickListener(overlay);
-            overlay.setData(result.getRouteLines().get(0));
-            overlay.addToMap();
-            overlay.zoomToSpan();
-        }
-    }
-
-    //定制RouteOverly
-    private class MyDrivingRouteOverlay extends DrivingRouteOverlay {
-
-        public MyDrivingRouteOverlay(BaiduMap baiduMap) {
-            super(baiduMap);
-        }
-    }
-
-    private class MyWalkingRouteOverlay extends WalkingRouteOverlay {
-
-        public MyWalkingRouteOverlay(BaiduMap baiduMap) {
-            super(baiduMap);
-        }
-
-        @Override
-        public BitmapDescriptor getStartMarker() {
-            if (useDefaultIcon) {
-                return BitmapDescriptorFactory.fromResource(R.drawable.icon_st);
-            }
-            return null;
-        }
-
-        @Override
-        public BitmapDescriptor getTerminalMarker() {
-            if (useDefaultIcon) {
-                return BitmapDescriptorFactory.fromResource(R.drawable.icon_en);
-            }
-            return null;
-        }
-    }
 
     @Override
     public void onMapClick(LatLng point) {
@@ -422,10 +252,12 @@ public class sendsos_map extends ActionBarActivity implements BaiduMap.OnMapClic
     //摧毁页面
     @Override
     protected void onDestroy() {
-        mSearch.destroy();
         mMapView.onDestroy();
         vib.cancel();
         cancelsos();
+        if (mLocClient != null) {
+            mLocClient.stop();
+        }
         super.onDestroy();
     }
 
@@ -451,44 +283,52 @@ public class sendsos_map extends ActionBarActivity implements BaiduMap.OnMapClic
                 longitude = location.getLatitude();
                 latitude = location.getLatitude();
             }
-            LatLng pt1 = new LatLng(location.getLatitude(),
-                    location.getLongitude());
-            stNode = PlanNode.withLocation(pt1);
 
             //获取当前经纬度
             longitude = location.getLongitude();
             latitude = location.getLatitude();
         }
-        public void onReceivePoi(BDLocation poiLocation) {}
     }
 
     public void init() {
         LatLngBounds.Builder builder = new LatLngBounds.Builder();
         // 暂时提供三个点标注在地图上作为例子
-        LatLng pt4 = new LatLng(23.063309, 113.394004);
-        LatLng pt2 = new LatLng(23.062578, 113.410821);
-        LatLng pt3 = new LatLng(23.045286, 113.405934);
+        LatLng pt1 = new LatLng(23.063309, 113.394004);
+        LatLng pt2 = new LatLng(23.052578, 113.410821);
+        LatLng pt3 = new LatLng(23.075286, 113.425934);
+        LatLng pt4 = new LatLng(23.055286, 113.435934);
+        LatLng pt5 = new LatLng(23.045286, 113.415934);
+        LatLng pt6 = new LatLng(23.245286, 113.435934);
 
         BitmapDescriptor bd = BitmapDescriptorFactory.fromResource(R.drawable.icon_gcoding);
-        OverlayOptions o1 = new MarkerOptions().icon(bd).position(pt4);
+        OverlayOptions o1 = new MarkerOptions().icon(bd).position(pt1);
         OverlayOptions o2 = new MarkerOptions().icon(bd).position(pt2);
         OverlayOptions o3 = new MarkerOptions().icon(bd).position(pt3);
+        OverlayOptions o4 = new MarkerOptions().icon(bd).position(pt4);
+        OverlayOptions o5 = new MarkerOptions().icon(bd).position(pt5);
+        OverlayOptions o6 = new MarkerOptions().icon(bd).position(pt6);
 
         mBaidumap.addOverlay(o1);
         mBaidumap.addOverlay(o2);
         mBaidumap.addOverlay(o3);
+        mBaidumap.addOverlay(o4);
+        mBaidumap.addOverlay(o5);
+        mBaidumap.addOverlay(o6);
 
-        builder.include(pt4);
+        builder.include(pt1);
         builder.include(pt2);
         builder.include(pt3);
+        builder.include(pt4);
+        builder.include(pt5);
+        builder.include(pt6);
 
-        LatLng pt5 = new LatLng(23.03777, 113.496627);
-        OverlayOptions o5 = new MarkerOptions().icon(bd).position(pt5);
-        mBaidumap.addOverlay(o5);
 
         mMarker1 = (Marker) (mBaidumap.addOverlay(o1));
         mMarker2 = (Marker) (mBaidumap.addOverlay(o2));
         mMarker3 = (Marker) (mBaidumap.addOverlay(o3));
+        mMarker4 = (Marker) (mBaidumap.addOverlay(o3));
+        mMarker5 = (Marker) (mBaidumap.addOverlay(o3));
+        mMarker6 = (Marker) (mBaidumap.addOverlay(o3));
     }
 
     //开始振动发声
@@ -593,7 +433,7 @@ public class sendsos_map extends ActionBarActivity implements BaiduMap.OnMapClic
             Log.v("sendposttest", ss1);
             Log.v("sendposttest", ss2);
             if (msg.indexOf("]") - msg.indexOf("[") == 1) {
-                 jsonString = "{\"platform\":\"android\",\"audience\":\"all\",\"notification\":{\"alert\":\"有人正在求救！事件号：" + event_id + "\"}}";
+                jsonString = "{\"platform\":\"android\",\"audience\":\"all\",\"notification\":{\"alert\":\"有人正在求救！\"}}";
             } else {
                 msg = msg.substring(msg.indexOf("[") + 1, msg.indexOf("]"));
                 Log.v("sendposttest", msg);
@@ -602,7 +442,7 @@ public class sendsos_map extends ActionBarActivity implements BaiduMap.OnMapClic
 
                 String jsonStringPart2 = jsonStringPart1 + msg;
 
-                jsonString = jsonStringPart2 + "]},\"notification\":{\"alert\":\"有人正在求救！事件号：" + event_id + "\"}}";
+                jsonString = jsonStringPart2 + "]},\"notification\":{\"alert\":\"有人正在求救！\"}}";
                 Log.v("sendposttest", jsonString);
             }
             Log.v("sendposttest", jsonString);
