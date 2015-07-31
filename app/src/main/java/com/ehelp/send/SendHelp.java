@@ -1,6 +1,7 @@
 package com.ehelp.send;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.StrictMode;
@@ -52,6 +53,9 @@ public class SendHelp extends AIActionBarActivity implements RapidFloatingAction
     public String jingdu;
     public String weidu;
     public String need_peo;
+
+    private SharedPreferences sharedPref;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -178,8 +182,10 @@ public class SendHelp extends AIActionBarActivity implements RapidFloatingAction
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            int default_ = -1;
+            int user_id;
+            user_id = sharedPref.getInt("user_id", default_);
             init();
-            int user_id = 12;
             Eevents = (EditText)findViewById(R.id.edit_message2);
             Edesc_event = (EditText)findViewById(R.id.edit_message3);
             Eshare_money = (EditText)findViewById(R.id.edit_message4);
