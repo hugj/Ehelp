@@ -1,5 +1,6 @@
 package com.ehelp.map;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -119,6 +120,8 @@ public class sendhelpcomeback_map extends AIActionBarActivity implements BaiduMa
 
 
     protected void onCreate(Bundle savedInstanceState) {
+        sharedPref = this.getSharedPreferences("user_id", Context.MODE_PRIVATE);
+
         super.onCreate(savedInstanceState);
         SDKInitializer.initialize(getApplicationContext());
         setContentView(R.layout.activity_sendhelpcomeback_map);
