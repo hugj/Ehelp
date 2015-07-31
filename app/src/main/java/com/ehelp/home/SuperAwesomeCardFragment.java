@@ -202,7 +202,7 @@ public class SuperAwesomeCardFragment extends Fragment {
             queList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 public void onItemClick(AdapterView<?> arg0, View arg1, int index, long arg3) {
                     Intent intent = new Intent(getActivity(), QuestionDetail.class);
-                    intent.putExtra(EXTRA_MESSAGE, events.get(index));
+                    intent.putExtra("qusetiondatail", events.get(index));
                     startActivity(intent);
                 }
             });

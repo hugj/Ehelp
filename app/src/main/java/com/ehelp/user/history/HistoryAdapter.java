@@ -128,6 +128,10 @@ public class HistoryAdapter extends BaseAdapter {
 
     public void setListi() {}
 
+    public List<Event> getEvent() {
+        return HisList;
+    }
+
     public int getCount() {return list.size();}
     public Object getItem(int position) {return position;}
     public long getItemId(int position) {return position;}

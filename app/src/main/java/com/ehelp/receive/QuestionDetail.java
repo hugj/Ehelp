@@ -14,7 +14,6 @@ import android.widget.Toast;
 
 import com.ehelp.R;
 import com.ehelp.entity.Event;
-import com.ehelp.home.SuperAwesomeCardFragment;
 import com.ehelp.map.sendhelp_map;
 import com.ehelp.send.CountNum;
 import com.ehelp.send.SendQuestion;
@@ -60,7 +59,7 @@ public class QuestionDetail extends AIActionBarActivity implements RapidFloating
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();
-        m_event = (Event)intent.getSerializableExtra(SuperAwesomeCardFragment.EXTRA_MESSAGE);
+        m_event = (Event)intent.getSerializableExtra("qusetiondatail");
         init();
         setView();
         ActivityCollector.getInstance().addActivity(this);

@@ -14,12 +14,17 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ehelp.R;
+import com.ehelp.entity.Event;
 import com.ehelp.map.sendhelp_map;
+import com.ehelp.map.sendhelpcomeback_map;
+import com.ehelp.map.sendsos_map;
+import com.ehelp.receive.QuestionDetail;
 import com.ehelp.send.CountNum;
 import com.ehelp.send.SendQuestion;
 import com.ehelp.utils.RequestHandler;
@@ -50,6 +55,7 @@ public class MyHistory extends AIActionBarActivity implements RapidFloatingActio
 
     private SharedPreferences sharedPref;
     private int user_id;
+    private List<Event> events;
 
     private ViewPager mPager;//页卡内容
     private List<View> listViews; // Tab页面列表
@@ -63,7 +69,7 @@ public class MyHistory extends AIActionBarActivity implements RapidFloatingActio
     private Toolbar mToolbar;
 
     private int wha = 2;//1代表全部，2代表发起，3代表接收
-    public final static String EXTRA_MESSAGE = "com.ehelp.receive.MESSAGE";
+    public final static String EXTRA_MESSAGE = "com.ehelp.user.history.MESSAGE";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -314,6 +320,18 @@ public class MyHistory extends AIActionBarActivity implements RapidFloatingActio
                     //wha 1代表发起的 2代表接受的
                     HistoryAdapter his = new HistoryAdapter(MyHistory.this, user_id, wha, 1);
                     hisList.setAdapter(his);
+
+                    events = his.getEvent();
+
+                    //绑定监听
+                    hisList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        public void onItemClick(AdapterView<?> arg0, View arg1, int index, long arg3) {
+                            Intent intent = new Intent(MyHistory.this, sendhelpcomeback_map.class);
+                            int eventID = events.get(index).getEventId();
+                            intent.putExtra(EXTRA_MESSAGE, eventID);
+                            startActivity(intent);
+                        }
+                    });
                     break;
                 case 1:
 
@@ -325,6 +343,18 @@ public class MyHistory extends AIActionBarActivity implements RapidFloatingActio
                     //wha 1代表发起的 2代表接受的
                     HistoryAdapter his2 = new HistoryAdapter(MyHistory.this, user_id, wha, 2);
                     hisList2.setAdapter(his2);
+
+                    events = his2.getEvent();
+
+                    //绑定监听
+                    hisList2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        public void onItemClick(AdapterView<?> arg0, View arg1, int index, long arg3) {
+                            Intent intent = new Intent(MyHistory.this, sendsos_map.class);
+                            int eventID = events.get(index).getEventId();
+                            intent.putExtra(EXTRA_MESSAGE, eventID);
+                            startActivity(intent);
+                        }
+                    });
                     break;
                 case 2:
                     tv.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
@@ -335,6 +365,18 @@ public class MyHistory extends AIActionBarActivity implements RapidFloatingActio
                     //wha 1代表发起的 2代表接受的
                     HistoryAdapter his3 = new HistoryAdapter(MyHistory.this, user_id, wha, 0);
                     hisList3.setAdapter(his3);
+
+                    events = his3.getEvent();
+
+                    //绑定监听
+                    hisList3.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        public void onItemClick(AdapterView<?> arg0, View arg1, int index, long arg3) {
+                            Intent intent = new Intent(MyHistory.this, QuestionDetail.class);
+                            int eventID = events.get(index).getEventId();
+                            intent.putExtra("qusetiondatail", events.get(index));
+                            startActivity(intent);
+                        }
+                    });
                     break;
             }
 
