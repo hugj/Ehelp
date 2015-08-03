@@ -216,6 +216,7 @@ public class SuperAwesomeCardFragment extends Fragment implements SwipeRefreshLa
             }
         } else if (position == 1) {
             fl.removeAllViews();
+            mSwipeLayout.removeAllViews();
             ListView queList = new ListView(getActivity());
             queList.setLayoutParams(new LinearLayout.LayoutParams(-1, -1));
             HomeAdapter que = new HomeAdapter(getActivity(), user_id, 2, eventCache);
@@ -237,6 +238,7 @@ public class SuperAwesomeCardFragment extends Fragment implements SwipeRefreshLa
         } else
         if (position == 2) {
             fl.removeAllViews();
+            mSwipeLayout.removeAllViews();
             ListView queList = new ListView(getActivity());
             queList.setLayoutParams(new LinearLayout.LayoutParams(-1, -1));
             //queList.setBackgroundColor(0x666666);
@@ -259,6 +261,7 @@ public class SuperAwesomeCardFragment extends Fragment implements SwipeRefreshLa
         } else
         if (position == 3) {
             fl.removeAllViews();
+            mSwipeLayout.removeAllViews();
             ListView queList = new ListView(getActivity());
             queList.setLayoutParams(new LinearLayout.LayoutParams(-1, -1));
             HomeAdapter que = new HomeAdapter(getActivity(), user_id, 0, eventCache);
