@@ -4,33 +4,20 @@
     android:layout_height="fill_parent"
     android:orientation="vertical">
     <include layout="@layout/toolbar" />
-    <TextView
-        android:layout_width="fill_parent"
-        android:layout_height="40dp"
-        android:background="#00cc33"
-        android:textSize="20dp"
-        android:textColor="#fff"
-        android:text="紧急联系人"
-        android:paddingLeft="20dp"
-        android:paddingTop="10dp"
-        android:clickable="true"
-        android:onClick="click_excontact_page"/>
     <RelativeLayout android:layout_width="fill_parent"
         android:layout_height="fill_parent">
-
         <ExpandableListView android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:id="@+id/elist"
+            android:id="@+id/elist1"
             android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
             android:groupIndicator="@null" />
-
         <com.ehelp.user.contactlist.AssortView
             android:layout_width="25dip"
             android:layout_height="fill_parent"
             android:layout_alignParentTop="true"
             android:layout_alignParentRight="true"
-            android:id="@+id/assort" />
+            android:id="@+id/assort1" />
 
         <com.wangjie.rapidfloatingactionbutton.RapidFloatingActionLayout
             xmlns:rfal="http://schemas.android.com/apk/res-auto"
@@ -57,10 +44,7 @@
                 rfab:rfab_shadow_radius="7dp"
                 rfab:rfab_shadow_color="#999999"
                 rfab:rfab_shadow_dx="0dp"
-                rfab:rfab_shadow_dy="5dp"
-                />
-
-
+                rfab:rfab_shadow_dy="5dp"/>
         </com.wangjie.rapidfloatingactionbutton.RapidFloatingActionLayout>
     </RelativeLayout>
 

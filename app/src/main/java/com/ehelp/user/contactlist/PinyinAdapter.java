@@ -1,4 +1,4 @@
-package com.ehelp.user.pinyin;
+package com.ehelp.user.contactlist;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -97,7 +97,7 @@ public class PinyinAdapter extends BaseExpandableListAdapter {
         TextView textView = (TextView) contentView.findViewById(R.id.name);
         if (assort.getFirstChar(assort.getHashList()
                 .getValueIndex(group, 0)) == "#"){
-            textView.setText("紧急联系人");
+            textView.setText("其他");
         } else {
             textView.setText(assort.getFirstChar(assort.getHashList()
                     .getValueIndex(group, 0)));

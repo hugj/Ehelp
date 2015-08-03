@@ -1,32 +1,30 @@
-package com.ehelp.evaluate;
+package com.ehelp.user.contactlist;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.nfc.Tag;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.EditText;
+import android.view.View;
 import android.widget.ExpandableListView;
-import android.widget.RatingBar;
+import android.widget.PopupWindow;
 import android.widget.TextView;
-
+import android.widget.Toast;
 
 import com.ehelp.R;
+import com.ehelp.entity.User;
 import com.ehelp.map.sendhelp_map;
 import com.ehelp.send.CountNum;
 import com.ehelp.send.SendQuestion;
-<<<<<<< Updated upstream
-import com.ehelp.user.pinyin.AssortView;
-import com.ehelp.user.pinyin.PinyinAdapter;
 import com.ehelp.utils.RequestHandler;
-=======
-import com.ehelp.user.contactlist.AssortView;
-import com.ehelp.user.contactlist.PinyinAdapter;
->>>>>>> Stashed changes
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.wangjie.androidbucket.utils.ABTextUtil;
 import com.wangjie.androidbucket.utils.imageprocess.ABShape;
 import com.wangjie.androidinject.annotation.annotations.base.AILayout;
@@ -38,45 +36,111 @@ import com.wangjie.rapidfloatingactionbutton.RapidFloatingActionLayout;
 import com.wangjie.rapidfloatingactionbutton.contentimpl.labellist.RFACLabelItem;
 import com.wangjie.rapidfloatingactionbutton.contentimpl.labellist.RapidFloatingActionContentLabelList;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import android.content.SharedPreferences;
+@AILayout(R.layout.activity_excontactlist)
+public class ExcontactlistActivity extends AIActionBarActivity implements RapidFloatingActionContentLabelList.OnRapidFloatingActionContentLabelListListener {
 
-//import android.view.View.OnLongClickListener;
-
-/**
- * Created by kyy on 2015/7/19.
- */
-@AILayout(R.layout.activity_comment)
-public class Comment extends AIActionBarActivity implements RapidFloatingActionContentLabelList.OnRapidFloatingActionContentLabelListListener {
     @AIView(R.id.label_list_sample_rfal)
     private RapidFloatingActionLayout rfaLayout;
     @AIView(R.id.label_list_sample_rfab)
     private RapidFloatingActionButton rfaButton;
     private RapidFloatingActionHelper rfabHelper;
     private Toolbar mToolbar;
-    //static int starnum = 1;//public static int starnumm =1;
-    private int starnum = 1;
-    private String comment;
-
-    private String url = "http://120.24.208.130:1501/event/modify";
-    private int user_id;
-    private int event_id;
-    private SharedPreferences sp;
 
     private PinyinAdapter adapter;
     private ExpandableListView eListView;
     private AssortView assortView;
     private List<String> names;
+    private List<User> userList;
+    private SharedPreferences sharedPref;
+    private String jsonStrng, message;
+    private int id;
+    Gson gson = new Gson();
+
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         init();
+        DrawContactlist();
     }
+    //好友列
+    public void DrawContactlist() {
+        eListView = (ExpandableListView) findViewById(R.id.elist1);
+        assortView = (AssortView) findViewById(R.id.assort1);
+        names=new ArrayList<String>();
+        //获取user id
+        sharedPref = this.getSharedPreferences("user_id", Context.MODE_PRIVATE);
+        id = sharedPref.getInt("user_id", -1);
+        //获取紧急联系人
+        jsonStrng = "{" +
+                "\"id\":" + id + "," +
+                "\"operation\":" + 2 + "," +
+                "\"type\":" + 0 +"}";
+        message = RequestHandler.sendPostRequest(
+                "http://120.24.208.130:1501/user/relation_manage", jsonStrng);
+        if (message == "false") {
+            Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
+                    Toast.LENGTH_SHORT).show();
+        }
+        try {
+            JSONObject jO = new JSONObject(message);
+            if (jO.getInt("status") == 500) {
+                Toast.makeText(getApplicationContext(), "没有紧急联系人",
+                        Toast.LENGTH_SHORT).show();
+            }else {
+                String user_list = jO.getString("user_list");
+                userList = gson.fromJson(user_list, new TypeToken<List<User>>(){}.getType());
+                for (int i = 0; i < userList.size(); i++) {
+                    String emp;
+                    emp = userList.get(i).getNickname();
+                    names.add(emp);
+                }
+            }
+        }catch (JSONException e) {
+            e.printStackTrace();
+        }
+        //紧急联系人列表的信息添加
+        adapter = new PinyinAdapter(this,names);
+        eListView.setAdapter(adapter);
+        //展开紧急联系人
+        for (int i = 0, length = adapter.getGroupCount(); i < length; i++) {
+            eListView.expandGroup(i);
+        }
+        assortView.setOnTouchAssortListener(new AssortView.OnTouchAssortListener() {
+            View layoutView = LayoutInflater.from(ExcontactlistActivity.this)
+                    .inflate(R.layout.alert_dialog_menu_layout, null);
+            TextView text = (TextView) layoutView.findViewById(R.id.content);
+            PopupWindow popupWindow;
 
+            public void onTouchAssortListener(String str) {
+                int index = adapter.getAssort().getHashList().indexOfKey(str);
+                if (index != -1) {
+                    eListView.setSelectedGroup(index);
+                }
+                if (popupWindow != null) {
+                    text.setText(str);
+                } else {
+                    popupWindow = new PopupWindow(layoutView,
+                            120, 120, false);
+                    popupWindow.showAtLocation(getWindow().getDecorView(),
+                            Gravity.CENTER, 0, 0);
+                }
+                text.setText(str);
+            }
+            public void onTouchAssortUP() {
+                if (popupWindow != null)
+                    popupWindow.dismiss();
+                popupWindow = null;
+            }
+        });
+    }
     private void init() {
         StrictMode.setThreadPolicy(
                 new StrictMode.ThreadPolicy.Builder().
@@ -84,46 +148,17 @@ public class Comment extends AIActionBarActivity implements RapidFloatingActionC
         StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder().
                 detectLeakedSqlLiteObjects().detectLeakedClosableObjects().
                 penaltyLog().penaltyDeath().build());
-
         //set toolbar
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        mToolbar.setTitle("");
+        mToolbar.setTitle("  ");
         setSupportActionBar(mToolbar);
         TextView tvv =(TextView) findViewById(R.id.titlefortoolbar);
-        tvv.setText("评价");
-
-
-        //添加按钮事件
-        /*Button button  =(Button)findViewById(R.id.button_comment_send);
-        button.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                // TODO Auto-generated method stub
-                Toast.makeText(getApplicationContext(), "通过setOnClickListener（）方法实现",
-                        Toast.LENGTH_SHORT).show();
-                //Intent intent = new Intent(activity_comment.this, activity_home.class);
-                //activity_comment.this.startActivity(intent);
-            }
-        });*/
-        RatingBar ratBar = (RatingBar)findViewById(R.id.ratingBar);
-        ratBar.setStepSize(1);//步进为1
-        ratBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
-            @Override
-            public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
-                //doing actions
-                starnum =(int) rating;
-                //rating是传入的星级。
-            }
-        });
+        tvv.setText("紧急联系人列表");
 
         //FAB
         fab();
-
-        sp = this.getSharedPreferences("user_id", MODE_PRIVATE);
-        user_id = sp.getInt("user_id", -1);
     }
-
+    //下面的按钮
     private void fab(){
         RapidFloatingActionContentLabelList rfaContent = new RapidFloatingActionContentLabelList(context);
         rfaContent.setOnRapidFloatingActionContentLabelListListener(this);
@@ -201,13 +236,27 @@ public class Comment extends AIActionBarActivity implements RapidFloatingActionC
     }
 
 
+    //点击跳转到联系人的详细信息上
+    public void getMessagePage(View view) {
+        Intent intent = new Intent(this, messageActivity.class);
+        startActivity(intent);
+    }
+
+
+    @Override
+    protected void onResume() {
+        // TODO Auto-generated method stub
+        super.onResume();
+    }
+
     //toolbar设置
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_comment, menu);
+        getMenuInflater().inflate(R.menu.menu_contactlist, menu);
         return true;
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -216,25 +265,13 @@ public class Comment extends AIActionBarActivity implements RapidFloatingActionC
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if ((id == R.id.action_settings)){
-            /*int state = 1;
-            getComment();
-            String send = "{\"id\":" + id + ",\"event_id\":"
-                    + event_id + ",\"group_pts\":" + starnum + ",\"comment\":\"" + comment
-                    + "\",\"state\":" + state + "}";
-            String msg = RequestHandler.sendPostRequest(
-                    url, send);
-            Log.v("myowntest", msg);*/
-
+        if (id == R.id.action_settings) {
+            //添加好友。跳转至添加好友页面
+            Intent intent = new Intent(this, AddFriendActivity.class);
+            startActivity(intent);
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
-
-    //获取评论内容
-    public void getComment(){
-        EditText editText1 =(EditText)findViewById(R.id.editText_comment);
-        comment=editText1.getText().toString();
-    }
+    //toolbar设置结束
 }

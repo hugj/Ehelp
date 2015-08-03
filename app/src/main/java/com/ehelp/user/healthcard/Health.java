@@ -1,7 +1,5 @@
-package com.ehelp.user.pinyin;
+package com.ehelp.user.healthcard;
 
-import android.app.ActionBar;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;

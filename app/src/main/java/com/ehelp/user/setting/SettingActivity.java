@@ -1,4 +1,4 @@
-package com.ehelp.user.pinyin;
+package com.ehelp.user.setting;
 
 import android.content.Context;
 import android.content.Intent;
@@ -31,7 +31,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.jpush.android.api.JPushInterface;
-import android.content.SharedPreferences;
 
 @AILayout(R.layout.activity_setting)
 public class SettingActivity extends AIActionBarActivity implements OnChangedListener,RapidFloatingActionContentLabelList.OnRapidFloatingActionContentLabelListListener {
