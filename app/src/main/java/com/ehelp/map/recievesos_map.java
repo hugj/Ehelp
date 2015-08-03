@@ -1,9 +1,5 @@
 package com.ehelp.map;
 
-import android.app.ActionBar;
-import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.StrictMode;
@@ -52,8 +48,6 @@ import com.baidu.mapapi.search.route.TransitRouteResult;
 import com.baidu.mapapi.search.route.WalkingRoutePlanOption;
 import com.baidu.mapapi.search.route.WalkingRouteResult;
 import com.ehelp.R;
-import com.ehelp.home.Home;
-import com.ehelp.send.SendHelp;
 import com.ehelp.utils.RequestHandler;
 
 import org.json.JSONException;
