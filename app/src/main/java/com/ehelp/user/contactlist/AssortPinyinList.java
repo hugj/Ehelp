@@ -1,4 +1,4 @@
-package com.ehelp.user.pinyin;
+package com.ehelp.user.contactlist;
 
 import com.ehelp.user.sort.HashList;
 import com.ehelp.user.sort.KeySort;

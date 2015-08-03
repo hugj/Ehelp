@@ -196,7 +196,7 @@
             <!--</intent-filter>-->
         </activity>
         <activity
-            android:name=".user.pinyin.ContactlistActivity"
+            android:name=".user.contactlist.ContactlistActivity"
             android:label="@string/title_activity_contactlist"
             android:parentActivityName=".account.login" >
 
@@ -206,33 +206,45 @@
             -->
         </activity>
         <activity
-            android:name=".user.pinyin.adapterchatActivity"
+            android:name=".user.contactlist.adapterchatActivity"
             android:label="@string/title_activity_adapterchat" >
         </activity>
         <activity
-            android:name=".user.pinyin.homepageActivity"
+            android:name=".user.usermes.homepageActivity"
             android:label="@string/title_activity_homepage"
             android:parentActivityName=".account.login" >
         </activity>
         <activity
-            android:name=".user.pinyin.messageActivity"
+            android:name=".user.contactlist.messageActivity"
             android:label="@string/title_activity_message"
+<<<<<<< Updated upstream
             android:parentActivityName=".account.login" >
+=======
+            android:parentActivityName=".user.contactlist.ContactlistActivity" >
+>>>>>>> Stashed changes
         </activity>
         <activity
-            android:name=".user.pinyin.SettingActivity"
+            android:name=".user.setting.SettingActivity"
             android:label="@string/title_activity_setting"
             android:parentActivityName=".account.login" >
         </activity>
         <activity
-            android:name=".user.pinyin.AccountsafeActivity"
+            android:name=".user.setting.AccountsafeActivity"
             android:label="@string/title_activity_accountsafe"
+<<<<<<< Updated upstream
             android:parentActivityName=".account.login" >
+=======
+            android:parentActivityName=".user.setting.SettingActivity" >
+>>>>>>> Stashed changes
         </activity>
         <activity
-            android:name=".user.pinyin.ChangepasswordActivity"
+            android:name=".user.setting.ChangepasswordActivity"
             android:label="@string/title_activity_changepassword"
+<<<<<<< Updated upstream
             android:parentActivityName=".account.login" >
+=======
+            android:parentActivityName=".user.setting.AccountsafeActivity" >
+>>>>>>> Stashed changes
         </activity>
         <activity
             android:name=".map.recievehelp_map"
@@ -257,7 +269,7 @@
             android:parentActivityName=".account.login" >
         </activity>
         <activity
-            android:name=".user.pinyin.MessetnameActivity"
+            android:name=".user.usermes.MessetnameActivity"
             android:label="@string/title_activity_mesnotename" >
         </activity>
         <activity
@@ -266,7 +278,7 @@
             android:parentActivityName=".account.login" >
         </activity>
         <activity
-            android:name=".user.pinyin.Health"
+            android:name=".user.healthcard.Health"
             android:label="@string/title_activity_health"
             android:parentActivityName=".account.login" >
         </activity>
@@ -312,25 +324,50 @@
             android:parentActivityName=".account.login" >
         </activity>
         <activity
-            android:name=".user.pinyin.ChangephoneActivity"
+            android:name=".user.setting.ChangephoneActivity"
             android:label="@string/title_activity_changephone"
+<<<<<<< Updated upstream
             android:parentActivityName=".account.login" >
+=======
+            android:parentActivityName=".user.setting.AccountsafeActivity" >
+>>>>>>> Stashed changes
         </activity>
         <activity
-            android:name=".user.pinyin.AddFriendActivity"
+            android:name=".user.contactlist.AddFriendActivity"
             android:label="@string/title_activity_add_friend"
+<<<<<<< Updated upstream
             android:parentActivityName=".account.login" >
+=======
+            android:parentActivityName=".user.contactlist.ContactlistActivity" >
+>>>>>>> Stashed changes
         </activity>
         <activity
             android:name=".user.history.MyHistory"
             android:label="@string/title_activity_my_history"
+<<<<<<< Updated upstream
             android:parentActivityName=".account.login">
+=======
+            android:parentActivityName=".home.Home" >
+>>>>>>> Stashed changes
         </activity>
         <activity
             android:name=".receive.AddAns"
+<<<<<<< Updated upstream
             android:label="@string/title_activity_add_ans"
             android:parentActivityName=".account.login">
 
+=======
+            android:label="@string/title_activity_add_ans" >
+        </activity>
+        <activity
+            android:name=".user.history.MyHistory"
+            android:label="@string/title_activity_my_history"
+            android:parentActivityName=".home.Home" >
+        </activity>
+        <activity
+            android:name=".user.contactlist.ExcontactlistActivity"
+            android:label="@string/title_activity_excontactlist" >
+>>>>>>> Stashed changes
         </activity>
     </application>
 

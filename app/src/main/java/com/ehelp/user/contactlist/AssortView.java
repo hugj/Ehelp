@@ -1,4 +1,4 @@
-package com.ehelp.user.pinyin;
+package com.ehelp.user.contactlist;
 
 import android.content.Context;
 import android.graphics.Canvas;
