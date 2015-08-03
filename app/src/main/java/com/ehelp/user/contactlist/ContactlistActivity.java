@@ -1,6 +1,8 @@
-package com.ehelp.user.pinyin;
+package com.ehelp.user.contactlist;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.StrictMode;
@@ -13,11 +15,16 @@ import android.view.View;
 import android.widget.ExpandableListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ehelp.R;
+import com.ehelp.entity.User;
 import com.ehelp.map.sendhelp_map;
 import com.ehelp.send.CountNum;
 import com.ehelp.send.SendQuestion;
+import com.ehelp.utils.RequestHandler;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.wangjie.androidbucket.utils.ABTextUtil;
 import com.wangjie.androidbucket.utils.imageprocess.ABShape;
 import com.wangjie.androidinject.annotation.annotations.base.AILayout;
@@ -28,6 +35,9 @@ import com.wangjie.rapidfloatingactionbutton.RapidFloatingActionHelper;
 import com.wangjie.rapidfloatingactionbutton.RapidFloatingActionLayout;
 import com.wangjie.rapidfloatingactionbutton.contentimpl.labellist.RFACLabelItem;
 import com.wangjie.rapidfloatingactionbutton.contentimpl.labellist.RapidFloatingActionContentLabelList;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,40 +57,57 @@ public class ContactlistActivity extends AIActionBarActivity implements RapidFlo
     private ExpandableListView eListView;
     private AssortView assortView;
     private List<String> names;
+    private List<User> userList;
+    private SharedPreferences sharedPref;
+    private String jsonStrng, message;
+    private int id;
+    Gson gson = new Gson();
+
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         init();
-        
-
+        DrawContactlist();
+    }
+    //好友列
+    public void DrawContactlist() {
         eListView = (ExpandableListView) findViewById(R.id.elist);
         assortView = (AssortView) findViewById(R.id.assort);
         names=new ArrayList<String>();
-        names.add("lxz");
-        names.add("ming");
-        names.add("Ada");
-        names.add("nini");
-        names.add("dada");
-        names.add("jingjing");
-        names.add("lucy");
-        names.add("er");
-        names.add("L");
-        names.add("xdsfsdggs");
-        names.add("diao");
-        names.add("nih");
-        names.add("Java");
-        names.add("gen");
-        names.add("小米");
-        names.add("qianqian");
-        names.add("有道");
-        names.add("明明");
-        names.add("yes");
-        names.add("jack");
-        names.add("jackson");
-        names.add("0小明");
-        names.add(" ");
+        //获取user id
+        sharedPref = this.getSharedPreferences("user_id", Context.MODE_PRIVATE);
+        id = sharedPref.getInt("user_id", -1);
+        //获取好友列表
+        jsonStrng = "{" +
+                "\"id\":" + id + "," +
+                "\"operation\":" + 2 + "," +
+                "\"type\":" + 2 +"}";
+        message = RequestHandler.sendPostRequest(
+                "http://120.24.208.130:1501/user/relation_manage", jsonStrng);
+        if (message == "false") {
+            Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
+                    Toast.LENGTH_SHORT).show();
+        }
+        try {
+            JSONObject jO = new JSONObject(message);
+            if (jO.getInt("status") == 500) {
+                Toast.makeText(getApplicationContext(), "您当前没有好友",
+                        Toast.LENGTH_SHORT).show();
+            }else {
+                String user_list = jO.getString("user_list");
+                userList = gson.fromJson(user_list, new TypeToken<List<User>>(){}.getType());
+                for (int i = 0; i < userList.size(); i++) {
+                    String emp;
+                    emp = userList.get(i).getNickname();
+                    names.add(emp);
+                }
+            }
+        }catch (JSONException e) {
+            e.printStackTrace();
+        }
+        //紧急联系人列表的信息添加
         adapter = new PinyinAdapter(this,names);
         eListView.setAdapter(adapter);
 
@@ -108,7 +135,6 @@ public class ContactlistActivity extends AIActionBarActivity implements RapidFlo
                 }
                 text.setText(str);
             }
-
             public void onTouchAssortUP() {
                 if (popupWindow != null)
                     popupWindow.dismiss();
@@ -116,6 +142,7 @@ public class ContactlistActivity extends AIActionBarActivity implements RapidFlo
             }
         });
     }
+
 
     private void init() {
         StrictMode.setThreadPolicy(
@@ -134,7 +161,7 @@ public class ContactlistActivity extends AIActionBarActivity implements RapidFlo
         //FAB
         fab();
     }
-
+    //下面的浮动按钮
     private void fab(){
         RapidFloatingActionContentLabelList rfaContent = new RapidFloatingActionContentLabelList(context);
         rfaContent.setOnRapidFloatingActionContentLabelListListener(this);
@@ -212,12 +239,16 @@ public class ContactlistActivity extends AIActionBarActivity implements RapidFlo
     }
 
 
+    //点击跳转到联系人的详细信息上
     public void getMessagePage(View view) {
         Intent intent = new Intent(this, messageActivity.class);
         intent.putExtra("id","14");
         startActivity(intent);
     }
-
+    public void click_excontact_page(View view) {
+        Intent intent = new Intent(this, ExcontactlistActivity.class);
+        startActivity(intent);
+    }
 
     @Override
     protected void onResume() {
@@ -225,7 +256,7 @@ public class ContactlistActivity extends AIActionBarActivity implements RapidFlo
         super.onResume();
     }
 
-//toolbar设置
+    //toolbar设置
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.

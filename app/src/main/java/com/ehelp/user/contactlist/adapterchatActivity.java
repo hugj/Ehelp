@@ -1,4 +1,4 @@
-package com.ehelp.user.pinyin;
+package com.ehelp.user.contactlist;
 
 import android.content.Intent;
 import android.os.Bundle;

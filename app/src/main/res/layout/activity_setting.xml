@@ -31,7 +31,7 @@
            android:textIsSelectable="true"
            android:textSize="18dp"
            android:id="@+id/setting_push1" />
-        <com.ehelp.user.pinyin.SlipButton
+        <com.ehelp.user.setting.SlipButton
             android:layout_width="60dip"
             android:layout_height="25dip"
             android:layout_alignParentRight="true"
