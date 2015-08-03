@@ -1,10 +1,7 @@
 package com.ehelp.map;
 
-import android.app.ActionBar;
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
@@ -22,7 +19,6 @@ import android.widget.ZoomControls;
 
 import com.baidu.mapapi.SDKInitializer;
 import com.baidu.mapapi.map.BaiduMap;
-import com.baidu.mapapi.map.MapFragment;
 import com.baidu.mapapi.map.MapView;
 import com.baidu.mapapi.map.SupportMapFragment;
 import com.baidu.mapapi.model.LatLng;
@@ -65,6 +61,7 @@ public class sendhelp_map extends ActionBarActivity implements
     private Toolbar mToolbar;
 
     LatLng ll;
+    String address;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -158,8 +155,9 @@ public class sendhelp_map extends ActionBarActivity implements
             String b = Double.toString(ll.longitude);
 
             Bundle bundle = new Bundle();
-            bundle.putString("longitude", a);
-            bundle.putString("latitude", b);
+            bundle.putString("latitude", a);
+            bundle.putString("longitude", b);
+            bundle.putString("address", address);
             intent.putExtras(bundle);
             startActivity(intent);
 
@@ -264,6 +262,7 @@ public class sendhelp_map extends ActionBarActivity implements
             Toast.makeText(sendhelp_map.this, result.getLocation() + "," + "\n" + result.getName() + ": " + result.getAddress(), Toast.LENGTH_SHORT)
                     .show();
             ll = result.getLocation();
+            address = result.getAddress();
         }
     }
 
