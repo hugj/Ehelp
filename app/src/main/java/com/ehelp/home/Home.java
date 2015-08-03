@@ -291,16 +291,14 @@ public class Home extends AIActionBarActivity implements RapidFloatingActionCont
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // switch (item.getItemId()) {
-        // case R.id.action_settings:
-        // Toast.makeText(MainActivity.this, "action_settings", 0).show();
-        // break;
-        // case R.id.action_share:
-        // Toast.makeText(MainActivity.this, "action_share", 0).show();
-        // break;
-        // default:
-        // break;
-        // }
+//        switch (item.getItemId()) {
+//            case R.id.action_settings:
+//                Toast.makeText(getApplicationContext(), "action_settings",
+//                        Toast.LENGTH_SHORT).show();
+//                return true;
+//            default:
+//                return super.onOptionsItemSelected(item);
+//        }
         return super.onOptionsItemSelected(item);
     }
 

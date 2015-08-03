@@ -1,9 +1,5 @@
 package com.ehelp.map;
 
-import android.app.ActionBar;
-import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.StrictMode;
@@ -52,8 +48,6 @@ import com.baidu.mapapi.search.route.TransitRouteResult;
 import com.baidu.mapapi.search.route.WalkingRoutePlanOption;
 import com.baidu.mapapi.search.route.WalkingRouteResult;
 import com.ehelp.R;
-import com.ehelp.home.Home;
-import com.ehelp.send.SendHelp;
 import com.ehelp.utils.RequestHandler;
 
 import org.json.JSONException;
@@ -99,6 +93,11 @@ public class recievesos_map extends ActionBarActivity implements BaiduMap.OnMapC
     //TOOLbar
     private Toolbar mToolbar;
 
+    //用于后台数据交互
+    private String message;
+    private String message1;
+    private String jsonStrng;
+
     private int event_id;
     private int user_id;
     private String url = "http://120.24.208.130:1501/user/event_manage";
@@ -129,6 +128,9 @@ public class recievesos_map extends ActionBarActivity implements BaiduMap.OnMapC
         tvv.setText("求救信息详情");
 
         init();
+
+        //显示信息详情
+        showdetail();
         // 去除无关图标
         for (int i = 0; i < count; i++) {
             View child = mMapView.getChildAt(i);
@@ -214,6 +216,101 @@ public class recievesos_map extends ActionBarActivity implements BaiduMap.OnMapC
         user_id = sp.getInt("user_id", -1);
     }
 
+
+    protected void showdetail(){
+        jsonStrng = "{" +
+                "\"event_id\":" + event_id + "}";
+        message = RequestHandler.sendPostRequest(
+                "http://120.24.208.130:1501/event/get_information", jsonStrng);
+        if (message == "false") {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
+                            Toast.LENGTH_SHORT).show();
+                }
+            });
+            return;
+        }
+        try{
+            JSONObject jO = new JSONObject(message);
+            if (jO.getInt("status") == 500) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(getApplicationContext(), "无此事件",
+                                Toast.LENGTH_SHORT).show();
+                    }
+                });
+                return;
+            }else {
+                Toast.makeText(getApplicationContext(), "查询成功",
+                        Toast.LENGTH_SHORT).show();
+                //修改显示的时间
+                TextView tv1 =(TextView) findViewById(R.id.SOStime);
+                tv1.setText(jO.getString("time"));
+                //地址的文字信息
+                TextView tv2 =(TextView) findViewById(R.id.SOSlocation);
+                tv2.setText("");
+                //通过发起者id寻找发起者用户名并显示
+                int idd = jO.getInt("launcher_id");
+                findforusername(idd);
+            }
+
+        }catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void findforusername(int idd){
+        if( idd != -1){
+            jsonStrng = "{" +
+                    "\"id\":" + idd + "}";
+            message1 = RequestHandler.sendPostRequest(
+                    "http://120.24.208.130:1501/user/get_information", jsonStrng);
+            if (message1 == "false") {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
+                                Toast.LENGTH_SHORT).show();
+                    }
+                });
+                return;
+            }
+            try{
+                JSONObject jO1 = new JSONObject(message1);
+                if (jO1.getInt("status") == 500) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(getApplicationContext(), "查询数据库错误",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    return;
+                }else {
+                    Toast.makeText(getApplicationContext(), "查询数据库成功",
+                            Toast.LENGTH_SHORT).show();
+                    //修改显示的用户名
+                    TextView tv3 =(TextView) findViewById(R.id.SOSusername);
+                    if(jO1.getString("nickname") !="") {
+                        tv3.setText(jO1.getString("nickname"));
+                    }else {
+                        tv3.setText(jO1.getString("name"));
+                    }
+
+                    return;
+                }
+
+            }catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }else {
+            Toast.makeText(getApplicationContext(), "无此用户",
+                    Toast.LENGTH_SHORT).show();
+        }
+    }
     //设置TOOLBAR
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

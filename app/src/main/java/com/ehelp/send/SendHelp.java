@@ -209,7 +209,7 @@ public class SendHelp extends AIActionBarActivity implements RapidFloatingAction
                         "\"longitude\":" +  Djingdu + "," +
                         "\"latitude\":" + Dweidu + "," +
                         "\"love_coin\":" + Ishare_money + "," +
-                        "\"demand_number\":" + Ineed_peo + " " + "}";
+                        "\"demand_number\":" + Ineed_peo + "}";
                 Toast.makeText(getApplicationContext(), user_id + "," + event + ","
                                 + desc_event + "," + Djingdu + ",",
                         Toast.LENGTH_SHORT).show();
