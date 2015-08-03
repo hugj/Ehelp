@@ -69,7 +69,7 @@ public class SuperAwesomeCardFragment extends Fragment {
     BaiduMap mBaiduMap;
     private int user_id;
     private List<Event> events;
-    public final static String EXTRA_MESSAGE = "com.ehelp.home.MESSAGE";
+    public final static String EXTRA_MESSAGE = "event_id";
 
     // UI相关
     boolean isFirstLoc = true;// 是否首次定位

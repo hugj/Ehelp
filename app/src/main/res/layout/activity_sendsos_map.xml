@@ -23,11 +23,29 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="解除求救状态"
-            android:id="@+id/button7"
+            android:id="@+id/releaseHelp"
             android:onClick="Stopvands"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true" />
-        
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="健康问题"
+            android:id="@+id/healthForHelp"
+            android:onClick="chooseHealth"
+            android:layout_above="@+id/releaseHelp"
+            android:layout_toStartOf="@+id/releaseHelp" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="安全问题"
+            android:id="@+id/safeForHelp"
+            android:onClick="chooseSafe"
+            android:layout_above="@+id/releaseHelp"
+            android:layout_toEndOf="@+id/releaseHelp" />
+
 
     </RelativeLayout>
 
