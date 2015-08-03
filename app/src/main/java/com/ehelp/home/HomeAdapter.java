@@ -5,6 +5,7 @@ import android.os.StrictMode;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 import android.widget.LinearLayout;
@@ -155,10 +156,16 @@ public class HomeAdapter extends BaseAdapter {
         l12.addView(l11);
         //相对布局1
         RelativeLayout rl1=new RelativeLayout(context);
-        rl1.setLayoutParams(new RelativeLayout.LayoutParams(-1,-2));
+        rl1.setLayoutParams(new RelativeLayout.LayoutParams(-1, -2));
         rl1.addView(l12);
         rl1.addView(Reward);
         //返回视图
+
+        final int margin = 16;
+        ListView.LayoutParams params = new ListView.LayoutParams(ListView.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
+
+
+        //params.setMargins(margin, margin, margin, margin);
         LinearLayout returnView=new LinearLayout(context);
         returnView.setLayoutParams(new ListView.LayoutParams(-1,-2));//注意:ListView.LayoutParams
         returnView.setOrientation(LinearLayout.VERTICAL);

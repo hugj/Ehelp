@@ -114,7 +114,7 @@ public class SuperAwesomeCardFragment extends Fragment {
 
         FrameLayout fl = new FrameLayout(getActivity());
         fl.setLayoutParams(params);
-        //fl.setBackgroundResource(R.drawable.background);
+        //fl.setBackgroundColor(0x666666);
         final int margin = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 8, getResources()
                 .getDisplayMetrics());
 
@@ -156,6 +156,7 @@ public class SuperAwesomeCardFragment extends Fragment {
             queList.setLayoutParams(new LinearLayout.LayoutParams(-1, -1));
             HomeAdapter que = new HomeAdapter(getActivity(), user_id, 2);
             queList.setAdapter(que);
+            queList.setDividerHeight(20);
             fl.addView(queList);
 
             events = que.getEvent();
@@ -164,7 +165,8 @@ public class SuperAwesomeCardFragment extends Fragment {
             queList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 public void onItemClick(AdapterView<?> arg0, View arg1, int index, long arg3) {
                     Intent intent = new Intent(getActivity(), recievesos_map.class);
-                    intent.putExtra(EXTRA_MESSAGE, events.get(index));
+                    int eventid = events.get(index).getEventId();
+                    intent.putExtra(EXTRA_MESSAGE, eventid);
                     startActivity(intent);
                 }
             });
@@ -173,6 +175,9 @@ public class SuperAwesomeCardFragment extends Fragment {
             fl.removeAllViews();
             ListView queList = new ListView(getActivity());
             queList.setLayoutParams(new LinearLayout.LayoutParams(-1, -1));
+            //queList.setBackgroundColor(0x666666);
+            //queList.setAlpha(125);
+            queList.setDividerHeight(20);
             HomeAdapter que = new HomeAdapter(getActivity(), user_id, 1);
             queList.setAdapter(que);
             fl.addView(queList);
@@ -194,6 +199,7 @@ public class SuperAwesomeCardFragment extends Fragment {
             queList.setLayoutParams(new LinearLayout.LayoutParams(-1, -1));
             HomeAdapter que = new HomeAdapter(getActivity(), user_id, 0);
             queList.setAdapter(que);
+            queList.setDividerHeight(20);
             fl.addView(queList);
 
             events = que.getEvent();
