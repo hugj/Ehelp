@@ -17,7 +17,9 @@
 package com.ehelp.home;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.support.v4.app.Fragment;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -25,12 +27,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.FrameLayout.LayoutParams;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ZoomControls;
 
 import com.baidu.location.BDLocation;
@@ -56,6 +60,10 @@ import com.ehelp.entity.Event;
 import com.ehelp.map.recieve_help_ans_map;
 import com.ehelp.map.recievesos_map;
 import com.ehelp.receive.QuestionDetail;
+import com.ehelp.utils.RequestHandler;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.List;
 
@@ -93,7 +101,13 @@ public class SuperAwesomeCardFragment extends Fragment {
     private List<Event> helpList;
 
     public double lon;
-    public double la;
+    public double lat;
+
+    Event temp;
+
+    public boolean isVaild = false;
+
+
 
 
     public static SuperAwesomeCardFragment newInstance(int position) {
@@ -109,6 +123,7 @@ public class SuperAwesomeCardFragment extends Fragment {
         super.onCreate(savedInstanceState);
         //SDKInitializer.initialize(getApplicationContext());
         position = getArguments().getInt(ARG_POSITION);
+
     }
 
     public void getUserID(int id) {
@@ -346,6 +361,13 @@ public class SuperAwesomeCardFragment extends Fragment {
                 MapStatusUpdate u = MapStatusUpdateFactory.newLatLngZoom(ll, 15); // 更新定位焦点与缩放级别;
                 mBaiduMap.animateMapStatus(u);
             }
+            lon = location.getLongitude();
+            lat = location.getLatitude();
+
+            if (!isVaild) {
+                send_info();
+                isVaild = true;
+            }
         }
 
         public void onReceivePoi(BDLocation poiLocation) {
@@ -422,6 +444,7 @@ public class SuperAwesomeCardFragment extends Fragment {
 //        mMarker6 = (Marker) (mBaiduMap.addOverlay(o3));
 //    }
 
+    //显示事件坐标
     public void setLocation() {
         HomeAdapter que1 = new HomeAdapter(getActivity(), user_id, 1);
         HomeAdapter que2 = new HomeAdapter(getActivity(), user_id, 2);
@@ -429,20 +452,101 @@ public class SuperAwesomeCardFragment extends Fragment {
         sosList = que2.getEvent();
         BitmapDescriptor bd = BitmapDescriptorFactory.fromResource(R.drawable.icon_gcoding);
         LatLngBounds.Builder builder = new LatLngBounds.Builder();
+
+        //遍历所有求助类型显示到地图上
         for (Event help : helpList) {
             LatLng pt = new LatLng(help.getLatitude(), help.getLongitude());
             OverlayOptions o = new MarkerOptions().icon(bd).position(pt);
             mBaiduMap.addOverlay(o);
             builder.include(pt);
             mMarker1 = (Marker) (mBaiduMap.addOverlay(o));
+
+            //用于监听图标时间
+            temp = help;
+            mBaiduMap.setOnMarkerClickListener(new BaiduMap.OnMarkerClickListener() {
+                public boolean onMarkerClick(final Marker marker) {
+                    Button button = new Button(getActivity().getApplicationContext());
+                    button.setBackgroundResource(R.drawable.popup);
+                    InfoWindow.OnInfoWindowClickListener listener = null;
+                    if (marker == mMarker1) {
+                        button.setText("这里是跳转");
+                        button.setTextColor(Color.BLACK);
+                        LatLng ll = marker.getPosition();
+                        mInfoWindow = new InfoWindow(BitmapDescriptorFactory.fromView(button), ll, -47, listener);
+                        mBaiduMap.showInfoWindow(mInfoWindow);
+                        Intent intent = new Intent(getActivity(), recievesos_map.class);
+                        int eventid = temp.getEventId();
+                        intent.putExtra(EXTRA_MESSAGE, eventid);
+                        startActivity(intent);
+                    }
+                    return true;
+                }
+            });
         }
 
-        for (Event help : sosList) {
-            LatLng pt = new LatLng(help.getLatitude(), help.getLongitude());
+        //遍历所有sos信息
+        for (Event sos : sosList) {
+            LatLng pt = new LatLng(sos.getLatitude(), sos.getLongitude());
             OverlayOptions o = new MarkerOptions().icon(bd).position(pt);
             mBaiduMap.addOverlay(o);
             builder.include(pt);
             mMarker1 = (Marker) (mBaiduMap.addOverlay(o));
+
+            //监听图标点击事件
+            temp = sos;
+            mBaiduMap.setOnMarkerClickListener(new BaiduMap.OnMarkerClickListener() {
+                public boolean onMarkerClick(final Marker marker) {
+                    Button button = new Button(getActivity().getApplicationContext());
+                    button.setBackgroundResource(R.drawable.popup);
+                    InfoWindow.OnInfoWindowClickListener listener = null;
+                    if (marker == mMarker1) {
+                        button.setText("这里是跳转");
+                        button.setTextColor(Color.BLACK);
+                        LatLng ll = marker.getPosition();
+                        mInfoWindow = new InfoWindow(BitmapDescriptorFactory.fromView(button), ll, -47, listener);
+                        mBaiduMap.showInfoWindow(mInfoWindow);
+                        Intent intent = new Intent(getActivity(), recievesos_map.class);
+                        int eventid = temp.getEventId();
+                        intent.putExtra(EXTRA_MESSAGE, eventid);
+                        startActivity(intent);
+                    }
+                    return true;
+                }
+            });
+        }
+    }
+
+    //初次传输地理位置信息
+    public void send_info() {
+        StrictMode.setThreadPolicy(
+                new StrictMode.ThreadPolicy.Builder().
+                        detectDiskReads().detectDiskWrites().detectNetwork().penaltyLog().build());
+        StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder().
+                detectLeakedSqlLiteObjects().detectLeakedClosableObjects().
+                penaltyLog().penaltyDeath().build());
+        String jsonStrng = "{" +
+                "\"id\":" + user_id + ",\"type\":1," +
+                "\"longitude\":" +  lon + "," +
+                "\"latitude\":" + lat + "}";
+        String message = RequestHandler.sendPostRequest(
+                "http://120.24.208.130:1501/user/modify_information", jsonStrng);
+        if (message == "false") {
+            Toast.makeText(getActivity().getApplicationContext(), "连接失败，请检查网络是否连接并重试",
+                    Toast.LENGTH_SHORT).show();
+        }else {
+            JSONObject jO = null;
+            try {
+                jO = new JSONObject(message);
+                if (jO.getInt("status") == 500) {
+                        Toast.makeText(getActivity().getApplicationContext(), "fuck",
+                                Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getActivity().getApplicationContext(), "good job",
+                            Toast.LENGTH_SHORT).show();
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
         }
     }
 }
