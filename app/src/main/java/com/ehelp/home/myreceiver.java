@@ -12,8 +12,18 @@ import cn.jpush.android.api.JPushInterface;
 
 import com.ehelp.map.recievesos_map;
 
+import android.media.SoundPool;
+import android.media.AudioManager;
+
+import com.ehelp.R;
+
+import com.ehelp.map.sendsos_map;
+
+
 public class myreceiver extends BroadcastReceiver {
     private static final String TAG = "broadcastreceivertest";
+    private SoundPool sp;
+
     public void onReceive(Context context, Intent intent) {
         Bundle bundle = intent.getExtras();
         Log.d(TAG, "onReceive - " + intent.getAction());
@@ -40,6 +50,17 @@ public class myreceiver extends BroadcastReceiver {
             i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(i);
 
+        } else if ("com.ehelp.map.RECEIVER_ACTION".equals(intent.getAction())) {
+            Log.v(TAG, "voice on create");
+            //sp(context.getApplicationContext());
+
+            /*Intent mIntent = new Intent();
+            mIntent.setClass(context.getApplicationContext(), sendsos_map.class);
+            mIntent.addFlags(mIntent.FLAG_ACTIVITY_NEW_TASK);
+            context.getApplicationContext().startActivity(intent);*/
+        } else if ("com.ehelp.map.STOP_ACTION".equals(intent.getAction())) {
+            Log.v(TAG, "voice on stop");
+            //stopsp();
         } else {
             Log.d(TAG, "Unhandled intent - " + intent.getAction());
         }
@@ -56,5 +77,17 @@ public class myreceiver extends BroadcastReceiver {
         Log.v(TAG, ss);
         int res = Integer.parseInt(ss);
         return res;
+    }
+    private void sp(Context context) {
+        //发声代码
+        sp = new SoundPool(10, AudioManager.STREAM_SYSTEM, 5);
+        int i  = sp.load(context, R.raw.alarm, 1);
+        String s = String.valueOf(i);
+        Log.v(TAG, s);
+        sp.play(1, 1, 1, 0, -1, 1);
+    }
+    private void stopsp() {
+        Log.v(TAG, "voicestoptest");
+        sp.stop(1);
     }
 }

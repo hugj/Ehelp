@@ -76,20 +76,15 @@ import cn.jpush.android.api.JPushInterface;
 import org.json.JSONObject;
 import org.json.JSONException;
 
-//手机振动与手机发声
-//import android.media.SoundPool;
-//import android.media.AudioManager;
-//统计代码
-//极光推送
-//严苛模式
-
+import android.content.Intent;
 
 public class sendsos_map extends ActionBarActivity implements BaiduMap.OnMapClickListener{
-
+    //定义myreceiver action常量
+    protected static final String ACTION = "com.ehelp.map.RECEIVER_ACTION";
+    protected static final String ACTION2 = "com.ehelp.map.STOP_ACTION";
 
     MapView mMapView = null;    // map View
     BaiduMap mBaidumap = null;
-
 
     //定位相关
     LocationClient mLocClient;
@@ -118,7 +113,7 @@ public class sendsos_map extends ActionBarActivity implements BaiduMap.OnMapClic
     private Toolbar mToolbar;
 
     //振动发声定义
-    private Button button7;
+    //private Button button7;
     //private SoundPool sp;
     private Vibrator vib;
 
@@ -194,6 +189,10 @@ public class sendsos_map extends ActionBarActivity implements BaiduMap.OnMapClic
         thread.start();
         //振动发声
         vibandsp();
+
+        Intent mIntent = new Intent();
+        mIntent.setAction(ACTION);
+        sendBroadcast(mIntent);
         //sp = new SoundPool(10, AudioManager.STREAM_SYSTEM, 5);
         //sp.load(getApplicationContext(), R.raw.alarm, 1);
     }
@@ -265,7 +264,11 @@ public class sendsos_map extends ActionBarActivity implements BaiduMap.OnMapClic
     protected void onDestroy() {
         mMapView.onDestroy();
         vib.cancel();
+        //sp.stop(1);
         cancelsos();
+        Intent mIntent = new Intent();
+        mIntent.setAction(ACTION2);
+        sendBroadcast(mIntent);
         if (mLocClient != null) {
             mLocClient.stop();
         }
