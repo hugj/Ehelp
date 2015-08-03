@@ -40,6 +40,7 @@ import com.baidu.location.LocationClientOption;
 import com.baidu.mapapi.map.BaiduMap;
 import com.baidu.mapapi.map.BitmapDescriptor;
 import com.baidu.mapapi.map.BitmapDescriptorFactory;
+import com.baidu.mapapi.map.InfoWindow;
 import com.baidu.mapapi.map.MapStatusUpdate;
 import com.baidu.mapapi.map.MapStatusUpdateFactory;
 import com.baidu.mapapi.map.MapView;
@@ -86,6 +87,14 @@ public class SuperAwesomeCardFragment extends Fragment {
     private Marker mMarker4;
     private Marker mMarker5;
     private Marker mMarker6;
+    private InfoWindow mInfoWindow;
+
+    private List<Event> sosList;
+    private List<Event> helpList;
+
+    public double lon;
+    public double la;
+
 
     public static SuperAwesomeCardFragment newInstance(int position) {
         SuperAwesomeCardFragment f = new SuperAwesomeCardFragment();
@@ -98,7 +107,6 @@ public class SuperAwesomeCardFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         //SDKInitializer.initialize(getApplicationContext());
         position = getArguments().getInt(ARG_POSITION);
     }
@@ -142,7 +150,7 @@ public class SuperAwesomeCardFragment extends Fragment {
             option.setScanSpan(1000);
             mLocClient.setLocOption(option);
             mLocClient.start();
-            init();
+            //init();
             int count = mMapView.getChildCount();
             for (int i = 0; i < count; i++) {
                 View child = mMapView.getChildAt(i);
@@ -150,6 +158,104 @@ public class SuperAwesomeCardFragment extends Fragment {
                     child.setVisibility(View.INVISIBLE);
                 }
             }
+            setLocation();
+//            mBaiduMap.setOnMarkerClickListener(new BaiduMap.OnMarkerClickListener() {
+//                public boolean onMarkerClick(final Marker marker) {
+//                    Button button = new Button(getActivity().getApplicationContext());
+//                    button.setBackgroundResource(R.drawable.popup);
+//                    InfoWindow.OnInfoWindowClickListener listener = null;
+//                    if (marker == mMarker1) {
+//                        button.setText("这里是跳转");
+//                        button.setTextColor(Color.BLACK);
+//                    /*这里是跳转button
+//                    listener = new InfoWindow.OnInfoWindowClickListener() {
+//                        public void onInfoWindowClick() {
+//                            LatLng ll = marker.getPosition();
+//                            LatLng llNew = new LatLng(ll.latitude + 0.005,
+//                                    ll.longitude + 0.005);
+//                            marker.setPosition(llNew);
+//                            mBaidumap.hideInfoWindow();
+//                        }
+//                    };
+//                    */
+//                        LatLng ll = marker.getPosition();
+//                        mInfoWindow = new InfoWindow(BitmapDescriptorFactory.fromView(button), ll, -47, listener);
+//                        mBaiduMap.showInfoWindow(mInfoWindow);
+//                    } else if (marker == mMarker2) {
+//                        button.setText("这里是跳转");
+//                        button.setTextColor(Color.BLACK);
+//                    /*这里是跳转button
+//                    button.setOnClickListener(new View.OnClickListener() {
+//                        public void onClick(View v) {
+//                            marker.setIcon(bd);
+//                            mBaiduMap.hideInfoWindow();
+//                        }
+//
+//                    });
+//                    */
+//                        LatLng ll = marker.getPosition();
+//                        mInfoWindow = new InfoWindow(button, ll, -47);
+//                        mBaiduMap.showInfoWindow(mInfoWindow);
+//                    } else if (marker == mMarker3) {
+//                        button.setText("这里是跳转");
+//                        button.setTextColor(Color.BLACK);
+//                    /*这里是跳转button
+//                    button.setOnClickListener(new View.OnClickListener() {
+//                        public void onClick(View v) {
+//                            marker.remove();
+//                            mBaidumap.hideInfoWindow();
+//                        }
+//                    });
+//                    */
+//                        LatLng ll = marker.getPosition();
+//                        mInfoWindow = new InfoWindow(button, ll, -47);
+//                        mBaiduMap.showInfoWindow(mInfoWindow);
+//                    } else if (marker == mMarker4) {
+//                        button.setText("这里是跳转");
+//                        button.setTextColor(Color.BLACK);
+//                    /*这里是跳转button
+//                    button.setOnClickListener(new View.OnClickListener() {
+//                        public void onClick(View v) {
+//                            marker.remove();
+//                            mBaidumap.hideInfoWindow();
+//                        }
+//                    });
+//                    */
+//                        LatLng ll = marker.getPosition();
+//                        mInfoWindow = new InfoWindow(button, ll, -47);
+//                        mBaiduMap.showInfoWindow(mInfoWindow);
+//                    } else if (marker == mMarker5) {
+//                        button.setText("这里是跳转");
+//                        button.setTextColor(Color.BLACK);
+//                    /*这里是跳转button
+//                    button.setOnClickListener(new View.OnClickListener() {
+//                        public void onClick(View v) {
+//                            marker.remove();
+//                            mBaidumap.hideInfoWindow();
+//                        }
+//                    });
+//                    */
+//                        LatLng ll = marker.getPosition();
+//                        mInfoWindow = new InfoWindow(button, ll, -47);
+//                        mBaiduMap.showInfoWindow(mInfoWindow);
+//                    } else if (marker == mMarker6) {
+//                        button.setText("这里是跳转");
+//                        button.setTextColor(Color.BLACK);
+//                    /*这里是跳转button
+//                    button.setOnClickListener(new View.OnClickListener() {
+//                        public void onClick(View v) {
+//                            marker.remove();
+//                            mBaidumap.hideInfoWindow();
+//                        }
+//                    });
+//                    */
+//                        LatLng ll = marker.getPosition();
+//                        mInfoWindow = new InfoWindow(button, ll, -47);
+//                        mBaiduMap.showInfoWindow(mInfoWindow);
+//                    }
+//                    return true;
+//                }
+//            });
         } else if (position == 1) {
             fl.removeAllViews();
             ListView queList = new ListView(getActivity());
@@ -275,46 +381,69 @@ public class SuperAwesomeCardFragment extends Fragment {
         super.onDestroy();
     }
 
-    public void init() {
-        LatLngBounds.Builder builder = new LatLngBounds.Builder();
-        // 暂时提供三个点标注在地图上作为例子
-        LatLng pt1 = new LatLng(23.063309, 113.394004);
-        LatLng pt2 = new LatLng(23.052578, 113.410821);
-        LatLng pt3 = new LatLng(23.075286, 113.425934);
-        LatLng pt4 = new LatLng(23.055286, 113.435934);
-        LatLng pt5 = new LatLng(23.045286, 113.415934);
-        LatLng pt6 = new LatLng(23.245286, 113.435934);
+//    public void init() {
+//        LatLngBounds.Builder builder = new LatLngBounds.Builder();
+//        // 暂时提供三个点标注在地图上作为例子
+//        LatLng pt1 = new LatLng(23.063309, 113.394004);
+//        LatLng pt2 = new LatLng(23.052578, 113.410821);
+//        LatLng pt3 = new LatLng(23.075286, 113.425934);
+//        LatLng pt4 = new LatLng(23.055286, 113.435934);
+//        LatLng pt5 = new LatLng(23.045286, 113.415934);
+//        LatLng pt6 = new LatLng(23.245286, 113.435934);
+//
+//        BitmapDescriptor bd = BitmapDescriptorFactory.fromResource(R.drawable.icon_gcoding);
+//        OverlayOptions o1 = new MarkerOptions().icon(bd).position(pt1);
+//        OverlayOptions o2 = new MarkerOptions().icon(bd).position(pt2);
+//        OverlayOptions o3 = new MarkerOptions().icon(bd).position(pt3);
+//        OverlayOptions o4 = new MarkerOptions().icon(bd).position(pt4);
+//        OverlayOptions o5 = new MarkerOptions().icon(bd).position(pt5);
+//        OverlayOptions o6 = new MarkerOptions().icon(bd).position(pt6);
+//
+//        mBaiduMap.addOverlay(o1);
+//        mBaiduMap.addOverlay(o2);
+//        mBaiduMap.addOverlay(o3);
+//        mBaiduMap.addOverlay(o4);
+//        mBaiduMap.addOverlay(o5);
+//        mBaiduMap.addOverlay(o6);
+//
+//        builder.include(pt1);
+//        builder.include(pt2);
+//        builder.include(pt3);
+//        builder.include(pt4);
+//        builder.include(pt5);
+//        builder.include(pt6);
+//
+//
+//        mMarker1 = (Marker) (mBaiduMap.addOverlay(o1));
+//        mMarker2 = (Marker) (mBaiduMap.addOverlay(o2));
+//        mMarker3 = (Marker) (mBaiduMap.addOverlay(o3));
+//        mMarker4 = (Marker) (mBaiduMap.addOverlay(o3));
+//        mMarker5 = (Marker) (mBaiduMap.addOverlay(o3));
+//        mMarker6 = (Marker) (mBaiduMap.addOverlay(o3));
+//    }
 
+    public void setLocation() {
+        HomeAdapter que1 = new HomeAdapter(getActivity(), user_id, 1);
+        HomeAdapter que2 = new HomeAdapter(getActivity(), user_id, 2);
+        helpList = que1.getEvent();
+        sosList = que2.getEvent();
         BitmapDescriptor bd = BitmapDescriptorFactory.fromResource(R.drawable.icon_gcoding);
-        OverlayOptions o1 = new MarkerOptions().icon(bd).position(pt1);
-        OverlayOptions o2 = new MarkerOptions().icon(bd).position(pt2);
-        OverlayOptions o3 = new MarkerOptions().icon(bd).position(pt3);
-        OverlayOptions o4 = new MarkerOptions().icon(bd).position(pt4);
-        OverlayOptions o5 = new MarkerOptions().icon(bd).position(pt5);
-        OverlayOptions o6 = new MarkerOptions().icon(bd).position(pt6);
+        LatLngBounds.Builder builder = new LatLngBounds.Builder();
+        for (Event help : helpList) {
+            LatLng pt = new LatLng(help.getLatitude(), help.getLongitude());
+            OverlayOptions o = new MarkerOptions().icon(bd).position(pt);
+            mBaiduMap.addOverlay(o);
+            builder.include(pt);
+            mMarker1 = (Marker) (mBaiduMap.addOverlay(o));
+        }
 
-        mBaiduMap.addOverlay(o1);
-        mBaiduMap.addOverlay(o2);
-        mBaiduMap.addOverlay(o3);
-        mBaiduMap.addOverlay(o4);
-        mBaiduMap.addOverlay(o5);
-        mBaiduMap.addOverlay(o6);
-
-        builder.include(pt1);
-        builder.include(pt2);
-        builder.include(pt3);
-        builder.include(pt4);
-        builder.include(pt5);
-        builder.include(pt6);
-
-
-        mMarker1 = (Marker) (mBaiduMap.addOverlay(o1));
-        mMarker2 = (Marker) (mBaiduMap.addOverlay(o2));
-        mMarker3 = (Marker) (mBaiduMap.addOverlay(o3));
-        mMarker4 = (Marker) (mBaiduMap.addOverlay(o3));
-        mMarker5 = (Marker) (mBaiduMap.addOverlay(o3));
-        mMarker6 = (Marker) (mBaiduMap.addOverlay(o3));
+        for (Event help : sosList) {
+            LatLng pt = new LatLng(help.getLatitude(), help.getLongitude());
+            OverlayOptions o = new MarkerOptions().icon(bd).position(pt);
+            mBaiduMap.addOverlay(o);
+            builder.include(pt);
+            mMarker1 = (Marker) (mBaiduMap.addOverlay(o));
+        }
     }
-
 }
 

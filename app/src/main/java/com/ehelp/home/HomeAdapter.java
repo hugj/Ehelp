@@ -45,6 +45,7 @@ public class HomeAdapter extends BaseAdapter {
     private List<Event> events;
     Gson gson = new Gson();
 
+
     HomeAdapter(Context context, int id, int type_){
         this.context=context;
         user_id = id;
@@ -92,6 +93,10 @@ public class HomeAdapter extends BaseAdapter {
                     item.put("用户", eventList.getJSONObject(i).getString("launcher"));
                     item.put("时间", eventList.getJSONObject(i).getString("time"));
                     item.put("悬赏", "10爱心币");
+                    item.put("经度", eventList.getJSONObject(i).getDouble("longitude"));
+                    item.put("纬度", eventList.getJSONObject(i).getDouble("latitude"));
+
+
                     list.add(item);
                 }
             }
@@ -174,5 +179,4 @@ public class HomeAdapter extends BaseAdapter {
 
         return returnView;
     }
-
 }
