@@ -18,7 +18,9 @@ package com.ehelp.home;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -58,7 +60,7 @@ import com.ehelp.receive.QuestionDetail;
 
 import java.util.List;
 
-public class SuperAwesomeCardFragment extends Fragment {
+public class SuperAwesomeCardFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener{
     // 定位相关
     LocationClient mLocClient;
     public MyLocationListenner myListener = new MyLocationListenner();
@@ -70,6 +72,10 @@ public class SuperAwesomeCardFragment extends Fragment {
     private int user_id;
     private List<Event> events;
     public final static String EXTRA_MESSAGE = "event_id";
+    private static final int REFRESH_COMPLETE = 2;
+    private ACache eventCache;// event cache
+    private SwipeRefreshLayout mSwipeLayout;
+    private HomeAdapter que;
 
     // UI相关
     boolean isFirstLoc = true;// 是否首次定位
@@ -101,11 +107,69 @@ public class SuperAwesomeCardFragment extends Fragment {
 
         //SDKInitializer.initialize(getApplicationContext());
         position = getArguments().getInt(ARG_POSITION);
+        initList();
     }
 
     public void getUserID(int id) {
         user_id = id;
     }
+
+    public void initList() {
+
+        // initalize Listview and SwipeLayout
+        mSwipeLayout = new SwipeRefreshLayout(getActivity());
+        mSwipeLayout.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
+        //mListView = new ListView(this);
+        //mListView.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
+
+        // mSwipeLayout.addView(mListView); // add listview into layout
+        //this.setContentView(mSwipeLayout); // add layout into current object
+
+        // get eventCache
+        eventCache = ACache.get(getActivity());
+//
+//        try {
+//            mDatas = getTitleList();
+//        } catch (JSONException e) {
+//            // TODO Auto-generated catch block
+//            e.printStackTrace();
+//        }
+
+        mSwipeLayout.setOnRefreshListener(this);
+        mSwipeLayout.setColorScheme(android.R.color.holo_green_dark, android.R.color.holo_green_light,
+                android.R.color.holo_orange_light, android.R.color.holo_red_light);
+    }
+
+    public void onRefresh()
+    {
+        mHandler.sendEmptyMessageDelayed(REFRESH_COMPLETE, 2000);
+    }
+
+
+    private Handler mHandler = new Handler()
+    {
+        public void handleMessage(android.os.Message msg)
+        {
+            switch (msg.what)
+            {
+                case REFRESH_COMPLETE:
+                    //0代表提问，1代表普通求助，2代表紧急求救
+                    if (position == 1){
+                        eventCache = que.getRemoteTitleList(2);
+                    } else
+                    if (position == 2){
+                        eventCache = que.getRemoteTitleList(1);
+                    } else
+                    if (position == 3){
+                        eventCache = que.getRemoteTitleList(0);
+                    }
+                    que.notifyDataSetChanged(); // change the data in listview
+                    mSwipeLayout.setRefreshing(false);
+                    break;
+            }
+            super.handleMessage(msg);
+        };
+    };
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -154,7 +218,7 @@ public class SuperAwesomeCardFragment extends Fragment {
             fl.removeAllViews();
             ListView queList = new ListView(getActivity());
             queList.setLayoutParams(new LinearLayout.LayoutParams(-1, -1));
-            HomeAdapter que = new HomeAdapter(getActivity(), user_id, 2);
+            HomeAdapter que = new HomeAdapter(getActivity(), user_id, 2, eventCache);
             queList.setAdapter(que);
             queList.setDividerHeight(20);
             fl.addView(queList);
@@ -178,7 +242,7 @@ public class SuperAwesomeCardFragment extends Fragment {
             //queList.setBackgroundColor(0x666666);
             //queList.setAlpha(125);
             queList.setDividerHeight(20);
-            HomeAdapter que = new HomeAdapter(getActivity(), user_id, 1);
+            HomeAdapter que = new HomeAdapter(getActivity(), user_id, 1, eventCache);
             queList.setAdapter(que);
             fl.addView(queList);
 
@@ -197,7 +261,7 @@ public class SuperAwesomeCardFragment extends Fragment {
             fl.removeAllViews();
             ListView queList = new ListView(getActivity());
             queList.setLayoutParams(new LinearLayout.LayoutParams(-1, -1));
-            HomeAdapter que = new HomeAdapter(getActivity(), user_id, 0);
+            HomeAdapter que = new HomeAdapter(getActivity(), user_id, 0, eventCache);
             queList.setAdapter(que);
             queList.setDividerHeight(20);
             fl.addView(queList);

@@ -2,7 +2,6 @@ package com.ehelp.home;
 
 import android.content.Context;
 import android.os.StrictMode;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -35,6 +34,7 @@ import java.util.Map;
  */
 public class HomeAdapter extends BaseAdapter {
 
+    private static final int REFRESH_COMPLETE = 2;
     private Context context=null;
     private List<Map<String,Object>> list = new ArrayList<Map<String,Object>>();
     private Map<String,Object> item;
@@ -44,13 +44,18 @@ public class HomeAdapter extends BaseAdapter {
     private int user_id;
     private int type;
     private List<Event> events;
+    private ACache eventCache; // event cache
     Gson gson = new Gson();
 
-    HomeAdapter(Context context, int id, int type_){
+    HomeAdapter(Context context, int id, int type_, ACache eventCache_){
         this.context=context;
         user_id = id;
         type = type_;
+        eventCache = eventCache_;
+        init();
+    }
 
+    public void init(){
         // 使用后台线程运行网络连接功能
         StrictMode.setThreadPolicy(
                 new StrictMode.ThreadPolicy.Builder().
@@ -60,20 +65,43 @@ public class HomeAdapter extends BaseAdapter {
                 penaltyLog().penaltyDeath().build());
 
         //数据初始化
-        setList();
+        String message = getTitleList();
+        setList(message);
     }
 
+    /*
+ * get cache as a list(for test only)
+ * @param
+ * @return a list contain cache
+ */
+    public String getTitleList(){
+        String cache = eventCache.getAsString(type + "");
+        if (cache == null) {
+            cache = getRemoteTitleList(type).getAsString(type + "");
+        }
+        return cache;
+    }
 
-    public void setList() {
-        //数据初始化
+    /*
+ * get events' titles from server as a list
+ * only return title
+ * @param
+ * @return a list contains events' titles
+ */
+    public ACache getRemoteTitleList(int type){
+        String response;
+        String postURL = "http://120.24.208.130:1501/event/get_nearby_event";
+        String postString = "{" +
+                "\"id\":" + user_id + ",\"state\":0," +
+                "\"type\":" + type + "}";
+
+        response = RequestHandler.sendPostRequest(postURL, postString);
+        eventCache.put(type + "", response);
+        return eventCache;
+    }
+
+    public void setList(String message) {
         try {
-            String jsonStrng = "{" +
-                    "\"id\":" + user_id + ",\"state\":0," +
-                    "\"type\":" + type + "}";
-
-            String message = RequestHandler.sendPostRequest(
-                    "http://120.24.208.130:1501/event/get_nearby_event", jsonStrng);
-            Log.v("asdf3qweqw", message);
             if (message == "false") {
                 item=new HashMap<String,Object>();
                 item.put("头像", R.drawable.icon);
