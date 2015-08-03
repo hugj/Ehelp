@@ -1,6 +1,10 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools" tools:context="com.ehelp.map.recievesos_map">
-    <item android:id="@+id/action_settings" android:title="回应"
-        android:orderInCategory="100" app:showAsAction="ifRoom" />
+    xmlns:tools="http://schemas.android.com/tools" tools:context="com.ehelp.map.recievesos_map"
+    android:id = "@+id/menu_recievesos_map">
+    <item android:id="@+id/action_respond" android:title="回应"
+        android:orderInCategory="100" app:showAsAction="never" />
+    <item android:id="@+id/action_concern" android:title="关注"
+        android:orderInCategory="100" app:showAsAction="never" />
+
 </menu>

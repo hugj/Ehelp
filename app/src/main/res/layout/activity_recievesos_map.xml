@@ -38,16 +38,15 @@
             android:layout_above="@+id/drive"
             android:layout_alignEnd="@+id/drive" />
 
-        <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="100sp"
-            android:inputType="textPersonName"
-            android:hint="SOS"
-            android:ems="10"
-            android:id="@+id/editText2"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="50sp"
-            android:layout_alignParentStart="true" />
+        <!--<TextView-->
+            <!--android:layout_width="fill_parent"-->
+            <!--android:layout_height="100sp"-->
+            <!--android:inputType="textPersonName"-->
+            <!--android:ems="10"-->
+            <!--android:id="@+id/editText2"-->
+            <!--android:layout_alignParentBottom="true"-->
+            <!--android:layout_marginBottom="50sp"-->
+            <!--android:layout_alignParentStart="true" />-->
 
         <ImageView
             android:layout_width="60sp"
@@ -68,6 +67,17 @@
             android:layout_marginTop="20sp"
             android:layout_alignParentEnd="true" />
 
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="健康卡"
+            android:background="#00cc33"
+            android:onClick="healthCardClick"
+            android:id="@+id/healthCard"
+            android:layout_alignBaseline="@+id/SOSusername"
+            android:layout_alignBottom="@+id/SOSusername"
+            android:layout_centerHorizontal="true" />
+
         <TextView
             android:layout_width="100sp"
             android:layout_height="20sp"
@@ -83,9 +93,19 @@
             android:layout_height="wrap_content"
             android:text="2005年7月18日   13点25分37秒"
             android:id="@+id/SOStime"
-            android:layout_marginBottom = "80sp"
-            android:layout_alignBottom="@+id/editText2"
+            android:layout_below="@+id/SOSlocation"
             android:layout_alignEnd="@+id/SOSlocation" />
+        <!--android:layout_alignBottom="@+id/editText2"-->
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="SOS"
+            android:id="@+id/problem"
+            android:layout_alignTop="@+id/SOSlocation"
+            android:layout_alignStart="@+id/imageView"
+            android:layout_marginStart="31dp" />
 
     </RelativeLayout>
 
