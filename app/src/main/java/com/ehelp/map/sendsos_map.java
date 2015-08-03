@@ -118,7 +118,6 @@ public class sendsos_map extends ActionBarActivity implements BaiduMap.OnMapClic
     private Toolbar mToolbar;
 
     //振动发声定义
-    private Button button7;
     //private SoundPool sp;
     private Vibrator vib;
 
@@ -219,33 +218,7 @@ public class sendsos_map extends ActionBarActivity implements BaiduMap.OnMapClic
     public boolean onMapPoiClick(MapPoi poi) {
         return false;
     }
-    /*/设置TOOLBAR
-    这个界面右上角无按钮
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            MenuItem it =(MenuItem)findViewById(R.id.action_ans);
-            it.setTitle("取消回应");
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_sendsos_map, menu);
-        return true;
-    }
-    //toolbar设置结束    */
     @Override
     protected void onPause() {
         mMapView.onPause();
@@ -536,10 +509,86 @@ public class sendsos_map extends ActionBarActivity implements BaiduMap.OnMapClic
         Log.v("sendsostest", tests1);
         String ss1 = String.valueOf(event_id);
         Log.v("sendsostest", ss1);
-        String send = "{\"id\":" + id + ",\"event_id\":" + event_id + "}";
+        String send = "{\"id\":" + id + ",\"event_id\":" + event_id + ",\"state\":"+0+"}";
 
         String msg = RequestHandler.sendPostRequest(
                 url, send);
         Log.v("sendsostest", msg);
+    }
+
+    public void chooseHealth(View v){
+        String url = "http://120.24.208.130:1501/event/modify";
+        SharedPreferences sp = getSharedPreferences("user_id", MODE_PRIVATE);
+        int id = sp.getInt("user_id", -1);
+        String send = "{\"id\":" + id + ",\"event_id\":" + event_id + ",\"demand_number\":"+1+"}";
+        String msg ="false";
+        msg = RequestHandler.sendPostRequest(
+                url, send);
+        if(msg == "false"){
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
+                                Toast.LENGTH_SHORT).show();
+                    }
+                });
+                return;
+        }
+        try{
+            JSONObject jO = new JSONObject(msg);
+            if (jO.getInt("status") == 500) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(getApplicationContext(), "设置失败",
+                                Toast.LENGTH_SHORT).show();
+                    }
+                });
+                return;
+            }else if(jO.getInt("status") == 200){
+                Toast.makeText(getApplicationContext(), "设置成功",
+                        Toast.LENGTH_SHORT).show();
+            }
+
+        }catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+    public void chooseSafe(View v){
+        String url = "http://120.24.208.130:1501/event/modify";
+        SharedPreferences sp = getSharedPreferences("user_id", MODE_PRIVATE);
+        int id = sp.getInt("user_id", -1);
+        String send = "{\"id\":" + id + ",\"event_id\":" + event_id + ",\"demand_number\":"+2+"}";
+        String msg = RequestHandler.sendPostRequest(
+                url, send);
+        if(msg == "false"){
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
+                            Toast.LENGTH_SHORT).show();
+                }
+            });
+            return;
+        }
+        try{
+            JSONObject jO = new JSONObject(msg);
+            if (jO.getInt("status") == 500) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(getApplicationContext(), "设置失败",
+                                Toast.LENGTH_SHORT).show();
+                    }
+                });
+                return;
+            }else if(jO.getInt("status") == 200){
+                Toast.makeText(getApplicationContext(), "设置成功",
+                        Toast.LENGTH_SHORT).show();
+            }
+
+        }catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 }

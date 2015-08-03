@@ -2,6 +2,7 @@ package com.ehelp.home;
 
 import android.content.Context;
 import android.os.StrictMode;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -72,6 +73,7 @@ public class HomeAdapter extends BaseAdapter {
 
             String message = RequestHandler.sendPostRequest(
                     "http://120.24.208.130:1501/event/get_nearby_event", jsonStrng);
+            Log.v("asdf3qweqw", message);
             if (message == "false") {
                 item=new HashMap<String,Object>();
                 item.put("头像", R.drawable.icon);
