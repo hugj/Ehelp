@@ -1,32 +1,21 @@
 package com.ehelp.evaluate;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.nfc.Tag;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
-import android.widget.ExpandableListView;
 import android.widget.RatingBar;
 import android.widget.TextView;
-
 
 import com.ehelp.R;
 import com.ehelp.map.sendhelp_map;
 import com.ehelp.send.CountNum;
 import com.ehelp.send.SendQuestion;
-<<<<<<< Updated upstream
-import com.ehelp.user.pinyin.AssortView;
-import com.ehelp.user.pinyin.PinyinAdapter;
-import com.ehelp.utils.RequestHandler;
-=======
-import com.ehelp.user.contactlist.AssortView;
-import com.ehelp.user.contactlist.PinyinAdapter;
->>>>>>> Stashed changes
 import com.wangjie.androidbucket.utils.ABTextUtil;
 import com.wangjie.androidbucket.utils.imageprocess.ABShape;
 import com.wangjie.androidinject.annotation.annotations.base.AILayout;
@@ -41,8 +30,6 @@ import com.wangjie.rapidfloatingactionbutton.contentimpl.labellist.RapidFloating
 import java.util.ArrayList;
 import java.util.List;
 
-import android.content.SharedPreferences;
-
 //import android.view.View.OnLongClickListener;
 
 /**
@@ -56,7 +43,8 @@ public class Comment extends AIActionBarActivity implements RapidFloatingActionC
     private RapidFloatingActionButton rfaButton;
     private RapidFloatingActionHelper rfabHelper;
     private Toolbar mToolbar;
-    //static int starnum = 1;//public static int starnumm =1;
+    //static int starnum = 1;
+    // public static int starnumm =1;
     private int starnum = 1;
     private String comment;
 
@@ -65,11 +53,9 @@ public class Comment extends AIActionBarActivity implements RapidFloatingActionC
     private int event_id;
     private SharedPreferences sp;
 
-    private PinyinAdapter adapter;
-    private ExpandableListView eListView;
-    private AssortView assortView;
-    private List<String> names;
-
+//    private ExpandableListView eListView;
+//    private AssortView assortView;
+//    private List<String> names;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

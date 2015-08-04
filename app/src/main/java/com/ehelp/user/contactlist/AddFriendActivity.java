@@ -1,13 +1,11 @@
 package com.ehelp.user.contactlist;
 
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
-<<<<<<< Updated upstream:app/src/main/java/com/ehelp/user/pinyin/AddFriendActivity.java
 import android.util.Log;
-=======
->>>>>>> Stashed changes:app/src/main/java/com/ehelp/user/contactlist/AddFriendActivity.java
 import android.view.View;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
@@ -19,8 +17,6 @@ import com.ehelp.utils.RequestHandler;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import android.content.SharedPreferences;
 
 
 public class AddFriendActivity extends ActionBarActivity {
