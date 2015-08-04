@@ -1,18 +1,14 @@
 package com.ehelp.map;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.os.Vibrator;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -38,43 +34,27 @@ import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.map.OverlayOptions;
 import com.baidu.mapapi.model.LatLng;
 import com.baidu.mapapi.model.LatLngBounds;
-import com.baidu.mapapi.overlayutil.DrivingRouteOverlay;
-import com.baidu.mapapi.overlayutil.OverlayManager;
-import com.baidu.mapapi.overlayutil.WalkingRouteOverlay;
-import com.baidu.mapapi.search.core.RouteLine;
-import com.baidu.mapapi.search.core.SearchResult;
-import com.baidu.mapapi.search.route.DrivingRoutePlanOption;
-import com.baidu.mapapi.search.route.DrivingRouteResult;
-import com.baidu.mapapi.search.route.OnGetRoutePlanResultListener;
-import com.baidu.mapapi.search.route.PlanNode;
-import com.baidu.mapapi.search.route.RoutePlanSearch;
-import com.baidu.mapapi.search.route.TransitRouteResult;
-import com.baidu.mapapi.search.route.WalkingRoutePlanOption;
-import com.baidu.mapapi.search.route.WalkingRouteResult;
 import com.ehelp.R;
 import com.ehelp.utils.RequestHandler;
 
-//手机振动与手机发声
-import android.os.Vibrator;
-//import android.media.SoundPool;
-//import android.media.AudioManager;
-//统计代码
-import cn.jpush.android.api.JPushInterface;
-//极光推送
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import javax.net.ssl.HttpsURLConnection;
 import java.net.URL;
-//严苛模式
-import android.os.StrictMode;
 
 import javax.net.ssl.HttpsURLConnection;
-import com.ehelp.utils.RequestHandler;
-import android.util.Log;
+
 import cn.jpush.android.api.JPushInterface;
-import org.json.JSONObject;
-import org.json.JSONException;
+
+//手机振动与手机发声
+//import android.media.SoundPool;
+//import android.media.AudioManager;
+//统计代码
+//极光推送
+//严苛模式
 
 //手机振动与手机发声
 //import android.media.SoundPool;
@@ -264,7 +244,7 @@ public class sendsos_map extends ActionBarActivity implements BaiduMap.OnMapClic
                         location.getLongitude());
                 MapStatusUpdate u = MapStatusUpdateFactory.newLatLng(ll);
                 mBaidumap.animateMapStatus(u);
-                longitude = location.getLatitude();
+                longitude = location.getLongitude();
                 latitude = location.getLatitude();
             }
 

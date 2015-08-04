@@ -18,6 +18,7 @@ package com.ehelp.home;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.support.v4.app.Fragment;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -31,6 +32,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ZoomControls;
 
 import com.baidu.location.BDLocation;
@@ -47,7 +49,6 @@ import com.baidu.mapapi.map.Marker;
 import com.baidu.mapapi.map.MarkerOptions;
 import com.baidu.mapapi.map.MyLocationConfiguration;
 import com.baidu.mapapi.map.MyLocationData;
-import com.baidu.mapapi.map.OverlayOptions;
 import com.baidu.mapapi.model.LatLng;
 import com.baidu.mapapi.model.LatLngBounds;
 import com.ehelp.R;
@@ -55,6 +56,10 @@ import com.ehelp.entity.Event;
 import com.ehelp.map.recieve_help_ans_map;
 import com.ehelp.map.recievesos_map;
 import com.ehelp.receive.QuestionDetail;
+import com.ehelp.utils.RequestHandler;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.List;
 
@@ -79,13 +84,12 @@ public class SuperAwesomeCardFragment extends Fragment {
     private int position;
     //private static final int[] drawables = { R.drawable.f, R.drawable.fi, R.drawable.f, R.drawable.fo};
 
-    //test point
-    private Marker mMarker1;
-    private Marker mMarker2;
-    private Marker mMarker3;
-    private Marker mMarker4;
-    private Marker mMarker5;
-    private Marker mMarker6;
+    private List<Event> helpList;
+    private List<Event> sosList;
+    public double lon;
+    public double lat;
+    boolean isVaild = false;
+
 
     public static SuperAwesomeCardFragment newInstance(int position) {
         SuperAwesomeCardFragment f = new SuperAwesomeCardFragment();
@@ -142,7 +146,6 @@ public class SuperAwesomeCardFragment extends Fragment {
             option.setScanSpan(1000);
             mLocClient.setLocOption(option);
             mLocClient.start();
-            init();
             int count = mMapView.getChildCount();
             for (int i = 0; i < count; i++) {
                 View child = mMapView.getChildAt(i);
@@ -150,6 +153,7 @@ public class SuperAwesomeCardFragment extends Fragment {
                     child.setVisibility(View.INVISIBLE);
                 }
             }
+            setLocation();
         } else if (position == 1) {
             fl.removeAllViews();
             ListView queList = new ListView(getActivity());
@@ -240,6 +244,12 @@ public class SuperAwesomeCardFragment extends Fragment {
                 MapStatusUpdate u = MapStatusUpdateFactory.newLatLngZoom(ll, 15); // 更新定位焦点与缩放级别;
                 mBaiduMap.animateMapStatus(u);
             }
+            lon = location.getLongitude();
+            lat = location.getLatitude();
+            if (!isVaild) {
+                send_info();
+                isVaild = true;
+            }
         }
 
         public void onReceivePoi(BDLocation poiLocation) {
@@ -274,47 +284,95 @@ public class SuperAwesomeCardFragment extends Fragment {
         }
         super.onDestroy();
     }
-
-    public void init() {
-        LatLngBounds.Builder builder = new LatLngBounds.Builder();
-        // 暂时提供三个点标注在地图上作为例子
-        LatLng pt1 = new LatLng(23.063309, 113.394004);
-        LatLng pt2 = new LatLng(23.052578, 113.410821);
-        LatLng pt3 = new LatLng(23.075286, 113.425934);
-        LatLng pt4 = new LatLng(23.055286, 113.435934);
-        LatLng pt5 = new LatLng(23.045286, 113.415934);
-        LatLng pt6 = new LatLng(23.245286, 113.435934);
+    public void setLocation() {
+        HomeAdapter que1 = new HomeAdapter(getActivity(), user_id, 1);
+        HomeAdapter que2 = new HomeAdapter(getActivity(), user_id, 2);
+        helpList = que1.getEvent();
+        sosList = que2.getEvent();
 
         BitmapDescriptor bd = BitmapDescriptorFactory.fromResource(R.drawable.icon_gcoding);
-        OverlayOptions o1 = new MarkerOptions().icon(bd).position(pt1);
-        OverlayOptions o2 = new MarkerOptions().icon(bd).position(pt2);
-        OverlayOptions o3 = new MarkerOptions().icon(bd).position(pt3);
-        OverlayOptions o4 = new MarkerOptions().icon(bd).position(pt4);
-        OverlayOptions o5 = new MarkerOptions().icon(bd).position(pt5);
-        OverlayOptions o6 = new MarkerOptions().icon(bd).position(pt6);
+        LatLngBounds.Builder builder = new LatLngBounds.Builder();
 
-        mBaiduMap.addOverlay(o1);
-        mBaiduMap.addOverlay(o2);
-        mBaiduMap.addOverlay(o3);
-        mBaiduMap.addOverlay(o4);
-        mBaiduMap.addOverlay(o5);
-        mBaiduMap.addOverlay(o6);
+        //遍历所有求助类型显示到地图上
+        for (Event help : helpList) {
+            LatLng pt = new LatLng(help.getLatitude(), help.getLongitude());
+//          OverlayOptions o = new MarkerOptions().icon(bd).position(pt);
+            MarkerOptions markerOptions = new MarkerOptions().icon(bd).position(pt);
+            Marker mMarker1 = (Marker) (mBaiduMap.addOverlay(markerOptions));
+            Bundle bundle = new Bundle();
+            int type = 1;
+            bundle.putSerializable("event", help);
+            bundle.putInt("type", type);
+            mMarker1.setExtraInfo(bundle);
+        }
 
-        builder.include(pt1);
-        builder.include(pt2);
-        builder.include(pt3);
-        builder.include(pt4);
-        builder.include(pt5);
-        builder.include(pt6);
-
-
-        mMarker1 = (Marker) (mBaiduMap.addOverlay(o1));
-        mMarker2 = (Marker) (mBaiduMap.addOverlay(o2));
-        mMarker3 = (Marker) (mBaiduMap.addOverlay(o3));
-        mMarker4 = (Marker) (mBaiduMap.addOverlay(o3));
-        mMarker5 = (Marker) (mBaiduMap.addOverlay(o3));
-        mMarker6 = (Marker) (mBaiduMap.addOverlay(o3));
+        //遍历所有sos信息
+        for (Event sos : sosList) {
+            LatLng pt = new LatLng(sos.getLatitude(), sos.getLongitude());
+            MarkerOptions markerOptions = new MarkerOptions().icon(bd).position(pt);
+            builder.include(pt);
+            Marker mMarker1 = (Marker) (mBaiduMap.addOverlay(markerOptions));
+            Bundle bundle = new Bundle();
+            int eventid = sos.getEventId();
+            int type = 2;
+            bundle.putInt("eventid", eventid);
+            bundle.putInt("type", type);
+            mMarker1.setExtraInfo(bundle);
+        }
+        mBaiduMap.setOnMarkerClickListener(new BaiduMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(Marker marker) {
+                // TODO Auto-generated method stub
+                Toast.makeText(getActivity().getApplicationContext(), "Marker被点击了！", Toast.LENGTH_SHORT).show();
+                int type = (int) marker.getExtraInfo().get("type");
+                if (type == 2) {
+                    int eventid = (int) marker.getExtraInfo().get("eventid");
+                    Intent intent = new Intent(getActivity(), recievesos_map.class);
+                    intent.putExtra(EXTRA_MESSAGE, eventid);
+                    startActivity(intent);
+                } else {
+                    Event event = (Event) marker.getExtraInfo().get("event");
+                    Intent intent = new Intent(getActivity(), recieve_help_ans_map.class);
+                    intent.putExtra(EXTRA_MESSAGE, event);
+                    startActivity(intent);
+                }
+                return false;
+            }
+        });
     }
 
+    //初次传输地理位置信息
+    public void send_info() {
+        StrictMode.setThreadPolicy(
+                new StrictMode.ThreadPolicy.Builder().
+                        detectDiskReads().detectDiskWrites().detectNetwork().penaltyLog().build());
+        StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder().
+                detectLeakedSqlLiteObjects().detectLeakedClosableObjects().
+                penaltyLog().penaltyDeath().build());
+        String jsonStrng = "{" +
+                "\"id\":" + user_id + ",\"type\":1," +
+                "\"longitude\":" +  lon + "," +
+                "\"latitude\":" + lat + "}";
+        String message = RequestHandler.sendPostRequest(
+                "http://120.24.208.130:1501/user/modify_information", jsonStrng);
+        if (message == "false") {
+            Toast.makeText(getActivity().getApplicationContext(), "连接失败，请检查网络是否连接并重试",
+                    Toast.LENGTH_SHORT).show();
+        }else {
+            JSONObject jO = null;
+            try {
+                jO = new JSONObject(message);
+                if (jO.getInt("status") == 500) {
+                    Toast.makeText(getActivity().getApplicationContext(), "fuck",
+                            Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getActivity().getApplicationContext(), "good job",
+                            Toast.LENGTH_SHORT).show();
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }
 
