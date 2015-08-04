@@ -179,7 +179,6 @@
             android:name=".send.SendQuestion"
             android:label="@string/title_activity_send_question"
             android:parentActivityName=".account.login" >
-
         </activity>
         <activity
             android:name=".send.SendHelp"
@@ -315,11 +314,16 @@
         <activity
             android:name=".user.history.MyHistory"
             android:label="@string/title_activity_my_history"
-            android:parentActivityName=".home.Home" >
+            android:parentActivityName=".account.login" >
         </activity>
         <activity android:name=".user.contactlist.ContactlistActivity"
             android:label="@string/title_activity_contactlist"
-            android:parentActivityName=".home.Home">
+            android:parentActivityName=".account.login">
+        </activity>
+        <activity
+            android:name=".user.history.EndSosActivity"
+            android:label="@string/title_activity_end_sos"
+            android:parentActivityName=".account.login" >
         </activity>
     </application>
 

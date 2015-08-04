@@ -92,5 +92,6 @@
     <string name="title_activity_add_friend">AddFriendActivity</string>
     <string name="title_activity_my_history">MyHistory</string>
     <string name="title_activity_add_ans">AddAns</string>
+    <string name="title_activity_end_sos">EndSosActivity</string>
     <string name="title_activity_excontactlist">ExcontactlistActivity</string>
 </resources>
