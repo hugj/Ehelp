@@ -196,20 +196,6 @@
             <!--</intent-filter>-->
         </activity>
         <activity
-            android:name=".user.contactlist.ContactlistActivity"
-            android:label="@string/title_activity_contactlist"
-            android:parentActivityName=".account.login" >
-
-            <!--
-         android:parentActivityName=".Test" 改变这句话后通讯录的返回键就可以正常返回了。
-         android:value="com.ehelp.Test" 下面的meta-data似乎没有什么卵用
-            -->
-        </activity>
-        <activity
-            android:name=".user.contactlist.adapterchatActivity"
-            android:label="@string/title_activity_adapterchat" >
-        </activity>
-        <activity
             android:name=".user.usermes.homepageActivity"
             android:label="@string/title_activity_homepage"
             android:parentActivityName=".account.login" >
@@ -217,11 +203,7 @@
         <activity
             android:name=".user.contactlist.messageActivity"
             android:label="@string/title_activity_message"
-<<<<<<< Updated upstream
             android:parentActivityName=".account.login" >
-=======
-            android:parentActivityName=".user.contactlist.ContactlistActivity" >
->>>>>>> Stashed changes
         </activity>
         <activity
             android:name=".user.setting.SettingActivity"
@@ -231,20 +213,12 @@
         <activity
             android:name=".user.setting.AccountsafeActivity"
             android:label="@string/title_activity_accountsafe"
-<<<<<<< Updated upstream
             android:parentActivityName=".account.login" >
-=======
-            android:parentActivityName=".user.setting.SettingActivity" >
->>>>>>> Stashed changes
         </activity>
         <activity
             android:name=".user.setting.ChangepasswordActivity"
             android:label="@string/title_activity_changepassword"
-<<<<<<< Updated upstream
             android:parentActivityName=".account.login" >
-=======
-            android:parentActivityName=".user.setting.AccountsafeActivity" >
->>>>>>> Stashed changes
         </activity>
         <activity
             android:name=".map.recievehelp_map"
@@ -326,48 +300,26 @@
         <activity
             android:name=".user.setting.ChangephoneActivity"
             android:label="@string/title_activity_changephone"
-<<<<<<< Updated upstream
             android:parentActivityName=".account.login" >
-=======
-            android:parentActivityName=".user.setting.AccountsafeActivity" >
->>>>>>> Stashed changes
         </activity>
         <activity
             android:name=".user.contactlist.AddFriendActivity"
             android:label="@string/title_activity_add_friend"
-<<<<<<< Updated upstream
             android:parentActivityName=".account.login" >
-=======
-            android:parentActivityName=".user.contactlist.ContactlistActivity" >
->>>>>>> Stashed changes
-        </activity>
-        <activity
-            android:name=".user.history.MyHistory"
-            android:label="@string/title_activity_my_history"
-<<<<<<< Updated upstream
-            android:parentActivityName=".account.login">
-=======
-            android:parentActivityName=".home.Home" >
->>>>>>> Stashed changes
         </activity>
         <activity
             android:name=".receive.AddAns"
-<<<<<<< Updated upstream
             android:label="@string/title_activity_add_ans"
             android:parentActivityName=".account.login">
-
-=======
-            android:label="@string/title_activity_add_ans" >
         </activity>
         <activity
             android:name=".user.history.MyHistory"
             android:label="@string/title_activity_my_history"
             android:parentActivityName=".home.Home" >
         </activity>
-        <activity
-            android:name=".user.contactlist.ExcontactlistActivity"
-            android:label="@string/title_activity_excontactlist" >
->>>>>>> Stashed changes
+        <activity android:name=".user.contactlist.ContactlistActivity"
+            android:label="@string/title_activity_contactlist"
+            android:parentActivityName=".home.Home">
         </activity>
     </application>
 

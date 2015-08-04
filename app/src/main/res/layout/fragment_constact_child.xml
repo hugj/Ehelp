@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="65dp"
+    android:background="@drawable/mm_listitem" >
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="0.1dp"
+        android:layout_alignParentTop="true"
+        android:background="#F0F0F0" />
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="6.0dip"
+        android:paddingTop="6.0dip" >
+
+        <ImageView
+            android:id="@+id/icon"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10.0dip"
+            android:contentDescription="@string/app_name"
+            android:scaleType="centerCrop"
+            android:src="@drawable/icon" />
+
+        <TextView
+            android:id="@+id/contact_list_item_name"
+            android:layout_width="fill_parent"
+            android:layout_height="25.0dip"
+            android:layout_marginLeft="10.0dip"
+            android:layout_marginRight="18.0dip"
+            android:layout_toRightOf="@id/icon"
+            android:ellipsize="end"
+            android:gravity="left|center"
+            android:includeFontPadding="false"
+            android:padding="0.0dip"
+            android:singleLine="true"
+            android:textSize="16.0sp" />
+
+        <TextView
+            android:id="@+id/cpntact_list_item_state"
+            android:layout_width="fill_parent"
+            android:layout_height="25.0dip"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/contact_list_item_name"
+            android:layout_marginLeft="10.0dip"
+            android:layout_marginRight="18.0dip"
+            android:layout_toRightOf="@id/icon"
+            android:ellipsize="end"
+            android:gravity="left|center"
+            android:drawableRight="@drawable/ic_phone"
+            android:includeFontPadding="false"
+            android:padding="0.0dip"
+            android:singleLine="true"
+            android:textColor="#999999"
+            android:textSize="12.0sp" />
+    </RelativeLayout>
+
+</RelativeLayout>
