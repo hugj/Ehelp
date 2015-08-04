@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.os.StrictMode;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -13,6 +12,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -32,6 +32,7 @@ import com.ehelp.user.pinyin.Health;
 import com.ehelp.user.pinyin.SettingActivity;
 import com.ehelp.user.pinyin.homepageActivity;
 import com.ehelp.utils.ActivityCollector;
+import com.ehelp.utils.RequestHandler;
 import com.wangjie.androidbucket.utils.ABTextUtil;
 import com.wangjie.androidbucket.utils.imageprocess.ABShape;
 import com.wangjie.androidinject.annotation.annotations.base.AILayout;
@@ -45,16 +46,16 @@ import com.wangjie.rapidfloatingactionbutton.contentimpl.labellist.RapidFloating
 
 import java.util.ArrayList;
 import java.util.List;
-//推送统计代码
+
 import cn.jpush.android.api.JPushInterface;
+
+//推送统计代码
 //推送代码
-import com.ehelp.utils.RequestHandler;
-import android.util.Log;
 //自定义Receiver
-import android.content.BroadcastReceiver;
 
 @AILayout(R.layout.activity_home)
-public class Home extends AIActionBarActivity implements RapidFloatingActionContentLabelList.OnRapidFloatingActionContentLabelListListener {
+public class Home extends AIActionBarActivity implements
+        RapidFloatingActionContentLabelList.OnRapidFloatingActionContentLabelListListener {
     @AIView(R.id.label_list_sample_rfal)
     private RapidFloatingActionLayout rfaLayout;
     @AIView(R.id.label_list_sample_rfab)
@@ -67,6 +68,7 @@ public class Home extends AIActionBarActivity implements RapidFloatingActionCont
     private Toolbar mToolbar;
     private int user_id;
     private SharedPreferences sharedPref;
+    private List<BaseFragment> fragments = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -185,6 +187,10 @@ public class Home extends AIActionBarActivity implements RapidFloatingActionCont
         setSupportActionBar(mToolbar);
         TextView tvv =(TextView) findViewById(R.id.titlefortoolbar);
         tvv.setText("Ehelp");
+
+        fragments.add(new HomeMapActivity());
+        fragments.add(new HomeSOSActivity());
+        //fragments.add(new FragmentC());
 
         mToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
@@ -313,19 +319,18 @@ public class Home extends AIActionBarActivity implements RapidFloatingActionCont
 
         @Override
         public CharSequence getPageTitle(int position) {
-            return TITLES[position];
+            return fragments.get(position).getTitle();
         }
 
         @Override
         public int getCount() {
-            return TITLES.length;
+            return fragments.size();
         }
 
         @Override
         public Fragment getItem(int position) {
-            SuperAwesomeCardFragment it = SuperAwesomeCardFragment.newInstance(position);
-            it.getUserID(user_id);
-            return it;
+            fragments.get(position).setUserID(user_id);
+            return fragments.get(position);
         }
 
     }

@@ -179,7 +179,6 @@
             android:name=".send.SendQuestion"
             android:label="@string/title_activity_send_question"
             android:parentActivityName=".account.login" >
-
         </activity>
         <activity
             android:name=".send.SendHelp"
@@ -189,11 +188,13 @@
         <activity
             android:name=".Test"
             android:label="@string/title_activity_test" >
-            <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.MAIN" />-->
 
-                <!--<category android:name="android.intent.category.LAUNCHER" />-->
-            <!--</intent-filter>-->
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
+
+
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
         </activity>
         <activity
             android:name=".user.pinyin.ContactlistActivity"
@@ -245,10 +246,10 @@
         <service
             android:name="com.baidu.location.f"
             android:enabled="true"
-            android:process=":remote"
-            android:permission="android.permission.BAIDU_LOCATION_SERVICE">
+            android:permission="android.permission.BAIDU_LOCATION_SERVICE"
+            android:process=":remote" >
             <intent-filter>
-                <action android:name="com.baidu.location.service_v2.6"></action>
+                <action android:name="com.baidu.location.service_v2.6" />
             </intent-filter>
         </service>
 
@@ -324,13 +325,20 @@
         <activity
             android:name=".user.history.MyHistory"
             android:label="@string/title_activity_my_history"
-            android:parentActivityName=".account.login">
+            android:parentActivityName=".account.login" >
         </activity>
         <activity
             android:name=".receive.AddAns"
             android:label="@string/title_activity_add_ans"
-            android:parentActivityName=".account.login">
-
+            android:parentActivityName=".account.login" >
+        </activity>
+        <activity
+            android:name=".home.HomeMapActivity"
+            android:label="@string/title_activity_home_map" >
+        </activity>
+        <activity
+            android:name=".home.HomeSOSActivity"
+            android:label="@string/title_activity_home_sos" >
         </activity>
     </application>
 

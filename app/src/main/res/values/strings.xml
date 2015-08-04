@@ -92,4 +92,11 @@
     <string name="title_activity_add_friend">AddFriendActivity</string>
     <string name="title_activity_my_history">MyHistory</string>
     <string name="title_activity_add_ans">AddAns</string>
+    <string name="title_activity_home_map">HomeMapActivity</string>
+
+    <!-- 用于通过唯一的identificationCode获取 -->
+    <string name="rfab_identification_code_fragment_a">RFAB_IDENTIFICATION_CODE_FRAGMENT_A</string>
+    <string name="rfab_identification_code_fragment_b">RFAB_IDENTIFICATION_CODE_FRAGMENT_B</string>
+    <string name="rfab_identification_code_fragment_c">RFAB_IDENTIFICATION_CODE_FRAGMENT_C</string>
+    <string name="title_activity_home_sos">HomeSOSActivity</string>
 </resources>

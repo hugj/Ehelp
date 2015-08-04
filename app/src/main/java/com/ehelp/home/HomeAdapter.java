@@ -76,7 +76,7 @@ public class HomeAdapter extends BaseAdapter {
  */
     public String getTitleList(){
         String cache = eventCache.getAsString(type + "");
-        if (cache == null) {
+        if ((cache.isEmpty()) || (cache.equals("false"))) {
             cache = getRemoteTitleList(type).getAsString(type + "");
         }
         return cache;
@@ -102,7 +102,7 @@ public class HomeAdapter extends BaseAdapter {
 
     public void setList(String message) {
         try {
-            if (message == "false") {
+            if (message.equals("false")) {
                 item=new HashMap<String,Object>();
                 item.put("头像", R.drawable.icon);
                 item.put("标题", "连接失败，请检查网络是否连接并重试");
