@@ -51,8 +51,8 @@ public class SendHelp extends AIActionBarActivity implements RapidFloatingAction
     private String event;
     private String share_money;
     private String desc_event;
-    public String jingdu;
-    public String weidu;
+    public String longitude;
+    public String latitude;
     public String need_peo;
 
     private SharedPreferences sharedPref;
@@ -70,9 +70,9 @@ public class SendHelp extends AIActionBarActivity implements RapidFloatingAction
 
         //get the information of sendhelp_map location
         Bundle bunde = this.getIntent().getExtras();
-        jingdu = bunde.getString("longitude").toString();
-        weidu = bunde.getString("latitude").toString();
-        Toast.makeText(SendHelp.this, jingdu + weidu, Toast.LENGTH_SHORT).show();
+        longitude = bunde.getString("longitude").toString();
+        latitude = bunde.getString("latitude").toString();
+        Toast.makeText(SendHelp.this, latitude + longitude, Toast.LENGTH_SHORT).show();
     }
 
     private void init() {
@@ -197,8 +197,8 @@ public class SendHelp extends AIActionBarActivity implements RapidFloatingAction
             share_money = Eshare_money.getText().toString();
             need_peo = Eneed_peo.getText().toString();
             if (!event.isEmpty() && !need_peo.isEmpty()) {
-                double Djingdu = Double.valueOf(jingdu.toString());
-                double Dweidu = Double.valueOf(weidu.toString());
+                double Dlongitude = Double.valueOf(longitude.toString());
+                double Dlatitude = Double.valueOf(latitude.toString());
                 int Ishare_money = Integer.parseInt(share_money);
                 int Ineed_peo = Integer.parseInt(need_peo);
 
@@ -206,12 +206,12 @@ public class SendHelp extends AIActionBarActivity implements RapidFloatingAction
                         "\"id\":" + user_id + ",\"type\":1," +
                         "\"title\":\"" + event + "\"," +
                         "\"content\":\"" + desc_event + "\"," +
-                        "\"longitude\":" +  Djingdu + "," +
-                        "\"latitude\":" + Dweidu + "," +
+                        "\"longitude\":" +  Dlongitude + "," +
+                        "\"latitude\":" + Dlatitude + "," +
                         "\"love_coin\":" + Ishare_money + "," +
                         "\"demand_number\":" + Ineed_peo + "}";
                 Toast.makeText(getApplicationContext(), user_id + "," + event + ","
-                                + desc_event + "," + Djingdu + ",",
+                                + desc_event + "," + Dlatitude + "," + Dlongitude,
                         Toast.LENGTH_SHORT).show();
                 String message = RequestHandler.sendPostRequest(
                         "http://120.24.208.130:1501/event/add", jsonStrng);
