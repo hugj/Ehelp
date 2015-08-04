@@ -196,41 +196,27 @@
             <!--</intent-filter>-->
         </activity>
         <activity
-            android:name=".user.pinyin.ContactlistActivity"
-            android:label="@string/title_activity_contactlist"
-            android:parentActivityName=".account.login" >
-
-            <!--
-         android:parentActivityName=".Test" 改变这句话后通讯录的返回键就可以正常返回了。
-         android:value="com.ehelp.Test" 下面的meta-data似乎没有什么卵用
-            -->
-        </activity>
-        <activity
-            android:name=".user.pinyin.adapterchatActivity"
-            android:label="@string/title_activity_adapterchat" >
-        </activity>
-        <activity
-            android:name=".user.pinyin.homepageActivity"
+            android:name=".user.usermes.homepageActivity"
             android:label="@string/title_activity_homepage"
             android:parentActivityName=".account.login" >
         </activity>
         <activity
-            android:name=".user.pinyin.messageActivity"
+            android:name=".user.contactlist.messageActivity"
             android:label="@string/title_activity_message"
             android:parentActivityName=".account.login" >
         </activity>
         <activity
-            android:name=".user.pinyin.SettingActivity"
+            android:name=".user.setting.SettingActivity"
             android:label="@string/title_activity_setting"
             android:parentActivityName=".account.login" >
         </activity>
         <activity
-            android:name=".user.pinyin.AccountsafeActivity"
+            android:name=".user.setting.AccountsafeActivity"
             android:label="@string/title_activity_accountsafe"
             android:parentActivityName=".account.login" >
         </activity>
         <activity
-            android:name=".user.pinyin.ChangepasswordActivity"
+            android:name=".user.setting.ChangepasswordActivity"
             android:label="@string/title_activity_changepassword"
             android:parentActivityName=".account.login" >
         </activity>
@@ -257,7 +243,7 @@
             android:parentActivityName=".account.login" >
         </activity>
         <activity
-            android:name=".user.pinyin.MessetnameActivity"
+            android:name=".user.usermes.MessetnameActivity"
             android:label="@string/title_activity_mesnotename" >
         </activity>
         <activity
@@ -266,7 +252,7 @@
             android:parentActivityName=".account.login" >
         </activity>
         <activity
-            android:name=".user.pinyin.Health"
+            android:name=".user.healthcard.Health"
             android:label="@string/title_activity_health"
             android:parentActivityName=".account.login" >
         </activity>
@@ -312,25 +298,28 @@
             android:parentActivityName=".account.login" >
         </activity>
         <activity
-            android:name=".user.pinyin.ChangephoneActivity"
+            android:name=".user.setting.ChangephoneActivity"
             android:label="@string/title_activity_changephone"
             android:parentActivityName=".account.login" >
         </activity>
         <activity
-            android:name=".user.pinyin.AddFriendActivity"
+            android:name=".user.contactlist.AddFriendActivity"
             android:label="@string/title_activity_add_friend"
             android:parentActivityName=".account.login" >
-        </activity>
-        <activity
-            android:name=".user.history.MyHistory"
-            android:label="@string/title_activity_my_history"
-            android:parentActivityName=".account.login">
         </activity>
         <activity
             android:name=".receive.AddAns"
             android:label="@string/title_activity_add_ans"
             android:parentActivityName=".account.login">
-
+        </activity>
+        <activity
+            android:name=".user.history.MyHistory"
+            android:label="@string/title_activity_my_history"
+            android:parentActivityName=".home.Home" >
+        </activity>
+        <activity android:name=".user.contactlist.ContactlistActivity"
+            android:label="@string/title_activity_contactlist"
+            android:parentActivityName=".home.Home">
         </activity>
     </application>
 

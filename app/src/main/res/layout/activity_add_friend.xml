@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.ehelp.user.pinyin.AddFriendActivity"
+    tools:context="com.ehelp.user.contactlist.AddFriendActivity"
     android:weightSum="1">
     <include layout="@layout/toolbar" />
 <!--
