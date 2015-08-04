@@ -99,4 +99,6 @@
     <string name="rfab_identification_code_fragment_b">RFAB_IDENTIFICATION_CODE_FRAGMENT_B</string>
     <string name="rfab_identification_code_fragment_c">RFAB_IDENTIFICATION_CODE_FRAGMENT_C</string>
     <string name="title_activity_home_sos">HomeSOSActivity</string>
+    <string name="title_activity_home_help">HomeHelpActivity</string>
+    <string name="title_activity_home_que">HomeQueActivity</string>
 </resources>

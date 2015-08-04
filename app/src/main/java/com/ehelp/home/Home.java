@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.os.StrictMode;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -27,9 +26,9 @@ import com.ehelp.home.widget.PagerSlidingTabStrip;
 import com.ehelp.map.sendhelp_map;
 import com.ehelp.send.CountNum;
 import com.ehelp.send.SendQuestion;
-import com.ehelp.user.history.MyHistory;
 import com.ehelp.user.contactlist.ContactlistActivity;
 import com.ehelp.user.healthcard.Health;
+import com.ehelp.user.history.MyHistory;
 import com.ehelp.user.setting.SettingActivity;
 import com.ehelp.user.usermes.homepageActivity;
 import com.ehelp.utils.ActivityCollector;
@@ -47,13 +46,12 @@ import com.wangjie.rapidfloatingactionbutton.contentimpl.labellist.RapidFloating
 
 import java.util.ArrayList;
 import java.util.List;
-//推送统计代码
+
 import cn.jpush.android.api.JPushInterface;
+
+//推送统计代码
 //推送代码
-import com.ehelp.utils.RequestHandler;
-import android.util.Log;
 //自定义Receiver
-import android.content.BroadcastReceiver;
 
 @AILayout(R.layout.activity_home)
 public class Home extends AIActionBarActivity implements
@@ -192,7 +190,8 @@ public class Home extends AIActionBarActivity implements
 
         fragments.add(new HomeMapActivity());
         fragments.add(new HomeSOSActivity());
-        //fragments.add(new FragmentC());
+        fragments.add(new HomeHelpActivity());
+        fragments.add(new HomeQueActivity());
 
         mToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override

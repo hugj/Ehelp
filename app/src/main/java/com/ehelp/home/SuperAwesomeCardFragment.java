@@ -69,6 +69,7 @@ public class SuperAwesomeCardFragment extends Fragment {
     public MyLocationListenner myListener = new MyLocationListenner();
     private MyLocationConfiguration.LocationMode mCurrentMode;
     BitmapDescriptor mCurrentMarker;
+    private ACache eventCache;// event cache
 
     MapView mMapView;
     BaiduMap mBaiduMap;
@@ -158,7 +159,7 @@ public class SuperAwesomeCardFragment extends Fragment {
             fl.removeAllViews();
             ListView queList = new ListView(getActivity());
             queList.setLayoutParams(new LinearLayout.LayoutParams(-1, -1));
-            HomeAdapter que = new HomeAdapter(getActivity(), user_id, 2);
+            HomeAdapter que = new HomeAdapter(getActivity(), user_id, 2, eventCache);
             queList.setAdapter(que);
             queList.setDividerHeight(20);
             fl.addView(queList);
@@ -182,7 +183,7 @@ public class SuperAwesomeCardFragment extends Fragment {
             //queList.setBackgroundColor(0x666666);
             //queList.setAlpha(125);
             queList.setDividerHeight(20);
-            HomeAdapter que = new HomeAdapter(getActivity(), user_id, 1);
+            HomeAdapter que = new HomeAdapter(getActivity(), user_id, 1, eventCache);
             queList.setAdapter(que);
             fl.addView(queList);
 
@@ -201,7 +202,7 @@ public class SuperAwesomeCardFragment extends Fragment {
             fl.removeAllViews();
             ListView queList = new ListView(getActivity());
             queList.setLayoutParams(new LinearLayout.LayoutParams(-1, -1));
-            HomeAdapter que = new HomeAdapter(getActivity(), user_id, 0);
+            HomeAdapter que = new HomeAdapter(getActivity(), user_id, 0, eventCache);
             queList.setAdapter(que);
             queList.setDividerHeight(20);
             fl.addView(queList);
@@ -285,8 +286,8 @@ public class SuperAwesomeCardFragment extends Fragment {
         super.onDestroy();
     }
     public void setLocation() {
-        HomeAdapter que1 = new HomeAdapter(getActivity(), user_id, 1);
-        HomeAdapter que2 = new HomeAdapter(getActivity(), user_id, 2);
+        HomeAdapter que1 = new HomeAdapter(getActivity(), user_id, 1, eventCache);
+        HomeAdapter que2 = new HomeAdapter(getActivity(), user_id, 2, eventCache);
         helpList = que1.getEvent();
         sosList = que2.getEvent();
 
