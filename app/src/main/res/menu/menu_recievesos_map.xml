@@ -6,5 +6,7 @@
         android:orderInCategory="100" app:showAsAction="never" />
     <item android:id="@+id/action_concern" android:title="关注"
         android:orderInCategory="100" app:showAsAction="never" />
+    <item android:id="@+id/action_comment" android:title="评论"
+        android:orderInCategory="100" app:showAsAction="never" />
 
 </menu>

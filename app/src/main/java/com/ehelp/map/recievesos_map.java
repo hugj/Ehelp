@@ -338,6 +338,9 @@ public class recievesos_map extends ActionBarActivity implements BaiduMap.OnMapC
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
+        if(id == R.id.action_comment){
+            //点击评论按钮
+        }
 
         //noinspection SimplifiableIfStatement
         if (item.getTitle().toString().equals("回应")||item.getTitle().toString().equals("关注")){
