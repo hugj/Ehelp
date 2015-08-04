@@ -1,11 +1,14 @@
-package com.ehelp.user.pinyin;
+package com.ehelp.user.healthcard;
 
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
@@ -16,16 +19,30 @@ import android.widget.Toast;
 import com.ehelp.R;
 import com.ehelp.utils.RequestHandler;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.Calendar;
 
 public class Health extends ActionBarActivity {
-
+    private String TAG = "myowndeveloptest";
+    //Dialog定义
     private AlertDialog EditanaphylaxisDialog = null;
     private AlertDialog EditmedicineDialog = null;
     private AlertDialog EditbloodtypeDialog = null;
     private AlertDialog EditillnessDialog = null;
     private AlertDialog EditheightDialog = null;
     private AlertDialog EditweightDialog = null;
+
+    private TextView anaphylaxis;
+    private TextView medicine_taken;
+    private TextView bloodtype;
+    private TextView medihistory;
+    private TextView height;
+    private TextView weight;
+
+    private int user_id;
+    private SharedPreferences SharedPref;
 
     private final static int DATE_DIALOG = 0;
     private TextView edt = null;
@@ -38,6 +55,63 @@ public class Health extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_health);
+
+        anaphylaxis = (TextView)findViewById(R.id.allergy2);
+        medicine_taken = (TextView)findViewById(R.id.medicine2);
+        bloodtype = (TextView)findViewById(R.id.bloodType2);
+        medihistory = (TextView)findViewById(R.id.mediHistory2);
+        height = (TextView)findViewById(R.id.height2);
+        weight = (TextView)findViewById(R.id.weight2);
+
+        SharedPref = this.getSharedPreferences("user_id", Context.MODE_PRIVATE);
+        user_id = SharedPref.getInt("user_id", -1);
+        String jsonString = "{" +
+                "\"id\":" + user_id + "}";
+        String message = RequestHandler.sendPostRequest(
+                "http://120.24.208.130:1501/health/query", jsonString);
+        if (message.equals("false")) {
+            Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
+                    Toast.LENGTH_SHORT).show();
+        } else {
+            try {
+                JSONObject j = new JSONObject(message);
+                if (j.getInt("status") == 500) {
+                    Toast.makeText(getApplicationContext(), "用户未登陆",
+                            Toast.LENGTH_SHORT).show();
+                } else {
+                    if (j.getJSONObject("health_list") == null) {
+                        //显示过敏反应
+                        anaphylaxis.setText("无");
+                        //显示药物使用
+                        medicine_taken.setText("无");
+                        //显示血型
+                        bloodtype.setText("无");
+                        //显示病史
+                        medihistory.setText("无");
+                        //显示身高
+                        height.setText("无");
+                        //显示体重
+                        weight.setText("无");
+                    } else {
+                        JSONObject jo = j.getJSONObject("health_list");
+                        //显示过敏反应
+                        anaphylaxis.setText(jo.getString("anaphylaxis"));
+                        //显示药物使用
+                        medicine_taken.setText(jo.getString("medicine_taken"));
+                        //显示血型
+                        bloodtype.setText(jo.getString("blood_type"));
+                        //显示病史
+                        medihistory.setText(jo.getString("medical_history"));
+                        //显示身高
+                        height.setText(String.valueOf(jo.getInt("height")));
+                        //显示体重
+                        weight.setText(String.valueOf(jo.getInt("weight")));
+                    }
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
 
         init();
     }
@@ -75,20 +149,25 @@ public class Health extends ActionBarActivity {
                         .setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                /*//修改用户资料里面的用户名
-                                EditText Get_edittext = (EditText)EditnameDialog.getWindow()
-                                        .findViewById(R.id.edit_username4);
+                                //修改过敏反应
+                                EditText Get_edittext = (EditText)EditanaphylaxisDialog.getWindow()
+                                        .findViewById(R.id.edit_healthcard_anaphylaxis4);
                                 //获取输入的字符串,通过user_id来修改信息
-                                emp = Get_edittext.getText().toString();
+                                String emp = Get_edittext.getText().toString();
                                 String jsonString = "{" +
                                         "\"id\":" + user_id + "," +
-                                        "\"name\":\"" +  emp + "\" " + "}";
+                                        "\"anaphylaxis\":\"" +  emp + "\"" + "}";
                                 String message = RequestHandler.sendPostRequest(
-                                        "http://120.24.208.130:1501/user/modify_information", jsonString);
-                                Username.setText(emp);*/
-
-                                Toast.makeText(getApplicationContext(), "修改过敏反应成功",
-                                        Toast.LENGTH_SHORT).show();
+                                        "http://120.24.208.130:1501/health/upload", jsonString);
+                                Log.v(TAG, "return anaphylaxis" + message);
+                                if (message.equals("false")) {
+                                    Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
+                                            Toast.LENGTH_SHORT).show();
+                                } else {
+                                    anaphylaxis.setText(emp);
+                                    Toast.makeText(getApplicationContext(), "修改过敏反应成功",
+                                            Toast.LENGTH_SHORT).show();
+                                }
                                 EditanaphylaxisDialog.dismiss();
                             }
                         });
@@ -119,20 +198,25 @@ public class Health extends ActionBarActivity {
                         .setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                /*//修改用户资料里面的用户名
-                                EditText Get_edittext = (EditText)EditnameDialog.getWindow()
-                                        .findViewById(R.id.edit_username4);
+                                //修改药物使用
+                                EditText Get_edittext = (EditText)EditmedicineDialog.getWindow()
+                                        .findViewById(R.id.edit_healthcard_medicine4);
                                 //获取输入的字符串,通过user_id来修改信息
-                                emp = Get_edittext.getText().toString();
+                                String emp = Get_edittext.getText().toString();
                                 String jsonString = "{" +
                                         "\"id\":" + user_id + "," +
-                                        "\"name\":\"" +  emp + "\" " + "}";
+                                        "\"medicine_taken\":\"" +  emp + "\"" + "}";
                                 String message = RequestHandler.sendPostRequest(
-                                        "http://120.24.208.130:1501/user/modify_information", jsonString);
-                                Username.setText(emp);*/
-
-                                Toast.makeText(getApplicationContext(), "修改药物使用成功",
-                                        Toast.LENGTH_SHORT).show();
+                                        "http://120.24.208.130:1501/health/upload", jsonString);
+                                Log.v(TAG, "return medicine_taken" + message);
+                                if (message.equals("false")) {
+                                    Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
+                                            Toast.LENGTH_SHORT).show();
+                                } else {
+                                    medicine_taken.setText(emp);
+                                    Toast.makeText(getApplicationContext(), "修改药物使用成功",
+                                            Toast.LENGTH_SHORT).show();
+                                }
                                 EditmedicineDialog.dismiss();
                             }
                         });
@@ -163,20 +247,25 @@ public class Health extends ActionBarActivity {
                         .setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                /*//修改用户资料里面的用户名
-                                EditText Get_edittext = (EditText)EditnameDialog.getWindow()
-                                        .findViewById(R.id.edit_username4);
+                                //修改血型
+                                EditText Get_edittext = (EditText)EditbloodtypeDialog.getWindow()
+                                        .findViewById(R.id.edit_healthcard_bloodtype4);
                                 //获取输入的字符串,通过user_id来修改信息
-                                emp = Get_edittext.getText().toString();
+                                String emp = Get_edittext.getText().toString();
                                 String jsonString = "{" +
                                         "\"id\":" + user_id + "," +
-                                        "\"name\":\"" +  emp + "\" " + "}";
+                                        "\"blood_type\":\"" +  emp + "\"" + "}";
                                 String message = RequestHandler.sendPostRequest(
-                                        "http://120.24.208.130:1501/user/modify_information", jsonString);
-                                Username.setText(emp);*/
-
-                                Toast.makeText(getApplicationContext(), "修改血型成功",
-                                        Toast.LENGTH_SHORT).show();
+                                        "http://120.24.208.130:1501/health/upload", jsonString);
+                                Log.v(TAG, "return bloodtype" + message);
+                                if (message.equals("false")) {
+                                    Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
+                                            Toast.LENGTH_SHORT).show();
+                                } else {
+                                    bloodtype.setText(emp);
+                                    Toast.makeText(getApplicationContext(), "修改血型成功",
+                                            Toast.LENGTH_SHORT).show();
+                                }
                                 EditbloodtypeDialog.dismiss();
                             }
                         });
@@ -207,20 +296,25 @@ public class Health extends ActionBarActivity {
                         .setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                /*//修改用户资料里面的用户名
-                                EditText Get_edittext = (EditText)EditnameDialog.getWindow()
-                                        .findViewById(R.id.edit_username4);
+                                //修改病史
+                                EditText Get_edittext = (EditText)EditillnessDialog.getWindow()
+                                        .findViewById(R.id.edit_healthcard_medihistory4);
                                 //获取输入的字符串,通过user_id来修改信息
-                                emp = Get_edittext.getText().toString();
+                                String emp = Get_edittext.getText().toString();
                                 String jsonString = "{" +
                                         "\"id\":" + user_id + "," +
-                                        "\"name\":\"" +  emp + "\" " + "}";
+                                        "\"medical_history\":\"" +  emp + "\"" + "}";
                                 String message = RequestHandler.sendPostRequest(
-                                        "http://120.24.208.130:1501/user/modify_information", jsonString);
-                                Username.setText(emp);*/
-
-                                Toast.makeText(getApplicationContext(), "修改病史成功",
-                                        Toast.LENGTH_SHORT).show();
+                                        "http://120.24.208.130:1501/health/upload", jsonString);
+                                Log.v(TAG, "return medihistory" + message);
+                                if (message.equals("false")) {
+                                    Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
+                                            Toast.LENGTH_SHORT).show();
+                                } else {
+                                    medihistory.setText(emp);
+                                    Toast.makeText(getApplicationContext(), "修改病史成功",
+                                            Toast.LENGTH_SHORT).show();
+                                }
                                 EditillnessDialog.dismiss();
                             }
                         });
@@ -251,20 +345,25 @@ public class Health extends ActionBarActivity {
                         .setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                /*//修改用户资料里面的用户名
-                                EditText Get_edittext = (EditText)EditnameDialog.getWindow()
-                                        .findViewById(R.id.edit_username4);
+                                //修改身高
+                                EditText Get_edittext = (EditText)EditheightDialog.getWindow()
+                                        .findViewById(R.id.edit_healthcard_height4);
                                 //获取输入的字符串,通过user_id来修改信息
-                                emp = Get_edittext.getText().toString();
+                                String emp = Get_edittext.getText().toString();
                                 String jsonString = "{" +
                                         "\"id\":" + user_id + "," +
-                                        "\"name\":\"" +  emp + "\" " + "}";
+                                        "\"height\":" +  emp + "}";
                                 String message = RequestHandler.sendPostRequest(
-                                        "http://120.24.208.130:1501/user/modify_information", jsonString);
-                                Username.setText(emp);*/
-
-                                Toast.makeText(getApplicationContext(), "修改身高成功",
-                                        Toast.LENGTH_SHORT).show();
+                                        "http://120.24.208.130:1501/health/upload", jsonString);
+                                Log.v(TAG, "return height" + message);
+                                if (message.equals("false")) {
+                                    Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
+                                            Toast.LENGTH_SHORT).show();
+                                } else {
+                                    height.setText(emp);
+                                    Toast.makeText(getApplicationContext(), "修改身高成功",
+                                            Toast.LENGTH_SHORT).show();
+                                }
                                 EditheightDialog.dismiss();
                             }
                         });
@@ -295,20 +394,25 @@ public class Health extends ActionBarActivity {
                         .setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                /*//修改用户资料里面的用户名
-                                EditText Get_edittext = (EditText)EditnameDialog.getWindow()
-                                        .findViewById(R.id.edit_username4);
+                                //修改体重
+                                EditText Get_edittext = (EditText)EditweightDialog.getWindow()
+                                        .findViewById(R.id.edit_healthcard_weight4);
                                 //获取输入的字符串,通过user_id来修改信息
-                                emp = Get_edittext.getText().toString();
+                                String emp = Get_edittext.getText().toString();
                                 String jsonString = "{" +
                                         "\"id\":" + user_id + "," +
-                                        "\"name\":\"" +  emp + "\" " + "}";
+                                        "\"weight\":" +  emp + "}";
                                 String message = RequestHandler.sendPostRequest(
-                                        "http://120.24.208.130:1501/user/modify_information", jsonString);
-                                Username.setText(emp);*/
-
-                                Toast.makeText(getApplicationContext(), "修改体重成功",
-                                        Toast.LENGTH_SHORT).show();
+                                        "http://120.24.208.130:1501/health/upload", jsonString);
+                                Log.v(TAG, "return weight" + message);
+                                if (message.equals("false")) {
+                                    Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
+                                            Toast.LENGTH_SHORT).show();
+                                } else {
+                                    weight.setText(emp);
+                                    Toast.makeText(getApplicationContext(), "修改体重成功",
+                                            Toast.LENGTH_SHORT).show();
+                                }
                                 EditweightDialog.dismiss();
                             }
                         });

@@ -1,11 +1,13 @@
 package com.ehelp.map;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -49,15 +51,11 @@ import com.baidu.mapapi.search.route.TransitRouteResult;
 import com.baidu.mapapi.search.route.WalkingRoutePlanOption;
 import com.baidu.mapapi.search.route.WalkingRouteResult;
 import com.ehelp.R;
-import com.ehelp.user.pinyin.Health;
-import com.ehelp.user.pinyin.messageActivity;
+import com.ehelp.user.healthcard.Health;
 import com.ehelp.utils.RequestHandler;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import android.util.Log;
-import android.content.SharedPreferences;
 
 
 public class recievesos_map extends ActionBarActivity implements BaiduMap.OnMapClickListener,

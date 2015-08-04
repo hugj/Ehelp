@@ -1,7 +1,5 @@
 package com.ehelp.entity;
 
-import com.ehelp.user.pinyin.Health;
-
 /**
  * Created by thetruthmyg on 2015/7/27.
  */

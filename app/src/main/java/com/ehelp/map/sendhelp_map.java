@@ -1,10 +1,7 @@
 package com.ehelp.map;
 
-import android.app.ActionBar;
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
@@ -22,7 +19,6 @@ import android.widget.ZoomControls;
 
 import com.baidu.mapapi.SDKInitializer;
 import com.baidu.mapapi.map.BaiduMap;
-import com.baidu.mapapi.map.MapFragment;
 import com.baidu.mapapi.map.MapView;
 import com.baidu.mapapi.map.SupportMapFragment;
 import com.baidu.mapapi.model.LatLng;
@@ -154,12 +150,12 @@ public class sendhelp_map extends ActionBarActivity implements
 
             Intent intent=new Intent(sendhelp_map.this,SendHelp.class);
             //传值
-            String a = Double.toString(ll.latitude);
-            String b = Double.toString(ll.longitude);
+            String latitude = Double.toString(ll.latitude);
+            String longitude = Double.toString(ll.longitude);
 
             Bundle bundle = new Bundle();
-            bundle.putString("longitude", a);
-            bundle.putString("latitude", b);
+            bundle.putString("longitude", longitude);
+            bundle.putString("latitude", latitude);
             intent.putExtras(bundle);
             startActivity(intent);
 

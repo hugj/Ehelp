@@ -1,32 +1,24 @@
-package com.ehelp.user.pinyin;
+package com.ehelp.home;
 
-import android.content.Intent;
-import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 
 import com.ehelp.R;
 
-
-public class adapterchatActivity extends ActionBarActivity {
-
-    public void getMessagePage(View view) {
-        Intent intent = new Intent(this, messageActivity.class);
-        startActivity(intent);
-    }
+public class HomeQueActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_adapterchat);
+        setContentView(R.layout.activity_home_que);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_adapterchat, menu);
+        getMenuInflater().inflate(R.menu.menu_home_que, menu);
         return true;
     }
 

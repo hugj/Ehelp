@@ -1,56 +1,24 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:orientation="vertical">
-    <include layout="@layout/toolbar" />
-    <RelativeLayout android:layout_width="fill_parent"
-        android:layout_height="fill_parent">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-        <ExpandableListView android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:id="@+id/elist"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true"
-            android:groupIndicator="@null" />
+    <TextView
+        android:id="@+id/tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:text="通讯录"
+        android:textColor="#AFAFAF" />
 
-        <com.ehelp.user.pinyin.AssortView
-            android:layout_width="25dip"
-            android:layout_height="fill_parent"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentRight="true"
-            android:id="@+id/assort" />
+    <com.ehelp.user.contactlist.IphoneTreeView
+        android:id="@+id/iphone_tree_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/tv"
+        android:cacheColorHint="@android:color/transparent"
+        android:childDivider="#AFAFAF"
+        android:listSelector="@android:color/transparent"
+        android:divider="#AFAFAF" />
 
-        <com.wangjie.rapidfloatingactionbutton.RapidFloatingActionLayout
-            xmlns:rfal="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/label_list_sample_rfal"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            rfal:rfal_frame_color="#ffffff"
-            rfal:rfal_frame_alpha="0.7"
-            >
-
-            <com.wangjie.rapidfloatingactionbutton.RapidFloatingActionButton
-                xmlns:rfab="http://schemas.android.com/apk/res-auto"
-                android:id="@+id/label_list_sample_rfab"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentBottom="true"
-                android:layout_marginRight="15dp"
-                android:layout_marginBottom="15dp"
-                rfab:rfab_size="normal"
-                rfab:rfab_drawable="@drawable/rfab__drawable_rfab_default"
-                rfab:rfab_color_normal="#37474f"
-                rfab:rfab_color_pressed="#263238"
-                rfab:rfab_shadow_radius="7dp"
-                rfab:rfab_shadow_color="#999999"
-                rfab:rfab_shadow_dx="0dp"
-                rfab:rfab_shadow_dy="5dp"
-                />
-
-
-        </com.wangjie.rapidfloatingactionbutton.RapidFloatingActionLayout>
-    </RelativeLayout>
-
-</LinearLayout>
+</RelativeLayout>
