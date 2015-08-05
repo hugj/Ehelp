@@ -76,7 +76,7 @@ public class HomeHelpActivity extends BaseFragment implements OnRapidFloatingBut
             switch (msg.what)
             {
                 case REFRESH_COMPLETE:
-                    eventCache = SOS.getRemoteTitleList(2);
+                    eventCache = SOS.getRemoteTitleList(1);
                     setList(); // change the data in listview
                     mSwipeLayout.setRefreshing(false);
                     break;

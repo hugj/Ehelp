@@ -1,8 +1,6 @@
 package com.ehelp.map;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.StrictMode;
@@ -13,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ZoomControls;
@@ -51,6 +50,7 @@ import com.baidu.mapapi.search.route.WalkingRoutePlanOption;
 import com.baidu.mapapi.search.route.WalkingRouteResult;
 import com.ehelp.R;
 import com.ehelp.entity.Event;
+import com.ehelp.entity.comment;
 import com.ehelp.home.SuperAwesomeCardFragment;
 import com.ehelp.send.CountNum;
 import com.ehelp.send.SendQuestion;
@@ -91,6 +91,7 @@ public class recieve_help_ans_map extends AIActionBarActivity implements BaiduMa
     private double jingdu;
     private double weidu;
     private Event m_event;
+    private int event_id;
 
     MapView mMapView = null;    // map View
     BaiduMap mBaidumap = null;
@@ -126,6 +127,7 @@ public class recieve_help_ans_map extends AIActionBarActivity implements BaiduMa
 
         Intent intent = getIntent();
         m_event = (Event)intent.getSerializableExtra(SuperAwesomeCardFragment.EXTRA_MESSAGE);
+        event_id = m_event.getEventId();
         setView();
 
         init();
@@ -220,6 +222,7 @@ public class recieve_help_ans_map extends AIActionBarActivity implements BaiduMa
 
 
     }
+
     public void setView(){
         //获取nickname
         final int user_id = m_event.getLauncherId();
@@ -247,14 +250,30 @@ public class recieve_help_ans_map extends AIActionBarActivity implements BaiduMa
         tmp = (TextView)findViewById(R.id.Content);
         tmp.setText(m_event.getContent());
 
-        SharedPreferences sharedPref;
-        int user2;
-        sharedPref = this.getSharedPreferences("user_id", Context.MODE_PRIVATE);
-        user2 = sharedPref.getInt("user_id", -1);
-        if (user_id == user2){
-            //add button
-        }
+        setListView();
     }
+
+    /*
+    * 加载评论列表
+    * */
+    public void setListView(){
+        ListView hisList = (ListView)findViewById(R.id.comment);
+        CommentAdapter com = new CommentAdapter(this, event_id);
+        hisList.setAdapter(com);
+
+        List<comment> events = com.getEvent();
+
+//        //绑定监听
+//        hisList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            public void onItemClick(AdapterView<?> arg0, View arg1, int index, long arg3) {
+//                Intent intent = new Intent(MyHistory.this, sendhelpcomeback_map.class);
+//                int eventID = events.get(index).getEventId();
+//                intent.putExtra(EXTRA_MESSAGE, eventID);
+//                startActivity(intent);
+//            }
+//        });
+    }
+
     /**
      * 发起路线规划搜索示例
      *

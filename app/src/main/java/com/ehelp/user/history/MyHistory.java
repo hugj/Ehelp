@@ -17,7 +17,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.ehelp.R;
 import com.ehelp.entity.Event;
@@ -27,7 +26,6 @@ import com.ehelp.map.sendsos_map;
 import com.ehelp.receive.QuestionDetail;
 import com.ehelp.send.CountNum;
 import com.ehelp.send.SendQuestion;
-import com.ehelp.utils.RequestHandler;
 import com.wangjie.androidbucket.utils.ABTextUtil;
 import com.wangjie.androidbucket.utils.imageprocess.ABShape;
 import com.wangjie.androidinject.annotation.annotations.base.AILayout;
@@ -38,9 +36,6 @@ import com.wangjie.rapidfloatingactionbutton.RapidFloatingActionHelper;
 import com.wangjie.rapidfloatingactionbutton.RapidFloatingActionLayout;
 import com.wangjie.rapidfloatingactionbutton.contentimpl.labellist.RFACLabelItem;
 import com.wangjie.rapidfloatingactionbutton.contentimpl.labellist.RapidFloatingActionContentLabelList;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -390,100 +385,5 @@ public class MyHistory extends AIActionBarActivity implements RapidFloatingActio
         @Override
         public void onPageScrollStateChanged(int arg0) {
         }
-    }
-    private void findformylaunch(int ty){
-        int id = SharedPref.getInt("user_id", -1);
-
-        if(id != -1){
-            jsonStrng = "{" +
-                    "\"id\":" + id + "," +"\"type\":\""+ty+"\"}";
-            message = RequestHandler.sendPostRequest(
-                    "http://120.24.208.130:1501/event/query_launch", jsonStrng);
-            if (message == "false") {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
-                                Toast.LENGTH_SHORT).show();
-                    }
-                });
-                return;
-            }
-            try{
-                JSONObject jO = new JSONObject(message);
-                if (jO.getInt("status") == 500) {
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            //未获取到
-                            Toast.makeText(getApplicationContext(), "未查找到相关信息",
-                                    Toast.LENGTH_SHORT).show();
-                        }
-                    });
-//                    Toast.makeText(getApplicationContext(), "用户未注册",
-//                            Toast.LENGTH_SHORT).show();
-                    return;
-                }else {
-                    //当获取到
-                    Toast.makeText(getApplicationContext(), "萌萌哒",
-                            Toast.LENGTH_SHORT).show();
-                }
-
-            }catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }else{
-            Toast.makeText(getApplicationContext(), "未登录",
-                    Toast.LENGTH_SHORT).show();
-        }
-
-    }
-
-    private void findformyreceive(int ty){
-        int id = SharedPref.getInt("user_id", -1);
-        if(id != -1){
-        jsonStrng = "{" +
-                "\"id\":" + id + "," +"\"type\":\""+2+"\"}";
-        if (message == "false") {
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
-                            Toast.LENGTH_SHORT).show();
-                }
-            });
-            return;
-        }
-        try{
-            JSONObject jO = new JSONObject(message);
-            if (jO.getInt("status") == 500) {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        //未获取到
-                        Toast.makeText(getApplicationContext(), "未查找到相关信息",
-                                Toast.LENGTH_SHORT).show();
-                    }
-                });
-//                    Toast.makeText(getApplicationContext(), "用户未注册",
-//                            Toast.LENGTH_SHORT).show();
-                return;
-            }else {
-                //当获取到
-                Toast.makeText(getApplicationContext(), "萌萌哒",
-                        Toast.LENGTH_SHORT).show();
-                //根据返回的type值与ty来比较，然后决定显示哪些
-
-
-            }
-
-        }catch (JSONException e) {
-            e.printStackTrace();
-        }
-        }else{
-            Toast.makeText(getApplicationContext(), "未登录",
-                    Toast.LENGTH_SHORT).show();
-        }
-
     }
 }
