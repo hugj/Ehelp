@@ -1,7 +1,6 @@
 package com.ehelp.home;
 
 import android.content.Context;
-import android.os.StrictMode;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -19,7 +18,6 @@ import com.ehelp.utils.RequestHandler;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -56,14 +54,6 @@ public class HomeAdapter extends BaseAdapter {
     }
 
     public void init(){
-        // 使用后台线程运行网络连接功能
-        StrictMode.setThreadPolicy(
-                new StrictMode.ThreadPolicy.Builder().
-                        detectDiskReads().detectDiskWrites().detectNetwork().penaltyLog().build());
-        StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder().
-                detectLeakedSqlLiteObjects().detectLeakedClosableObjects().
-                penaltyLog().penaltyDeath().build());
-
         //数据初始化
         String message = getTitleList();
         setList(message);
@@ -88,15 +78,22 @@ public class HomeAdapter extends BaseAdapter {
  * @param
  * @return a list contains events' titles
  */
-    public ACache getRemoteTitleList(int type){
-        String response;
-        String postURL = "http://120.24.208.130:1501/event/get_nearby_event";
-        String postString = "{" +
-                "\"id\":" + user_id + ",\"state\":0," +
-                "\"type\":" + type + "}";
+    public ACache getRemoteTitleList(int type_){
+        final int type = type_;
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                String response;
+                String postURL = "http://120.24.208.130:1501/event/get_nearby_event";
+                String postString = "{" +
+                        "\"id\":" + user_id + ",\"state\":0," +
+                        "\"type\":" + type + "}";
 
-        response = RequestHandler.sendPostRequest(postURL, postString);
-        eventCache.put(type + "", response);
+                response = RequestHandler.sendPostRequest(postURL, postString);
+                eventCache.put(type + "", response);
+            }
+        }).start();
+
         return eventCache;
     }
 
@@ -114,13 +111,12 @@ public class HomeAdapter extends BaseAdapter {
                 JSONObject j1 = new JSONObject(message);
                 String st = j1.getString("event_list");
                 events = gson.fromJson(st, new TypeToken<List<Event>>(){}.getType());
-                JSONArray eventList = j1.getJSONArray("event_list");
-                for (int i = 0; i < eventList.length(); i++) {
+                for (int i = 0; i < events.size(); i++) {
                     item=new HashMap<String,Object>();
                     item.put("头像", R.drawable.icon);
-                    item.put("标题", eventList.getJSONObject(i).getString("title"));
-                    item.put("用户", eventList.getJSONObject(i).getString("launcher"));
-                    item.put("时间", eventList.getJSONObject(i).getString("time"));
+                    item.put("标题", events.get(i).getTitle());
+                    item.put("用户", events.get(i).getLauncher());
+                    item.put("时间", events.get(i).getTime());
                     item.put("悬赏", "10爱心币");
                     list.add(item);
                 }
