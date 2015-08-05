@@ -243,10 +243,6 @@
             android:parentActivityName=".account.login" >
         </activity>
         <activity
-            android:name=".user.usermes.MessetnameActivity"
-            android:label="@string/title_activity_mesnotename" >
-        </activity>
-        <activity
             android:name=".account.RegisterPassword"
             android:label="@string/title_activity_register_password"
             android:parentActivityName=".account.login" >
@@ -319,7 +315,7 @@
         </activity>
         <activity android:name=".user.contactlist.ContactlistActivity"
             android:label="@string/title_activity_contactlist"
-            android:parentActivityName=".home.Home">
+            android:parentActivityName=".account.login">
         </activity>
     </application>
 

@@ -8,9 +8,7 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -64,44 +62,44 @@ public class messageActivity extends ActionBarActivity {
         //根据用户ID从后台获取数据显示信息详情
         show123();
 
-        //click on set name设置备注名
-        myLay = (RelativeLayout) findViewById(R.id.detail_setname);
-        Setname = (TextView)findViewById(R.id.detail_setname2);
-        myLay.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View arg0) {
-                myDialog = new AlertDialog.Builder(messageActivity.this).create();
-                myDialog.show();
-                myDialog.getWindow().setContentView(R.layout.activity_messetname);
-                //click on cancel
-                myDialog.getWindow()
-                        .findViewById(R.id.setname5)
-                        .setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                myDialog.dismiss();
-                            }
-                        });
-                //click on ensure
-                myDialog.getWindow()
-                        .findViewById(R.id.setname6)
-                        .setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                EditText edit = (EditText)myDialog.getWindow()
-                                        .findViewById(R.id.setname4);
-                                Setname.setText(edit.getText().toString());
-                                Toast.makeText(getApplicationContext(), "备注名设置成功",
-                                        Toast.LENGTH_SHORT).show();
-                                myDialog.dismiss();
-                            }
-                        });
-                myDialog.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
-                        | WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
-                myDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams
-                        .SOFT_INPUT_STATE_VISIBLE);
-            }
-        });
+//        //click on set name设置备注名
+//        myLay = (RelativeLayout) findViewById(R.id.detail_setname);
+//        Setname = (TextView)findViewById(R.id.detail_setname2);
+//        myLay.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View arg0) {
+//                myDialog = new AlertDialog.Builder(messageActivity.this).create();
+//                myDialog.show();
+//                myDialog.getWindow().setContentView(R.layout.activity_messetname);
+//                //click on cancel
+//                myDialog.getWindow()
+//                        .findViewById(R.id.setname5)
+//                        .setOnClickListener(new View.OnClickListener() {
+//                            @Override
+//                            public void onClick(View v) {
+//                                myDialog.dismiss();
+//                            }
+//                        });
+//                //click on ensure
+//                myDialog.getWindow()
+//                        .findViewById(R.id.setname6)
+//                        .setOnClickListener(new View.OnClickListener() {
+//                            @Override
+//                            public void onClick(View v) {
+//                                EditText edit = (EditText)myDialog.getWindow()
+//                                        .findViewById(R.id.setname4);
+//                                Setname.setText(edit.getText().toString());
+//                                Toast.makeText(getApplicationContext(), "备注名设置成功",
+//                                        Toast.LENGTH_SHORT).show();
+//                                myDialog.dismiss();
+//                            }
+//                        });
+//                myDialog.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
+//                        | WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
+//                myDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams
+//                        .SOFT_INPUT_STATE_VISIBLE);
+//            }
+//        });
         //add contact添加紧急联系人
         Button add_excontact = (Button)findViewById(R.id.addexcontact);
         add_excontact.setOnClickListener(new View.OnClickListener() {
@@ -174,10 +172,13 @@ public class messageActivity extends ActionBarActivity {
                             Toast.LENGTH_SHORT).show();
                     //修改显示的用户名
                     TextView tv =(TextView) findViewById(R.id.detail_name2);
-                    if(jO.getString("nickname") !="") {
-                        tv.setText(jO.getString("nickname"));
-                    }else {
-                        tv.setText(jO.getString("name"));
+                    String emp,emp_;
+                    emp = jO.getString("nickname");
+                    emp_ = jO.getString("name");
+                    if(emp.equals("")) {
+                        tv.setText(emp_);
+                    } else {
+                        tv.setText(emp);
                     }
                     //修改显示的手机号
                     TextView tv1 =(TextView) findViewById(R.id.detail_phone2);

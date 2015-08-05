@@ -1,20 +1,38 @@
 package com.ehelp.user.contactlist;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.os.StrictMode;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ExpandableListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ehelp.R;
 import com.ehelp.entity.User;
+import com.ehelp.map.sendhelp_map;
+import com.ehelp.send.CountNum;
+import com.ehelp.send.SendQuestion;
 import com.ehelp.utils.RequestHandler;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.wangjie.androidbucket.utils.ABTextUtil;
+import com.wangjie.androidbucket.utils.imageprocess.ABShape;
+import com.wangjie.androidinject.annotation.annotations.base.AILayout;
+import com.wangjie.androidinject.annotation.annotations.base.AIView;
+import com.wangjie.androidinject.annotation.present.AIActionBarActivity;
+import com.wangjie.rapidfloatingactionbutton.RapidFloatingActionButton;
+import com.wangjie.rapidfloatingactionbutton.RapidFloatingActionHelper;
+import com.wangjie.rapidfloatingactionbutton.RapidFloatingActionLayout;
+import com.wangjie.rapidfloatingactionbutton.contentimpl.labellist.RFACLabelItem;
+import com.wangjie.rapidfloatingactionbutton.contentimpl.labellist.RapidFloatingActionContentLabelList;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -22,9 +40,13 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-
-public class ContactlistActivity extends Activity {
-	
+@AILayout(R.layout.activity_contactlist)
+public class ContactlistActivity extends AIActionBarActivity implements RapidFloatingActionContentLabelList.OnRapidFloatingActionContentLabelListListener {
+	@AIView(R.id.label_list_sample_rfal)
+	private RapidFloatingActionLayout rfaLayout;
+	@AIView(R.id.label_list_sample_rfab)
+	private RapidFloatingActionButton rfaButton;
+	private RapidFloatingActionHelper rfabHelper;
 	private IphoneTreeView mIphoneTreeView;
 	private ConstactAdapter mExpAdapter;
 	private List<Group> listGroup;
@@ -34,11 +56,14 @@ public class ContactlistActivity extends Activity {
 	private int id;
 	Gson gson = new Gson();
 
+	private Toolbar mToolbar;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_contactlist);
+
 		initView();
+		init();//fab
 		Drawcontactlist();
 		click_on_message();
 	}
@@ -146,11 +171,129 @@ public class ContactlistActivity extends Activity {
 	}
 
 	private void initView() {
+		//画出通讯录
 		mIphoneTreeView = (IphoneTreeView) findViewById(R.id.iphone_tree_view);
 		mIphoneTreeView.setHeaderView(LayoutInflater.from(this)
 				.inflate(R.layout.fragment_constact_head_view, mIphoneTreeView, false));
 		mIphoneTreeView.setGroupIndicator(null);
 	}
+	private  void init() {
+		StrictMode.setThreadPolicy(
+				new StrictMode.ThreadPolicy.Builder().
+						detectDiskReads().detectDiskWrites().detectNetwork().penaltyLog().build());
+		StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder().
+				detectLeakedSqlLiteObjects().detectLeakedClosableObjects().
+				penaltyLog().penaltyDeath().build());
+		//set toolbar
+		mToolbar = (Toolbar) findViewById(R.id.toolbar);
+		mToolbar.setTitle("  ");
+		setSupportActionBar(mToolbar);
+		TextView tvv =(TextView) findViewById(R.id.titlefortoolbar);
+		tvv.setText("通讯录");
+
+		//下面的圆型按钮
+		fab();
+	}
+	private void fab(){
+		RapidFloatingActionContentLabelList rfaContent = new RapidFloatingActionContentLabelList(context);
+		rfaContent.setOnRapidFloatingActionContentLabelListListener(this);
+		List<RFACLabelItem> items = new ArrayList<>();
+		items.add(new RFACLabelItem<Integer>()
+						.setLabel("求救")
+						.setResId(R.mipmap.ic_launcher)
+						.setIconNormalColor(0xffd84315)
+						.setIconPressedColor(0xffbf360c)
+						.setWrapper(0)
+		);
+		items.add(new RFACLabelItem<Integer>()
+						.setLabel("求助")
+//                        .setResId(R.mipmap.ico_test_c)
+						.setDrawable(getResources().getDrawable(R.mipmap.ic_launcher))
+						.setIconNormalColor(0xff4e342e)
+						.setIconPressedColor(0xff3e2723)
+						.setLabelColor(Color.WHITE)
+						.setLabelSizeSp(14)
+						.setLabelBackgroundDrawable(ABShape.generateCornerShapeDrawable(0xaa000000, ABTextUtil.dip2px(context, 4)))
+						.setWrapper(1)
+		);
+		items.add(new RFACLabelItem<Integer>()
+						.setLabel("提问")
+						.setResId(R.mipmap.ic_launcher)
+						.setIconNormalColor(0xff056f00)
+						.setIconPressedColor(0xff0d5302)
+						.setLabelColor(0xff056f00)
+						.setWrapper(2)
+		);
+		rfaContent
+				.setItems(items)
+				.setIconShadowRadius(ABTextUtil.dip2px(context, 5))
+				.setIconShadowColor(0xff888888)
+				.setIconShadowDy(ABTextUtil.dip2px(context, 5))
+		;
+
+		rfabHelper = new RapidFloatingActionHelper(
+				context,
+				rfaLayout,
+				rfaButton,
+				rfaContent
+		).build();
+	}
+	@Override
+	public void onRFACItemLabelClick(int position, RFACLabelItem item) {
+		if (position == 0) {
+			Intent intent = new Intent(this, CountNum.class);
+			startActivity(intent);
+		} else
+		if (position == 1) {
+			Intent intent = new Intent(this, sendhelp_map.class);
+			startActivity(intent);
+		} else {
+			Intent intent = new Intent(this, SendQuestion.class);
+			startActivity(intent);
+		}
+		rfabHelper.toggleContent();
+	}
+
+	@Override
+	public void onRFACItemIconClick(int position, RFACLabelItem item) {
+		if (position == 0) {
+			Intent intent = new Intent(this, CountNum.class);
+			startActivity(intent);
+		} else
+		if (position == 1) {
+			Intent intent = new Intent(this, sendhelp_map.class);
+			startActivity(intent);
+		} else {
+			Intent intent = new Intent(this, SendQuestion.class);
+			startActivity(intent);
+		}
+		rfabHelper.toggleContent();
+	}
+	//toolbar设置
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.menu_contactlist, menu);
+		return true;
+	}
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// Handle action bar item clicks here. The action bar will
+		// automatically handle clicks on the Home/Up button, so long
+		// as you specify a parent activity in AndroidManifest.xml.
+		int id = item.getItemId();
+
+		//noinspection SimplifiableIfStatement
+		if (id == R.id.action_settings) {
+			//添加好友。跳转至添加好友页面
+			Intent intent = new Intent(this, AddFriendActivity.class);
+			startActivity(intent);
+			return true;
+		}
+		return super.onOptionsItemSelected(item);
+	}//toolbar设置结束
+
+	//点击查看联系人的信息
 	private void click_on_message() {
 		mIphoneTreeView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
 			@Override
