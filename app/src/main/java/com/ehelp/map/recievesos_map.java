@@ -271,7 +271,7 @@ public class recievesos_map extends ActionBarActivity implements BaiduMap.OnMapC
                 }
 
                 //通过发起者id寻找发起者用户名并显示
-                 idd = jO.getInt("launcher");
+                 idd = jO.getInt("launcher_id");
                 findforusername();
             }
 
