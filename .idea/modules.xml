@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/AnimatedCircleLoading/AnimatedCircleLoading.iml" filepath="$PROJECT_DIR$/AnimatedCircleLoading/AnimatedCircleLoading.iml" />
       <module fileurl="file://$PROJECT_DIR$/Ehelp.iml" filepath="$PROJECT_DIR$/Ehelp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/IMKit/IMKit.iml" filepath="$PROJECT_DIR$/IMKit/IMKit.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/library/library.iml" filepath="$PROJECT_DIR$/library/library.iml" />
     </modules>

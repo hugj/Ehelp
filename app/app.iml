@@ -87,7 +87,6 @@
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/rs" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/symbols" />
       <excludeFolder url="file://$MODULE_DIR$/build/outputs" />
-      <excludeFolder url="file://$MODULE_DIR$/build/tmp" />
     </content>
     <orderEntry type="jdk" jdkName="Android API 21 Platform" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
@@ -108,6 +107,7 @@
     <orderEntry type="library" exported="" name="SMSSDK-1.2.2" level="project" />
     <orderEntry type="library" exported="" name="AndroidBucket-1.0.4" level="project" />
     <orderEntry type="module" module-name="AnimatedCircleLoading" exported="" />
+    <orderEntry type="module" module-name="IMKit" exported="" />
     <orderEntry type="module" module-name="library" exported="" />
   </component>
 </module>
