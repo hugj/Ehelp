@@ -96,17 +96,17 @@
                         android:onClick="user_page_click">
                         <RelativeLayout android:layout_width="55dp"
                             android:layout_height="60dp" android:id="@+id/user_page1">
-                            <ImageView android:id="@+id/user_page2" android:layout_width="50dp"
-                                android:layout_height="50dp" android:layout_alignParentLeft="true"
-                                android:layout_centerVertical="true" android:paddingLeft="5dp"
-                                android:background="@drawable/icon" />
+                            <ImageView android:id="@+id/user_page2" android:layout_width="40dp"
+                                android:layout_height="40dp" android:layout_alignParentLeft="true"
+                                android:layout_centerVertical="true" android:paddingLeft="10dp"
+                                android:background="@drawable/homepage" />
                         </RelativeLayout>
 
                         <TextView android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_toRightOf="@id/user_page1"
-                            android:layout_marginLeft="30dp"
-                            android:textColor="#000" android:layout_centerVertical="true"
+                            android:layout_marginLeft="10dp"
+                            android:layout_centerVertical="true"
                             android:textSize="20sp" android:id="@+id/user_page3"
                             android:text="@string/mes_page"/>
 
@@ -121,17 +121,17 @@
                         android:onClick="ContactList">
                         <RelativeLayout android:layout_width="55dp"
                             android:layout_height="60dp" android:id="@+id/user_friends1">
-                            <ImageView android:id="@+id/user_friends2" android:layout_width="50dp"
-                                android:layout_height="50dp" android:layout_alignParentLeft="true"
-                                android:layout_centerVertical="true" android:paddingLeft="5dp"
-                                android:background="@drawable/icon" />
+                            <ImageView android:id="@+id/user_friends2" android:layout_width="40dp"
+                                android:layout_height="40dp" android:layout_alignParentLeft="true"
+                                android:layout_centerVertical="true" android:paddingLeft="4dp"
+                                android:background="@drawable/contactlist" />
                         </RelativeLayout>
 
                         <TextView android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_toRightOf="@id/user_friends1"
-                            android:layout_marginLeft="30dp"
-                            android:textColor="#000" android:layout_centerVertical="true"
+                            android:layout_marginLeft="10dp"
+                            android:layout_centerVertical="true"
                             android:textSize="20sp" android:id="@+id/user_friends3"
                             android:text="@string/mes_friends"/>
 
@@ -146,17 +146,17 @@
                         android:onClick="health">
                         <RelativeLayout android:layout_width="55dp"
                             android:layout_height="60dp" android:id="@+id/user_healthcard1">
-                            <ImageView android:id="@+id/user_healthcard2" android:layout_width="50dp"
-                                android:layout_height="50dp" android:layout_alignParentLeft="true"
-                                android:layout_centerVertical="true" android:paddingLeft="5dp"
-                                android:background="@drawable/icon" />
+                            <ImageView android:id="@+id/user_healthcard2" android:layout_width="40dp"
+                                android:layout_height="40dp" android:layout_alignParentLeft="true"
+                                android:layout_centerVertical="true" android:paddingLeft="10dp"
+                                android:background="@drawable/healthcard" />
                         </RelativeLayout>
 
                         <TextView android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_toRightOf="@id/user_healthcard1"
-                            android:layout_marginLeft="30dp"
-                            android:textColor="#000" android:layout_centerVertical="true"
+                            android:layout_marginLeft="10dp"
+                            android:layout_centerVertical="true"
                             android:textSize="20sp" android:id="@+id/user_healthcard3"
                             android:text="健康卡"/>
                     </RelativeLayout>
@@ -169,17 +169,17 @@
                         android:id="@+id/user_bank">
                         <RelativeLayout android:layout_width="55dp"
                             android:layout_height="60dp" android:id="@+id/user_bank1">
-                            <ImageView android:id="@+id/user_bank2" android:layout_width="50dp"
-                                android:layout_height="50dp" android:layout_alignParentLeft="true"
-                                android:layout_centerVertical="true" android:paddingLeft="5dp"
-                                android:background="@drawable/icon" />
+                            <ImageView android:id="@+id/user_bank2" android:layout_width="40dp"
+                                android:layout_height="40dp" android:layout_alignParentLeft="true"
+                                android:layout_centerVertical="true" android:paddingLeft="10dp"
+                                android:background="@drawable/bank" />
                         </RelativeLayout>
 
                         <TextView android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_toRightOf="@id/user_bank1"
-                            android:layout_marginLeft="30dp"
-                            android:textColor="#000" android:layout_centerVertical="true"
+                            android:layout_marginLeft="10dp"
+                            android:layout_centerVertical="true"
                             android:textSize="20sp" android:id="@+id/user_bank3"
                             android:text="@string/mes_bank"/>
                     </RelativeLayout>
@@ -193,17 +193,17 @@
                         android:onClick="history">
                         <RelativeLayout android:layout_width="55dp"
                             android:layout_height="60dp" android:id="@+id/user_news1">
-                            <ImageView android:id="@+id/user_new2" android:layout_width="50dp"
-                                android:layout_height="50dp" android:layout_alignParentLeft="true"
-                                android:layout_centerVertical="true" android:paddingLeft="5dp"
-                                android:background="@drawable/icon" />
+                            <ImageView android:id="@+id/user_new2" android:layout_width="40dp"
+                                android:layout_height="40dp" android:layout_alignParentLeft="true"
+                                android:layout_centerVertical="true" android:paddingLeft="10dp"
+                                android:background="@drawable/news" />
                         </RelativeLayout>
 
                         <TextView android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_toRightOf="@id/user_news1"
-                            android:layout_marginLeft="30dp"
-                            android:textColor="#000" android:layout_centerVertical="true"
+                            android:layout_marginLeft="10dp"
+                            android:layout_centerVertical="true"
                             android:textSize="20sp" android:id="@+id/user_new3"
                             android:text="@string/mes_news"/>
                     </RelativeLayout>
@@ -221,17 +221,17 @@
                         android:id="@+id/user_help">
                         <RelativeLayout android:layout_width="55dp"
                             android:layout_height="60dp" android:id="@+id/user_help1">
-                            <ImageView android:id="@+id/user_help2" android:layout_width="50dp"
-                                android:layout_height="50dp" android:layout_alignParentLeft="true"
-                                android:layout_centerVertical="true" android:paddingLeft="5dp"
-                                android:background="@drawable/icon" />
+                            <ImageView android:id="@+id/user_help2" android:layout_width="40dp"
+                                android:layout_height="40dp" android:layout_alignParentLeft="true"
+                                android:layout_centerVertical="true" android:paddingLeft="10dp"
+                                android:background="@drawable/help" />
                         </RelativeLayout>
 
                         <TextView android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_toRightOf="@id/user_help1"
-                            android:layout_marginLeft="30dp"
-                            android:textColor="#000" android:layout_centerVertical="true"
+                            android:layout_marginLeft="10dp"
+                            android:layout_centerVertical="true"
                             android:textSize="20sp" android:id="@+id/user_help3"
                             android:text="@string/mes_help"/>
                     </RelativeLayout>
@@ -245,17 +245,17 @@
                         android:onClick="Setting_page_click">
                         <RelativeLayout android:layout_width="55dp"
                             android:layout_height="60dp" android:id="@+id/user_setting1">
-                            <ImageView android:id="@+id/user_setting2" android:layout_width="50dp"
-                                android:layout_height="50dp" android:layout_alignParentLeft="true"
+                            <ImageView android:id="@+id/user_setting2" android:layout_width="40dp"
+                                android:layout_height="40dp" android:layout_alignParentLeft="true"
                                 android:layout_centerVertical="true" android:paddingLeft="5dp"
-                                android:background="@drawable/icon" />
+                                android:background="@drawable/setting" />
                         </RelativeLayout>
 
                         <TextView android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_toRightOf="@id/user_setting1"
-                            android:layout_marginLeft="30dp"
-                            android:textColor="#000" android:layout_centerVertical="true"
+                            android:layout_marginLeft="10dp"
+                            android:layout_centerVertical="true"
                             android:textSize="20sp" android:id="@+id/user_setting3"
                             android:text="设置"/>
                     </RelativeLayout>
