@@ -60,7 +60,7 @@ public class homepageActivity extends AIActionBarActivity implements RapidFloati
     //用户名&&昵称&&手机号&&性别&&年龄的获取
     private TextView Username, Nickname;
     private TextView Phonenum, Location;
-    private TextView Gender;
+    private TextView Gender, Job;
     private TextView Age;
     private String emp,jsonString, message;
     private int user_id;
@@ -73,6 +73,7 @@ public class homepageActivity extends AIActionBarActivity implements RapidFloati
         Nickname = (TextView)findViewById(R.id.nickname2);
         Phonenum = (TextView)findViewById(R.id.single_phone2);
         Gender = (TextView)findViewById(R.id.single_file2);
+        Job = (TextView)findViewById(R.id.single_job2);
         Location = (TextView)findViewById(R.id.single_loacl2);
         Age = (TextView)findViewById(R.id.single_age2);
         //获取本地的user_id通过其来获得用户信息
@@ -104,6 +105,27 @@ public class homepageActivity extends AIActionBarActivity implements RapidFloati
                     Gender.setText("男");
                 } else {
                     Gender.setText("女");
+                }
+                int z = j.getInt("occupation");
+                switch (z) {
+                    case 0:
+                        Job.setText(R.string.mes_job1);
+                        break;
+                    case 1:
+                        Job.setText(R.string.mes_job2);
+                        break;
+                    case 2:
+                        Job.setText(R.string.mes_job3);
+                        break;
+                    case 3:
+                        Job.setText(R.string.mes_job4);
+                        break;
+                    case 4:
+                        Job.setText(R.string.mes_job5);
+                        break;
+                    case 5:
+                        Job.setText(R.string.mes_job6);
+                        break;
                 }
                 //显示当前所在地
                 Location.setText(j.getString("location"));
@@ -241,7 +263,7 @@ public class homepageActivity extends AIActionBarActivity implements RapidFloati
                                 EditnameDialog.dismiss();
                             }
                         });
-                //使edittext能输入东西，我也不造是啥
+                //使edittext能输入东西
                 EditnameDialog.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
                         | WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
                 EditnameDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams
@@ -399,6 +421,46 @@ public class homepageActivity extends AIActionBarActivity implements RapidFloati
                         | WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
                 EditageDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams
                         .SOFT_INPUT_STATE_VISIBLE);
+            }
+        });
+        //选择职业
+        RelativeLayout Job_choose = (RelativeLayout)findViewById(R.id.single_job);
+        Job_choose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new AlertDialog.Builder(homepageActivity.this).setTitle("选择性别").setIcon(
+                        android.R.drawable.ic_dialog_info).setSingleChoiceItems(
+                        new String[]{"学生", "教师", "工人", "警察", "消防员", "其他"}, 0,
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                String jsonString = "{" +
+                                        "\"id\":" + user_id + "," +
+                                        "\"occupation\":" + which + "}";
+                                String message = RequestHandler.sendPostRequest(
+                                        "http://120.24.208.130:1501/user/modify_information", jsonString);
+                                switch (which) {
+                                    case 0:
+                                        Job.setText(R.string.mes_job1);
+                                        break;
+                                    case 1:
+                                        Job.setText(R.string.mes_job2);
+                                        break;
+                                    case 2:
+                                        Job.setText(R.string.mes_job3);
+                                        break;
+                                    case 3:
+                                        Job.setText(R.string.mes_job4);
+                                        break;
+                                    case 4:
+                                        Job.setText(R.string.mes_job5);
+                                        break;
+                                    case 5:
+                                        Job.setText(R.string.mes_job6);
+                                        break;
+                                }
+                                dialog.dismiss();
+                            }
+                        }).show();
             }
         });
     }
