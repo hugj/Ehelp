@@ -318,7 +318,6 @@
         <activity
             android:name=".home.HomeSOSActivity"
             android:label="@string/title_activity_home_sos" >
-            android:parentActivityName=".account.login">
         </activity>
         <activity
             android:name=".user.contactlist.ContactlistActivity"

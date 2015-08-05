@@ -241,7 +241,7 @@ public class homepageActivity extends AIActionBarActivity implements RapidFloati
                                 EditnameDialog.dismiss();
                             }
                         });
-                //使edittext能输入东西，我也不造是啥
+                //使edittext能输入东西
                 EditnameDialog.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
                         | WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
                 EditnameDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams
