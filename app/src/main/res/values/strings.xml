@@ -101,4 +101,6 @@
     <string name="title_activity_home_sos">HomeSOSActivity</string>
     <string name="title_activity_home_help">HomeHelpActivity</string>
     <string name="title_activity_home_que">HomeQueActivity</string>
+    <string name="title_activity_end_sos">EndSosActivity</string>
+    <string name="title_activity_excontactlist">ExcontactlistActivity</string>
 </resources>

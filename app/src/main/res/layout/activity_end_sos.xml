@@ -1,0 +1,100 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.ehelp.user.history.EndSosActivity"
+    android:weightSum="1">
+    <!--android:paddingLeft="@dimen/activity_horizontal_margin"-->
+    <!--android:paddingRight="@dimen/activity_horizontal_margin"-->
+    <!--android:paddingTop="@dimen/activity_vertical_margin"-->
+    <!--android:paddingBottom="@dimen/activity_vertical_margin"-->
+    <include layout="@layout/toolbar" />
+
+
+    <TextView android:text="该求救已结束"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/border_for_textview"
+        />
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="bottom"
+        android:layout_marginTop="20sp">
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/icon"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="李大爷"
+            android:id="@+id/SOSusername"
+            android:layout_marginLeft="20dp"/>
+    </LinearLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="100sp"
+        android:background="@drawable/border_for_textview"
+        android:layout_weight="0.08">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="健康问题"
+            android:id="@+id/problem"
+            android:layout_below="@+id/SOStime"
+            android:layout_alignParentStart="true" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2012年"
+            android:id="@+id/SOStime"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true" />
+    </RelativeLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="10sp"
+        android:id="@+id/tv1"
+        android:background="@drawable/border_for_textview">
+    </TextView>
+    <com.ehelp.user.contactlist.IphoneTreeView
+        android:id="@+id/iphone_tree_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/tv1"
+        android:cacheColorHint="@android:color/transparent"
+        android:childDivider="#AFAFAF"
+        android:listSelector="@android:color/transparent"
+        android:divider="#AFAFAF" />
+    <!--<TextView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="回应的帮客"-->
+        <!--android:layout_marginTop="20sp"/>-->
+    <!--<LinearLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:gravity="bottom|center"-->
+        <!--android:background="@drawable/border_for_textview">-->
+        <!--<ImageView-->
+            <!--android:layout_width="40sp"-->
+            <!--android:layout_height="40sp"-->
+            <!--android:src="@drawable/icon"/>-->
+        <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginLeft="18sp"-->
+            <!--android:text="黄志婷"-->
+            <!--android:textSize="18sp"/>-->
+        <!--<ImageView-->
+            <!--android:layout_width="20sp"-->
+            <!--android:layout_height="20sp"-->
+            <!--android:layout_gravity="right|center"-->
+            <!--android:layout_marginLeft="200sp"-->
+            <!--android:src="@drawable/mm_submenu"/>-->
+    <!--</LinearLayout>-->
+
+
+
+</LinearLayout>

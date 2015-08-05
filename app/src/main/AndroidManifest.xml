@@ -60,7 +60,6 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
             <!--
                 meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -332,7 +331,13 @@
         </activity>
         <activity
             android:name=".home.HomeQueActivity"
-            android:label="@string/title_activity_home_que" >
+            android:label="@string/title_activity_home_que"> 
+        </activity>
+        <activity
+            android:name=".user.history.EndSosActivity"
+            android:label="@string/title_activity_end_sos"
+            android:parentActivityName=".account.login" >
+
         </activity>
     </application>
 
