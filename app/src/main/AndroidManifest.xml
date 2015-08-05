@@ -49,7 +49,7 @@
         android:theme="@style/AppTheme" >
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
-            android:value="hIOmFOzyRNVo5W7H75h5vmfo" />
+            android:value="xDO3hA5xIb6dwLnHvPlD5yC9" />
 
         <activity
             android:name=".account.login"
@@ -188,13 +188,11 @@
         <activity
             android:name=".Test"
             android:label="@string/title_activity_test" >
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.MAIN" />-->
 
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.MAIN" /> -->
-
-
-            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-            <!-- </intent-filter> -->
+                <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--</intent-filter>-->
         </activity>
         <activity
             android:name=".user.usermes.homepageActivity"
