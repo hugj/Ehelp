@@ -43,6 +43,7 @@
     <uses-permission android:name="android.permission.READ_LOGS" />
 
     <application
+        android:name=".home.App"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -187,11 +188,13 @@
         <activity
             android:name=".Test"
             android:label="@string/title_activity_test" >
-            <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.MAIN" />-->
 
-                <!--<category android:name="android.intent.category.LAUNCHER" />-->
-            <!--</intent-filter>-->
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
+
+
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
         </activity>
         <activity
             android:name=".user.usermes.homepageActivity"
@@ -322,7 +325,7 @@
         <activity
             android:name=".user.contactlist.ContactlistActivity"
             android:label="@string/title_activity_contactlist"
-            android:parentActivityName=".account.login">
+            android:parentActivityName=".account.login" >
         </activity>
         <activity
             android:name=".home.HomeHelpActivity"
@@ -330,13 +333,26 @@
         </activity>
         <activity
             android:name=".home.HomeQueActivity"
-            android:label="@string/title_activity_home_que"> 
+            android:label="@string/title_activity_home_que" >
         </activity>
         <activity
             android:name=".user.history.EndSosActivity"
             android:label="@string/title_activity_end_sos"
             android:parentActivityName=".account.login" >
+        </activity>
+        <activity
+            android:name=".home.ConversationActivity"
+            android:label="@string/title_activity_conversation" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
 
+                <category android:name="android.intent.category.DEFAULT" />
+
+                 <data
+                     android:host="com.ehelp"
+                    android:pathPrefix="/conversation/"
+                    android:scheme="rong" />
+            </intent-filter>
         </activity>
     </application>
 

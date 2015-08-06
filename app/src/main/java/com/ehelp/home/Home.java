@@ -48,6 +48,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.jpush.android.api.JPushInterface;
+import io.rong.imkit.RongIM;
 
 //推送统计代码
 //推送代码
@@ -198,8 +199,17 @@ public class Home extends AIActionBarActivity implements
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.action_settings:
-                        Toast.makeText(getApplicationContext(), "action_settings",
-                                Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(getApplicationContext(), "action_settings",
+//                                Toast.LENGTH_SHORT).show();
+                        /**
+                         * 启动单聊
+                         * context - 应用上下文。
+                         * targetUserId - 要与之聊天的用户 Id。
+                         * title - 聊天的标题，如果传入空值，则默认显示与之聊天的用户名称。
+                         */
+                        if (RongIM.getInstance() != null) {
+                            RongIM.getInstance().startPrivateChat(Home.this, "7", "hello");
+                        }
                         break;
                     default:
                         break;
