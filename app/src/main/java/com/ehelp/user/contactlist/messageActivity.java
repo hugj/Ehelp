@@ -184,8 +184,31 @@ public class messageActivity extends ActionBarActivity {
                     TextView tv1 =(TextView) findViewById(R.id.detail_phone2);
                     tv1.setText(jO.getString("phone"));
                     //修改显示的备注姓名
-                    TextView tv2 =(TextView) findViewById(R.id.detail_setname2);
-                    tv2.setText("");
+//                    TextView tv2 =(TextView) findViewById(R.id.detail_setname2);
+//                    tv2.setText("");
+                    //显示个人职业
+                    TextView tv2 = (TextView)findViewById(R.id.detail_job2);
+                    int i = jO.getInt("occupation");
+                    switch (i) {
+                        case 0:
+                            tv2.setText(R.string.mes_job1);
+                            break;
+                        case 1:
+                            tv2.setText(R.string.mes_job2);
+                            break;
+                        case 2:
+                            tv2.setText(R.string.mes_job3);
+                            break;
+                        case 3:
+                            tv2.setText(R.string.mes_job4);
+                            break;
+                        case 4:
+                            tv2.setText(R.string.mes_job5);
+                            break;
+                        case 5:
+                            tv2.setText(R.string.mes_job6);
+                            break;
+                    }
                     //修改显示的性别
                     TextView tv3 =(TextView) findViewById(R.id.detail_file2);
                     if(jO.getInt("gender")==1) {
