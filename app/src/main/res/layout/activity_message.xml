@@ -36,8 +36,8 @@
                 android:layout_marginLeft="30dp"
                 android:id="@+id/detail_name1"
                 android:text="@string/mes_username"
-                android:layout_centerVertical="true"
-                android:layout_alignParentStart="true" />
+                android:layout_centerVertical="true"/>
+                <!--android:layout_alignParentStart="true" />-->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
