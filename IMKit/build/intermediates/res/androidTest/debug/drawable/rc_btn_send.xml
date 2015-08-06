@@ -2,4 +2,4 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:drawable="@drawable/rc_btn_send_hover" android:state_focused="true"/>
     <item android:drawable="@drawable/rc_btn_send_normal"/>
-</selector><!-- From: file:/E:/360data/重要数据/桌面/实训/Ehelp/IMKit/src/main/res/drawable/rc_btn_send.xml --><!-- From: file:/E:/360data/重要数据/桌面/实训/Ehelp/IMKit/build/intermediates/bundles/debug/res/drawable/rc_btn_send.xml -->
+</selector><!-- From: file:/G:/ehelp/ehelp_client/Ehelp/IMKit/src/main/res/drawable/rc_btn_send.xml --><!-- From: file:/G:/ehelp/ehelp_client/Ehelp/IMKit/build/intermediates/bundles/debug/res/drawable/rc_btn_send.xml -->

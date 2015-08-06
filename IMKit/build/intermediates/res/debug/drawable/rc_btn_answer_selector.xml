@@ -9,4 +9,4 @@
     <!-- Pressed -->
     <item android:drawable="@drawable/rc_call_answer_down" android:state_pressed="true"/>
 
-</selector><!-- From: file:/E:/360data/重要数据/桌面/实训/Ehelp/IMKit/src/main/res/drawable/rc_btn_answer_selector.xml -->
+</selector><!-- From: file:/G:/ehelp/ehelp_client/Ehelp/IMKit/src/main/res/drawable/rc_btn_answer_selector.xml -->
