@@ -31,29 +31,21 @@
                 android:gravity="center_vertical"
                 android:clickable="true"
                 android:background="@drawable/preference_first_item"
-                android:id="@+id/allergy">
+                android:id="@+id/others_allergy">
                 <TextView android:layout_width="wrap_content"
                     android:layout_height="wrap_content" android:textColor="#000"
                     android:layout_centerVertical="true"
                     android:textSize="20sp"
-                    android:id="@+id/allergy1"
+                    android:id="@+id/others_allergy1"
                     android:text="过敏反应"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/allergy2"
+                    android:id="@+id/others_allergy2"
                     android:layout_marginLeft="30dp"
                     android:textColor="#000" android:layout_centerVertical="true"
-                    android:layout_toRightOf="@id/allergy1"
+                    android:layout_toRightOf="@id/others_allergy1"
                     android:text="无"/>
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:scaleType="matrix"
-                    android:layout_centerVertical="true"
-                    android:layout_alignParentRight="true"
-                    android:clickable="true"
-                    android:src="@drawable/mm_submenu" />
             </RelativeLayout>
             <RelativeLayout
                 android:layout_width="fill_parent"
@@ -62,29 +54,21 @@
                 android:gravity="center_vertical"
                 android:clickable="true"
                 android:background="@drawable/preference_item"
-                android:id="@+id/medicine_taken">
+                android:id="@+id/others_medicine_taken">
                 <TextView android:layout_width="wrap_content"
                     android:layout_height="wrap_content" android:textColor="#000"
                     android:layout_centerVertical="true"
                     android:textSize="20sp"
-                    android:id="@+id/medicine"
+                    android:id="@+id/others_medicine"
                     android:text="药物使用"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/medicine2"
+                    android:id="@+id/others_medicine2"
                     android:layout_marginLeft="30dp"
                     android:textColor="#000" android:layout_centerVertical="true"
-                    android:layout_toRightOf="@id/medicine"
+                    android:layout_toRightOf="@id/others_medicine"
                     android:text="无"/>
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:scaleType="matrix"
-                    android:layout_centerVertical="true"
-                    android:layout_alignParentRight="true"
-                    android:clickable="true"
-                    android:src="@drawable/mm_submenu" />
             </RelativeLayout>
             <RelativeLayout
                 android:layout_width="fill_parent"
@@ -93,31 +77,22 @@
                 android:gravity="center_vertical"
                 android:clickable="true"
                 android:background="@drawable/preference_item"
-                android:id="@+id/blood_type">
+                android:id="@+id/others_blood_type">
                 <TextView android:layout_width="wrap_content"
                     android:layout_height="wrap_content" android:textColor="#000"
                     android:layout_centerVertical="true"
                     android:textSize="20sp"
-                    android:id="@+id/bloodType"
+                    android:id="@+id/others_bloodType"
                     android:text="血型"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/bloodType2"
+                    android:id="@+id/others_bloodType2"
                     android:layout_marginLeft="70dp"
                     android:textColor="#000" android:layout_centerVertical="true"
-                    android:layout_toRightOf="@id/bloodType"
+                    android:layout_toRightOf="@id/others_bloodType"
                     android:text=""/>
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:scaleType="matrix"
-                    android:layout_centerVertical="true"
-                    android:layout_alignParentRight="true"
-                    android:clickable="true"
-                    android:src="@drawable/mm_submenu" />
             </RelativeLayout>
-
             <RelativeLayout
                 android:layout_width="fill_parent"
                 android:layout_height="50dp"
@@ -125,28 +100,20 @@
                 android:gravity="center_vertical"
                 android:clickable="true"
                 android:background="@drawable/preference_item"
-                android:id="@+id/medihistory1">
+                android:id="@+id/others_medihistory">
                 <TextView android:layout_width="wrap_content"
                     android:layout_height="wrap_content" android:textColor="#000"
                     android:layout_centerVertical="true"
-                    android:textSize="20sp" android:id="@+id/mediHistory"
+                    android:textSize="20sp" android:id="@+id/others_mediHistory1"
                     android:text="病史"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/mediHistory2"
+                    android:id="@+id/others_mediHistory2"
                     android:layout_marginLeft="70dp"
                     android:textColor="#000" android:layout_centerVertical="true"
-                    android:layout_toRightOf="@id/mediHistory"
+                    android:layout_toRightOf="@id/others_mediHistory1"
                     android:text="无"/>
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:scaleType="matrix"
-                    android:layout_centerVertical="true"
-                    android:layout_alignParentRight="true"
-                    android:clickable="true"
-                    android:src="@drawable/mm_submenu" />
             </RelativeLayout>
             <RelativeLayout
                 android:layout_width="fill_parent"
@@ -155,29 +122,21 @@
                 android:gravity="center_vertical"
                 android:clickable="true"
                 android:background="@drawable/preference_item"
-                android:id="@+id/height1">
+                android:id="@+id/others_height">
                 <TextView android:layout_width="wrap_content"
                     android:layout_height="wrap_content" android:textColor="#000"
                     android:layout_centerVertical="true"
                     android:textSize="20sp"
-                    android:id="@+id/height"
+                    android:id="@+id/others_height1"
                     android:text="身高(cm)"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/height2"
+                    android:id="@+id/others_height2"
                     android:layout_marginLeft="30dp"
                     android:textColor="#000" android:layout_centerVertical="true"
-                    android:layout_toRightOf="@id/height"
+                    android:layout_toRightOf="@id/others_height1"
                     android:text=""/>
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:scaleType="matrix"
-                    android:layout_centerVertical="true"
-                    android:layout_alignParentRight="true"
-                    android:clickable="true"
-                    android:src="@drawable/mm_submenu" />
             </RelativeLayout>
             <RelativeLayout
                 android:layout_width="fill_parent"
@@ -186,30 +145,22 @@
                 android:gravity="center_vertical"
                 android:clickable="true"
                 android:background="@drawable/preference_last_item"
-                android:id="@+id/weight1">
+                android:id="@+id/others_weight">
                 <TextView android:layout_width="wrap_content"
                     android:layout_height="wrap_content" android:textColor="#000"
                     android:layout_centerVertical="true"
                     android:textSize="20sp"
-                    android:id="@+id/weight"
+                    android:id="@+id/others_weight1"
                     android:text="体重(kg)"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/weight2"
+                    android:layout_centerVertical="true"
+                    android:id="@+id/others_weight2"
                     android:textColor="#000"
                     android:layout_marginLeft="40dp"
                     android:text=""
-                    android:layout_alignBottom="@+id/weight"
-                    android:layout_toEndOf="@+id/weight" />
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:scaleType="matrix"
-                    android:layout_centerVertical="true"
-                    android:layout_alignParentRight="true"
-                    android:clickable="true"
-                    android:src="@drawable/mm_submenu" />
+                    android:layout_toEndOf="@+id/others_weight1" />
             </RelativeLayout>
         </LinearLayout>
     </LinearLayout>
@@ -220,7 +171,6 @@
         android:layout_height="match_parent"
         rfal:rfal_frame_color="#ffffff"
         rfal:rfal_frame_alpha="0.7">
-
         <com.wangjie.rapidfloatingactionbutton.RapidFloatingActionButton
             xmlns:rfab="http://schemas.android.com/apk/res-auto"
             android:id="@+id/label_list_sample_rfab"
@@ -237,9 +187,6 @@
             rfab:rfab_shadow_radius="7dp"
             rfab:rfab_shadow_color="#999999"
             rfab:rfab_shadow_dx="0dp"
-            rfab:rfab_shadow_dy="5dp"
-            />
-
-
+            rfab:rfab_shadow_dy="5dp"/>
     </com.wangjie.rapidfloatingactionbutton.RapidFloatingActionLayout>
 </RelativeLayout>

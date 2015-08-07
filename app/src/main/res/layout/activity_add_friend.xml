@@ -1,97 +1,126 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context="com.ehelp.user.contactlist.AddFriendActivity"
-    android:weightSum="1"
-    android:background="#ddd">
-    <include layout="@layout/toolbar" />
-<!--
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"
-            android:paddingTop="@dimen/activity_vertical_margin"
-
-    android:paddingBottom="@dimen/activity_vertical_margin"
-
--->
-<RelativeLayout
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:background="#fff">
-    <EditText
-        android:layout_width="300dp"
-        android:layout_height="30dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="5dp"
-        android:hint="输入手机号查询"
-        android:textSize="18dp"
-        android:background="@drawable/search_frame"
-        android:id="@+id/editText_comment"
-        android:inputType="phone"/>
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="40dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp"
-        android:layout_toRightOf="@id/editText_comment"
-        android:text="查询"
-        android:onClick="chaxun"/>
-</RelativeLayout>
-
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:orientation="vertical"
-        android:background="@drawable/background_card"
-        android:layout_gravity="right"
-        android:layout_weight="0.27"
+        tools:context="com.ehelp.user.contactlist.AddFriendActivity"
         android:weightSum="1"
-        android:id="@+id/rll"
-        android:onClick="detail"
-        android:visibility="invisible">
-        <!--android:background="#158684"-->
-        <ImageView
-            android:layout_width="50dp"
+        android:background="#ddd">
+        <include layout="@layout/toolbar" />
+        <!--
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+                android:paddingRight="@dimen/activity_horizontal_margin"
+                    android:paddingTop="@dimen/activity_vertical_margin"
+
+            android:paddingBottom="@dimen/activity_vertical_margin"
+
+        -->
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="#fff">
+            <EditText
+                android:layout_width="300dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="5dp"
+                android:hint="输入手机号查询"
+                android:textSize="18dp"
+                android:background="@drawable/search_frame"
+                android:id="@+id/editText_comment"
+                android:inputType="phone"/>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_toRightOf="@id/editText_comment"
+                android:text="查询"
+                android:onClick="chaxun"/>
+        </RelativeLayout>
+
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:src="@drawable/icon"
-            android:id="@+id/imageView2" />
-        <TextView
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:orientation="vertical"
+            android:background="@drawable/background_card"
+            android:layout_gravity="right"
+            android:layout_weight="0.27"
+            android:weightSum="1"
+            android:id="@+id/rll"
+            android:onClick="detail"
+            android:visibility="invisible">
+            <!--android:background="#158684"-->
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/icon"
+                android:id="@+id/imageView2" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="玛丽莲梦露"
+                android:layout_gravity="center_horizontal"
+                android:layout_weight="0.19"
+                android:textColor="#000"
+                android:layout_alignBottom="@+id/imageView2"
+                android:layout_marginLeft="8dp"
+                android:textSize="18dp"
+                android:layout_toEndOf="@+id/imageView2"
+                android:id="@+id/name" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="年龄：300"
+                android:layout_centerVertical="true"
+                android:layout_alignParentStart="true"
+                android:id="@+id/age" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/gender"
+                android:text="性别：女"
+                android:layout_below="@+id/age"
+                android:layout_alignParentStart="true" />
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="添加"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentEnd="true"
+                android:onClick="addfriend"/>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+    <com.wangjie.rapidfloatingactionbutton.RapidFloatingActionLayout
+        xmlns:rfal="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/label_list_sample_rfal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        rfal:rfal_frame_color="#ffffff"
+        rfal:rfal_frame_alpha="0.7">
+        <com.wangjie.rapidfloatingactionbutton.RapidFloatingActionButton
+            xmlns:rfab="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/label_list_sample_rfab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="玛丽莲梦露"
-            android:layout_gravity="center_horizontal"
-            android:layout_weight="0.19"
-            android:textColor="#000"
-            android:layout_alignBottom="@+id/imageView2"
-            android:layout_marginLeft="8dp"
-            android:textSize="18dp"
-            android:layout_toEndOf="@+id/imageView2"
-            android:id="@+id/name" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="年龄：300"
-            android:layout_centerVertical="true"
-            android:layout_alignParentStart="true"
-            android:id="@+id/age" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/gender"
-            android:text="性别：女"
-            android:layout_below="@+id/age"
-            android:layout_alignParentStart="true" />
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="添加"
+            android:layout_alignParentRight="true"
             android:layout_alignParentBottom="true"
-            android:layout_alignParentEnd="true"
-            android:onClick="addfriend"/>
-
-    </RelativeLayout>
-
-</LinearLayout>
+            android:layout_marginRight="15dp"
+            android:layout_marginBottom="15dp"
+            rfab:rfab_size="normal"
+            rfab:rfab_drawable="@drawable/rfab__drawable_rfab_default"
+            rfab:rfab_color_normal="#37474f"
+            rfab:rfab_color_pressed="#263238"
+            rfab:rfab_shadow_radius="7dp"
+            rfab:rfab_shadow_color="#999999"
+            rfab:rfab_shadow_dx="0dp"
+            rfab:rfab_shadow_dy="5dp"/>
+    </com.wangjie.rapidfloatingactionbutton.RapidFloatingActionLayout>
+</RelativeLayout>
