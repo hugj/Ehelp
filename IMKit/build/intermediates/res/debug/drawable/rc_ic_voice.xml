@@ -2,4 +2,4 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:drawable="@drawable/rc_ic_voice_selected" android:state_selected="true"/>
     <item android:drawable="@drawable/rc_ic_voice_normal"/>
-</selector><!-- From: file:/G:/ehelp/ehelp_client/Ehelp/IMKit/src/main/res/drawable/rc_ic_voice.xml -->
+</selector><!-- From: file:/Users/kyouzuimine/Desktop/Ehelp/IMKit/src/main/res/drawable/rc_ic_voice.xml -->
