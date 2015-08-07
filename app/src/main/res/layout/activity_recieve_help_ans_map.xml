@@ -42,6 +42,7 @@
             android:layout_width="fill_parent"
             android:layout_height="40sp"
             android:id="@+id/Title"
+            android:text="事件标题"
             android:textSize="20dp"
             android:layout_alignParentLeft ="@+id/imageView"
             android:layout_below="@+id/imageView" />
@@ -50,6 +51,7 @@
             android:layout_width="fill_parent"
             android:layout_height="50sp"
             android:id="@+id/Content"
+            android:text="事件内容"
             android:layout_alignParentLeft ="@+id/imageView"
             android:layout_below="@+id/Title" />
 
@@ -81,10 +83,10 @@
             android:layout_alignParentEnd="true" />
 
         <TextView
-            android:layout_width="100sp"
+            android:layout_width="wrap_content"
             android:layout_height="20sp"
-            android:text="这里是天堂"
-            android:id="@+id/textView2"
+            android:text="2012年"
+            android:id="@+id/helptime"
             android:layout_alignTop="@+id/imageView"
             android:layout_alignParentEnd="true" />
 
