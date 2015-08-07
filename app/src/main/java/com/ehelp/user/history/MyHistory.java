@@ -20,8 +20,8 @@ import android.widget.TextView;
 
 import com.ehelp.R;
 import com.ehelp.entity.Event;
+import com.ehelp.map.recieve_help_ans_map;
 import com.ehelp.map.sendhelp_map;
-import com.ehelp.map.sendhelpcomeback_map;
 import com.ehelp.map.sendsos_map;
 import com.ehelp.receive.QuestionDetail;
 import com.ehelp.send.CountNum;
@@ -321,9 +321,10 @@ public class MyHistory extends AIActionBarActivity implements RapidFloatingActio
                     //绑定监听
                     hisList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         public void onItemClick(AdapterView<?> arg0, View arg1, int index, long arg3) {
-                            Intent intent = new Intent(MyHistory.this, sendhelpcomeback_map.class);
+                            Intent intent = new Intent(MyHistory.this, recieve_help_ans_map.class);
+                            //根据是否结束跳入不同页面
                             int eventID = events.get(index).getEventId();
-                            intent.putExtra(EXTRA_MESSAGE, eventID);
+                            intent.putExtra("event_id", eventID);
                             startActivity(intent);
                         }
                     });
@@ -345,8 +346,9 @@ public class MyHistory extends AIActionBarActivity implements RapidFloatingActio
                     hisList2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         public void onItemClick(AdapterView<?> arg0, View arg1, int index, long arg3) {
                             Intent intent = new Intent(MyHistory.this, sendsos_map.class);
+                            //这里要根据是否结束判断跳转至哪个页面sendsos_map，endsos，一般情况下是跳至已结束的页面
                             int eventID = events.get(index).getEventId();
-                            intent.putExtra(EXTRA_MESSAGE, eventID);
+                            intent.putExtra("event_id", eventID);
                             startActivity(intent);
                         }
                     });

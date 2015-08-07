@@ -6,4 +6,4 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="bottom"
-    app:style="SCE" /><!-- From: file:/G:/ehelp/ehelp_client/Ehelp/IMKit/src/main/res/layout/rc_fr_messageinput.xml -->
+    app:style="SCE" /><!-- From: file:/F:/Grade4.1/一键求助实训项目/代码资源库/Ehelp_2/Ehelp/IMKit/src/main/res/layout/rc_fr_messageinput.xml -->

@@ -5,4 +5,4 @@
     <item android:drawable="@drawable/rc_checkbox_normal" android:state_checked="false"></item>
     <item android:drawable="@drawable/rc_checkbox_normal"></item>
 
-</selector><!-- From: file:/G:/ehelp/ehelp_client/Ehelp/IMKit/src/main/res/drawable/rc_photo_checkbox.xml --><!-- From: file:/G:/ehelp/ehelp_client/Ehelp/IMKit/build/intermediates/bundles/debug/res/drawable/rc_photo_checkbox.xml -->
+</selector><!-- From: file:/F:/Grade4.1/一键求助实训项目/代码资源库/Ehelp_2/Ehelp/IMKit/src/main/res/drawable/rc_photo_checkbox.xml --><!-- From: file:/F:/Grade4.1/一键求助实训项目/代码资源库/Ehelp_2/Ehelp/IMKit/build/intermediates/bundles/debug/res/drawable/rc_photo_checkbox.xml -->

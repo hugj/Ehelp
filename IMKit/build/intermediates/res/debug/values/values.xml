@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- From: file:/G:/ehelp/ehelp_client/Ehelp/IMKit/src/main/res/values/rc_emoji.xml -->
+    <!-- From: file:/F:/Grade4.1/一键求助实训项目/代码资源库/Ehelp_2/Ehelp/IMKit/src/main/res/values/rc_emoji.xml -->
     <eat-comment/>
     <integer-array name="emoji_code">
             <item>0x1f60a</item>
@@ -262,10 +262,10 @@
         <item>@drawable/u1f680</item>
         <item>@drawable/u23f3</item>
     </array>
-    <!-- From: file:/G:/ehelp/ehelp_client/Ehelp/IMKit/src/main/res/values/rc_config.xml -->
+    <!-- From: file:/F:/Grade4.1/一键求助实训项目/代码资源库/Ehelp_2/Ehelp/IMKit/src/main/res/values/rc_config.xml -->
     <eat-comment/>
     <bool name="rc_is_show_warning_notification">true</bool>
-    <!-- From: file:/G:/ehelp/ehelp_client/Ehelp/IMKit/src/main/res/values/rc_color.xml -->
+    <!-- From: file:/F:/Grade4.1/一键求助实训项目/代码资源库/Ehelp_2/Ehelp/IMKit/src/main/res/values/rc_color.xml -->
     <eat-comment/>
     <color name="rc_conversation_top_bg">#f2faff</color>
     <color name="rc_draft_color">#cb120f</color>
@@ -289,12 +289,12 @@
     <declare-styleable name="InputView"><attr name="style"><enum name="SCE" value="0x123"/><enum name="CES" value="0x231"/><enum name="ECS" value="0x321"/><enum name="CSE" value="0x213"/><enum name="SC" value="0x120"/><enum name="CS" value="0x21"/><enum name="EC" value="0x320"/><enum name="CE" value="0x023"/><enum name="C" value="0x020"/></attr></declare-styleable>
     <declare-styleable name="MessageProviderContainerView"><attr format="integer" name="maxContainSize"/></declare-styleable>
     <declare-styleable name="ViewFlow"><attr format="integer" name="sideBuffer"/></declare-styleable>
-    <!-- From: file:/G:/ehelp/ehelp_client/Ehelp/IMKit/src/main/res/values/rc_dimens.xml -->
+    <!-- From: file:/F:/Grade4.1/一键求助实训项目/代码资源库/Ehelp_2/Ehelp/IMKit/src/main/res/values/rc_dimens.xml -->
     <eat-comment/>
     <dimen name="rc_conversation_item_data_size">14sp</dimen>
     <dimen name="rc_conversation_item_name_size">16sp</dimen>
     <dimen name="rc_message_send_status_image_size">17dp</dimen>
-    <!-- From: file:/G:/ehelp/ehelp_client/Ehelp/IMKit/src/main/res/values/rc_ids.xml -->
+    <!-- From: file:/F:/Grade4.1/一键求助实训项目/代码资源库/Ehelp_2/Ehelp/IMKit/src/main/res/values/rc_ids.xml -->
     <eat-comment/>
     <item name="rc_actionbar" type="id"/>
     <item name="rc_back" type="id"/>
@@ -344,10 +344,10 @@
     <item name="rc_unread_message" type="id"/>
     <item name="rc_unread_message_right" type="id"/>
     <item name="rc_warning" type="id"/>
-    <!-- From: file:/G:/ehelp/ehelp_client/Ehelp/IMKit/src/main/res/values/rc_config.xml -->
+    <!-- From: file:/F:/Grade4.1/一键求助实训项目/代码资源库/Ehelp_2/Ehelp/IMKit/src/main/res/values/rc_config.xml -->
     <eat-comment/>
     <integer name="rc_chatroom_first_pull_message_count">10</integer>
-    <!-- From: file:/G:/ehelp/ehelp_client/Ehelp/IMKit/src/main/res/values/rc_string.xml -->
+    <!-- From: file:/F:/Grade4.1/一键求助实训项目/代码资源库/Ehelp_2/Ehelp/IMKit/src/main/res/values/rc_string.xml -->
     <eat-comment/>
     <string name="rc_dialog_cancel">取消</string>
     <string name="rc_dialog_item_message_copy">复制消息</string>
@@ -391,10 +391,10 @@
     <string name="rc_message_content_voice">[语音]</string>
     <string name="rc_message_unknown">当前版本暂不支持查看此消息</string>
     <string name="rc_message_unread_count">"···"</string>
-    <!-- From: file:/G:/ehelp/ehelp_client/Ehelp/IMKit/src/main/res/values/rc_strings.xml -->
+    <!-- From: file:/F:/Grade4.1/一键求助实训项目/代码资源库/Ehelp_2/Ehelp/IMKit/src/main/res/values/rc_strings.xml -->
     <eat-comment/>
     <string name="rc_name">融云</string>
-    <!-- From: file:/G:/ehelp/ehelp_client/Ehelp/IMKit/src/main/res/values/rc_string.xml -->
+    <!-- From: file:/F:/Grade4.1/一键求助实训项目/代码资源库/Ehelp_2/Ehelp/IMKit/src/main/res/values/rc_string.xml -->
     <eat-comment/>
     <string name="rc_notice_connecting">正在连接服务器</string>
     <string name="rc_notice_create_discussion">正在创建讨论组</string>
@@ -403,21 +403,21 @@
     <string name="rc_notice_input_conversation_error">会话尚未创建</string>
     <string name="rc_notice_network_unavailable">当前网络不可用</string>
     <string name="rc_notice_tick">该账号已经在其他设备登录</string>
-    <!-- From: file:/G:/ehelp/ehelp_client/Ehelp/IMKit/src/main/res/values/rc_notification_string.xml -->
+    <!-- From: file:/F:/Grade4.1/一键求助实训项目/代码资源库/Ehelp_2/Ehelp/IMKit/src/main/res/values/rc_notification_string.xml -->
     <eat-comment/>
     <string name="rc_notification_contact">个联系人</string>
     <string name="rc_notification_msg">条消息</string>
     <string name="rc_notification_send">发来了</string>
     <string name="rc_notification_ticker_text">您有了一条新消息</string>
-    <!-- From: file:/G:/ehelp/ehelp_client/Ehelp/IMKit/src/main/res/values/rc_string.xml -->
+    <!-- From: file:/F:/Grade4.1/一键求助实训项目/代码资源库/Ehelp_2/Ehelp/IMKit/src/main/res/values/rc_string.xml -->
     <eat-comment/>
     <string name="rc_plugins_camera">相机</string>
     <string name="rc_plugins_image">图片</string>
     <string name="rc_plugins_location">位置</string>
-    <!-- From: file:/G:/ehelp/ehelp_client/Ehelp/IMKit/src/main/res/values/rc_voip_string.xml -->
+    <!-- From: file:/F:/Grade4.1/一键求助实训项目/代码资源库/Ehelp_2/Ehelp/IMKit/src/main/res/values/rc_voip_string.xml -->
     <eat-comment/>
     <string name="rc_plugins_voip">语音通话</string>
-    <!-- From: file:/G:/ehelp/ehelp_client/Ehelp/IMKit/src/main/res/values/rc_string.xml -->
+    <!-- From: file:/F:/Grade4.1/一键求助实训项目/代码资源库/Ehelp_2/Ehelp/IMKit/src/main/res/values/rc_string.xml -->
     <eat-comment/>
     <string name="rc_pub_service_info_account">公众号：%1$s</string>
     <string name="rc_pub_service_info_description">功能介绍</string>
@@ -436,17 +436,17 @@
     <string name="rc_setting_set_top">置顶</string>
     <string name="rc_setting_set_top_fail">设置置顶失败</string>
     <string name="rc_voice_cancel">松开手指，取消发送</string>
-    <!-- From: file:/G:/ehelp/ehelp_client/Ehelp/IMKit/src/main/res/values/rc_strings.xml -->
+    <!-- From: file:/F:/Grade4.1/一键求助实训项目/代码资源库/Ehelp_2/Ehelp/IMKit/src/main/res/values/rc_strings.xml -->
     <eat-comment/>
     <string name="rc_voice_dialog_cancel_send">松开手指，取消发送</string>
     <string name="rc_voice_dialog_swipe">手指上滑，取消发送</string>
     <string name="rc_voice_dialog_time_short">说话时间太短</string>
-    <!-- From: file:/G:/ehelp/ehelp_client/Ehelp/IMKit/src/main/res/values/rc_string.xml -->
+    <!-- From: file:/F:/Grade4.1/一键求助实训项目/代码资源库/Ehelp_2/Ehelp/IMKit/src/main/res/values/rc_string.xml -->
     <eat-comment/>
     <string name="rc_voice_failure">录音失败！</string>
     <string name="rc_voice_rec">手指上滑，取消发送</string>
     <string name="rc_voice_short">录音时间太短</string>
-    <!-- From: file:/G:/ehelp/ehelp_client/Ehelp/IMKit/src/main/res/values/rc_theme.xml -->
+    <!-- From: file:/F:/Grade4.1/一键求助实训项目/代码资源库/Ehelp_2/Ehelp/IMKit/src/main/res/values/rc_theme.xml -->
     <eat-comment/>
     <style name="RCTheme" parent="@android:style/Theme.Light">
         <item name="android:listDivider">@android:color/transparent</item>
@@ -507,7 +507,7 @@
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:background">@android:color/transparent</item>
     </style>
-    <!-- From: file:/G:/ehelp/ehelp_client/Ehelp/IMKit/src/main/res/values/rc_style.xml -->
+    <!-- From: file:/F:/Grade4.1/一键求助实训项目/代码资源库/Ehelp_2/Ehelp/IMKit/src/main/res/values/rc_style.xml -->
     <eat-comment/>
     <style name="custom_checkbox" parent="@android:style/Widget.CompoundButton.CheckBox">
         <item name="android:background">@drawable/rc_photo_checkbox</item>

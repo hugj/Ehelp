@@ -6,16 +6,20 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ehelp.R;
+import com.ehelp.home.Home;
 import com.ehelp.map.sendhelp_map;
 import com.ehelp.send.CountNum;
 import com.ehelp.send.SendQuestion;
+import com.ehelp.utils.RequestHandler;
 import com.wangjie.androidbucket.utils.ABTextUtil;
 import com.wangjie.androidbucket.utils.imageprocess.ABShape;
 import com.wangjie.androidinject.annotation.annotations.base.AILayout;
@@ -27,6 +31,9 @@ import com.wangjie.rapidfloatingactionbutton.RapidFloatingActionLayout;
 import com.wangjie.rapidfloatingactionbutton.contentimpl.labellist.RFACLabelItem;
 import com.wangjie.rapidfloatingactionbutton.contentimpl.labellist.RapidFloatingActionContentLabelList;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,7 +43,7 @@ import java.util.List;
  * Created by kyy on 2015/7/19.
  */
 @AILayout(R.layout.activity_comment)
-public class Comment extends AIActionBarActivity implements RapidFloatingActionContentLabelList.OnRapidFloatingActionContentLabelListListener {
+public class Evaluation extends AIActionBarActivity implements RapidFloatingActionContentLabelList.OnRapidFloatingActionContentLabelListListener {
     @AIView(R.id.label_list_sample_rfal)
     private RapidFloatingActionLayout rfaLayout;
     @AIView(R.id.label_list_sample_rfab)
@@ -52,10 +59,6 @@ public class Comment extends AIActionBarActivity implements RapidFloatingActionC
     private int user_id;
     private int event_id;
     private SharedPreferences sp;
-
-//    private ExpandableListView eListView;
-//    private AssortView assortView;
-//    private List<String> names;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -78,20 +81,6 @@ public class Comment extends AIActionBarActivity implements RapidFloatingActionC
         TextView tvv =(TextView) findViewById(R.id.titlefortoolbar);
         tvv.setText("评价");
 
-
-        //添加按钮事件
-        /*Button button  =(Button)findViewById(R.id.button_comment_send);
-        button.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                // TODO Auto-generated method stub
-                Toast.makeText(getApplicationContext(), "通过setOnClickListener（）方法实现",
-                        Toast.LENGTH_SHORT).show();
-                //Intent intent = new Intent(activity_comment.this, activity_home.class);
-                //activity_comment.this.startActivity(intent);
-            }
-        });*/
         RatingBar ratBar = (RatingBar)findViewById(R.id.ratingBar);
         ratBar.setStepSize(1);//步进为1
         ratBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
@@ -108,6 +97,8 @@ public class Comment extends AIActionBarActivity implements RapidFloatingActionC
 
         sp = this.getSharedPreferences("user_id", MODE_PRIVATE);
         user_id = sp.getInt("user_id", -1);
+
+        event_id = this.getIntent().getIntExtra("event_id",-1);
     }
 
     private void fab(){
@@ -203,14 +194,41 @@ public class Comment extends AIActionBarActivity implements RapidFloatingActionC
 
         //noinspection SimplifiableIfStatement
         if ((id == R.id.action_settings)){
-            /*int state = 1;
+            int state = 1;
             getComment();
             String send = "{\"id\":" + id + ",\"event_id\":"
                     + event_id + ",\"group_pts\":" + starnum + ",\"comment\":\"" + comment
                     + "\",\"state\":" + state + "}";
-            String msg = RequestHandler.sendPostRequest(
+            String message = RequestHandler.sendPostRequest(
                     url, send);
-            Log.v("myowntest", msg);*/
+            Log.v("myowntest", message);
+            if (message == "false") {
+                Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
+                        Toast.LENGTH_SHORT).show();
+                return true;
+            }
+            try{
+                JSONObject jO = new JSONObject(message);
+                if (jO.getInt("status") == 500) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(getApplicationContext(), "提交失败",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    return true;
+                }else if(jO.getInt("status") == 200){
+                    Toast.makeText(getApplicationContext(), "提交评价成功",
+                            Toast.LENGTH_SHORT).show();
+                    Intent intent=new Intent(this,Home.class);
+                    startActivity(intent);
+                    this.finish();
+                }
+            }catch (JSONException e) {
+                e.printStackTrace();
+            }
+
 
             return true;
         }

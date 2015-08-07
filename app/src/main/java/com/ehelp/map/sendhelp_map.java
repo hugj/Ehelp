@@ -158,13 +158,14 @@ public class sendhelp_map extends ActionBarActivity implements
             bundle.putString("latitude", latitude);
             intent.putExtras(bundle);
             startActivity(intent);
+            this.finish();
 
 //            Toast.makeText(sendhelp_map.this, a + ":" + b, Toast.LENGTH_SHORT)
 //                    .show();
 //
             return true;
         }
-        
+
         return super.onOptionsItemSelected(item);
     }
 

@@ -22,4 +22,4 @@
         android:layout_gravity="bottom|center_horizontal"
         app:inactiveType="fill"
         app:radius="6dp" />
-</LinearLayout><!-- From: file:/G:/ehelp/ehelp_client/Ehelp/IMKit/src/main/res/layout/rc_wi_ext_pager.xml -->
+</LinearLayout><!-- From: file:/F:/Grade4.1/一键求助实训项目/代码资源库/Ehelp_2/Ehelp/IMKit/src/main/res/layout/rc_wi_ext_pager.xml -->

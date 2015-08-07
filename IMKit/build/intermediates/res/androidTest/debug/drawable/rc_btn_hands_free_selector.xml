@@ -4,4 +4,4 @@
   <item android:maxLevel="1" android:drawable="@drawable/rc_hands_free_disable" />  
   <item android:maxLevel="2" android:drawable="@drawable/rc_hands_free" />  
   <item android:maxLevel="3" android:drawable="@drawable/rc_hands_free_down" />  
-</level-list>  <!-- From: file:/G:/ehelp/ehelp_client/Ehelp/IMKit/src/main/res/drawable/rc_btn_hands_free_selector.xml --><!-- From: file:/G:/ehelp/ehelp_client/Ehelp/IMKit/build/intermediates/bundles/debug/res/drawable/rc_btn_hands_free_selector.xml -->
+</level-list>  <!-- From: file:/F:/Grade4.1/一键求助实训项目/代码资源库/Ehelp_2/Ehelp/IMKit/src/main/res/drawable/rc_btn_hands_free_selector.xml --><!-- From: file:/F:/Grade4.1/一键求助实训项目/代码资源库/Ehelp_2/Ehelp/IMKit/build/intermediates/bundles/debug/res/drawable/rc_btn_hands_free_selector.xml -->
