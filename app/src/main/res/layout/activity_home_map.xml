@@ -13,14 +13,12 @@
         rfal:rfal_frame_alpha="0.7"
         >
 
-        <TextView android:layout_width="match_parent" android:layout_height="match_parent"
-            android:gravity="center_vertical"
-            android:lineSpacingMultiplier="1.3"
-            android:padding="30dp"
-            android:textSize="16sp"
-            android:background="#aacbacba"
-            android:text="该RFAB在RFAGroupSampleActivity中"
-            />
+        <com.baidu.mapapi.map.MapView
+            android:id="@+id/bmapView"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:clickable="true" />
+
         <!-- 只是用于占位，id和位置必须跟RFABGroupSampleActivity中的RFAB位置完全一致！ -->
         <com.wangjie.rapidfloatingactionbutton.RapidFloatingActionButton
             xmlns:rfab="http://schemas.android.com/apk/res-auto"

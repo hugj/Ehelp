@@ -17,11 +17,23 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ZoomControls;
 
+import com.baidu.location.BDLocation;
+import com.baidu.location.BDLocationListener;
+import com.baidu.location.LocationClient;
+import com.baidu.location.LocationClientOption;
 import com.baidu.mapapi.SDKInitializer;
 import com.baidu.mapapi.map.BaiduMap;
+import com.baidu.mapapi.map.BitmapDescriptor;
+import com.baidu.mapapi.map.BitmapDescriptorFactory;
+import com.baidu.mapapi.map.MapStatusUpdate;
+import com.baidu.mapapi.map.MapStatusUpdateFactory;
 import com.baidu.mapapi.map.MapView;
+import com.baidu.mapapi.map.Marker;
+import com.baidu.mapapi.map.MarkerOptions;
+import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.map.SupportMapFragment;
 import com.baidu.mapapi.model.LatLng;
+import com.baidu.mapapi.model.LatLngBounds;
 import com.baidu.mapapi.overlayutil.PoiOverlay;
 import com.baidu.mapapi.search.core.CityInfo;
 import com.baidu.mapapi.search.core.PoiInfo;
@@ -62,6 +74,12 @@ public class sendhelp_map extends ActionBarActivity implements
 
     LatLng ll;
 
+    LocationClient mLocClient;
+    public MyLocationListenner myListener = new MyLocationListenner();
+    boolean isFirstLoc = true;// 判断是否首次定位
+
+    Marker mMarker1;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         SDKInitializer.initialize(getApplicationContext());
@@ -95,6 +113,16 @@ public class sendhelp_map extends ActionBarActivity implements
          * 当输入关键字变化时，动态更新建议列表
          */
         mMapView = (MapView) findViewById(R.id.map);
+
+        mLocClient = new LocationClient(this);
+        mLocClient.registerLocationListener(myListener);
+        LocationClientOption option = new LocationClientOption();
+        option.setOpenGps(true);// 打开gps
+        option.setCoorType("bd09ll"); // 设置坐标类型
+        option.setScanSpan(1000);
+        mLocClient.setLocOption(option);
+        mLocClient.start();
+
         int count = mMapView.getChildCount();
         // 去除无关图标
         for (int i = 0; i < count; i++) {
@@ -133,6 +161,15 @@ public class sendhelp_map extends ActionBarActivity implements
             }
         });
 
+        mBaiduMap.setOnMarkerClickListener(new BaiduMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(Marker marker) {
+                // TODO Auto-generated method stub
+                Toast.makeText(getApplicationContext(), "Marker被点击了！", Toast.LENGTH_SHORT).show();
+                ll = marker.getPosition();
+                return false;
+            }
+        });
     }
 
     //toolbar设置
@@ -292,6 +329,37 @@ public class sendhelp_map extends ActionBarActivity implements
                     .poiUid(poi.uid));
             // }
             return true;
+        }
+    }
+
+    public class MyLocationListenner implements BDLocationListener {
+
+        @Override
+        public void onReceiveLocation(BDLocation location) {
+            // map view 销毁后不在处理新接收的位置
+            if (location == null || mMapView == null)
+                return;
+            MyLocationData locData = new MyLocationData.Builder()
+                    .accuracy(location.getRadius())
+                            // 此处设置开发者获取到的方向信息，顺时针0-360
+                    .direction(100).latitude(location.getLatitude())
+                    .longitude(location.getLongitude()).build();
+            mBaiduMap.setMyLocationData(locData);
+            if (isFirstLoc) {
+                isFirstLoc = false;
+                LatLng ll = new LatLng(location.getLatitude(),
+                        location.getLongitude());
+                MapStatusUpdate u = MapStatusUpdateFactory.newLatLng(ll);
+                mBaiduMap.animateMapStatus(u);
+                LatLng pt = new LatLng(location.getLatitude(), location.getLongitude());
+                BitmapDescriptor bd = BitmapDescriptorFactory.fromResource(R.drawable.icon_gcoding);
+                LatLngBounds.Builder builder = new LatLngBounds.Builder();
+                MarkerOptions markerOptions = new MarkerOptions().icon(bd).position(pt);
+                mMarker1 = (Marker) (mBaiduMap.addOverlay(markerOptions));
+            }
+        }
+
+        public void onReceivePoi(BDLocation poiLocation) {
         }
     }
 }

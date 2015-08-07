@@ -1,9 +1,11 @@
 package com.ehelp.entity;
 
+import java.io.Serializable;
+
 /**
  * Created by gj on 2015/8/5.
  */
-public class comment {
+public class comment implements Serializable {
     /**
      * parent_author : 回复的人的昵称
      * event_id : -1

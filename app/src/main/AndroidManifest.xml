@@ -50,7 +50,7 @@
         android:theme="@style/AppTheme" >
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
-            android:value="mUXipoTtifo0pKN3BqSIgbhb" />
+            android:value="DHx2AGnN7bg1m5yzaTMgCr7C" />
 
         <activity
             android:name=".account.login"
@@ -336,11 +336,19 @@
 
                 <category android:name="android.intent.category.DEFAULT" />
 
-                 <data
-                     android:host="com.ehelp"
+                <data
+                    android:host="com.ehelp"
                     android:pathPrefix="/conversation/"
                     android:scheme="rong" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".map.ResponseActivity"
+            android:label="@string/title_activity_response" >
+        </activity>
+        <activity
+            android:name=".user.healthcard.OthershealthcardActivity"
+            android:label="@string/title_activity_othershealthcard" >
         </activity>
     </application>
 

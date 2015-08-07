@@ -1,6 +1,8 @@
 package com.ehelp.home;
 
 import android.content.Context;
+import android.os.StrictMode;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -51,6 +53,19 @@ public class HomeAdapter extends BaseAdapter {
         type = type_;
         eventCache = eventCache_;
         init();
+    }
+
+    HomeAdapter(Context context, int id, int type_){
+        this.context=context;
+        user_id = id;
+        type = type_;
+        StrictMode.setThreadPolicy(
+                new StrictMode.ThreadPolicy.Builder().
+                        detectDiskReads().detectDiskWrites().detectNetwork().penaltyLog().build());
+        StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder().
+                detectLeakedSqlLiteObjects().detectLeakedClosableObjects().
+                penaltyLog().penaltyDeath().build());
+        setList2();
     }
 
     public void init(){
@@ -127,6 +142,34 @@ public class HomeAdapter extends BaseAdapter {
                     item.put("悬赏", "10爱心币");
                     list.add(item);
                 }
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void setList2() {
+        //数据初始化
+        try {
+            String jsonStrng = "{" +
+                    "\"id\":" + user_id + ",\"state\":0," +
+                    "\"type\":" + type + "}";
+
+            String message = RequestHandler.sendPostRequest(
+                    "http://120.24.208.130:1501/event/get_nearby_event", jsonStrng);
+            Log.v("asdf3qweqw", message);
+            if (message == "false") {
+                item=new HashMap<String,Object>();
+                item.put("头像", R.drawable.icon);
+                item.put("标题", "连接失败，请检查网络是否连接并重试");
+                item.put("用户", "");
+                item.put("时间", "");
+                item.put("悬赏", "");
+                list.add(item);
+            } else {
+                JSONObject j1 = new JSONObject(message);
+                String st = j1.getString("event_list");
+                events = gson.fromJson(st, new TypeToken<List<Event>>(){}.getType());
             }
         } catch (JSONException e) {
             e.printStackTrace();
