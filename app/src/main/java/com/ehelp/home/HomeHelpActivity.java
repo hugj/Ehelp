@@ -95,7 +95,7 @@ public class HomeHelpActivity extends BaseFragment implements OnRapidFloatingBut
         SOSList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> arg0, View arg1, int index, long arg3) {
                 Intent intent = new Intent(getActivity(), recieve_help_ans_map.class);
-                intent.putExtra(EXTRA_MESSAGE, events.get(index));
+                intent.putExtra(EXTRA_MESSAGE, events.get(index).getEventId());
                 startActivity(intent);
             }
         });

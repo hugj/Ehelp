@@ -8,16 +8,13 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.ehelp.account.login;
-import com.ehelp.evaluate.Comment;
+import com.ehelp.evaluate.Evaluation;
 import com.ehelp.home.Home;
 import com.ehelp.map.recieve_help_ans_map;
-import com.ehelp.map.recievehelp_map;
 import com.ehelp.map.recievesos_map;
 import com.ehelp.map.sendhelp_map;
-import com.ehelp.map.sendhelpcomeback_map;
 import com.ehelp.map.sendsos_map;
 import com.ehelp.send.CountNum;
-import com.ehelp.send.SendHelp;
 import com.ehelp.send.SendQuestion;
 import com.wangjie.androidbucket.utils.ABTextUtil;
 import com.wangjie.androidbucket.utils.imageprocess.ABShape;
@@ -160,16 +157,12 @@ public class Test extends AIActionBarActivity implements RapidFloatingActionCont
     }
     public void comment(View view) {
         // Do something in response to button
-        Intent intent = new Intent(this, Comment.class);
+        Intent intent = new Intent(this, Evaluation.class);
         startActivity(intent);
     }
 
 
 
-    public void goToMap(View view) {
-        Intent intent = new Intent(this, recievehelp_map.class);
-        startActivity(intent);
-    }
 
 
 
@@ -193,7 +186,7 @@ public class Test extends AIActionBarActivity implements RapidFloatingActionCont
 
     public void send_map4(View view) {
 
-        Intent intent = new Intent(this, sendhelpcomeback_map.class);
+        Intent intent = new Intent(this, recieve_help_ans_map.class);
         startActivity(intent);
     }
 
