@@ -4,8 +4,8 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
@@ -14,12 +14,34 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ehelp.R;
+import com.ehelp.map.sendhelp_map;
+import com.ehelp.send.CountNum;
+import com.ehelp.send.SendQuestion;
 import com.ehelp.utils.RequestHandler;
+import com.wangjie.androidbucket.utils.ABTextUtil;
+import com.wangjie.androidbucket.utils.imageprocess.ABShape;
+import com.wangjie.androidinject.annotation.annotations.base.AILayout;
+import com.wangjie.androidinject.annotation.annotations.base.AIView;
+import com.wangjie.androidinject.annotation.present.AIActionBarActivity;
+import com.wangjie.rapidfloatingactionbutton.RapidFloatingActionButton;
+import com.wangjie.rapidfloatingactionbutton.RapidFloatingActionHelper;
+import com.wangjie.rapidfloatingactionbutton.RapidFloatingActionLayout;
+import com.wangjie.rapidfloatingactionbutton.contentimpl.labellist.RFACLabelItem;
+import com.wangjie.rapidfloatingactionbutton.contentimpl.labellist.RapidFloatingActionContentLabelList;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class messageActivity extends ActionBarActivity {
+import java.util.ArrayList;
+import java.util.List;
+
+@AILayout(R.layout.activity_message)
+public class messageActivity extends AIActionBarActivity implements RapidFloatingActionContentLabelList.OnRapidFloatingActionContentLabelListListener {
+    @AIView(R.id.label_list_sample_rfal)
+    private RapidFloatingActionLayout rfaLayout;
+    @AIView(R.id.label_list_sample_rfab)
+    private RapidFloatingActionButton rfaButton;
+    private RapidFloatingActionHelper rfabHelper;
 
     private RelativeLayout myLay = null;
     private AlertDialog myDialog = null;
@@ -41,7 +63,7 @@ public class messageActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_message);
+//        setContentView(R.layout.activity_message);
 
         //set toolbar
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -62,44 +84,6 @@ public class messageActivity extends ActionBarActivity {
         //根据用户ID从后台获取数据显示信息详情
         show123();
 
-//        //click on set name设置备注名
-//        myLay = (RelativeLayout) findViewById(R.id.detail_setname);
-//        Setname = (TextView)findViewById(R.id.detail_setname2);
-//        myLay.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View arg0) {
-//                myDialog = new AlertDialog.Builder(messageActivity.this).create();
-//                myDialog.show();
-//                myDialog.getWindow().setContentView(R.layout.activity_messetname);
-//                //click on cancel
-//                myDialog.getWindow()
-//                        .findViewById(R.id.setname5)
-//                        .setOnClickListener(new View.OnClickListener() {
-//                            @Override
-//                            public void onClick(View v) {
-//                                myDialog.dismiss();
-//                            }
-//                        });
-//                //click on ensure
-//                myDialog.getWindow()
-//                        .findViewById(R.id.setname6)
-//                        .setOnClickListener(new View.OnClickListener() {
-//                            @Override
-//                            public void onClick(View v) {
-//                                EditText edit = (EditText)myDialog.getWindow()
-//                                        .findViewById(R.id.setname4);
-//                                Setname.setText(edit.getText().toString());
-//                                Toast.makeText(getApplicationContext(), "备注名设置成功",
-//                                        Toast.LENGTH_SHORT).show();
-//                                myDialog.dismiss();
-//                            }
-//                        });
-//                myDialog.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
-//                        | WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
-//                myDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams
-//                        .SOFT_INPUT_STATE_VISIBLE);
-//            }
-//        });
         //add contact添加紧急联系人
         Button add_excontact = (Button)findViewById(R.id.addexcontact);
         add_excontact.setOnClickListener(new View.OnClickListener() {
@@ -135,9 +119,86 @@ public class messageActivity extends ActionBarActivity {
             Toast.makeText(getApplicationContext(), "参数传入错误",
                     Toast.LENGTH_SHORT).show();
         }
+        //set FAB
+        fab();
+    }
+    private void fab(){
+        RapidFloatingActionContentLabelList rfaContent = new RapidFloatingActionContentLabelList(context);
+        rfaContent.setOnRapidFloatingActionContentLabelListListener(this);
+        List<RFACLabelItem> items = new ArrayList<>();
+        items.add(new RFACLabelItem<Integer>()
+                        .setLabel("求救")
+                        .setResId(R.mipmap.ic_launcher)
+                        .setIconNormalColor(0xffd84315)
+                        .setIconPressedColor(0xffbf360c)
+                        .setWrapper(0)
+        );
+        items.add(new RFACLabelItem<Integer>()
+                        .setLabel("求助")
+//                        .setResId(R.mipmap.ico_test_c)
+                        .setDrawable(getResources().getDrawable(R.mipmap.ic_launcher))
+                        .setIconNormalColor(0xff4e342e)
+                        .setIconPressedColor(0xff3e2723)
+                        .setLabelColor(Color.WHITE)
+                        .setLabelSizeSp(14)
+                        .setLabelBackgroundDrawable(ABShape.generateCornerShapeDrawable(0xaa000000, ABTextUtil.dip2px(context, 4)))
+                        .setWrapper(1)
+        );
+        items.add(new RFACLabelItem<Integer>()
+                        .setLabel("提问")
+                        .setResId(R.mipmap.ic_launcher)
+                        .setIconNormalColor(0xff056f00)
+                        .setIconPressedColor(0xff0d5302)
+                        .setLabelColor(0xff056f00)
+                        .setWrapper(2)
+        );
+        rfaContent
+                .setItems(items)
+                .setIconShadowRadius(ABTextUtil.dip2px(context, 5))
+                .setIconShadowColor(0xff888888)
+                .setIconShadowDy(ABTextUtil.dip2px(context, 5))
+        ;
 
+        rfabHelper = new RapidFloatingActionHelper(
+                context,
+                rfaLayout,
+                rfaButton,
+                rfaContent
+        ).build();
+    }
+    @Override
+    public void onRFACItemLabelClick(int position, RFACLabelItem item) {
+        if (position == 0) {
+            Intent intent = new Intent(this, CountNum.class);
+            startActivity(intent);
+        } else
+        if (position == 1) {
+            Intent intent = new Intent(this, sendhelp_map.class);
+            startActivity(intent);
+        } else {
+            Intent intent = new Intent(this, SendQuestion.class);
+            startActivity(intent);
+        }
+        rfabHelper.toggleContent();
     }
 
+    @Override
+    public void onRFACItemIconClick(int position, RFACLabelItem item) {
+        if (position == 0) {
+            Intent intent = new Intent(this, CountNum.class);
+            startActivity(intent);
+        } else
+        if (position == 1) {
+            Intent intent = new Intent(this, sendhelp_map.class);
+            startActivity(intent);
+        } else {
+            Intent intent = new Intent(this, SendQuestion.class);
+            startActivity(intent);
+        }
+        rfabHelper.toggleContent();
+    }
+
+    //显示详细资料的信息
     protected void show123(){
         if(idd != -1){
             jsonStrng = "{" +

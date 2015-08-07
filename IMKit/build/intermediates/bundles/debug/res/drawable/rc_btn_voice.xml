@@ -3,4 +3,4 @@
 
     <item android:drawable="@drawable/rc_btn_voice_hover" android:state_pressed="true"></item>
     <item android:drawable="@drawable/rc_btn_voice_normal"></item>
-</selector><!-- From: file:/E:/360data/重要数据/桌面/实训/Ehelp/IMKit/src/main/res/drawable/rc_btn_voice.xml -->
+</selector><!-- From: file:/E:/Ehelp/IMKit/src/main/res/drawable/rc_btn_voice.xml -->

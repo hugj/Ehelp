@@ -348,11 +348,15 @@
 
                 <category android:name="android.intent.category.DEFAULT" />
 
-                 <data
-                     android:host="com.ehelp"
+                <data
+                    android:host="com.ehelp"
                     android:pathPrefix="/conversation/"
                     android:scheme="rong" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".user.healthcard.OthershealthcardActivity"
+            android:label="@string/title_activity_othershealthcard" >
         </activity>
     </application>
 
