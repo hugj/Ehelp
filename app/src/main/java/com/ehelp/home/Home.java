@@ -18,7 +18,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.baidu.mapapi.SDKInitializer;
 import com.ehelp.R;
@@ -189,10 +188,10 @@ public class Home extends AIActionBarActivity implements
         TextView tvv =(TextView) findViewById(R.id.titlefortoolbar);
         tvv.setText("Ehelp");
 
-        fragments.add(new HomeMapActivity());
-        fragments.add(new HomeSOSActivity());
         fragments.add(new HomeHelpActivity());
+        fragments.add(new HomeSOSActivity());
         fragments.add(new HomeQueActivity());
+        fragments.add(new HomeMapActivity());
 
         mToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override

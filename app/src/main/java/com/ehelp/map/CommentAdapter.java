@@ -59,7 +59,7 @@ public class CommentAdapter extends BaseAdapter {
     public String getMessage() {
         //数据初始化
         String jsonStrng = "{" +
-                "\"id\":" + event_id + "}";
+                "\"event_id\":" + event_id + "}";
         String message = RequestHandler.sendPostRequest(
                 "http://120.24.208.130:1501/comment/query", jsonStrng);
         return message;
