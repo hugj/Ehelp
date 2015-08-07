@@ -331,7 +331,7 @@
         <activity
             android:name=".home.ConversationActivity"
             android:label="@string/title_activity_conversation"
-            android:parentActivityName=".home.ConversationListActivity" >
+            android:parentActivityName=".account.login" >
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -353,7 +353,7 @@
         <activity
             android:name=".home.ConversationListActivity"
             android:label="@string/title_activity_conversation_list"
-            android:parentActivityName=".home.Home">
+            android:parentActivityName=".account.login">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
