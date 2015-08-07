@@ -1,12 +1,11 @@
 package com.ehelp.user.healthcard;
 
-import android.app.ActionBar;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
@@ -17,14 +16,35 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ehelp.R;
+import com.ehelp.map.sendhelp_map;
+import com.ehelp.send.CountNum;
+import com.ehelp.send.SendQuestion;
 import com.ehelp.utils.RequestHandler;
+import com.wangjie.androidbucket.utils.ABTextUtil;
+import com.wangjie.androidbucket.utils.imageprocess.ABShape;
+import com.wangjie.androidinject.annotation.annotations.base.AILayout;
+import com.wangjie.androidinject.annotation.annotations.base.AIView;
+import com.wangjie.androidinject.annotation.present.AIActionBarActivity;
+import com.wangjie.rapidfloatingactionbutton.RapidFloatingActionButton;
+import com.wangjie.rapidfloatingactionbutton.RapidFloatingActionHelper;
+import com.wangjie.rapidfloatingactionbutton.RapidFloatingActionLayout;
+import com.wangjie.rapidfloatingactionbutton.contentimpl.labellist.RFACLabelItem;
+import com.wangjie.rapidfloatingactionbutton.contentimpl.labellist.RapidFloatingActionContentLabelList;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
+@AILayout(R.layout.activity_health)
+public class Health extends AIActionBarActivity implements RapidFloatingActionContentLabelList.OnRapidFloatingActionContentLabelListListener {
+    @AIView(R.id.label_list_sample_rfal)
+    private RapidFloatingActionLayout rfaLayout;
+    @AIView(R.id.label_list_sample_rfab)
+    private RapidFloatingActionButton rfaButton;
+    private RapidFloatingActionHelper rfabHelper;
 
-public class Health extends ActionBarActivity {
     private String TAG = "myowndeveloptest";
     //Dialog定义
     private AlertDialog EditanaphylaxisDialog = null;
@@ -54,7 +74,6 @@ public class Health extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_health);
 
         anaphylaxis = (TextView)findViewById(R.id.allergy2);
         medicine_taken = (TextView)findViewById(R.id.medicine2);
@@ -125,6 +144,83 @@ public class Health extends ActionBarActivity {
         tvv.setText("健康卡");
 
         editorInfo();
+        //set FAB
+        fab();
+    }
+    private void fab(){
+        RapidFloatingActionContentLabelList rfaContent = new RapidFloatingActionContentLabelList(context);
+        rfaContent.setOnRapidFloatingActionContentLabelListListener(this);
+        List<RFACLabelItem> items = new ArrayList<>();
+        items.add(new RFACLabelItem<Integer>()
+                        .setLabel("求救")
+                        .setResId(R.mipmap.ic_launcher)
+                        .setIconNormalColor(0xffd84315)
+                        .setIconPressedColor(0xffbf360c)
+                        .setWrapper(0)
+        );
+        items.add(new RFACLabelItem<Integer>()
+                        .setLabel("求助")
+//                        .setResId(R.mipmap.ico_test_c)
+                        .setDrawable(getResources().getDrawable(R.mipmap.ic_launcher))
+                        .setIconNormalColor(0xff4e342e)
+                        .setIconPressedColor(0xff3e2723)
+                        .setLabelColor(Color.WHITE)
+                        .setLabelSizeSp(14)
+                        .setLabelBackgroundDrawable(ABShape.generateCornerShapeDrawable(0xaa000000, ABTextUtil.dip2px(context, 4)))
+                        .setWrapper(1)
+        );
+        items.add(new RFACLabelItem<Integer>()
+                        .setLabel("提问")
+                        .setResId(R.mipmap.ic_launcher)
+                        .setIconNormalColor(0xff056f00)
+                        .setIconPressedColor(0xff0d5302)
+                        .setLabelColor(0xff056f00)
+                        .setWrapper(2)
+        );
+        rfaContent
+                .setItems(items)
+                .setIconShadowRadius(ABTextUtil.dip2px(context, 5))
+                .setIconShadowColor(0xff888888)
+                .setIconShadowDy(ABTextUtil.dip2px(context, 5))
+        ;
+
+        rfabHelper = new RapidFloatingActionHelper(
+                context,
+                rfaLayout,
+                rfaButton,
+                rfaContent
+        ).build();
+    }
+    @Override
+    public void onRFACItemLabelClick(int position, RFACLabelItem item) {
+        if (position == 0) {
+            Intent intent = new Intent(this, CountNum.class);
+            startActivity(intent);
+        } else
+        if (position == 1) {
+            Intent intent = new Intent(this, sendhelp_map.class);
+            startActivity(intent);
+        } else {
+            Intent intent = new Intent(this, SendQuestion.class);
+            startActivity(intent);
+        }
+        rfabHelper.toggleContent();
+    }
+
+    @Override
+    public void onRFACItemIconClick(int position, RFACLabelItem item) {
+        if (position == 0) {
+            Intent intent = new Intent(this, CountNum.class);
+            startActivity(intent);
+        } else
+        if (position == 1) {
+            Intent intent = new Intent(this, sendhelp_map.class);
+            startActivity(intent);
+        } else {
+            Intent intent = new Intent(this, SendQuestion.class);
+            startActivity(intent);
+        }
+        rfabHelper.toggleContent();
     }
 
     protected void editorInfo() {

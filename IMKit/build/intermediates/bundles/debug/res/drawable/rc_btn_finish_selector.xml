@@ -9,4 +9,4 @@
     <!-- Pressed -->
     <item android:drawable="@drawable/rc_call_over_down" android:state_pressed="true"/>
 
-</selector><!-- From: file:/G:/ehelp/ehelp_client/Ehelp/IMKit/src/main/res/drawable/rc_btn_finish_selector.xml -->
+</selector><!-- From: file:/E:/Ehelp/IMKit/src/main/res/drawable/rc_btn_finish_selector.xml -->

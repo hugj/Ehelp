@@ -23,4 +23,4 @@
         android:layout_marginLeft="40dp"
         android:id="@+id/name"/>
 </RelativeLayout>
-<!-- From: file:/G:/ehelp/ehelp_client/Ehelp/IMKit/src/main/res/layout/rc_item_public_service_search.xml -->
+<!-- From: file:/E:/Ehelp/IMKit/src/main/res/layout/rc_item_public_service_search.xml -->

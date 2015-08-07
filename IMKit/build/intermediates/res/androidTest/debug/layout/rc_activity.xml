@@ -11,4 +11,4 @@
         android:id="@id/rc_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
-</FrameLayout><!-- From: file:/G:/ehelp/ehelp_client/Ehelp/IMKit/src/main/res/layout/rc_activity.xml --><!-- From: file:/G:/ehelp/ehelp_client/Ehelp/IMKit/build/intermediates/bundles/debug/res/layout/rc_activity.xml -->
+</FrameLayout><!-- From: file:/E:/Ehelp/IMKit/src/main/res/layout/rc_activity.xml --><!-- From: file:/E:/Ehelp/IMKit/build/intermediates/bundles/debug/res/layout/rc_activity.xml -->

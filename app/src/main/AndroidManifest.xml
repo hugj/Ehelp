@@ -358,6 +358,10 @@
             android:name=".map.ResponseActivity"
             android:label="@string/title_activity_response" >
         </activity>
+        <activity
+            android:name=".user.healthcard.OthershealthcardActivity"
+            android:label="@string/title_activity_othershealthcard" >
+        </activity>
     </application>
 
 </manifest>
