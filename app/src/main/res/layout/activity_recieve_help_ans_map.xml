@@ -47,7 +47,6 @@
                     android:text="步行"
                     android:layout_above="@+id/drive"
                     android:layout_alignEnd="@+id/drive" />
-
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="40sp"
@@ -90,9 +89,19 @@
             android:layout_width="100sp"
             android:layout_height="20sp"
             android:text="这里是天堂"
-            android:id="@+id/textView2"
+            android:id="@+id/helptime"
             android:layout_alignTop="@+id/imageView"
             android:layout_alignParentEnd="true" />
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@+id/Content"
+                    android:id="@+id/comment"></LinearLayout>
+            </RelativeLayout>
+
+        </ScrollView>
 
         <com.wangjie.rapidfloatingactionbutton.RapidFloatingActionLayout
             xmlns:rfal="http://schemas.android.com/apk/res-auto"
