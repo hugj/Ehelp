@@ -2,6 +2,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.ehelp.map.recieve_help_ans_map">
-    <item android:id="@+id/action_ans" android:title="回应"
-        android:orderInCategory="100" app:showAsAction="ifRoom" />
+    <item android:id="@+id/action_respond" android:title="回应"
+        android:orderInCategory="100" app:showAsAction="never" />
+    <item android:id="@+id/action_concern" android:title="关注"
+        android:orderInCategory="100" app:showAsAction="never" />
+    <item android:id="@+id/action_endhelp" android:title="结束求助"
+        android:orderInCategory="100" app:showAsAction="never" />
+    <item android:id="@+id/action_cancelhelp" android:title="取消求助"
+        android:orderInCategory="100" app:showAsAction="never" />
+    <item android:id="@+id/action_comment" android:title="评论"
+        android:orderInCategory="100" app:showAsAction="never" />
 </menu>
