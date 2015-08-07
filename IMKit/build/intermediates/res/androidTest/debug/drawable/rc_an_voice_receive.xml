@@ -13,4 +13,4 @@
         android:drawable="@drawable/rc_ic_voice_receive_play3"
         android:duration="300"/>
 
-</animation-list><!-- From: file:/G:/ehelp/ehelp_client/Ehelp/IMKit/src/main/res/drawable/rc_an_voice_receive.xml --><!-- From: file:/G:/ehelp/ehelp_client/Ehelp/IMKit/build/intermediates/bundles/debug/res/drawable/rc_an_voice_receive.xml -->
+</animation-list><!-- From: file:/Users/kyouzuimine/Desktop/Ehelp/IMKit/src/main/res/drawable/rc_an_voice_receive.xml --><!-- From: file:/Users/kyouzuimine/Desktop/Ehelp/IMKit/build/intermediates/bundles/debug/res/drawable/rc_an_voice_receive.xml -->

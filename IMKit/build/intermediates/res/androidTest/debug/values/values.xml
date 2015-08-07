@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- From: file:/G:/ehelp/ehelp_client/Ehelp/IMKit/build/intermediates/bundles/debug/res/values/values.xml -->
+    <!-- From: file:/Users/kyouzuimine/Desktop/Ehelp/IMKit/build/intermediates/bundles/debug/res/values/values.xml -->
     <eat-comment/>
     <integer-array name="emoji_code">
             <item>0x1f60a</item>
