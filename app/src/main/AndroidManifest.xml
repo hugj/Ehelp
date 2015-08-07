@@ -350,6 +350,11 @@
             android:name=".user.healthcard.OthershealthcardActivity"
             android:label="@string/title_activity_othershealthcard" >
         </activity>
+        <activity
+            android:name=".user.history.EndHelpActivity"
+            android:label="@string/title_activity_end_help"
+            android:parentActivityName=".account.login" >
+        </activity>
     </application>
 
 </manifest>
