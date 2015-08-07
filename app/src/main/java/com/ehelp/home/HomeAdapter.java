@@ -57,6 +57,7 @@ public class HomeAdapter extends BaseAdapter {
         //数据初始化
         String message = getTitleList();
         setList(message);
+
     }
 
     /*
