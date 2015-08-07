@@ -489,7 +489,7 @@ public class sendsos_map extends ActionBarActivity implements BaiduMap.OnMapClic
         Log.v("sendsostest", tests1);
         String ss1 = String.valueOf(event_id);
         Log.v("sendsostest", ss1);
-        String send = "{\"id\":" + id + ",\"event_id\":" + event_id + ",\"state\":"+0+"}";
+        String send = "{\"id\":" + id + ",\"event_id\":" + event_id + ",\"state\":" + 1 + "}";
 
         String msg = RequestHandler.sendPostRequest(
                 url, send);

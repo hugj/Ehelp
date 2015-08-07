@@ -48,6 +48,8 @@ import java.util.List;
 
 import cn.jpush.android.api.JPushInterface;
 import io.rong.imkit.RongIM;
+import io.rong.imkit.model.UIConversation;
+import io.rong.imlib.RongIMClient;
 
 //推送统计代码
 //推送代码
@@ -200,15 +202,21 @@ public class Home extends AIActionBarActivity implements
                     case R.id.action_settings:
 //                        Toast.makeText(getApplicationContext(), "action_settings",
 //                                Toast.LENGTH_SHORT).show();
-                        /**
-                         * 启动单聊
-                         * context - 应用上下文。
-                         * targetUserId - 要与之聊天的用户 Id。
-                         * title - 聊天的标题，如果传入空值，则默认显示与之聊天的用户名称。
-                         */
-                        if (RongIM.getInstance() != null) {
-                            RongIM.getInstance().startPrivateChat(Home.this, "7", "hello");
-                        }
+//                        /**
+//                         * 启动单聊
+//                         * context - 应用上下文。
+//                         * targetUserId - 要与之聊天的用户 Id。
+//                         * title - 聊天的标题，如果传入空值，则默认显示与之聊天的用户名称。
+//                         */
+//                        if (RongIM.getInstance() != null) {
+//                            RongIM.getInstance().startPrivateChat(Home.this, "7", "hello");
+//                        }
+                        RongIM.setConversationListBehaviorListener(new MyConversationListBehaviorListener());
+
+                        String token = "7OJOwb0+p97XKUxde7yH6+RgfvzP32M+B6kCt5/NOhiHOvVT5BuxxNswJ8lTUwIZoreRx3a/ywhRjxNkdSyWSA==";
+                        IMconnect(token);
+                        RongIM.getInstance().startConversationList(Home.this);
+                        //RongIM.getInstance().startPrivateChat(Home.this, "7", "自问自答");
                         break;
                     default:
                         break;
@@ -391,23 +399,73 @@ public class Home extends AIActionBarActivity implements
             String jsonString = "{" + "\"id\":"+ id +"," + "\"identity_id\":\"" + identity_id + "\"" + "}";
             String s1 = RequestHandler.sendPostRequest("http://120.24.208.130:1501/user/modify_information", jsonString);
             Log.v("Ehelp", s1);
-            /*if (msg == "false") {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
-                                Toast.LENGTH_SHORT).show();
-                    }
-                });
-            } else {
-                Toast.makeText(getApplicationContext(), identity_id, Toast.LENGTH_LONG).show();
-            }*/
+//            if (msg == "false") {
+//                runOnUiThread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
+//                                Toast.LENGTH_SHORT).show();
+//                    }
+//                });
+//            } else {
+//                Toast.makeText(getApplicationContext(), identity_id, Toast.LENGTH_LONG).show();
+//            }
         }
     });
 
-    /*private MessageReceiver mMessageReceiver;
-    public static final String MESSAGE_RECEIVED_ACTION = "com.example.jpushdemo.MESSAGE_RECEIVED_ACTION";
-    public static final String KEY_TITLE = "title";
-    public static final String KEY_MESSAGE = "message";
-    public static final String KEY_EXTRAS = "extras";*/
+    private void getIMToken(int user_id) {
+
+    }
+
+    private void IMconnect(String token) {
+         /* IMKit SDK调用第二步 建立与服务器的连接 */
+
+    /* 集成和测试阶段，您可以直接使用从您开发者后台获取到的 token，比如 String token = “d6bCQsXiupB......”; */
+        RongIM.connect(token, new RongIMClient.ConnectCallback() {
+            @Override
+            public void onSuccess(String userId) {
+        /* 连接成功 */
+            }
+
+            @Override
+            public void onError(RongIMClient.ErrorCode e) {
+        /* 连接失败，注意并不需要您做重连 */
+            }
+
+            @Override
+            public void onTokenIncorrect() {
+        /* Token 错误，在线上环境下主要是因为 Token 已经过期，您需要向 App Server 重新请求一个新的 Token */
+            }
+        });
+    }
+
+    private class MyConversationListBehaviorListener implements RongIM.ConversationListBehaviorListener{
+        /**
+         * 长按会话列表中的 item 时执行。
+         *
+         * @param context        上下文。
+         * @param view           触发点击的 View。
+         * @param uiConversation 长按时的会话条目。
+         * @return 如果用户自己处理了长按会话后的逻辑处理，则返回 true， 否则返回 false，false 走融云默认处理方式。
+         */
+        @Override
+        public boolean onConversationLongClick(Context context, View view, UIConversation uiConversation) {
+            return false;
+        }
+
+        /**
+         * 点击会话列表中的 item 时执行。
+         *
+         * @param context        上下文。
+         * @param view           触发点击的 View。
+         * @param uiConversation 会话条目。
+         * @return 如果用户自己处理了点击会话后的逻辑处理，则返回 true， 否则返回 false，false 走融云默认处理方式。
+         */
+        @Override
+        public boolean onConversationClick(Context context, View view, UIConversation uiConversation) {
+            //RongIM.getInstance().startPrivateChat(Home.this, "7", "自问自答");
+            return false;
+        }
+    }
+
 }
