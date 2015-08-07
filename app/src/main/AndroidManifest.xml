@@ -50,7 +50,7 @@
         android:theme="@style/AppTheme" >
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
-            android:value="mUXipoTtifo0pKN3BqSIgbhb" />
+            android:value="DHx2AGnN7bg1m5yzaTMgCr7C" />
 
         <activity
             android:name=".account.login"
@@ -221,13 +221,6 @@
             android:label="@string/title_activity_changepassword"
             android:parentActivityName=".account.login" >
         </activity>
-        <activity
-            android:name=".map.recievehelp_map"
-            android:configChanges="orientation|keyboardHidden"
-            android:label="@string/title_activity_bmap_api_demo_main"
-            android:parentActivityName=".account.login"
-            android:screenOrientation="portrait" >
-        </activity>
 
         <service
             android:name="com.baidu.location.f"
@@ -240,7 +233,7 @@
         </service>
 
         <activity
-            android:name=".evaluate.Comment"
+            android:name=".evaluate.Evaluation"
             android:parentActivityName=".account.login" >
         </activity>
         <activity
@@ -273,11 +266,6 @@
         <activity
             android:name=".map.recievesos_map"
             android:label="@string/title_activity_recievesos_map"
-            android:parentActivityName=".account.login" >
-        </activity>
-        <activity
-            android:name=".map.sendhelpcomeback_map"
-            android:label="@string/title_activity_sendhelpcomeback_map"
             android:parentActivityName=".account.login" >
         </activity>
         <activity
@@ -357,6 +345,10 @@
         <activity
             android:name=".map.ResponseActivity"
             android:label="@string/title_activity_response" >
+        </activity>
+        <activity
+            android:name=".user.healthcard.OthershealthcardActivity"
+            android:label="@string/title_activity_othershealthcard" >
         </activity>
         <activity
             android:name=".home.ConversationListActivity"

@@ -271,7 +271,7 @@ public class recievesos_map extends ActionBarActivity implements BaiduMap.OnMapC
                 }
 
                 //通过发起者id寻找发起者用户名并显示
-                 idd = jO.getInt("launcher_id");
+                idd = jO.getInt("launcher_id");
                 findforusername();
             }
 
@@ -431,11 +431,11 @@ public class recievesos_map extends ActionBarActivity implements BaiduMap.OnMapC
                             Toast.LENGTH_SHORT).show();
                     //if(id == R.id.action_respond)
                     //{
-                        //item.setTitle("回应");
+                    //item.setTitle("回应");
 
-                   // }
+                    // }
                     //if(id == R.id.action_concern) {
-                        //MenuItem it =menu.findItem(R.id.action_ans);//
+                    //MenuItem it =menu.findItem(R.id.action_ans);//
                     Menu menu =menu_recievesos_map;//(Menu)findViewById(R.id.menu_recievesos_map);
                     MenuItem item_respond = menu.findItem(R.id.action_respond);
                     item_respond.setVisible(true);
@@ -595,16 +595,16 @@ public class recievesos_map extends ActionBarActivity implements BaiduMap.OnMapC
 //        super.onPause();
 //    }
 
-//    @Override
+    //    @Override
 //    protected void onResume() {
 //        mMapView.onResume();
 //        super.onResume();
 //    }
-@Override
-protected void onResume() {
-    // TODO Auto-generated method stub
-    super.onResume();
-}
+    @Override
+    protected void onResume() {
+        // TODO Auto-generated method stub
+        super.onResume();
+    }
 //
 //    @Override
 //    protected void onDestroy() {

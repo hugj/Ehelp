@@ -1,21 +1,18 @@
-package com.ehelp;
+package com.ehelp.user.healthcard;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
+import android.widget.TextView;
+import android.widget.Toast;
 
-import com.ehelp.account.login;
-import com.ehelp.evaluate.Evaluation;
-import com.ehelp.home.Home;
-import com.ehelp.map.recieve_help_ans_map;
-import com.ehelp.map.recievesos_map;
+import com.ehelp.R;
 import com.ehelp.map.sendhelp_map;
-import com.ehelp.map.sendsos_map;
 import com.ehelp.send.CountNum;
 import com.ehelp.send.SendQuestion;
+import com.ehelp.utils.RequestHandler;
 import com.wangjie.androidbucket.utils.ABTextUtil;
 import com.wangjie.androidbucket.utils.imageprocess.ABShape;
 import com.wangjie.androidinject.annotation.annotations.base.AILayout;
@@ -27,26 +24,87 @@ import com.wangjie.rapidfloatingactionbutton.RapidFloatingActionLayout;
 import com.wangjie.rapidfloatingactionbutton.contentimpl.labellist.RFACLabelItem;
 import com.wangjie.rapidfloatingactionbutton.contentimpl.labellist.RapidFloatingActionContentLabelList;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
-
-@AILayout(R.layout.activity_test)
-public class Test extends AIActionBarActivity implements RapidFloatingActionContentLabelList.OnRapidFloatingActionContentLabelListListener {
+@AILayout(R.layout.activity_othershealthcard)
+public class OthershealthcardActivity extends AIActionBarActivity implements RapidFloatingActionContentLabelList.OnRapidFloatingActionContentLabelListListener {
     @AIView(R.id.label_list_sample_rfal)
     private RapidFloatingActionLayout rfaLayout;
     @AIView(R.id.label_list_sample_rfab)
     private RapidFloatingActionButton rfaButton;
     private RapidFloatingActionHelper rfabHelper;
-
+    private SharedPreferences SharedPref;
+    private TextView allergy, medicine, bloodType, mediHistory, height, weight;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.activity_test);
-        init();
+        //set FAB
+        fab();
+        int id = getIntent().getIntExtra("user_id", -1);
+        set_healthcard(id);
     }
+    private void set_healthcard(int id) {
+        allergy = (TextView)findViewById(R.id.others_allergy2);
+        medicine = (TextView)findViewById(R.id.others_medicine2);
+        bloodType = (TextView)findViewById(R.id.others_bloodType2);
+        mediHistory = (TextView)findViewById(R.id.others_mediHistory2);
+        height = (TextView)findViewById(R.id.others_height2);
+        weight = (TextView)findViewById(R.id.others_weight2);
 
-    private void init() {
+        SharedPref = this.getSharedPreferences("user_id", Context.MODE_PRIVATE);
+        String jsonString = "{" +
+                "\"id\":" + id + "}";
+        String message = RequestHandler.sendPostRequest(
+                "http://120.24.208.130:1501/health/query", jsonString);
+        if (message.equals("false")) {
+            Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
+                    Toast.LENGTH_SHORT).show();
+        } else {
+            try {
+                JSONObject j = new JSONObject(message);
+                if (j.getInt("status") == 500) {
+                    Toast.makeText(getApplicationContext(), "用户未登陆",
+                            Toast.LENGTH_SHORT).show();
+                } else {
+                    if (j.getJSONObject("health_list") == null) {
+                        //显示过敏反应
+                        allergy.setText("无");
+                        //显示药物使用
+                        medicine.setText("无");
+                        //显示血型
+                        bloodType.setText("无");
+                        //显示病史
+                        mediHistory.setText("无");
+                        //显示身高
+                        height.setText("无");
+                        //显示体重
+                        weight.setText("无");
+                    } else {
+                        JSONObject jo = j.getJSONObject("health_list");
+                        //显示过敏反应
+                        allergy.setText(jo.getString("anaphylaxis"));
+                        //显示药物使用
+                        medicine.setText(jo.getString("medicine_taken"));
+                        //显示血型
+                        bloodType.setText(jo.getString("blood_type"));
+                        //显示病史
+                        mediHistory.setText(jo.getString("medical_history"));
+                        //显示身高
+                        height.setText(String.valueOf(jo.getInt("height")));
+                        //显示体重
+                        weight.setText(String.valueOf(jo.getInt("weight")));
+                    }
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    private void fab(){
         RapidFloatingActionContentLabelList rfaContent = new RapidFloatingActionContentLabelList(context);
         rfaContent.setOnRapidFloatingActionContentLabelListListener(this);
         List<RFACLabelItem> items = new ArrayList<>();
@@ -122,77 +180,5 @@ public class Test extends AIActionBarActivity implements RapidFloatingActionCont
         rfabHelper.toggleContent();
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_test, menu);
-        return true;
-    }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    public void home(View view) {
-        // Do something in response to button
-        Intent intent = new Intent(this, Home.class);
-        startActivity(intent);
-    }
-
-    public void login(View view) {
-        // Do something in response to button
-        Intent intent = new Intent(this, login.class);
-        startActivity(intent);
-    }
-    public void comment(View view) {
-        // Do something in response to button
-        Intent intent = new Intent(this, Evaluation.class);
-        startActivity(intent);
-    }
-
-
-
-
-
-
-    public void send_map1(View view) {
-
-        Intent intent = new Intent(this, recieve_help_ans_map.class);
-        startActivity(intent);
-    }
-
-    public void send_map2(View view) {
-
-        Intent intent = new Intent(this, recievesos_map.class);
-        startActivity(intent);
-    }
-
-    public void send_map3(View view) {
-
-        Intent intent = new Intent(this, sendhelp_map.class);
-        startActivity(intent);
-    }
-
-    public void send_map4(View view) {
-
-        Intent intent = new Intent(this, recieve_help_ans_map.class);
-        startActivity(intent);
-    }
-
-    public void send_map5(View view) {
-
-        Intent intent = new Intent(this, sendsos_map.class);
-        startActivity(intent);
-    }
 }
