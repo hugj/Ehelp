@@ -739,14 +739,11 @@ public class recieve_help_ans_map extends AIActionBarActivity implements BaiduMa
                         item.setTitle("取消回应");
                         item_concern.setTitle("关注");
                         item_concern.setVisible(false);
-                    }
-                    if (item.getTitle().toString().equals("关注")) {
+                    }else if (item.getTitle().toString().equals("关注")) {
                         item.setTitle("取消关注");
-                    }
-                    if (item.getTitle().toString().equals("取消关注")) {
+                    }else if (item.getTitle().toString().equals("取消关注")) {
                         item.setTitle("关注");
-                    }
-                    if (item.getTitle().toString().equals("取消回应")) {
+                    }else if (item.getTitle().toString().equals("取消回应")) {
                         MenuItem item_concern = menu_.findItem(R.id.action_concern);
                         item.setTitle("回应");
                         item_concern.setVisible(true);
