@@ -125,7 +125,7 @@ public class recieve_help_ans_map extends AIActionBarActivity implements BaiduMa
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         SDKInitializer.initialize(getApplicationContext());
-        setContentView(R.layout.activity_recieve_help_ans_map);
+
         //CharSequence titleLable = "路线规划";
         //setTitle(titleLable);
         // 初始化地图

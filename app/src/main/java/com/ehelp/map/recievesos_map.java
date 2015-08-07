@@ -51,7 +51,7 @@ import com.baidu.mapapi.search.route.TransitRouteResult;
 import com.baidu.mapapi.search.route.WalkingRoutePlanOption;
 import com.baidu.mapapi.search.route.WalkingRouteResult;
 import com.ehelp.R;
-import com.ehelp.user.healthcard.OthershealthcardActivity;
+import com.ehelp.user.healthcard.Health;
 import com.ehelp.utils.RequestHandler;
 
 import org.json.JSONException;
@@ -221,8 +221,8 @@ public class recievesos_map extends ActionBarActivity implements BaiduMap.OnMapC
     }
 
     public void healthCardClick(View v){
-        Intent intent = new Intent(this, OthershealthcardActivity.class);
-        intent.putExtra("user_id", idd);
+        Intent intent = new Intent(this, Health.class);
+        intent.putExtra("user_id",idd);
         startActivity(intent);
     }
 

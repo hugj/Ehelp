@@ -219,8 +219,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         rfal:rfal_frame_color="#ffffff"
-        rfal:rfal_frame_alpha="0.7"
-        >
+        rfal:rfal_frame_alpha="0.7">
 
         <com.wangjie.rapidfloatingactionbutton.RapidFloatingActionButton
             xmlns:rfab="http://schemas.android.com/apk/res-auto"
