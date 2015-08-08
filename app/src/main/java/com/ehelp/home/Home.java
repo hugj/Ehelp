@@ -18,6 +18,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.baidu.mapapi.SDKInitializer;
 import com.ehelp.R;
@@ -42,6 +43,9 @@ import com.wangjie.rapidfloatingactionbutton.RapidFloatingActionHelper;
 import com.wangjie.rapidfloatingactionbutton.RapidFloatingActionLayout;
 import com.wangjie.rapidfloatingactionbutton.contentimpl.labellist.RFACLabelItem;
 import com.wangjie.rapidfloatingactionbutton.contentimpl.labellist.RapidFloatingActionContentLabelList;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -214,9 +218,17 @@ public class Home extends AIActionBarActivity implements
                         RongIM.setConversationListBehaviorListener(new MyConversationListBehaviorListener());
 
                         String token = "7OJOwb0+p97XKUxde7yH6+RgfvzP32M+B6kCt5/NOhiHOvVT5BuxxNswJ8lTUwIZoreRx3a/ywhRjxNkdSyWSA==";
-                        IMconnect(token);
-                        RongIM.getInstance().startConversationList(Home.this);
-                        //RongIM.getInstance().startPrivateChat(Home.this, "7", "自问自答");
+
+                        token = getIMToken();
+
+                        if (token.equals("false")) {
+                            Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
+                                    Toast.LENGTH_SHORT).show();
+                        } else {
+                            IMconnect(token);
+                            RongIM.getInstance().startConversationList(Home.this);
+                            //RongIM.getInstance().startPrivateChat(Home.this, "7", "自问自答");
+                        }
                         break;
                     default:
                         break;
@@ -413,8 +425,43 @@ public class Home extends AIActionBarActivity implements
         }
     });
 
-    private void getIMToken(int user_id) {
+    private String getIMToken() {
+        String url = "http://120.24.208.130:1501/account/get_token";
 
+        sharedPref = getSharedPreferences("user_id", MODE_PRIVATE);
+        int user_id = sharedPref.getInt("user_id", -1);
+
+        if (user_id != -1) {
+            String jsonString = "{" + "\"id\":" + user_id + "}";
+
+            String msg = RequestHandler.sendPostRequest(url, jsonString);
+            if (msg.equals("false")) {
+                Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
+                                Toast.LENGTH_SHORT).show();
+                return "false";
+            } else {
+                try {
+                    JSONObject JO = new JSONObject(msg);
+                    if (JO.getInt("status") == 500) {
+                        Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
+                                Toast.LENGTH_SHORT).show();
+                        return "false";
+                    } else {
+                        String res = JO.getString("chat_token");
+                        return res;
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
+                            Toast.LENGTH_SHORT).show();
+                    return "false";
+                }
+            }
+        } else {
+            Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
+                    Toast.LENGTH_SHORT).show();
+            return "false";
+        }
     }
 
     private void IMconnect(String token) {
