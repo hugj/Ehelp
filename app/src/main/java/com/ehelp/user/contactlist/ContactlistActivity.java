@@ -75,7 +75,8 @@ public class ContactlistActivity extends AIActionBarActivity implements RapidFlo
 		jsonStrng = "{" +
 				"\"id\":" + id + "," +
 				"\"operation\":" + 2 + "," +
-				"\"type\":" + 0 +"}";
+				"\"type\":" + 0 + "," +
+				"\"state\": 0}";
 		message = RequestHandler.sendPostRequest(
 				"http://120.24.208.130:1501/user/relation_manage", jsonStrng);
 		//紧急联系人列表
@@ -126,6 +127,7 @@ public class ContactlistActivity extends AIActionBarActivity implements RapidFlo
 		jsonStrng = "{" +
 				"\"id\":" + id + "," +
 				"\"operation\":" + 2 + "," +
+				"\"state\":" + 0 + "," +
 				"\"type\":" + 2 +"}";
 		message = RequestHandler.sendPostRequest(
 				"http://120.24.208.130:1501/user/relation_manage", jsonStrng);

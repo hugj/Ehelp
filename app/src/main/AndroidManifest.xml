@@ -330,12 +330,12 @@
         </activity>
         <activity
             android:name=".home.ConversationActivity"
-            android:label="@string/title_activity_conversation" >
+            android:label="@string/title_activity_conversation"
+            android:parentActivityName=".account.login" >
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
                 <category android:name="android.intent.category.DEFAULT" />
-
                 <data
                     android:host="com.ehelp"
                     android:pathPrefix="/conversation/"
@@ -355,6 +355,21 @@
             android:label="@string/title_activity_end_help"
             android:parentActivityName=".account.login" >
         </activity>
+        <activity
+            android:name=".home.ConversationListActivity"
+            android:label="@string/title_activity_conversation_list"
+            android:parentActivityName=".account.login">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <data
+                    android:host="com.ehelp"
+                    android:pathPrefix="/conversationlist"
+                    android:scheme="rong" />
+            </intent-filter>
+        </activity>
+
     </application>
 
 </manifest>
