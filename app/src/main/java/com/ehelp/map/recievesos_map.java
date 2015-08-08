@@ -52,6 +52,7 @@ import com.baidu.mapapi.search.route.WalkingRoutePlanOption;
 import com.baidu.mapapi.search.route.WalkingRouteResult;
 import com.ehelp.R;
 import com.ehelp.user.healthcard.Health;
+import com.ehelp.user.healthcard.OthershealthcardActivity;
 import com.ehelp.utils.RequestHandler;
 
 import org.json.JSONException;
@@ -221,7 +222,7 @@ public class recievesos_map extends ActionBarActivity implements BaiduMap.OnMapC
     }
 
     public void healthCardClick(View v){
-        Intent intent = new Intent(this, Health.class);
+        Intent intent = new Intent(this, OthershealthcardActivity.class);
         intent.putExtra("user_id",idd);
         startActivity(intent);
     }
@@ -231,6 +232,7 @@ public class recievesos_map extends ActionBarActivity implements BaiduMap.OnMapC
                 "\"event_id\":" + event_id + "}";
         message = RequestHandler.sendPostRequest(
                 "http://120.24.208.130:1501/event/get_information", jsonStrng);
+        int i=1;
         if (message == "false") {
             runOnUiThread(new Runnable() {
                 @Override
