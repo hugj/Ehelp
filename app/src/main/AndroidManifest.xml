@@ -362,6 +362,10 @@
             android:name=".user.healthcard.OthershealthcardActivity"
             android:label="@string/title_activity_othershealthcard" >
         </activity>
+        <activity
+            android:name=".user.lovebank.BankActivity"
+            android:label="@string/title_activity_bank" >
+        </activity>
     </application>
 
 </manifest>

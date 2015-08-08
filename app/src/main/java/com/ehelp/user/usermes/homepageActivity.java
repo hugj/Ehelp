@@ -69,13 +69,13 @@ public class homepageActivity extends AIActionBarActivity implements RapidFloati
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Username = (TextView)findViewById(R.id.single_name2);
-        Nickname = (TextView)findViewById(R.id.nickname2);
-        Phonenum = (TextView)findViewById(R.id.single_phone2);
-        Gender = (TextView)findViewById(R.id.single_file2);
-        Job = (TextView)findViewById(R.id.single_job2);
-        Location = (TextView)findViewById(R.id.single_loacl2);
-        Age = (TextView)findViewById(R.id.single_age2);
+        Username = (TextView) findViewById(R.id.single_name2);
+        Nickname = (TextView) findViewById(R.id.nickname2);
+        Phonenum = (TextView) findViewById(R.id.single_phone2);
+        Gender = (TextView) findViewById(R.id.single_file2);
+        Job = (TextView) findViewById(R.id.single_job2);
+        Location = (TextView) findViewById(R.id.single_loacl2);
+        Age = (TextView) findViewById(R.id.single_age2);
         //获取本地的user_id通过其来获得用户信息
         sharedPref = this.getSharedPreferences("user_id", Context.MODE_PRIVATE);
         user_id = sharedPref.getInt("user_id", -1);
@@ -86,56 +86,57 @@ public class homepageActivity extends AIActionBarActivity implements RapidFloati
         if (message == "false") {
             Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
                     Toast.LENGTH_SHORT).show();
-        }
-        try {
-            JSONObject j = new JSONObject(message);
-            if (j.getInt("status") == 500){
-                Toast.makeText(getApplicationContext(), "用户未登陆",
-                        Toast.LENGTH_SHORT).show();
-            } else {
-                //显示当前用户名
-                Username.setText(j.getString("name"));
-                //显示当前昵称
-                Nickname.setText(j.getString("nickname"));
-                //显示当前用户的手机号
-                Phonenum.setText(j.getString("phone"));
-                //显示当前用户性别
-                int i = j.getInt("gender");
-                if (i == 1) {
-                    Gender.setText("男");
+        } else {
+            try {
+                JSONObject j = new JSONObject(message);
+                if (j.getInt("status") == 500) {
+                    Toast.makeText(getApplicationContext(), "用户未登陆",
+                            Toast.LENGTH_SHORT).show();
                 } else {
-                    Gender.setText("女");
+                    //显示当前用户名
+                    Username.setText(j.getString("name"));
+                    //显示当前昵称
+                    Nickname.setText(j.getString("nickname"));
+                    //显示当前用户的手机号
+                    Phonenum.setText(j.getString("phone"));
+                    //显示当前用户性别
+                    int i = j.getInt("gender");
+                    if (i == 1) {
+                        Gender.setText("男");
+                    } else {
+                        Gender.setText("女");
+                    }
+                    int z = j.getInt("occupation");
+                    switch (z) {
+                        case 0:
+                            Job.setText(R.string.mes_job1);
+                            break;
+                        case 1:
+                            Job.setText(R.string.mes_job2);
+                            break;
+                        case 2:
+                            Job.setText(R.string.mes_job3);
+                            break;
+                        case 3:
+                            Job.setText(R.string.mes_job4);
+                            break;
+                        case 4:
+                            Job.setText(R.string.mes_job5);
+                            break;
+                        case 5:
+                            Job.setText(R.string.mes_job6);
+                            break;
+                    }
+                    //显示当前所在地
+                    Location.setText(j.getString("location"));
+                    //显示年龄
+                    Age.setText(String.valueOf(j.getInt("age")));
                 }
-                int z = j.getInt("occupation");
-                switch (z) {
-                    case 0:
-                        Job.setText(R.string.mes_job1);
-                        break;
-                    case 1:
-                        Job.setText(R.string.mes_job2);
-                        break;
-                    case 2:
-                        Job.setText(R.string.mes_job3);
-                        break;
-                    case 3:
-                        Job.setText(R.string.mes_job4);
-                        break;
-                    case 4:
-                        Job.setText(R.string.mes_job5);
-                        break;
-                    case 5:
-                        Job.setText(R.string.mes_job6);
-                        break;
-                }
-                //显示当前所在地
-                Location.setText(j.getString("location"));
-                //显示年龄
-                Age.setText(String.valueOf(j.getInt("age")));
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
-        } catch (JSONException e) {
-            e.printStackTrace();
+            init();
         }
-        init();
     }
     private void init() {
         //set toolbar
@@ -257,10 +258,25 @@ public class homepageActivity extends AIActionBarActivity implements RapidFloati
                                         "\"name\":\"" +  emp + "\" " + "}";
                                 String message = RequestHandler.sendPostRequest(
                                         "http://120.24.208.130:1501/user/modify_information", jsonString);
-                                Username.setText(emp);
-                                Toast.makeText(getApplicationContext(), "用户名设置成功",
-                                        Toast.LENGTH_SHORT).show();
-                                EditnameDialog.dismiss();
+                                if (message == "false") {
+                                    Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
+                                            Toast.LENGTH_SHORT).show();
+                                } else {
+                                    try {
+                                        JSONObject jO = new JSONObject(message);
+                                        if (jO.getInt("status") == 500) {
+                                            Toast.makeText(getApplicationContext(), "没有此用户",
+                                                    Toast.LENGTH_SHORT).show();
+                                        } else {
+                                            Username.setText(emp);
+                                            Toast.makeText(getApplicationContext(), "用户名设置成功",
+                                                    Toast.LENGTH_SHORT).show();
+                                            EditnameDialog.dismiss();
+                                        }
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
                             }
                         });
                 //使edittext能输入东西
@@ -301,10 +317,25 @@ public class homepageActivity extends AIActionBarActivity implements RapidFloati
                                         "\"nickname\":\"" + emp + "\" " + "}";
                                 String message = RequestHandler.sendPostRequest(
                                         "http://120.24.208.130:1501/user/modify_information", jsonString);
-                                Nickname.setText(emp);
-                                Toast.makeText(getApplicationContext(), "用户昵称修改成功",
-                                        Toast.LENGTH_SHORT).show();
-                                EditnicknameDialog.dismiss();
+                                if (message == "false") {
+                                    Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
+                                            Toast.LENGTH_SHORT).show();
+                                } else {
+                                    try {
+                                        JSONObject jO = new JSONObject(message);
+                                        if (jO.getInt("status") == 500) {
+                                            Toast.makeText(getApplicationContext(), "没有此用户",
+                                                    Toast.LENGTH_SHORT).show();
+                                        } else {
+                                            Nickname.setText(emp);
+                                            Toast.makeText(getApplicationContext(), "用户昵称修改成功",
+                                                    Toast.LENGTH_SHORT).show();
+                                            EditnicknameDialog.dismiss();
+                                        }
+                                    }catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
                             }
                         });
                 //使edittext能输入
@@ -344,10 +375,25 @@ public class homepageActivity extends AIActionBarActivity implements RapidFloati
                                         "\"location\":\"" + emp + "\" " + "}";
                                 String message = RequestHandler.sendPostRequest(
                                         "http://120.24.208.130:1501/user/modify_information", jsonString);
-                                Location.setText(emp);
-                                Toast.makeText(getApplicationContext(), "所在地设置成功",
-                                        Toast.LENGTH_SHORT).show();
-                                EditlocationDialog.dismiss();
+                                if (message == "false") {
+                                    Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
+                                            Toast.LENGTH_SHORT).show();
+                                } else {
+                                    try {
+                                        JSONObject jO = new JSONObject(message);
+                                        if (jO.getInt("status") == 500) {
+                                            Toast.makeText(getApplicationContext(), "没有此用户",
+                                                    Toast.LENGTH_SHORT).show();
+                                        } else {
+                                            Location.setText(emp);
+                                            Toast.makeText(getApplicationContext(), "所在地设置成功",
+                                                    Toast.LENGTH_SHORT).show();
+                                            EditlocationDialog.dismiss();
+                                        }
+                                    }catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
                             }
                         });
                 EditlocationDialog.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
@@ -371,16 +417,35 @@ public class homepageActivity extends AIActionBarActivity implements RapidFloati
                                         "\"gender\":" + which + "}";
                                 String message = RequestHandler.sendPostRequest(
                                         "http://120.24.208.130:1501/user/modify_information", jsonString);
-                                if (which == 1) {
-                                    Gender.setText(R.string.mes_user1);
+                                if (message == "false") {
+                                    Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
+                                            Toast.LENGTH_SHORT).show();
                                 } else {
-                                    Gender.setText(R.string.mes_user2);
+                                    try {
+                                        JSONObject jO = new JSONObject(message);
+                                        if (jO.getInt("status") == 500) {
+                                            Toast.makeText(getApplicationContext(), "没有此用户",
+                                                    Toast.LENGTH_SHORT).show();
+                                        } else {
+                                            if (which == 1) {
+                                                Gender.setText(R.string.mes_user1);
+                                            } else {
+                                                Gender.setText(R.string.mes_user2);
+                                            }
+                                            dialog.dismiss();
+                                        }
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
                                 }
-                                dialog.dismiss();
                             }
-                        }).show();
-            }
-        });
+                        }
+
+                ).
+
+                            show();
+                        }
+            });
         //click age 编辑年龄
         RelativeLayout click_age = (RelativeLayout)findViewById(R.id.single_age);
         click_age.setOnClickListener(new View.OnClickListener() {
@@ -405,26 +470,47 @@ public class homepageActivity extends AIActionBarActivity implements RapidFloati
                                 EditText Get_edittext = (EditText) EditageDialog.getWindow()
                                         .findViewById(R.id.edit_age4);
                                 //获取输入的字符串,通过user_id来修改信息
-                                int emp1 = Integer.parseInt( Get_edittext.getText().toString());
+                                int emp1 = Integer.parseInt(Get_edittext.getText().toString());
                                 String jsonString = "{" +
                                         "\"id\":" + user_id + "," +
                                         "\"age\":" + emp1 + "}";
                                 String message = RequestHandler.sendPostRequest(
                                         "http://120.24.208.130:1501/user/modify_information", jsonString);
-                                Age.setText(String.valueOf(emp1));
-                                Toast.makeText(getApplicationContext(), "用户年龄修改成功",
-                                        Toast.LENGTH_SHORT).show();
-                                EditageDialog.dismiss();
+                                if (message == "false") {
+                                    Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
+                                            Toast.LENGTH_SHORT).show();
+                                } else {
+                                    try {
+                                        JSONObject jO = new JSONObject(message);
+                                        if (jO.getInt("status") == 500) {
+                                            Toast.makeText(getApplicationContext(), "没有此用户",
+                                                    Toast.LENGTH_SHORT).show();
+                                        } else {
+                                            Age.setText(String.valueOf(emp1));
+                                            Toast.makeText(getApplicationContext(), "用户年龄修改成功",
+                                                    Toast.LENGTH_SHORT).show();
+                                            EditageDialog.dismiss();
+                                        }
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
                             }
+
                         });
-                EditageDialog.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
-                        | WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
-                EditageDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams
-                        .SOFT_INPUT_STATE_VISIBLE);
-            }
-        });
-        //选择职业
-        RelativeLayout Job_choose = (RelativeLayout)findViewById(R.id.single_job);
+                            EditageDialog.getWindow().
+
+                            clearFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
+                                       |WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
+
+                            EditageDialog.getWindow().
+
+                            setSoftInputMode(WindowManager.LayoutParams
+                                    .SOFT_INPUT_STATE_VISIBLE);
+                        }
+            });
+                            //选择职业
+        RelativeLayout Job_choose = (RelativeLayout) findViewById(R.id.single_job);
         Job_choose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -438,30 +524,44 @@ public class homepageActivity extends AIActionBarActivity implements RapidFloati
                                         "\"occupation\":" + which + "}";
                                 String message = RequestHandler.sendPostRequest(
                                         "http://120.24.208.130:1501/user/modify_information", jsonString);
-                                switch (which) {
-                                    case 0:
-                                        Job.setText(R.string.mes_job1);
-                                        break;
-                                    case 1:
-                                        Job.setText(R.string.mes_job2);
-                                        break;
-                                    case 2:
-                                        Job.setText(R.string.mes_job3);
-                                        break;
-                                    case 3:
-                                        Job.setText(R.string.mes_job4);
-                                        break;
-                                    case 4:
-                                        Job.setText(R.string.mes_job5);
-                                        break;
-                                    case 5:
-                                        Job.setText(R.string.mes_job6);
-                                        break;
+                                if (message == "false") {
+                                    Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
+                                            Toast.LENGTH_SHORT).show();
+                                } else {
+                                    try {
+                                        JSONObject jO = new JSONObject(message);
+                                        if (jO.getInt("status") == 500) {
+                                            Toast.makeText(getApplicationContext(), "没有此用户",
+                                                    Toast.LENGTH_SHORT).show();
+                                        } else {
+                                            switch (which) {
+                                                case 0:
+                                                    Job.setText(R.string.mes_job1);
+                                                    break;
+                                                case 1:
+                                                    Job.setText(R.string.mes_job2);
+                                                    break;
+                                                case 2:
+                                                    Job.setText(R.string.mes_job3);
+                                                    break;
+                                                case 3:
+                                                    Job.setText(R.string.mes_job4);
+                                                    break;
+                                                case 4:
+                                                    Job.setText(R.string.mes_job5);
+                                                    break;
+                                                case 5:
+                                                    Job.setText(R.string.mes_job6);
+                                                    break;
+                                            }
+                                            dialog.dismiss();
+                                        }
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
                                 }
-                                dialog.dismiss();
                             }
-                        }).show();
-            }
+                        }).show();}
         });
     }
 

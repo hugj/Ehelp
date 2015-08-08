@@ -1,0 +1,48 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#eee"
+    tools:context="com.ehelp.user.lovebank.BankActivity">
+    <LinearLayout android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@drawable/background_box">
+        <ImageView android:layout_height="60dp"
+            android:layout_width="60dp"
+            android:src="@drawable/icon"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:id="@+id/bank_icon"/>
+        <RelativeLayout android:layout_height="wrap_content"
+            android:layout_width="wrap_content">
+            <TextView android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="30dp"
+                android:textColor="#000"
+                android:id="@+id/bank_name"
+                android:text="黄志婷" />
+            <TextView android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="60dp"
+                android:text="13826459597"/>
+        </RelativeLayout>
+        <RelativeLayout android:layout_height="wrap_content"
+            android:layout_width="wrap_content">
+            <TextView android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_marginLeft="85dp"
+                android:layout_marginTop="30dp"
+                android:text="等级"/>
+            <ImageView android:layout_height="20dp"
+                android:layout_width="20dp"
+                android:layout_marginLeft="90dp"
+                android:layout_marginTop="50dp"
+                android:id="@+id/bank_level"
+                android:src="@drawable/homepage"/>
+        </RelativeLayout>
+    </LinearLayout>
+</LinearLayout>

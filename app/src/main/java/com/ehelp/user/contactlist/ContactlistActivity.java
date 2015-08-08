@@ -85,35 +85,37 @@ public class ContactlistActivity extends AIActionBarActivity implements RapidFlo
 		if (message == "false") {
 			Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
 					Toast.LENGTH_SHORT).show();
-		}
-		try {
-			JSONObject jO = new JSONObject(message);
-			if (jO.getInt("status") == 500) {
-				Toast.makeText(getApplicationContext(), "您当前没有紧急联系人",
-						Toast.LENGTH_SHORT).show();
-			} else {
-				String user_list = jO.getString("user_list");
-				userList = gson.fromJson(user_list, new TypeToken<List<User>>(){}.getType());
-				for (int i = 0; i < userList.size(); i++) {
-					Child child=new Child();
-					String emp,emp_, phone;
-					emp = userList.get(i).getNickname();
-					emp_ = userList.get(i).getName();
-					//假如昵称为空则设置为用户名
-					if (emp == "") {
-						child.setUsername(emp_);
-					} else {
-						child.setUsername(emp);
+		} else {
+			try {
+				JSONObject jO = new JSONObject(message);
+				if (jO.getInt("status") == 500) {
+					Toast.makeText(getApplicationContext(), "您当前没有紧急联系人",
+							Toast.LENGTH_SHORT).show();
+				} else {
+					String user_list = jO.getString("user_list");
+					userList = gson.fromJson(user_list, new TypeToken<List<User>>() {
+					}.getType());
+					for (int i = 0; i < userList.size(); i++) {
+						Child child = new Child();
+						String emp, emp_, phone;
+						emp = userList.get(i).getNickname();
+						emp_ = userList.get(i).getName();
+						//假如昵称为空则设置为用户名
+						if (emp == "") {
+							child.setUsername(emp_);
+						} else {
+							child.setUsername(emp);
+						}
+						phone = userList.get(i).getPhone();
+						child.setHeadphoto("http://d.hiphotos.baidu.com/zhidao/pic/item/562c11dfa9ec8a13e028c4c0f603918fa0ecc0e4.jpg");
+						child.setPhone(phone);
+						child.setOnline_status("1");//1在线，0不在线
+						listChild.add(child);
 					}
-					phone = userList.get(i).getPhone();
-					child.setHeadphoto("http://d.hiphotos.baidu.com/zhidao/pic/item/562c11dfa9ec8a13e028c4c0f603918fa0ecc0e4.jpg");
-					child.setPhone(phone);
-					child.setOnline_status("1");//1在线，0不在线
-					listChild.add(child);
 				}
+			} catch (JSONException e) {
+				e.printStackTrace();
 			}
-		}catch (JSONException e) {
-			e.printStackTrace();
 		}
 		group.setChildList(listChild);
 		listGroup.add(group);
@@ -132,36 +134,38 @@ public class ContactlistActivity extends AIActionBarActivity implements RapidFlo
 		if (message == "false") {
 			Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
 					Toast.LENGTH_SHORT).show();
-		}
-		try {
-			JSONObject jO = new JSONObject(message);
-			if (jO.getInt("status") == 500) {
-				Toast.makeText(getApplicationContext(), "您当前没有好友",
-						Toast.LENGTH_SHORT).show();
-			} else {
-				String user_list = jO.getString("user_list");
-				userList = gson.fromJson(user_list, new TypeToken<List<User>>(){}.getType());
-				for (int i = 0; i < userList.size(); i++) {
-					Child child=new Child();
-					String emp, emp_, phone;
-					emp = userList.get(i).getNickname();
-					emp_ = userList.get(i).getName();
-					//假如昵称为空则设置为用户名
-					if (emp == "") {
-						child.setUsername(emp_);
-					} else {
+		} else {
+			try {
+				JSONObject jO = new JSONObject(message);
+				if (jO.getInt("status") == 500) {
+					Toast.makeText(getApplicationContext(), "您当前没有好友",
+							Toast.LENGTH_SHORT).show();
+				} else {
+					String user_list = jO.getString("user_list");
+					userList = gson.fromJson(user_list, new TypeToken<List<User>>() {
+					}.getType());
+					for (int i = 0; i < userList.size(); i++) {
+						Child child = new Child();
+						String emp, emp_, phone;
+						emp = userList.get(i).getNickname();
+						emp_ = userList.get(i).getName();
+						//假如昵称为空则设置为用户名
+						if (emp == "") {
+							child.setUsername(emp_);
+						} else {
+							child.setUsername(emp);
+						}
+						phone = userList.get(i).getPhone();
 						child.setUsername(emp);
+						child.setHeadphoto("http://wenwen.soso.com/p/20090901/20090901120135-1666292770.jpg");
+						child.setPhone(phone);
+						child.setOnline_status("1");//1在线，0不在线
+						listChild.add(child);
 					}
-					phone = userList.get(i).getPhone();
-					child.setUsername(emp);
-					child.setHeadphoto("http://wenwen.soso.com/p/20090901/20090901120135-1666292770.jpg");
-					child.setPhone(phone);
-                    child.setOnline_status("1");//1在线，0不在线
-					listChild.add(child);
 				}
+			} catch (JSONException e) {
+				e.printStackTrace();
 			}
-		}catch (JSONException e) {
-			e.printStackTrace();
 		}
 		group.setChildList(listChild);
 		listGroup.add(group);
@@ -310,31 +314,32 @@ public class ContactlistActivity extends AIActionBarActivity implements RapidFlo
 				if (message == "false") {
 					Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
 							Toast.LENGTH_SHORT).show();
-				}
-				try {
-					JSONObject jO = new JSONObject(message);
-					if (jO.getInt("status") == 500) {
-						Toast.makeText(getApplicationContext(), "没有此用户",
-								Toast.LENGTH_SHORT).show();
-					} else {
-						int id = jO.getInt("id");
-						int type;
-						//判断是紧急联系人还是好友
-						if (arg2 == 0) {
-							type = 2;
+				} else {
+					try {
+						JSONObject jO = new JSONObject(message);
+						if (jO.getInt("status") == 500) {
+							Toast.makeText(getApplicationContext(), "没有此用户",
+									Toast.LENGTH_SHORT).show();
 						} else {
-							type = 1;
+							int id = jO.getInt("id");
+							int type;
+							//判断是紧急联系人还是好友
+							if (arg2 == 0) {
+								type = 2;
+							} else {
+								type = 1;
+							}
+							Intent intent = new Intent(ContactlistActivity.this, messageActivity.class);
+							intent.putExtra("type", type);
+							intent.putExtra("id", id);
+							startActivity(intent);
 						}
-						Intent intent = new Intent(ContactlistActivity.this, messageActivity.class);
-						intent.putExtra("type",type);
-						intent.putExtra("id",id);
-						startActivity(intent);
+					} catch (JSONException e) {
+						e.printStackTrace();
 					}
-				}catch (JSONException e) {
-					e.printStackTrace();
 				}
 //				Toast.makeText(getApplicationContext(), "点击"+arg2, Toast.LENGTH_SHORT).show();
-				return true;
+					return true;
 			}
 		});
 	}
