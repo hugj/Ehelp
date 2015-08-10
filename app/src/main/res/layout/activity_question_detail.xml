@@ -22,7 +22,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content" >
                 <ImageView
-                    android:id="@+id/single_icon"
+                    android:id="@+id/single_icon1"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:background="@drawable/icon" />
@@ -30,14 +30,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="30sp"
-                    android:layout_toRightOf="@id/single_icon"
+                    android:layout_toRightOf="@id/single_icon1"
                     android:id="@+id/user_name"
                     android:text="@string/mes_username"/>
                 <TextView
                     android:id="@+id/edit_message4"
                     android:layout_width="match_parent"
                     android:layout_height="20dp"
-                    android:layout_toRightOf="@id/single_icon"
+                    android:layout_toRightOf="@id/single_icon1"
                     android:layout_below="@+id/user_name"
                     android:layout_weight="1"
                     android:text="悬赏: 10爱心币"/>

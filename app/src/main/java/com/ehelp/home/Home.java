@@ -156,6 +156,7 @@ public class Home extends AIActionBarActivity implements
                 rfaContent
         ).build();
     }
+
     @Override
     public void onRFACItemLabelClick(int position, RFACLabelItem item) {
 //        showToastMessage("clicked label: " + position);

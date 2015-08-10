@@ -1,6 +1,8 @@
 package com.ehelp.home;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.StrictMode;
 import android.util.Log;
 import android.view.View;
@@ -23,6 +25,11 @@ import com.google.gson.reflect.TypeToken;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -45,6 +52,7 @@ public class HomeAdapter extends BaseAdapter {
     private int type;
     private List<Event> events;
     private ACache eventCache; // event cache
+    private Bitmap bitmap = null;
     Gson gson = new Gson();
 
     HomeAdapter(Context context, int id, int type_, ACache eventCache_){
@@ -133,9 +141,10 @@ public class HomeAdapter extends BaseAdapter {
                 JSONObject j1 = new JSONObject(message);
                 String st = j1.getString("event_list");
                 events = gson.fromJson(st, new TypeToken<List<Event>>(){}.getType());
+                String url = "http://120.24.208.130:1501/avatar/touxiang.jpg";
                 for (int i = 0; i < events.size(); i++) {
                     item=new HashMap<String,Object>();
-                    item.put("头像", R.drawable.icon);
+                    item.put("头像", returnBitMap(url));
                     item.put("标题", events.get(i).getTitle());
                     item.put("用户", events.get(i).getLauncher());
                     item.put("时间", events.get(i).getTime());
@@ -146,6 +155,34 @@ public class HomeAdapter extends BaseAdapter {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
+
+    public Bitmap returnBitMap(String url_){
+        final String url = url_;
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                URL myFileUrl = null;
+                try {
+                    myFileUrl = new URL(url);
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                }
+                try {
+                    HttpURLConnection conn = (HttpURLConnection) myFileUrl
+                            .openConnection();
+                    conn.setDoInput(true);
+                    conn.connect();
+                    InputStream is = conn.getInputStream();
+                    bitmap = BitmapFactory.decodeStream(is);
+                    is.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+
+        return bitmap;
     }
 
     public void setList2() {
@@ -191,7 +228,7 @@ public class HomeAdapter extends BaseAdapter {
         lp_iv.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
         iv.setLayoutParams(lp_iv);
         iv.setScaleType(ScaleType.CENTER_INSIDE);
-        iv.setImageResource((Integer) ((list.get(position)).get("头像")));
+        iv.setImageBitmap((Bitmap) ((list.get(position)).get("头像")));
         //标题
         TextView title=new TextView(context);
         RelativeLayout.LayoutParams lp_tv=new RelativeLayout.LayoutParams(-2,-2);
