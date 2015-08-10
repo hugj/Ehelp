@@ -76,7 +76,8 @@ public class Home extends AIActionBarActivity implements
     private SharedPreferences sharedPref;
     private List<BaseFragment> fragments = new ArrayList<>();
 
-    private String token;
+    private String token = "false";
+    private int flag = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -206,7 +207,7 @@ public class Home extends AIActionBarActivity implements
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()) {
-                    case R.id.action_settings:
+                    case R.id.message:
 //                        Toast.makeText(getApplicationContext(), "action_settings",
 //                                Toast.LENGTH_SHORT).show();
 //                        /**
@@ -219,9 +220,10 @@ public class Home extends AIActionBarActivity implements
 //                            RongIM.getInstance().startPrivateChat(Home.this, "7", "hello");
 //                        }
 //                          RongIM.getInstance().startPrivateChat(Home.this, "7", "聊天");
-
-                        RongIM.setConversationListBehaviorListener(new MyConversationListBehaviorListener());
-                        RongIM.getInstance().startConversationList(Home.this);
+                        if (flag == 0) {
+                            RongIM.setConversationListBehaviorListener(new MyConversationListBehaviorListener());
+                            RongIM.getInstance().startConversationList(Home.this);
+                        }
                         break;
                     default:
                         break;
@@ -423,6 +425,7 @@ public class Home extends AIActionBarActivity implements
         public void run() {
             getIMToken();
             if (token.equals("false")) {
+                flag = 1;
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -448,26 +451,46 @@ public class Home extends AIActionBarActivity implements
 
             String msg = RequestHandler.sendPostRequest(url, jsonString);
             if (msg.equals("false")) {
-                Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
                                 Toast.LENGTH_SHORT).show();
+                    }
+                });
             } else {
                 try {
                     JSONObject JO = new JSONObject(msg);
                     if (JO.getInt("status") == 500) {
-                        Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
-                                Toast.LENGTH_SHORT).show();
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
+                                        Toast.LENGTH_SHORT).show();
+                            }
+                        });
                     } else {
                         token = JO.getString("chat_token");
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
-                    Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
-                            Toast.LENGTH_SHORT).show();
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    });
                 }
             }
         } else {
-            Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
-                    Toast.LENGTH_SHORT).show();
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
+                            Toast.LENGTH_SHORT).show();
+                }
+            });
         }
     }
 

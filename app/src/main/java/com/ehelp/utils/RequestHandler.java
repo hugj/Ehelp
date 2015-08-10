@@ -98,7 +98,6 @@ public class RequestHandler {
 		} catch (Exception e) {
 
 			e.printStackTrace();
-			return e.toString();
 
 		}
 
