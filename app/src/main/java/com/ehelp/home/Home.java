@@ -18,6 +18,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.baidu.mapapi.SDKInitializer;
 import com.ehelp.R;
@@ -44,11 +45,16 @@ import com.wangjie.rapidfloatingactionbutton.RapidFloatingActionLayout;
 import com.wangjie.rapidfloatingactionbutton.contentimpl.labellist.RFACLabelItem;
 import com.wangjie.rapidfloatingactionbutton.contentimpl.labellist.RapidFloatingActionContentLabelList;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import cn.jpush.android.api.JPushInterface;
 import io.rong.imkit.RongIM;
+import io.rong.imkit.model.UIConversation;
+import io.rong.imlib.RongIMClient;
 
 //推送统计代码
 //推送代码
@@ -70,6 +76,9 @@ public class Home extends AIActionBarActivity implements
     private int user_id;
     private SharedPreferences sharedPref;
     private List<BaseFragment> fragments = new ArrayList<>();
+
+    private String token = "false";
+    private int flag = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,6 +104,7 @@ public class Home extends AIActionBarActivity implements
         String s = String.valueOf(id);
         Toast.makeText(getApplicationContext(), s, Toast.LENGTH_LONG).show();*/
 
+        thread_token.start();
 
         // 收集activity，以便退出登录时集中销毁
         ActivityCollector.getInstance().addActivity(this);
@@ -147,6 +157,7 @@ public class Home extends AIActionBarActivity implements
                 rfaContent
         ).build();
     }
+
     @Override
     public void onRFACItemLabelClick(int position, RFACLabelItem item) {
 //        showToastMessage("clicked label: " + position);
@@ -198,17 +209,22 @@ public class Home extends AIActionBarActivity implements
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()) {
-                    case R.id.action_settings:
+                    case R.id.message:
 //                        Toast.makeText(getApplicationContext(), "action_settings",
 //                                Toast.LENGTH_SHORT).show();
-                        /**
-                         * 启动单聊
-                         * context - 应用上下文。
-                         * targetUserId - 要与之聊天的用户 Id。
-                         * title - 聊天的标题，如果传入空值，则默认显示与之聊天的用户名称。
-                         */
-                        if (RongIM.getInstance() != null) {
-                            RongIM.getInstance().startPrivateChat(Home.this, "7", "hello");
+//                        /**
+//                         * 启动单聊
+//                         * context - 应用上下文。
+//                         * targetUserId - 要与之聊天的用户 Id。
+//                         * title - 聊天的标题，如果传入空值，则默认显示与之聊天的用户名称。
+//                         */
+//                        if (RongIM.getInstance() != null) {
+//                            RongIM.getInstance().startPrivateChat(Home.this, "7", "hello");
+//                        }
+//                          RongIM.getInstance().startPrivateChat(Home.this, "7", "聊天");
+                        if (flag == 0) {
+                            RongIM.setConversationListBehaviorListener(new MyConversationListBehaviorListener());
+                            RongIM.getInstance().startConversationList(Home.this);
                         }
                         break;
                     default:
@@ -396,7 +412,26 @@ public class Home extends AIActionBarActivity implements
             String jsonString = "{" + "\"id\":"+ id +"," + "\"identity_id\":\"" + identity_id + "\"" + "}";
             String s1 = RequestHandler.sendPostRequest("http://120.24.208.130:1501/user/modify_information", jsonString);
             Log.v("Ehelp", s1);
-            /*if (msg == "false") {
+//            if (msg == "false") {
+//                runOnUiThread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
+//                                Toast.LENGTH_SHORT).show();
+//                    }
+//                });
+//            } else {
+//                Toast.makeText(getApplicationContext(), identity_id, Toast.LENGTH_LONG).show();
+//            }
+        }
+    });
+
+    Thread thread_token =new Thread(new Runnable() {
+        @Override
+        public void run() {
+            getIMToken();
+            if (token.equals("false")) {
+                flag = 1;
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -405,14 +440,115 @@ public class Home extends AIActionBarActivity implements
                     }
                 });
             } else {
-                Toast.makeText(getApplicationContext(), identity_id, Toast.LENGTH_LONG).show();
-            }*/
+                //token = "SxzzzlNjm0qdIQtgUFqmqeRgfvzP32M+B6kCt5/NOhjlnkUgM2TiFEqH7NP3Yzy5+spQShmSUhpRjxNkdSyWSA==";
+                IMconnect(token);
+            }
         }
     });
 
-    /*private MessageReceiver mMessageReceiver;
-    public static final String MESSAGE_RECEIVED_ACTION = "com.example.jpushdemo.MESSAGE_RECEIVED_ACTION";
-    public static final String KEY_TITLE = "title";
-    public static final String KEY_MESSAGE = "message";
-    public static final String KEY_EXTRAS = "extras";*/
+    private void getIMToken() {
+        String url = "http://120.24.208.130:1501/account/get_token";
+
+        sharedPref = getSharedPreferences("user_id", MODE_PRIVATE);
+        int user_id = sharedPref.getInt("user_id", -1);
+
+        if (user_id != -1) {
+            String jsonString = "{" + "\"id\":" + user_id + "}";
+
+            String msg = RequestHandler.sendPostRequest(url, jsonString);
+            if (msg.equals("false")) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
+                                Toast.LENGTH_SHORT).show();
+                    }
+                });
+            } else {
+                try {
+                    JSONObject JO = new JSONObject(msg);
+                    if (JO.getInt("status") == 500) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
+                                        Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    } else {
+                        token = JO.getString("chat_token");
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+            }
+        } else {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
+                            Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+    }
+
+    private void IMconnect(String token) {
+         /* IMKit SDK调用第二步 建立与服务器的连接 */
+
+    /* 集成和测试阶段，您可以直接使用从您开发者后台获取到的 token，比如 String token = “d6bCQsXiupB......”; */
+        RongIM.connect(token, new RongIMClient.ConnectCallback() {
+            @Override
+            public void onSuccess(String userId) {
+        /* 连接成功 */
+            }
+
+            @Override
+            public void onError(RongIMClient.ErrorCode e) {
+        /* 连接失败，注意并不需要您做重连 */
+            }
+
+            @Override
+            public void onTokenIncorrect() {
+        /* Token 错误，在线上环境下主要是因为 Token 已经过期，您需要向 App Server 重新请求一个新的 Token */
+            }
+        });
+    }
+
+    private class MyConversationListBehaviorListener implements RongIM.ConversationListBehaviorListener{
+        /**
+         * 长按会话列表中的 item 时执行。
+         *
+         * @param context        上下文。
+         * @param view           触发点击的 View。
+         * @param uiConversation 长按时的会话条目。
+         * @return 如果用户自己处理了长按会话后的逻辑处理，则返回 true， 否则返回 false，false 走融云默认处理方式。
+         */
+        @Override
+        public boolean onConversationLongClick(Context context, View view, UIConversation uiConversation) {
+            return false;
+        }
+
+        /**
+         * 点击会话列表中的 item 时执行。
+         *
+         * @param context        上下文。
+         * @param view           触发点击的 View。
+         * @param uiConversation 会话条目。
+         * @return 如果用户自己处理了点击会话后的逻辑处理，则返回 true， 否则返回 false，false 走融云默认处理方式。
+         */
+        @Override
+        public boolean onConversationClick(Context context, View view, UIConversation uiConversation) {
+            //RongIM.getInstance().startPrivateChat(Home.this, "7", "自问自答");
+            return false;
+        }
+    }
+
 }

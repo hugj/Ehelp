@@ -115,4 +115,7 @@
     <string name="title_activity_bank">BankActivity</string>
     <string name="title_activity_integral">IntegralActivity</string>
     <string name="title_activity_coin">CoinActivity</string>
+    <string name="title_activity_basic_info">BasicInfoActivity</string>
+
+    <string name="toolbar_title">个人主页</string>
 </resources>

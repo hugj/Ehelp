@@ -1,6 +1,8 @@
 package com.ehelp.receive;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.StrictMode;
@@ -8,6 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,6 +36,11 @@ import com.wangjie.rapidfloatingactionbutton.contentimpl.labellist.RapidFloating
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -188,12 +196,41 @@ public class QuestionDetail extends AIActionBarActivity implements RapidFloating
         tmp = (TextView)findViewById(R.id.Content);
         tmp.setText(m_event.getContent());
 
+        String imageUrl = "http://120.24.208.130:1501/avatar/touxiang.jpg";
+        //Uri u = Uri.parse(imageUrl);
+        ImageView imView;
+        imView = (ImageView) findViewById(R.id.single_icon1);
+        //imView.setImageURI(u);
+        imView.setImageBitmap(returnBitMap(imageUrl));
+
         //回答列表
         ListView ansList = (ListView)findViewById(R.id.answerList);
         int event_id = m_event.getEventId();
         AnsAdapter ans = new AnsAdapter(this, event_id);
         ansList.setAdapter(ans);
 
+    }
+
+    public Bitmap returnBitMap(String url){
+        URL myFileUrl = null;
+        Bitmap bitmap = null;
+        try {
+            myFileUrl = new URL(url);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        try {
+            HttpURLConnection conn = (HttpURLConnection) myFileUrl
+                    .openConnection();
+            conn.setDoInput(true);
+            conn.connect();
+            InputStream is = conn.getInputStream();
+            bitmap = BitmapFactory.decodeStream(is);
+            is.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return bitmap;
     }
 
     @Override
