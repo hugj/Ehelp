@@ -99,6 +99,7 @@ public class EndSosActivity extends ActionBarActivity {
 
                     Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
                             Toast.LENGTH_SHORT).show();
+            return;
         }
         try{
             JSONObject jO = new JSONObject(message);
@@ -138,6 +139,7 @@ public class EndSosActivity extends ActionBarActivity {
             if (message == "false") {
                         Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
                                 Toast.LENGTH_SHORT).show();
+                return;
             }
             try{
                 JSONObject jO1 = new JSONObject(message);
@@ -187,6 +189,7 @@ public class EndSosActivity extends ActionBarActivity {
                         if (message == "false") {
                                     Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
                                             Toast.LENGTH_SHORT).show();
+                            return;
                         }
                         try {
                             JSONObject jO = new JSONObject(message);
@@ -252,21 +255,22 @@ public class EndSosActivity extends ActionBarActivity {
                 if (message == "false") {
                     Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
                             Toast.LENGTH_SHORT).show();
-                }
-                try {
-                    JSONObject jO = new JSONObject(message);
-                    if (jO.getInt("status") == 500) {
-                        Toast.makeText(getApplicationContext(), "没有此用户",
-                                Toast.LENGTH_SHORT).show();
-                    } else {
-                        int id = jO.getInt("id");
-                        Intent intent = new Intent(EndSosActivity.this, messageActivity.class);
-                        intent.putExtra("type", 0);//默认非好友
-                        intent.putExtra("id", id);
-                        startActivity(intent);
+                }else {
+                    try {
+                        JSONObject jO = new JSONObject(message);
+                        if (jO.getInt("status") == 500) {
+                            Toast.makeText(getApplicationContext(), "没有此用户",
+                                    Toast.LENGTH_SHORT).show();
+                        } else {
+                            int id = jO.getInt("id");
+                            Intent intent = new Intent(EndSosActivity.this, messageActivity.class);
+                            intent.putExtra("type", 0);//默认非好友
+                            intent.putExtra("id", id);
+                            startActivity(intent);
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
-                } catch (JSONException e) {
-                    e.printStackTrace();
                 }
 //				Toast.makeText(getApplicationContext(), "点击"+arg2, Toast.LENGTH_SHORT).show();
                 return true;
