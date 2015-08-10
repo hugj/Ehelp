@@ -57,7 +57,6 @@ import com.ehelp.R;
 import com.ehelp.entity.comment;
 import com.ehelp.evaluate.Evaluation;
 import com.ehelp.home.Home;
-import com.ehelp.home.SuperAwesomeCardFragment;
 import com.ehelp.send.CountNum;
 import com.ehelp.send.SendQuestion;
 import com.ehelp.utils.RequestHandler;

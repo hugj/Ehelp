@@ -123,6 +123,10 @@ public class AnsAdapter extends BaseAdapter {
         }
     }
 
+    public List<answer> getAnswerList() {
+        return answerList;
+    }
+
     public int getCount() {return list.size();}
     public Object getItem(int position) {return position;}
     public long getItemId(int position) {return position;}
