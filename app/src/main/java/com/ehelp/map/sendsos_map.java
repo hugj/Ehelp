@@ -363,55 +363,47 @@ public class sendsos_map extends ActionBarActivity implements BaiduMap.OnMapClic
             int id = spf.getInt("user_id", -1);
             String s1 = String.valueOf(id);
             Log.v("sendposttest", s1);
-            /*if (id == -1) {
-                Toast.makeText(getApplicationContext(), "id获取失败", Toast.LENGTH_LONG).show();
-            }*/
 
-            /*if (longitude == 0 || latitude == 0) {
-                Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
-                        Toast.LENGTH_SHORT).show();
-            }*/
-
-            //String locmsg = "{" + "\"id\":" + id + "}";
-            //String s2 = "37";
             String locmsg = "{\"id\":"+ s1 + "}";
             String msg = RequestHandler.sendPostRequest(
                     "http://120.24.208.130:1501/user/neighbor", locmsg);
-            //Log.v("Ehelp", msg);
             Log.v("sendposttest", msg);
-            /*if (msg == "false") {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
-                                Toast.LENGTH_SHORT).show();
-                    }
-                });
-                return;
-            }*/
+
             String jsonString;
-            int t1 = msg.indexOf("]");
-            int t2 = msg.indexOf("[");
-            String ss1 = String.valueOf(t1);
-            String ss2 = String.valueOf(t2);
-            Log.v("sendposttest", ss1);
-            Log.v("sendposttest", ss2);
-            if (msg.indexOf("]") - msg.indexOf("[") == 1) {
-                jsonString = "{\"platform\":\"android\",\"audience\":\"all\",\"notification\":{\"alert\":\"有人正在求救！事件号：" + event_id + "\"}}";
+
+            if (msg.equals("false")) {
+                return;
             } else {
-                msg = msg.substring(msg.indexOf("[") + 1, msg.indexOf("]"));
-                Log.v("sendposttest", msg);
-                String jsonStringPart1 = "{" + "\"platform\":\"android\","
-                        + "\"audience\":{\"registration_id\":[";
+                try {
+                    JSONObject JO = new JSONObject(msg);
+                if (JO.getInt("status") == 500) {
+                    return;
+                } else {
+                    if (msg.indexOf("]") - msg.indexOf("[") == 1) {
+                        jsonString = "{\"platform\":\"android\",\"audience\":\"all\",\"notification\":{\"alert\":\"有人正在求救！事件号：" + event_id + "\"}}";
+                    } else {
+                        msg = msg.substring(msg.indexOf("[") + 1, msg.indexOf("]"));
+                        int temp = msg.indexOf(",");
+                        if (temp == -1) {
+                            jsonString = "{\"platform\":\"android\",\"audience\":\"all\",\"notification\":{\"alert\":\"有人正在求救！事件号：" + event_id + "\"}}";
+                        } else {
+                            Log.v("sendposttest", msg);
+                            String jsonStringPart1 = "{" + "\"platform\":\"android\","
+                                    + "\"audience\":{\"registration_id\":[";
 
-                String jsonStringPart2 = jsonStringPart1 + msg;
+                            String jsonStringPart2 = jsonStringPart1 + msg;
 
-                jsonString = jsonStringPart2 + "]},\"notification\":{\"alert\":\"有人正在求救！事件号：" + event_id + "\"}}";
-                Log.v("sendposttest", jsonString);
+                            jsonString = jsonStringPart2 + "]},\"notification\":{\"alert\":\"有人正在求救！事件号：" + event_id + "\"}}";
+                            Log.v("sendposttest", jsonString);
+                        }
+                    }
+                    Log.v("sendposttest", jsonString);
+                    sendPostRequest("https://api.jpush.cn/v3/push", jsonString);
+                }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
-            Log.v("sendposttest", jsonString);
-            sendPostRequest("https://api.jpush.cn/v3/push", jsonString);
-            //sendPostRequest("https://api.jpush.cn/v3/push", "{\"platform\":\"all\",\"audience\":\"all\",\"notification\":{\"alert\":\"有人正在求救！\"}}");
         }
     });
 
@@ -457,27 +449,26 @@ public class sendsos_map extends ActionBarActivity implements BaiduMap.OnMapClic
         String tests1 = String.valueOf(id);
         Log.v("sendsostest", tests1);
 
-        String ss1 = String.valueOf(longitude);
-        String ss2 = String.valueOf(latitude);
-        Log.v("sendsostest", ss1);
-        Log.v("sendsostest", ss2);
-
-        /*String send = "{\"id\":" + id + ",\"type\":" + type
-                + ",\"title\":\"sos\",\"longitude\":" + longitude
-                + ",\"latitude\":" + latitude +"}";*/
         String send = "{\"id\":" + id + ",\"type\":" + type
                 + ",\"title\":\"sos\"}";
 
         String msg = RequestHandler.sendPostRequest(
                 url, send);
-        JSONObject jo = new JSONObject(msg);
-        Log.v("sendsostest2", msg);
-        JSONObject value = jo.getJSONObject("value");
-        event_id = value.getInt("event_id");
-        String s = String.valueOf(event_id);
-        Log.v("sendposttest1", s);
-        String tests2 = String.valueOf(event_id);
-        Log.v("sendsostest", tests2);
+
+        if (msg.equals("false")) {
+            Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
+                    Toast.LENGTH_SHORT).show();
+        } else {
+            JSONObject jo = new JSONObject(msg);
+            Log.v("sendsostest2", msg);
+            if (jo.getInt("status") == 500) {
+                Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
+                        Toast.LENGTH_SHORT).show();
+            } else {
+                JSONObject value = jo.getJSONObject("value");
+                event_id = value.getInt("event_id");
+            }
+        }
     }
     //向后台取消求救信息
     public void cancelsos() {
@@ -485,10 +476,7 @@ public class sendsos_map extends ActionBarActivity implements BaiduMap.OnMapClic
 
         SharedPreferences sp = getSharedPreferences("user_id", MODE_PRIVATE);
         int id = sp.getInt("user_id", -1);
-        String tests1 = String.valueOf(id);
-        Log.v("sendsostest", tests1);
-        String ss1 = String.valueOf(event_id);
-        Log.v("sendsostest", ss1);
+
         String send = "{\"id\":" + id + ",\"event_id\":" + event_id + ",\"state\":" + 1 + "}";
 
         String msg = RequestHandler.sendPostRequest(

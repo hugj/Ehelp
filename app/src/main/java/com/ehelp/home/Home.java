@@ -76,6 +76,8 @@ public class Home extends AIActionBarActivity implements
     private SharedPreferences sharedPref;
     private List<BaseFragment> fragments = new ArrayList<>();
 
+    private String token;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -100,6 +102,7 @@ public class Home extends AIActionBarActivity implements
         String s = String.valueOf(id);
         Toast.makeText(getApplicationContext(), s, Toast.LENGTH_LONG).show();*/
 
+        thread_token.start();
 
         // 收集activity，以便退出登录时集中销毁
         ActivityCollector.getInstance().addActivity(this);
@@ -215,20 +218,10 @@ public class Home extends AIActionBarActivity implements
 //                        if (RongIM.getInstance() != null) {
 //                            RongIM.getInstance().startPrivateChat(Home.this, "7", "hello");
 //                        }
+//                          RongIM.getInstance().startPrivateChat(Home.this, "7", "聊天");
+
                         RongIM.setConversationListBehaviorListener(new MyConversationListBehaviorListener());
-
-                        String token = "7OJOwb0+p97XKUxde7yH6+RgfvzP32M+B6kCt5/NOhiHOvVT5BuxxNswJ8lTUwIZoreRx3a/ywhRjxNkdSyWSA==";
-
-                        token = getIMToken();
-
-                        if (token.equals("false")) {
-                            Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
-                                    Toast.LENGTH_SHORT).show();
-                        } else {
-                            IMconnect(token);
-                            RongIM.getInstance().startConversationList(Home.this);
-                            //RongIM.getInstance().startPrivateChat(Home.this, "7", "自问自答");
-                        }
+                        RongIM.getInstance().startConversationList(Home.this);
                         break;
                     default:
                         break;
@@ -425,7 +418,26 @@ public class Home extends AIActionBarActivity implements
         }
     });
 
-    private String getIMToken() {
+    Thread thread_token =new Thread(new Runnable() {
+        @Override
+        public void run() {
+            getIMToken();
+            if (token.equals("false")) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
+                                Toast.LENGTH_SHORT).show();
+                    }
+                });
+            } else {
+                //token = "SxzzzlNjm0qdIQtgUFqmqeRgfvzP32M+B6kCt5/NOhjlnkUgM2TiFEqH7NP3Yzy5+spQShmSUhpRjxNkdSyWSA==";
+                IMconnect(token);
+            }
+        }
+    });
+
+    private void getIMToken() {
         String url = "http://120.24.208.130:1501/account/get_token";
 
         sharedPref = getSharedPreferences("user_id", MODE_PRIVATE);
@@ -438,29 +450,24 @@ public class Home extends AIActionBarActivity implements
             if (msg.equals("false")) {
                 Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
                                 Toast.LENGTH_SHORT).show();
-                return "false";
             } else {
                 try {
                     JSONObject JO = new JSONObject(msg);
                     if (JO.getInt("status") == 500) {
                         Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
                                 Toast.LENGTH_SHORT).show();
-                        return "false";
                     } else {
-                        String res = JO.getString("chat_token");
-                        return res;
+                        token = JO.getString("chat_token");
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
                     Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
                             Toast.LENGTH_SHORT).show();
-                    return "false";
                 }
             }
         } else {
             Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
                     Toast.LENGTH_SHORT).show();
-            return "false";
         }
     }
 
