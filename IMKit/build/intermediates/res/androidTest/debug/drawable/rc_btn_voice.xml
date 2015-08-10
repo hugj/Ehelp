@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:drawable="@drawable/rc_btn_voice_hover" android:state_pressed="true"></item>
+    <item android:drawable="@drawable/rc_btn_voice_normal"></item>
+</selector><!-- From: file:/E:/360data/重要数据/桌面/实训/Ehelp/IMKit/src/main/res/drawable/rc_btn_voice.xml --><!-- From: file:/E:/360data/重要数据/桌面/实训/Ehelp/IMKit/build/intermediates/bundles/debug/res/drawable/rc_btn_voice.xml -->
