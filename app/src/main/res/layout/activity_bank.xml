@@ -23,12 +23,13 @@
                 android:layout_marginTop="30dp"
                 android:textColor="#000"
                 android:id="@+id/bank_name"
-                android:text="黄志婷" />
+                android:text="黄" />
             <TextView android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="30dp"
                 android:layout_marginTop="60dp"
-                android:text="13826459597"/>
+                android:id="@+id/bank_phone"
+                android:text="111111111"/>
         </RelativeLayout>
         <RelativeLayout android:layout_height="wrap_content"
             android:layout_width="wrap_content">
@@ -45,4 +46,61 @@
                 android:src="@drawable/homepage"/>
         </RelativeLayout>
     </LinearLayout>
+    <RelativeLayout android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="30dp"
+        android:clickable="true"
+        android:onClick="my_integral"
+        android:background="@drawable/background_box">
+        <TextView android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:text="我的积分"
+            android:textColor="#000"
+            android:id="@+id/bank_integral"
+            android:layout_marginTop="18dp"
+            android:layout_marginLeft="20dp"/>
+        <TextView android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/bank_integral1"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="150dp"
+            android:text="423"/>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleType="matrix"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="330dp"
+            android:clickable="true"
+            android:src="@drawable/mm_submenu" />
+    </RelativeLayout>
+    <RelativeLayout android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:gravity="center_horizontal"
+        android:clickable="true"
+        android:onClick="my_coin"
+        android:background="@drawable/background_box">
+        <TextView android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:text="我的爱心币"
+            android:textColor="#000"
+            android:id="@+id/bank_coin"
+            android:layout_marginTop="18dp"
+            android:layout_marginLeft="20dp"/>
+        <TextView android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/bank_coin1"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="150dp"
+            android:text="423"/>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleType="matrix"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="330dp"
+            android:clickable="true"
+            android:src="@drawable/mm_submenu" />
+    </RelativeLayout>
 </LinearLayout>

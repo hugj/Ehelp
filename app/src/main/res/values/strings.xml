@@ -113,4 +113,6 @@
     <string name="title_activity_response">ResponseActivity</string>
     <string name="title_activity_othershealthcard">OthershealthcardActivity</string>
     <string name="title_activity_bank">BankActivity</string>
+    <string name="title_activity_integral">IntegralActivity</string>
+    <string name="title_activity_coin">CoinActivity</string>
 </resources>
