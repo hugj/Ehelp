@@ -112,10 +112,11 @@ public class AnsAdapter extends BaseAdapter {
                     item.put("时间", answerList.get(i).getTime());
                     if (answerList.get(i).getIs_adopted() == 1) {
                         item.put("采纳", "被采纳答案");
+                        list.add(0, item);
                     } else {
                         item.put("采纳", "");
+                        list.add(item);
                     }
-                    list.add(item);
                 }
             }
         } catch (JSONException e) {

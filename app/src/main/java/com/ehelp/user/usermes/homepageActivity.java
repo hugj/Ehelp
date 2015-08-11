@@ -23,6 +23,7 @@ import android.view.WindowManager;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -512,6 +513,7 @@ public class homepageActivity extends AIActionBarActivity implements AbsListView
         headerBg = (ImageView) headerContainer.findViewById(R.id.img_header_bg);
 
         if (UserInfo != null) {
+            //设置头像
             ImageView portrait = (ImageView) headerContainer.findViewById
                     (R.id.portrait111);
             portrait.setOnClickListener(new View.OnClickListener() {
@@ -529,6 +531,7 @@ public class homepageActivity extends AIActionBarActivity implements AbsListView
             setNickname(headerContainer);
             setAttention(headerContainer);
             setFans(headerContainer);
+            setSignIn(headerContainer);
         }
 
         listView.addHeaderView(headerContainer);
@@ -556,13 +559,17 @@ public class homepageActivity extends AIActionBarActivity implements AbsListView
                 new_img_path += "/" + sourceStrArray[i];
             }
             File file = new File(img_path);
+            if (!file.exists() || file.isDirectory()) {
+                Toast.makeText(getApplicationContext(), "图片不存在",
+                        Toast.LENGTH_SHORT).show();
+                return;
+            }
             //修改文件名
             if (file.renameTo(new File(new_img_path))) {
                 file = new File(new_img_path);
                 Upload(file);
             } else {
-                Toast.makeText(getApplicationContext(),
-                        "上传失败",
+                Toast.makeText(getApplicationContext(), "上传失败",
                         Toast.LENGTH_SHORT).show();
             }
             file.renameTo(new File(img_path));
@@ -681,6 +688,78 @@ public class homepageActivity extends AIActionBarActivity implements AbsListView
                 //跳转
             }
         });
+    }
+
+    /*
+* 设置签到
+* */
+    public void setSignIn(View headerContainer) {
+        final Button EsignIn = (Button) headerContainer.findViewById(R.id.signIn);
+        String jsonStrng = "{" +
+                "\"id\":" + user_id +
+                ",\"operation\":" + 1 + "}";
+        final String message = RequestHandler.sendPostRequest(
+                "http://120.24.208.130:1501/account/signin", jsonStrng);
+        if (message == "false") {
+            Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
+                    Toast.LENGTH_SHORT).show();
+        }   else {
+            try {
+                JSONObject jO = new JSONObject(message);
+                if (jO.getInt("status") == 500) {
+                    Toast.makeText(getApplicationContext(),
+                            "我也不知道为什么出错了，也许是你没登陆吧。。？",
+                            Toast.LENGTH_SHORT).show();
+                } else {
+                    if (jO.getInt("type") == 0) {
+                        EsignIn.setText("签到");
+                        EsignIn.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View arg0) {
+                                if (SignIn()) {
+                                    EsignIn.setText("已签到");
+                                }
+                            }
+                        });
+                    } else {
+                        EsignIn.setText("已签到");
+                    }
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    /*
+* 点击签到
+* */
+    public Boolean SignIn() {
+        String jsonStrng = "{" +
+                "\"id\":" + user_id +
+                ",\"operation\":" + 0 + "}";
+        final String message = RequestHandler.sendPostRequest(
+                "http://120.24.208.130:1501/account/signin", jsonStrng);
+        if (message == "false") {
+            Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
+                    Toast.LENGTH_SHORT).show();
+        }   else {
+            try {
+                JSONObject jO = new JSONObject(message);
+                if (jO.getInt("status") == 500) {
+                    Toast.makeText(getApplicationContext(),
+                            "我也不知道为什么出错了，也许是你没登陆吧。。？",
+                            Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getApplicationContext(), "签到成功",
+                            Toast.LENGTH_SHORT).show();
+                    return true;
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        return false;
     }
 
     private void initEvent() {

@@ -269,7 +269,7 @@ public class QuestionDetail extends AIActionBarActivity implements RapidFloating
     }
 
     /*
-    * 修改回答相关信息
+    * 修改采纳回答相关信息
     * */
     public void change(int ansID){
         String jsonStrng = "{" +
