@@ -344,6 +344,13 @@ public class recievesos_map extends ActionBarActivity implements BaiduMap.OnMapC
             //点击评论按钮
         }
 
+        if (id == R.id.action_video) {
+            Intent mIntent = new Intent();
+            mIntent.putExtra("event_id", event_id);
+            mIntent.setClass(recievesos_map.this, VideoActivity.class);
+            startActivity(mIntent);
+        }
+
         //noinspection SimplifiableIfStatement
         if (item.getTitle().toString().equals("回应")||item.getTitle().toString().equals("关注")){
             int operation = 0;
