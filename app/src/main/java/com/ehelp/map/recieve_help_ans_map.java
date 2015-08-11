@@ -627,6 +627,14 @@ public class recieve_help_ans_map extends AIActionBarActivity implements BaiduMa
         if(id ==R.id.action_comment){
 
         }
+
+        if (id == R.id.action_video) {
+            Intent mIntent = new Intent();
+            mIntent.putExtra("event_id", event_id);
+            mIntent.setClass(recieve_help_ans_map.this, VideoActivity.class);
+            startActivity(mIntent);
+        }
+
         if(id == R.id.action_cancelhelp){
             String jsonStrng = "{" +
                     "\"id\":" + user_id + ",\"event_id\":" +event_id+ "}";

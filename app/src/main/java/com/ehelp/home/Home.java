@@ -219,7 +219,7 @@ public class Home extends AIActionBarActivity implements
 //                        if (RongIM.getInstance() != null) {
 //                            RongIM.getInstance().startPrivateChat(Home.this, "7", "hello");
 //                        }
-//                          RongIM.getInstance().startPrivateChat(Home.this, "7", "聊天");
+//                          RongIM.getInstance().startPrivateChat(Home.this, "64", "聊天");
                         if (flag == 0) {
                             RongIM.setConversationListBehaviorListener(new MyConversationListBehaviorListener());
                             RongIM.getInstance().startConversationList(Home.this);

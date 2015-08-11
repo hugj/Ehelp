@@ -336,6 +336,7 @@
                 <action android:name="android.intent.action.VIEW" />
 
                 <category android:name="android.intent.category.DEFAULT" />
+
                 <data
                     android:host="com.ehelp"
                     android:pathPrefix="/conversation/"
@@ -358,18 +359,23 @@
         <activity
             android:name=".home.ConversationListActivity"
             android:label="@string/title_activity_conversation_list"
-            android:parentActivityName=".account.login">
+            android:parentActivityName=".account.login" >
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
                 <category android:name="android.intent.category.DEFAULT" />
+
                 <data
                     android:host="com.ehelp"
                     android:pathPrefix="/conversationlist"
                     android:scheme="rong" />
             </intent-filter>
         </activity>
-
+        <activity
+            android:name=".map.VideoActivity"
+            android:label="@string/title_activity_video"
+            android:parentActivityName=".account.login" >
+        </activity>
     </application>
 
 </manifest>
