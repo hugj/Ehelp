@@ -80,6 +80,8 @@ public class sendhelp_map extends ActionBarActivity implements
 
     Marker mMarker1;
 
+    String loc_name = "";
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         SDKInitializer.initialize(getApplicationContext());
@@ -193,6 +195,7 @@ public class sendhelp_map extends ActionBarActivity implements
             Bundle bundle = new Bundle();
             bundle.putString("longitude", longitude);
             bundle.putString("latitude", latitude);
+            bundle.putString("loc_name", loc_name);
             intent.putExtras(bundle);
             startActivity(intent);
             this.finish();
@@ -297,6 +300,7 @@ public class sendhelp_map extends ActionBarActivity implements
         } else {
             Toast.makeText(sendhelp_map.this, result.getLocation() + "," + "\n" + result.getName() + ": " + result.getAddress(), Toast.LENGTH_SHORT)
                     .show();
+            loc_name = result.getAddress();
             ll = result.getLocation();
         }
     }
