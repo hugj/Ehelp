@@ -1,0 +1,67 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:background="#eee">
+    <RelativeLayout android:layout_width="fill_parent"
+        android:layout_height="150dp"
+        android:background="@drawable/background_box"
+        android:id="@+id/integral_inf">
+        <RelativeLayout android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:layout_marginLeft="150dp">
+        <TextView android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            android:text="我的积分" />
+        <TextView android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/integral_num"
+            android:layout_marginTop="50dp"
+            android:layout_marginLeft="9dp"
+            android:textSize="40dp"
+            android:textColor="#4876FF"
+            android:text="123"/>
+        </RelativeLayout>
+        <RelativeLayout android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_marginLeft="280dp"
+            android:layout_marginTop="60dp">
+            <TextView android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:id="@+id/integral_l"
+                android:text="等级"/>
+            <ImageView android:layout_height="20dp"
+                android:layout_width="20dp"
+                android:layout_toEndOf="@+id/integral_l"
+                android:layout_marginLeft="10dp"
+                android:id="@+id/integral_img"
+                android:src="@drawable/homepage"/>
+        </RelativeLayout>
+    </RelativeLayout>
+    <RelativeLayout android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="30dp"
+        android:gravity="center_horizontal"
+        android:id="@+id/changeto_icon"
+        android:clickable="true"
+        android:onClick="my_integral"
+        android:background="@drawable/background_box">
+        <TextView android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:text="兑换爱心币"
+            android:textSize="18dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginLeft="20dp"/>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleType="matrix"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="330dp"
+            android:clickable="true"
+            android:src="@drawable/mm_submenu" />
+    </RelativeLayout>
+</LinearLayout>

@@ -111,10 +111,12 @@
     <string name="title_activity_excontactlist">ExcontactlistActivity</string>
     <string name="title_activity_conversation">ConversationActivity</string>
     <string name="title_activity_response">ResponseActivity</string>
+    <string name="title_activity_bank">BankActivity</string>
+    <string name="title_activity_integral">IntegralActivity</string>
+    <string name="title_activity_coin">CoinActivity</string>
     <string name="title_activity_basic_info">BasicInfoActivity</string>
     <string name="title_activity_othershealthcard">OthershealthcardActivity</string>
     <string name="title_activity_end_help">EndHelpActivity</string>
     <string name="title_activity_conversation_list">ConversationActivity</string>
-
     <string name="toolbar_title">个人主页</string>
 </resources>

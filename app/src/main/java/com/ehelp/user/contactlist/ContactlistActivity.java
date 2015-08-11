@@ -158,7 +158,7 @@ public class ContactlistActivity extends AIActionBarActivity implements RapidFlo
 					child.setUsername(emp);
 					child.setHeadphoto("http://wenwen.soso.com/p/20090901/20090901120135-1666292770.jpg");
 					child.setPhone(phone);
-                    child.setOnline_status("1");//1在线，0不在线
+					child.setOnline_status("1");//1在线，0不在线
 					listChild.add(child);
 				}
 			}
