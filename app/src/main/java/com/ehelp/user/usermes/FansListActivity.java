@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.ExpandableListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,6 +22,7 @@ import com.ehelp.user.contactlist.Child;
 import com.ehelp.user.contactlist.ConstactAdapter;
 import com.ehelp.user.contactlist.Group;
 import com.ehelp.user.contactlist.IphoneTreeView;
+import com.ehelp.user.contactlist.messageActivity;
 import com.ehelp.utils.RequestHandler;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -63,6 +66,7 @@ public class FansListActivity extends AIActionBarActivity implements RapidFloati
         initView();
         init();//fab
         Drawfans(); //粉丝列表
+        click_on_fans();
     }
     public void Drawfans(){
         listGroup=new ArrayList<Group>();
@@ -93,8 +97,8 @@ public class FansListActivity extends AIActionBarActivity implements RapidFloati
                 Fans_list = j.getString("user_list");
                 fanslist = gson.fromJson(Fans_list, new TypeToken<List<User>>() {
                         }.getType());
-                Child child = new Child();
                 for (int i = 0; i < fanslist.size(); i++) {
+                    Child child = new Child();
                     String emp = fanslist.get(i).getNickname();
                     String emp_ = fanslist.get(i).getName();
                     if (emp == "") {
@@ -214,5 +218,69 @@ public class FansListActivity extends AIActionBarActivity implements RapidFloati
             startActivity(intent);
         }
         rfabHelper.toggleContent();
+    }
+    //点击查看联系人的信息
+    private void click_on_fans() {
+        mIphoneTreeView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+            @Override
+            public boolean onChildClick(ExpandableListView arg0, View arg1, int arg2, int arg3, long arg4) {
+				/*
+				 *arg0发生点击动作的ExpandableListView,arg1视图view，arg2 group在ExpandableListView
+				 *的位置索引 arg3 child在group的位置，arg4child的行id
+				 */
+                String Phone = mExpAdapter.getChild(arg2, arg3).getPhone();
+                String jsonStrng = "{" +
+                        "\"phone\":\"" + Phone + "\"}";
+                message = RequestHandler.sendPostRequest(
+                        "http://120.24.208.130:1501/user/get_information", jsonStrng);
+                if (message == "false") {
+                    Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
+                            Toast.LENGTH_SHORT).show();
+                }
+                try {
+                    JSONObject jO = new JSONObject(message);
+                    if (jO.getInt("status") == 500) {
+                        Toast.makeText(getApplicationContext(), "没有此用户",
+                                Toast.LENGTH_SHORT).show();
+                    } else {
+                        int id = jO.getInt("id");
+                        jsonStrng = "{"+
+                                "\"operation\":3" + "}";
+                        message = RequestHandler.sendPostRequest(
+                                "http://120.24.208.130:1501/user/relation_manage", jsonStrng);
+                        if (message == "false") {
+                            Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                        try {
+                            int type = 0; //operation 为3时获取的关系type 0为紧急联系人，2为好友
+                            JSONObject j = new JSONObject(message);
+                            if(j.getInt("status") == 500) {
+                                Toast.makeText(getApplicationContext(), "没有此用户",
+                                        Toast.LENGTH_SHORT).show();
+                            } else {
+                                type = j.getInt("type"); //message里0为无关系，1为好友，2为紧急联系人
+                                if (type == 0) {
+                                    type = 2; //紧急联系人
+                                } else if (type == 2) {
+                                    type = 1;
+                                } else {
+                                    type = 0;
+                                }
+                            }
+                            Intent intent = new Intent(FansListActivity.this, messageActivity.class);
+                            intent.putExtra("type", type);
+                            intent.putExtra("id", id);
+                            startActivity(intent);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                return true;
+            }
+        });
     }
 }
