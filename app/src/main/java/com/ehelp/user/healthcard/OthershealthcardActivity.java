@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,9 +40,16 @@ public class OthershealthcardActivity extends AIActionBarActivity implements Rap
     private RapidFloatingActionHelper rfabHelper;
     private SharedPreferences SharedPref;
     private TextView allergy, medicine, bloodType, mediHistory, height, weight;
+    private Toolbar mToolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //set toolbar
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        mToolbar.setTitle("");
+        setSupportActionBar(mToolbar);
+        TextView tvv =(TextView) findViewById(R.id.titlefortoolbar);
+        tvv.setText("TA的健康卡");
         //set FAB
         fab();
         int id = getIntent().getIntExtra("user_id", -1);
