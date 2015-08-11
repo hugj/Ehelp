@@ -1,0 +1,70 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:background="#eee">
+    <RelativeLayout android:layout_width="fill_parent"
+        android:layout_height="150dp"
+        android:gravity="center_horizontal|center"
+        android:background="@drawable/background_box"
+        android:id="@+id/integral_inf">
+        <TextView android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            android:text="我的爱心币" />
+        <TextView android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/integral_num"
+            android:layout_marginTop="50dp"
+            android:layout_marginLeft="9dp"
+            android:textSize="40dp"
+            android:textColor="#4876FF"
+            android:text="123"/>
+    </RelativeLayout>
+    <RelativeLayout android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:id="@+id/bank_transfer1"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="30dp"
+        android:clickable="true"
+        android:onClick="my_integral"
+        android:background="@drawable/background_box">
+        <TextView android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:text="转给我的朋友"
+            android:textSize="18dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginLeft="20dp"/>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleType="matrix"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="330dp"
+            android:clickable="true"
+            android:src="@drawable/mm_submenu" />
+    </RelativeLayout>
+    <RelativeLayout android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:id="@+id/bank_transfer2"
+        android:gravity="center_horizontal"
+        android:clickable="true"
+        android:onClick="my_integral"
+        android:background="@drawable/background_box">
+        <TextView android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:text="转给其他人"
+            android:textSize="18dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginLeft="20dp"/>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleType="matrix"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="330dp"
+            android:clickable="true"
+            android:src="@drawable/mm_submenu" />
+    </RelativeLayout>
+</LinearLayout>
