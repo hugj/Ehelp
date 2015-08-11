@@ -88,6 +88,7 @@ public class homepageActivity extends AIActionBarActivity implements AbsListView
     private List<User> attention;
     private List<User> fans;
     private List<String> data = new ArrayList<>();
+    ArrayAdapter<String> adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -235,7 +236,7 @@ public class homepageActivity extends AIActionBarActivity implements AbsListView
             data.add("111");
         }
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
+        adapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_list_item_2, android.R.id.text1, data);
         listView.setAdapter(adapter);
 
@@ -334,6 +335,7 @@ public class homepageActivity extends AIActionBarActivity implements AbsListView
                                 Toast.makeText(getApplicationContext(), "修改成功",
                                         Toast.LENGTH_SHORT).show();
                             }
+                            adapter.notifyDataSetChanged();
                             dialog.dismiss();
                         }
                     }).show();
@@ -351,6 +353,7 @@ public class homepageActivity extends AIActionBarActivity implements AbsListView
                                     "http://120.24.208.130:1501/user/modify_information", jsonString);
                             data.set(5, "职  业     " + getOccupation(which));
                             dialog.dismiss();
+                            adapter.notifyDataSetChanged();
                         }
                     }).show();
         }else
@@ -682,12 +685,11 @@ public class homepageActivity extends AIActionBarActivity implements AbsListView
     public void setFans(View headerContainer) {
         final TextView Efans = (TextView) headerContainer.findViewById(R.id.fans);
         Efans.setText("粉丝  " + fans.size());
-        Efans.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View arg0) {
-                //跳转
-            }
-        });
+    }
+    //跳转到粉丝列表页面
+    public void click_on_fanslist(View view) {
+        Intent intent = new Intent(this, FansListActivity.class);
+        startActivity(intent);
     }
 
     /*
