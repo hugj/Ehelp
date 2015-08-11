@@ -15,4 +15,9 @@
         <attr name="pstsTextAllCaps" format="boolean" />
     </declare-styleable>
 
+    <item type="id" name="id_video" />
+    <item type="id" name="id_audio" />
+    <item type="id" name="id_button_video" />
+    <item type="id" name="id_button_audio" />
+
 </resources>
