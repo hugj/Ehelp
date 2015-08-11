@@ -166,7 +166,8 @@
                         android:gravity="center_vertical"
                         android:clickable="true"
                         android:background="@drawable/preference_item"
-                        android:id="@+id/user_bank">
+                        android:id="@+id/user_bank"
+                        android:onClick="bank">
                         <RelativeLayout android:layout_width="55dp"
                             android:layout_height="60dp" android:id="@+id/user_bank1">
                             <ImageView android:id="@+id/user_bank2" android:layout_width="40dp"

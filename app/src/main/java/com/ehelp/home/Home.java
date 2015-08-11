@@ -29,6 +29,7 @@ import com.ehelp.send.SendQuestion;
 import com.ehelp.user.contactlist.ContactlistActivity;
 import com.ehelp.user.healthcard.Health;
 import com.ehelp.user.history.MyHistory;
+import com.ehelp.user.lovebank.BankActivity;
 import com.ehelp.user.setting.SettingActivity;
 import com.ehelp.user.usermes.homepageActivity;
 import com.ehelp.utils.ActivityCollector;
@@ -156,6 +157,7 @@ public class Home extends AIActionBarActivity implements
                 rfaContent
         ).build();
     }
+
     @Override
     public void onRFACItemLabelClick(int position, RFACLabelItem item) {
 //        showToastMessage("clicked label: " + position);
@@ -281,6 +283,10 @@ public class Home extends AIActionBarActivity implements
     public void history(View view) {
         // Do something in response to button
         Intent intent = new Intent(this, MyHistory.class);
+        startActivity(intent);
+    }
+    public void bank(View view) {
+        Intent intent = new Intent(this, BankActivity.class);
         startActivity(intent);
     }
     public void Setting_page_click(View view) {

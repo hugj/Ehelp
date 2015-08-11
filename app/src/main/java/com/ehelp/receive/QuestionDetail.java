@@ -1,19 +1,30 @@
 package com.ehelp.receive;
 
+import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ehelp.R;
 import com.ehelp.entity.Event;
+import com.ehelp.entity.answer;
+import com.ehelp.home.Home;
 import com.ehelp.map.sendhelp_map;
 import com.ehelp.send.CountNum;
 import com.ehelp.send.SendQuestion;
@@ -33,6 +44,11 @@ import com.wangjie.rapidfloatingactionbutton.contentimpl.labellist.RapidFloating
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -54,6 +70,9 @@ public class QuestionDetail extends AIActionBarActivity implements RapidFloating
     private String share_money;
     private String desc_ques;
     public final static String EXTRA_MESSAGE = "com.ehelp.receive.MESSAGE";
+    private AlertDialog AnsDialog = null;
+    private int phone_user_id;
+    private List<answer> answers;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,6 +99,9 @@ public class QuestionDetail extends AIActionBarActivity implements RapidFloating
         setSupportActionBar(mToolbar);
         TextView tvv =(TextView) findViewById(R.id.titlefortoolbar);
         tvv.setText("问题详情");
+
+        SharedPreferences sharedPref = this.getSharedPreferences("user_id", Context.MODE_PRIVATE);
+        phone_user_id = sharedPref.getInt("user_id", -1);
 
         //set FAB
         fab();
@@ -160,10 +182,8 @@ public class QuestionDetail extends AIActionBarActivity implements RapidFloating
         }
         rfabHelper.toggleContent();
     }
-//toolbar右上角键设置
 
-    public void setView(){
-        //问题详情
+    public String getNickname() {
         final int user_id = m_event.getLauncherId();
         String nickname = "";
         String jsonStrng = "{" +
@@ -181,19 +201,123 @@ public class QuestionDetail extends AIActionBarActivity implements RapidFloating
                 e.printStackTrace();
             }
         }
+        return nickname;
+    }
+
+    public void setView(){
+        //问题详情
         TextView tmp = (TextView)findViewById(R.id.user_name);
-        tmp.setText(nickname);
+        tmp.setText(getNickname());
         tmp = (TextView)findViewById(R.id.Title);
         tmp.setText(m_event.getTitle());
         tmp = (TextView)findViewById(R.id.Content);
         tmp.setText(m_event.getContent());
+
+        String imageUrl = "http://120.24.208.130:1501/avatar/touxiang.jpg";
+        //Uri u = Uri.parse(imageUrl);
+        ImageView imView;
+        imView = (ImageView) findViewById(R.id.single_icon1);
+        //imView.setImageURI(u);
+        imView.setImageBitmap(returnBitMap(imageUrl));
 
         //回答列表
         ListView ansList = (ListView)findViewById(R.id.answerList);
         int event_id = m_event.getEventId();
         AnsAdapter ans = new AnsAdapter(this, event_id);
         ansList.setAdapter(ans);
+        
+        answers = ans.getAnswerList();
 
+        //绑定监听
+        if (phone_user_id == m_event.getLauncherId()) {
+            ansList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                public void onItemClick(AdapterView<?> arg0, View arg1, int index, long arg3) {
+                    if (answers.get(index).getIs_adopted() == 0) {
+                        onClickAns(answers.get(index).getId());
+                    }
+                }
+            });
+        }
+    }
+
+    /*
+* 监听点击回答
+* */
+    public void onClickAns(int ansID_) {
+        final int ansID = ansID_;
+        AnsDialog = new AlertDialog.Builder(QuestionDetail.this).create();
+        AnsDialog.show();
+        AnsDialog.getWindow().setContentView(R.layout.response_comment);
+
+        //设置弹出框内容
+        LinearLayout pop = (LinearLayout)AnsDialog.getWindow().findViewById(R.id.pop);
+        LinearLayout resp = new LinearLayout(this);
+        TextView respText=new TextView(this);
+        respText.setText("采纳该回答");
+        respText.setTextSize(20);
+        resp.addView(respText);
+        pop.addView(resp);
+        //点击
+        resp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                change(ansID);
+                AnsDialog.dismiss();
+            }
+        });
+
+    }
+
+    /*
+    * 修改采纳回答相关信息
+    * */
+    public void change(int ansID){
+        String jsonStrng = "{" +
+                "\"answer_id\":" + ansID +
+                ",\"is_adopted\":" + 1 + "}";
+        final String message = RequestHandler.sendPostRequest(
+                "http://120.24.208.130:1501/event/update_answer", jsonStrng);
+        if (message == "false") {
+            Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
+                    Toast.LENGTH_SHORT).show();
+        } else {
+            try {
+                JSONObject jO = new JSONObject(message);
+                if (jO.getInt("status") == 500) {
+                    Toast.makeText(getApplicationContext(), "因为迷之原因采纳失败。。。",
+                            Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getApplicationContext(), "采纳回答成功",
+                            Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(QuestionDetail.this, Home.class);
+                    startActivity(intent);
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public Bitmap returnBitMap(String url){
+        URL myFileUrl = null;
+        Bitmap bitmap = null;
+        try {
+            myFileUrl = new URL(url);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        try {
+            HttpURLConnection conn = (HttpURLConnection) myFileUrl
+                    .openConnection();
+            conn.setDoInput(true);
+            conn.connect();
+            InputStream is = conn.getInputStream();
+            bitmap = BitmapFactory.decodeStream(is);
+            is.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return bitmap;
     }
 
     @Override
