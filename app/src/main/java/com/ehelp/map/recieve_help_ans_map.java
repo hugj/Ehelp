@@ -268,6 +268,7 @@ public class recieve_help_ans_map extends AIActionBarActivity implements BaiduMa
                 }
             });
             user_id= -1;
+            return;
         }
         try{
             JSONObject jO = new JSONObject(message);
