@@ -121,6 +121,8 @@ public class recieve_help_ans_map extends AIActionBarActivity implements BaiduMa
     //Toolbar
     private Toolbar mToolbar;
 
+    LatLng end_node = null;
+
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -414,10 +416,9 @@ public class recieve_help_ans_map extends AIActionBarActivity implements BaiduMa
         // 处理搜索按钮响应
         init();
         setView();
-        LatLng pt2 = new LatLng(23.03777, 113.496627); //LatLng代表地图上经纬度提供的位置
-        PlanNode enNode = PlanNode.withLocation(pt2);
+        PlanNode enNode = PlanNode.withLocation(end_node);
         BitmapDescriptor bd = BitmapDescriptorFactory.fromResource(R.drawable.icon_gcoding);
-        OverlayOptions o2 = new MarkerOptions().icon(bd).position(pt2);
+        OverlayOptions o2 = new MarkerOptions().icon(bd).position(end_node);
         mBaidumap.addOverlay(o2);
 
 
@@ -629,30 +630,15 @@ public class recieve_help_ans_map extends AIActionBarActivity implements BaiduMa
 
         LatLngBounds.Builder builder = new LatLngBounds.Builder();
         // 暂时提供三个点标注在地图上作为例子
-        LatLng pt4 = new LatLng(23.063309, 113.394004);
-        LatLng pt2 = new LatLng(23.062578, 113.410821);
-        LatLng pt3 = new LatLng(23.045286, 113.405934);
+        end_node = new LatLng(m_event.getLatitude(), m_event.getLongitude());
 
         BitmapDescriptor bd = BitmapDescriptorFactory.fromResource(R.drawable.icon_gcoding);
-        OverlayOptions o1 = new MarkerOptions().icon(bd).position(pt4);
-        OverlayOptions o2 = new MarkerOptions().icon(bd).position(pt2);
-        OverlayOptions o3 = new MarkerOptions().icon(bd).position(pt3);
+        OverlayOptions o1 = new MarkerOptions().icon(bd).position(end_node);
 
         mBaidumap.addOverlay(o1);
-        mBaidumap.addOverlay(o2);
-        mBaidumap.addOverlay(o3);
 
-        builder.include(pt4);
-        builder.include(pt2);
-        builder.include(pt3);
+        builder.include(end_node);
 
-        LatLng pt5 = new LatLng(23.03777, 113.496627);
-        OverlayOptions o5 = new MarkerOptions().icon(bd).position(pt5);
-        mBaidumap.addOverlay(o5);
-
-        mMarker1 = (Marker) (mBaidumap.addOverlay(o1));
-        mMarker2 = (Marker) (mBaidumap.addOverlay(o2));
-        mMarker3 = (Marker) (mBaidumap.addOverlay(o3));
         StrictMode.setThreadPolicy(
                 new StrictMode.ThreadPolicy.Builder().
                         detectDiskReads().detectDiskWrites().detectNetwork().penaltyLog().build());

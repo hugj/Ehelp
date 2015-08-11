@@ -78,6 +78,7 @@ public class HomeMapActivity extends BaseFragment implements RapidFloatingAction
     public double lon;
     public double lat;
     boolean isVaild = false;
+    LatLng temp = null;
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -106,6 +107,8 @@ public class HomeMapActivity extends BaseFragment implements RapidFloatingAction
             }
         }
         setLocation();
+        MapStatusUpdate u = MapStatusUpdateFactory.newLatLngZoom(temp, 15); // 更新定位焦点与缩放级别;
+        mBaiduMap.animateMapStatus(u);
     }
 
     public void setUserID(int id) {
@@ -156,6 +159,7 @@ public class HomeMapActivity extends BaseFragment implements RapidFloatingAction
                 isFirstLoc = false;
                 LatLng ll = new LatLng(location.getLatitude(),
                         location.getLongitude());
+                temp = ll;
                 MapStatusUpdate u = MapStatusUpdateFactory.newLatLngZoom(ll, 15); // 更新定位焦点与缩放级别;
                 mBaiduMap.animateMapStatus(u);
             }
@@ -176,11 +180,12 @@ public class HomeMapActivity extends BaseFragment implements RapidFloatingAction
         helpList = que1.getEvent();
         sosList = que2.getEvent();
 
-        BitmapDescriptor bd = BitmapDescriptorFactory.fromResource(R.drawable.icon_gcoding);
-        LatLngBounds.Builder builder = new LatLngBounds.Builder();
+
 
         //遍历所有求助类型显示到地图上
         for (Event help : helpList) {
+            BitmapDescriptor bd = BitmapDescriptorFactory.fromResource(R.drawable.icon_gcoding);
+            LatLngBounds.Builder builder = new LatLngBounds.Builder();
             LatLng pt = new LatLng(help.getLatitude(), help.getLongitude());
 //          OverlayOptions o = new MarkerOptions().icon(bd).position(pt);
             MarkerOptions markerOptions = new MarkerOptions().icon(bd).position(pt);
@@ -194,6 +199,8 @@ public class HomeMapActivity extends BaseFragment implements RapidFloatingAction
 
         //遍历所有sos信息
         for (Event sos : sosList) {
+            BitmapDescriptor bd = BitmapDescriptorFactory.fromResource(R.drawable.icon_hehehe);
+            LatLngBounds.Builder builder = new LatLngBounds.Builder();
             LatLng pt = new LatLng(sos.getLatitude(), sos.getLongitude());
             MarkerOptions markerOptions = new MarkerOptions().icon(bd).position(pt);
             builder.include(pt);

@@ -54,6 +54,7 @@ public class SendHelp extends AIActionBarActivity implements RapidFloatingAction
     public String longitude;
     public String latitude;
     public String need_peo;
+    public  String loc_name;
 
     private SharedPreferences sharedPref;
 
@@ -72,6 +73,7 @@ public class SendHelp extends AIActionBarActivity implements RapidFloatingAction
         Bundle bunde = this.getIntent().getExtras();
         longitude = bunde.getString("longitude").toString();
         latitude = bunde.getString("latitude").toString();
+        loc_name = bunde.getString("loc_name").toString();
         Toast.makeText(SendHelp.this, latitude + longitude, Toast.LENGTH_SHORT).show();
     }
 
@@ -209,7 +211,8 @@ public class SendHelp extends AIActionBarActivity implements RapidFloatingAction
                         "\"longitude\":" +  Dlongitude + "," +
                         "\"latitude\":" + Dlatitude + "," +
                         "\"love_coin\":" + Ishare_money + "," +
-                        "\"demand_number\":" + Ineed_peo + "}";
+                        "\"demand_number\":" + Ineed_peo + "," +
+                        "\"location\":\"" + loc_name + "\"" + "}";
                 Toast.makeText(getApplicationContext(), user_id + "," + event + ","
                                 + desc_event + "," + Dlatitude + "," + Dlongitude,
                         Toast.LENGTH_SHORT).show();
