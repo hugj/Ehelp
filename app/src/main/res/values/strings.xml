@@ -121,4 +121,5 @@
     <string name="toolbar_title">个人主页</string>
     <string name="title_activity_fans_list">FansListActivity</string>
     <string name="title_activity_video">VideoActivity</string>
+    <string name="title_activity_transfer">TransferActivity</string>
 </resources>

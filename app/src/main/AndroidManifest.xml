@@ -350,7 +350,7 @@
         <activity
             android:name=".user.healthcard.OthershealthcardActivity"
             android:label="@string/title_activity_othershealthcard"
-            android:parentActivityName=".account.login">
+            android:parentActivityName=".account.login" >
         </activity>
         <activity
             android:name=".user.history.EndHelpActivity"
@@ -388,12 +388,16 @@
         <activity
             android:name=".user.usermes.FansListActivity"
             android:label="@string/title_activity_fans_list"
-            android:parentActivityName=".account.login">
+            android:parentActivityName=".account.login" >
         </activity>
         <activity
             android:name=".map.VideoActivity"
             android:label="@string/title_activity_video"
             android:parentActivityName=".account.login" >
+        </activity>
+        <activity
+            android:name=".user.lovebank.TransferActivity"
+            android:label="@string/title_activity_transfer" >
         </activity>
     </application>
 
