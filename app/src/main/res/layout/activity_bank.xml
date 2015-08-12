@@ -4,6 +4,7 @@
     android:orientation="vertical"
     android:background="#eee"
     tools:context="com.ehelp.user.lovebank.BankActivity">
+    <include layout="@layout/toolbar" />
     <LinearLayout android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -22,14 +23,12 @@
                 android:layout_marginLeft="30dp"
                 android:layout_marginTop="30dp"
                 android:textColor="#000"
-                android:id="@+id/bank_name"
-                android:text="黄" />
+                android:id="@+id/bank_name" />
             <TextView android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="30dp"
                 android:layout_marginTop="60dp"
-                android:id="@+id/bank_phone"
-                android:text="111111111"/>
+                android:id="@+id/bank_phone" />
         </RelativeLayout>
         <RelativeLayout android:layout_height="wrap_content"
             android:layout_width="wrap_content">
@@ -64,8 +63,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/bank_integral1"
             android:layout_marginTop="20dp"
-            android:layout_marginLeft="150dp"
-            android:text="423"/>
+            android:layout_marginLeft="150dp" />
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -92,8 +90,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/bank_coin1"
             android:layout_marginTop="20dp"
-            android:layout_marginLeft="150dp"
-            android:text="423"/>
+            android:layout_marginLeft="150dp" />
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -103,4 +100,30 @@
             android:clickable="true"
             android:src="@drawable/mm_submenu" />
     </RelativeLayout>
+    <com.wangjie.rapidfloatingactionbutton.RapidFloatingActionLayout
+        xmlns:rfal="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/label_list_sample_rfal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        rfal:rfal_frame_color="#ffffff"
+        rfal:rfal_frame_alpha="0.7">
+
+        <com.wangjie.rapidfloatingactionbutton.RapidFloatingActionButton
+            xmlns:rfab="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/label_list_sample_rfab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginRight="15dp"
+            android:layout_marginBottom="15dp"
+            rfab:rfab_size="normal"
+            rfab:rfab_drawable="@drawable/rfab__drawable_rfab_default"
+            rfab:rfab_color_normal="#37474f"
+            rfab:rfab_color_pressed="#263238"
+            rfab:rfab_shadow_radius="7dp"
+            rfab:rfab_shadow_color="#999999"
+            rfab:rfab_shadow_dx="0dp"
+            rfab:rfab_shadow_dy="5dp"/>
+    </com.wangjie.rapidfloatingactionbutton.RapidFloatingActionLayout>
 </LinearLayout>
