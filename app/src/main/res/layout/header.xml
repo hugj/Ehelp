@@ -52,6 +52,8 @@
                 android:layout_marginTop="10sp"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:id="@+id/fans"
+                android:clickable="true"
+                android:onClick="click_on_fanslist"
                 android:layout_gravity="center_horizontal" />
         </LinearLayout>
 
