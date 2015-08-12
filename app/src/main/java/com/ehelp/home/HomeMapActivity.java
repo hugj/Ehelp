@@ -176,14 +176,14 @@ public class HomeMapActivity extends BaseFragment implements RapidFloatingAction
         helpList = que1.getEvent();
         sosList = que2.getEvent();
 
-        BitmapDescriptor bd = BitmapDescriptorFactory.fromResource(R.drawable.icon_gcoding);
-        LatLngBounds.Builder builder = new LatLngBounds.Builder();
-
         //遍历所有求助类型显示到地图上
         for (Event help : helpList) {
+            BitmapDescriptor bd = BitmapDescriptorFactory.fromResource(R.drawable.icon_gcoding);
+            LatLngBounds.Builder builder = new LatLngBounds.Builder();
             LatLng pt = new LatLng(help.getLatitude(), help.getLongitude());
 //          OverlayOptions o = new MarkerOptions().icon(bd).position(pt);
             MarkerOptions markerOptions = new MarkerOptions().icon(bd).position(pt);
+            builder.include(pt);
             Marker mMarker1 = (Marker) (mBaiduMap.addOverlay(markerOptions));
             Bundle bundle = new Bundle();
             int type = 1;
@@ -194,6 +194,8 @@ public class HomeMapActivity extends BaseFragment implements RapidFloatingAction
 
         //遍历所有sos信息
         for (Event sos : sosList) {
+            BitmapDescriptor bd = BitmapDescriptorFactory.fromResource(R.drawable.icon_hehehe);
+            LatLngBounds.Builder builder = new LatLngBounds.Builder();
             LatLng pt = new LatLng(sos.getLatitude(), sos.getLongitude());
             MarkerOptions markerOptions = new MarkerOptions().icon(bd).position(pt);
             builder.include(pt);
@@ -219,7 +221,7 @@ public class HomeMapActivity extends BaseFragment implements RapidFloatingAction
                 } else {
                     Event event = (Event) marker.getExtraInfo().get("event");
                     Intent intent = new Intent(getActivity(), recieve_help_ans_map.class);
-                    intent.putExtra(EXTRA_MESSAGE, event);
+                    intent.putExtra(EXTRA_MESSAGE, event.getEventId());
                     startActivity(intent);
                 }
                 return false;

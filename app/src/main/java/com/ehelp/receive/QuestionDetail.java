@@ -30,6 +30,7 @@ import com.ehelp.send.CountNum;
 import com.ehelp.send.SendQuestion;
 import com.ehelp.utils.ActivityCollector;
 import com.ehelp.utils.RequestHandler;
+import com.google.gson.Gson;
 import com.wangjie.androidbucket.utils.ABTextUtil;
 import com.wangjie.androidbucket.utils.imageprocess.ABShape;
 import com.wangjie.androidinject.annotation.annotations.base.AILayout;
@@ -63,6 +64,7 @@ public class QuestionDetail extends AIActionBarActivity implements RapidFloating
 
     // submit()
     private Event m_event;
+    private int event_id;
     private EditText Equestion;
     private EditText Edesc_ques;
     private EditText Eshare_money;
@@ -78,7 +80,7 @@ public class QuestionDetail extends AIActionBarActivity implements RapidFloating
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();
-        m_event = (Event)intent.getSerializableExtra("qusetiondatail");
+        event_id = intent.getIntExtra("qusetiondatail",-1);
         init();
         setView();
         ActivityCollector.getInstance().addActivity(this);
@@ -99,6 +101,8 @@ public class QuestionDetail extends AIActionBarActivity implements RapidFloating
         setSupportActionBar(mToolbar);
         TextView tvv =(TextView) findViewById(R.id.titlefortoolbar);
         tvv.setText("问题详情");
+
+        getEvent();
 
         SharedPreferences sharedPref = this.getSharedPreferences("user_id", Context.MODE_PRIVATE);
         phone_user_id = sharedPref.getInt("user_id", -1);
@@ -183,6 +187,42 @@ public class QuestionDetail extends AIActionBarActivity implements RapidFloating
         rfabHelper.toggleContent();
     }
 
+
+    public void getEvent(){
+        String jsonStrng = "{" +
+                "\"event_id\":" + event_id + "}";
+        String message = RequestHandler.sendPostRequest(
+                "http://120.24.208.130:1501/event/get_information", jsonStrng);
+        if (message == "false") {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
+                            Toast.LENGTH_SHORT).show();
+                }
+            });
+            return;
+        }
+        try{
+            JSONObject jO = new JSONObject(message);
+            if (jO.getInt("status") == 500) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(getApplicationContext(), "无此事件",
+                                Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }else {
+                Gson gson = new Gson();
+                m_event = gson.fromJson(message, Event.class);
+
+            }
+        }catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
     public String getNickname() {
         final int user_id = m_event.getLauncherId();
         String nickname = "";
@@ -213,12 +253,20 @@ public class QuestionDetail extends AIActionBarActivity implements RapidFloating
         tmp = (TextView)findViewById(R.id.Content);
         tmp.setText(m_event.getContent());
 
-        String imageUrl = "http://120.24.208.130:1501/avatar/touxiang.jpg";
-        //Uri u = Uri.parse(imageUrl);
+        String imageUrl = "http://120.24.208.130:1501/avatar/"
+                + m_event.getLauncherId() + ".jpg";
         ImageView imView;
         imView = (ImageView) findViewById(R.id.single_icon1);
-        //imView.setImageURI(u);
-        imView.setImageBitmap(returnBitMap(imageUrl));
+//        Uri u = Uri.parse(imageUrl);
+//        imView.setImageURI(u);
+        Bitmap bmp = returnBitMap(imageUrl);
+        if (bmp == null) {
+            imageUrl = "http://120.24.208.130:1501/avatar/touxiang.jpg";
+            bmp = returnBitMap(imageUrl);
+        }
+
+        imView.setImageBitmap(bmp);
+        imView.setScaleType(ImageView.ScaleType.FIT_XY);
 
         //回答列表
         ListView ansList = (ListView)findViewById(R.id.answerList);

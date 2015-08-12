@@ -12,7 +12,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -54,12 +53,16 @@ import com.baidu.mapapi.search.route.TransitRouteResult;
 import com.baidu.mapapi.search.route.WalkingRoutePlanOption;
 import com.baidu.mapapi.search.route.WalkingRouteResult;
 import com.ehelp.R;
+import com.ehelp.entity.Event;
 import com.ehelp.entity.comment;
 import com.ehelp.evaluate.Evaluation;
 import com.ehelp.home.Home;
 import com.ehelp.send.CountNum;
 import com.ehelp.send.SendQuestion;
+import com.ehelp.sound.RecordingActivity;
 import com.ehelp.utils.RequestHandler;
+import com.ehelp.video.RecordActivity;
+import com.google.gson.Gson;
 import com.wangjie.androidbucket.utils.ABTextUtil;
 import com.wangjie.androidbucket.utils.imageprocess.ABShape;
 import com.wangjie.androidinject.annotation.annotations.base.AILayout;
@@ -125,6 +128,10 @@ public class recieve_help_ans_map extends AIActionBarActivity implements BaiduMa
     private int user_id;//发起者ID
     private SharedPreferences sp;
 
+    LatLng end_node = null;
+    private Event m_event;
+
+    private Gson gson = new Gson();
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -140,8 +147,6 @@ public class recieve_help_ans_map extends AIActionBarActivity implements BaiduMa
         int count = mMapView.getChildCount();
 
         Intent intent = getIntent();
-        //m_event = (Event)intent.getSerializableExtra(SuperAwesomeCardFragment.EXTRA_MESSAGE);
-        //event_id = (Event)intent.getSerializableExtra(SuperAwesomeCardFragment.EXTRA_MESSAGE);
         event_id = getIntent().getIntExtra("event_id",-1);
         //event_id =311;
 
@@ -193,63 +198,6 @@ public class recieve_help_ans_map extends AIActionBarActivity implements BaiduMa
         mLocClient.setLocOption(option);
         mLocClient.start();
         //-----------------------
-
-        mBaidumap.setOnMarkerClickListener(new BaiduMap.OnMarkerClickListener() {
-            public boolean onMarkerClick(final Marker marker) {
-                Button button = new Button(getApplicationContext());
-                button.setBackgroundResource(R.drawable.popup);
-                InfoWindow.OnInfoWindowClickListener listener = null;
-                if (marker == mMarker1) {
-                    button.setText("这里是跳转");
-                    button.setTextColor(Color.BLACK);
-                    /*这里是跳转button
-                    listener = new InfoWindow.OnInfoWindowClickListener() {
-                        public void onInfoWindowClick() {
-                            LatLng ll = marker.getPosition();
-                            LatLng llNew = new LatLng(ll.latitude + 0.005,
-                                    ll.longitude + 0.005);
-                            marker.setPosition(llNew);
-                            mBaidumap.hideInfoWindow();
-                        }
-                    };
-                    */
-                    LatLng ll = marker.getPosition();
-                    mInfoWindow = new InfoWindow(BitmapDescriptorFactory.fromView(button), ll, -47, listener);
-                    mBaidumap.showInfoWindow(mInfoWindow);
-                } else if (marker == mMarker2) {
-                    button.setText("这里是跳转");
-                    button.setTextColor(Color.BLACK);
-                    /*这里是跳转button
-                    button.setOnClickListener(new View.OnClickListener() {
-                        public void onClick(View v) {
-                            marker.setIcon(bd);
-                            mBaiduMap.hideInfoWindow();
-                        }
-
-                    });
-                    */
-                    LatLng ll = marker.getPosition();
-                    mInfoWindow = new InfoWindow(button, ll, -47);
-                    mBaidumap.showInfoWindow(mInfoWindow);
-                } else if (marker == mMarker3) {
-                    button.setText("这里是跳转");
-                    button.setTextColor(Color.BLACK);
-                    /*这里是跳转button
-                    button.setOnClickListener(new View.OnClickListener() {
-                        public void onClick(View v) {
-                            marker.remove();
-                            mBaidumap.hideInfoWindow();
-                        }
-                    });
-                    */
-                    LatLng ll = marker.getPosition();
-                    mInfoWindow = new InfoWindow(button, ll, -47);
-                    mBaidumap.showInfoWindow(mInfoWindow);
-                }
-                return true;
-            }
-        });
-
     }
 
     public void getlauncherId(){
@@ -495,10 +443,9 @@ public class recieve_help_ans_map extends AIActionBarActivity implements BaiduMa
         // 处理搜索按钮响应
         init();
         setView();
-        LatLng pt2 = new LatLng(23.03777, 113.496627); //LatLng代表地图上经纬度提供的位置
-        PlanNode enNode = PlanNode.withLocation(pt2);
+        PlanNode enNode = PlanNode.withLocation(end_node);
         BitmapDescriptor bd = BitmapDescriptorFactory.fromResource(R.drawable.icon_gcoding);
-        OverlayOptions o2 = new MarkerOptions().icon(bd).position(pt2);
+        OverlayOptions o2 = new MarkerOptions().icon(bd).position(end_node);
         mBaidumap.addOverlay(o2);
 
 
@@ -843,33 +790,18 @@ public class recieve_help_ans_map extends AIActionBarActivity implements BaiduMa
     }
 
     public void init() {
-
+        init2();
         LatLngBounds.Builder builder = new LatLngBounds.Builder();
         // 暂时提供三个点标注在地图上作为例子
-        LatLng pt4 = new LatLng(23.063309, 113.394004);
-        LatLng pt2 = new LatLng(23.062578, 113.410821);
-        LatLng pt3 = new LatLng(23.045286, 113.405934);
+        end_node = new LatLng(m_event.getLatitude(), m_event.getLongitude());
 
         BitmapDescriptor bd = BitmapDescriptorFactory.fromResource(R.drawable.icon_gcoding);
-        OverlayOptions o1 = new MarkerOptions().icon(bd).position(pt4);
-        OverlayOptions o2 = new MarkerOptions().icon(bd).position(pt2);
-        OverlayOptions o3 = new MarkerOptions().icon(bd).position(pt3);
+        OverlayOptions o1 = new MarkerOptions().icon(bd).position(end_node);
 
         mBaidumap.addOverlay(o1);
-        mBaidumap.addOverlay(o2);
-        mBaidumap.addOverlay(o3);
 
-        builder.include(pt4);
-        builder.include(pt2);
-        builder.include(pt3);
+        builder.include(end_node);
 
-        LatLng pt5 = new LatLng(23.03777, 113.496627);
-        OverlayOptions o5 = new MarkerOptions().icon(bd).position(pt5);
-        mBaidumap.addOverlay(o5);
-
-        mMarker1 = (Marker) (mBaidumap.addOverlay(o1));
-        mMarker2 = (Marker) (mBaidumap.addOverlay(o2));
-        mMarker3 = (Marker) (mBaidumap.addOverlay(o3));
         StrictMode.setThreadPolicy(
                 new StrictMode.ThreadPolicy.Builder().
                         detectDiskReads().detectDiskWrites().detectNetwork().penaltyLog().build());
@@ -980,5 +912,49 @@ for fab
                 // getMenuInflater().inflate(R.menu.menu_send_help, menu);
             }
         }
+    }
+
+    public void init2() {
+        String jsonString = "{" +
+                "\"event_id\":" + event_id + "}";
+        String message = RequestHandler.sendPostRequest("http://120.24.208.130:1501/event/get_information", jsonString);
+        if (message.equals("false")) {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(getApplicationContext(), "无法获取数据，请检查网络连接",
+                            Toast.LENGTH_SHORT).show();
+                }
+            });
+        } else {
+            try {
+                JSONObject jO = new JSONObject(message);
+                if (jO.getInt("status") == 500) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(getApplicationContext(), "获取周围用户信息失败",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    return;
+                }
+                m_event = gson.fromJson(message, Event.class);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void sound(View v) {
+        Intent intent = new Intent(this, RecordingActivity.class);
+        intent.putExtra("EVENT_ID", m_event.getEventId());
+        startActivity(intent);
+    }
+
+    public void video(View v) {
+        Intent intent = new Intent(this, RecordActivity.class);
+        intent.putExtra("EVENT_ID", m_event.getEventId());
+        startActivity(intent);
     }
 }

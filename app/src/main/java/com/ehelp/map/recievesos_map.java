@@ -51,9 +51,10 @@ import com.baidu.mapapi.search.route.TransitRouteResult;
 import com.baidu.mapapi.search.route.WalkingRoutePlanOption;
 import com.baidu.mapapi.search.route.WalkingRouteResult;
 import com.ehelp.R;
-import com.ehelp.user.healthcard.Health;
+import com.ehelp.entity.Event;
 import com.ehelp.user.healthcard.OthershealthcardActivity;
 import com.ehelp.utils.RequestHandler;
+import com.google.gson.Gson;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -107,6 +108,11 @@ public class recievesos_map extends ActionBarActivity implements BaiduMap.OnMapC
     private SharedPreferences sp;
 
     private Menu menu_recievesos_map;
+
+    private Gson gson = new Gson();
+    public LatLng end_node = null;
+
+    private Event event;
 
     protected void onCreate(Bundle savedInstanceState) {
         init2();
@@ -482,10 +488,9 @@ public class recievesos_map extends ActionBarActivity implements BaiduMap.OnMapC
         mBaidumap.clear();
         // 处理搜索按钮响应
         init();
-        LatLng pt2 = new LatLng(23.03777, 113.496627); //LatLng代表地图上经纬度提供的位置
-        PlanNode enNode = PlanNode.withLocation(pt2);
+        PlanNode enNode = PlanNode.withLocation(end_node);
         BitmapDescriptor bd = BitmapDescriptorFactory.fromResource(R.drawable.icon_gcoding);
-        OverlayOptions o2 = new MarkerOptions().icon(bd).position(pt2);
+        OverlayOptions o2 = new MarkerOptions().icon(bd).position(end_node);
         mBaidumap.addOverlay(o2);
 
 
@@ -653,33 +658,53 @@ public class recievesos_map extends ActionBarActivity implements BaiduMap.OnMapC
     }
 
     public void init() {
+        String jsonString = "{" +
+                "\"event_id\":" + event_id + "}";
+        String message = RequestHandler.sendPostRequest("http://120.24.208.130:1501/event/get_information", jsonString);
+        if (message.equals("false")) {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(getApplicationContext(), "无法获取数据，请检查网络连接",
+                            Toast.LENGTH_SHORT).show();
+                }
+            });
+        } else {
+            try {
+                JSONObject jO = new JSONObject(message);
+                if (jO.getInt("status") == 500) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(getApplicationContext(), "获取周围用户信息失败",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    return;
+                }
+                event = gson.fromJson(message, Event.class);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        // 根据所得到的信息调用函数绘制标记
+        end_node = new LatLng(event.getLatitude(), event.getLongitude());
         LatLngBounds.Builder builder = new LatLngBounds.Builder();
-        // 暂时提供三个点标注在地图上作为例子
-        LatLng pt4 = new LatLng(23.063309, 113.394004);
-        LatLng pt2 = new LatLng(23.062578, 113.410821);
-        LatLng pt3 = new LatLng(23.045286, 113.405934);
-
         BitmapDescriptor bd = BitmapDescriptorFactory.fromResource(R.drawable.icon_gcoding);
-        OverlayOptions o1 = new MarkerOptions().icon(bd).position(pt4);
-        OverlayOptions o2 = new MarkerOptions().icon(bd).position(pt2);
-        OverlayOptions o3 = new MarkerOptions().icon(bd).position(pt3);
+        OverlayOptions o1 = new MarkerOptions().icon(bd).position(end_node);
 
         mBaidumap.addOverlay(o1);
-        mBaidumap.addOverlay(o2);
-        mBaidumap.addOverlay(o3);
 
-        builder.include(pt4);
-        builder.include(pt2);
-        builder.include(pt3);
+        builder.include(end_node);
 
-        LatLng pt5 = new LatLng(23.03777, 113.496627);
-        OverlayOptions o5 = new MarkerOptions().icon(bd).position(pt5);
-        mBaidumap.addOverlay(o5);
-
-        mMarker1 = (Marker) (mBaidumap.addOverlay(o1));
-        mMarker2 = (Marker) (mBaidumap.addOverlay(o2));
-        mMarker3 = (Marker) (mBaidumap.addOverlay(o3));
+        StrictMode.setThreadPolicy(
+                new StrictMode.ThreadPolicy.Builder().
+                        detectDiskReads().detectDiskWrites().detectNetwork().penaltyLog().build());
+        StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder().
+                detectLeakedSqlLiteObjects().detectLeakedClosableObjects().
+                penaltyLog().penaltyDeath().build());
     }
+
     public void init2() {
         StrictMode.setThreadPolicy(
                 new StrictMode.ThreadPolicy.Builder().

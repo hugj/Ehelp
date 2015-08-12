@@ -149,10 +149,14 @@ public class BankActivity extends AIActionBarActivity implements RapidFloatingAc
 
     public void my_integral(View view){
         Intent intent = new Intent(this, IntegralActivity.class);
+        String str1 = integral.getText().toString();
+        intent.putExtra("integral", str1);
         startActivity(intent);
     }
     public void my_coin(View view){
         Intent intent = new Intent(this, CoinActivity.class);
+        String  i = coin.getText().toString();
+        intent.putExtra("coin", i);
         startActivity(intent);
     }
     private  void init() {
