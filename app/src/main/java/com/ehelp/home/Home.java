@@ -29,6 +29,7 @@ import com.ehelp.send.SendQuestion;
 import com.ehelp.user.contactlist.ContactlistActivity;
 import com.ehelp.user.healthcard.Health;
 import com.ehelp.user.history.MyHistory;
+import com.ehelp.user.lovebank.BankActivity;
 import com.ehelp.user.setting.SettingActivity;
 import com.ehelp.user.usermes.homepageActivity;
 import com.ehelp.utils.ActivityCollector;
@@ -76,7 +77,8 @@ public class Home extends AIActionBarActivity implements
     private SharedPreferences sharedPref;
     private List<BaseFragment> fragments = new ArrayList<>();
 
-    private String token;
+    private String token = "false";
+    private int flag = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -155,6 +157,7 @@ public class Home extends AIActionBarActivity implements
                 rfaContent
         ).build();
     }
+
     @Override
     public void onRFACItemLabelClick(int position, RFACLabelItem item) {
 //        showToastMessage("clicked label: " + position);
@@ -206,7 +209,7 @@ public class Home extends AIActionBarActivity implements
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()) {
-                    case R.id.action_settings:
+                    case R.id.message:
 //                        Toast.makeText(getApplicationContext(), "action_settings",
 //                                Toast.LENGTH_SHORT).show();
 //                        /**
@@ -218,10 +221,11 @@ public class Home extends AIActionBarActivity implements
 //                        if (RongIM.getInstance() != null) {
 //                            RongIM.getInstance().startPrivateChat(Home.this, "7", "hello");
 //                        }
-//                          RongIM.getInstance().startPrivateChat(Home.this, "7", "聊天");
-
-                        RongIM.setConversationListBehaviorListener(new MyConversationListBehaviorListener());
-                        RongIM.getInstance().startConversationList(Home.this);
+//                          RongIM.getInstance().startPrivateChat(Home.this, "64", "聊天");
+                        if (flag == 0) {
+                            RongIM.setConversationListBehaviorListener(new MyConversationListBehaviorListener());
+                            RongIM.getInstance().startConversationList(Home.this);
+                        }
                         break;
                     default:
                         break;
@@ -279,6 +283,10 @@ public class Home extends AIActionBarActivity implements
     public void history(View view) {
         // Do something in response to button
         Intent intent = new Intent(this, MyHistory.class);
+        startActivity(intent);
+    }
+    public void bank(View view) {
+        Intent intent = new Intent(this, BankActivity.class);
         startActivity(intent);
     }
     public void Setting_page_click(View view) {
@@ -423,6 +431,7 @@ public class Home extends AIActionBarActivity implements
         public void run() {
             getIMToken();
             if (token.equals("false")) {
+                flag = 1;
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -448,26 +457,46 @@ public class Home extends AIActionBarActivity implements
 
             String msg = RequestHandler.sendPostRequest(url, jsonString);
             if (msg.equals("false")) {
-                Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
                                 Toast.LENGTH_SHORT).show();
+                    }
+                });
             } else {
                 try {
                     JSONObject JO = new JSONObject(msg);
                     if (JO.getInt("status") == 500) {
-                        Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
-                                Toast.LENGTH_SHORT).show();
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
+                                        Toast.LENGTH_SHORT).show();
+                            }
+                        });
                     } else {
                         token = JO.getString("chat_token");
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
-                    Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
-                            Toast.LENGTH_SHORT).show();
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    });
                 }
             }
         } else {
-            Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
-                    Toast.LENGTH_SHORT).show();
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
+                            Toast.LENGTH_SHORT).show();
+                }
+            });
         }
     }
 

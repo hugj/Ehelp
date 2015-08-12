@@ -9,4 +9,5 @@
     <color name="main_color">#ffff8c00</color>
     <color name="secondary_color">#BDBDBD</color>
     <color name="button_text">#ffececec</color>
+    <color name="divider">#666666</color>
 </resources>

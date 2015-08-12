@@ -90,6 +90,7 @@ public class Test extends AIActionBarActivity implements RapidFloatingActionCont
                 rfaContent
         ).build();
     }
+
     @Override
     public void onRFACItemLabelClick(int position, RFACLabelItem item) {
         if (position == 0) {

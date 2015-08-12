@@ -14,9 +14,9 @@ import java.net.URL;
 import java.util.UUID;
 
 /*@author HanksChan
-* @version 1.2
+* @version 1.3
 * With this class, Client can send the request
-* to the Server and get the response from the Server 
+* to the Server and get the response from the Server
 */
 
 public class RequestHandler {
@@ -97,7 +97,6 @@ public class RequestHandler {
 
 		} catch (Exception e) {
 
-			e.printStackTrace();
 			return e.toString();
 
 		}
@@ -105,7 +104,7 @@ public class RequestHandler {
 		return "false";
 
 	}
-	
+
 	/* send a file(.jpg) to server by POST method
 	 * @params a url path
 	 * 		   a image file
@@ -190,5 +189,38 @@ public class RequestHandler {
 
 		return "false";
 
+	}
+
+	/*
+	* Test the validation of url
+	* @param urlString, the path of url
+	* @return True if connected successfully
+	*         False if fails
+	*/
+	public static boolean TestGetURL(String urlString){
+
+		try {
+
+			URL url = new URL(urlString);
+			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+			conn.setConnectTimeout(500);
+			conn.setRequestMethod("GET");
+			conn.setDoInput(true); // permit to use the inputstream
+			conn.setDoOutput(true); // permit to use the outputstrem
+			conn.setUseCaches(false); // deny to use the cache
+
+			if(conn.getResponseCode() == HttpURLConnection.HTTP_OK){
+
+				return true;
+
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+
+		return false;
 	}
 }

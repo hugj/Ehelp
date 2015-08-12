@@ -57,10 +57,10 @@ import com.baidu.mapapi.search.route.TransitRouteResult;
 import com.baidu.mapapi.search.route.WalkingRoutePlanOption;
 import com.baidu.mapapi.search.route.WalkingRouteResult;
 import com.ehelp.R;
+import com.ehelp.entity.Event;
 import com.ehelp.entity.comment;
 import com.ehelp.evaluate.Evaluation;
 import com.ehelp.home.Home;
-import com.ehelp.home.SuperAwesomeCardFragment;
 import com.ehelp.send.CountNum;
 import com.ehelp.send.SendQuestion;
 import com.ehelp.utils.RequestHandler;
@@ -131,6 +131,8 @@ public class recieve_help_ans_map extends AIActionBarActivity implements BaiduMa
 
     Message msg_ =new Message();
     private int count = 0;
+    LatLng end_node = null;
+    private Event m_event;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -146,8 +148,6 @@ public class recieve_help_ans_map extends AIActionBarActivity implements BaiduMa
         int count = mMapView.getChildCount();
 
         Intent intent = getIntent();
-        //m_event = (Event)intent.getSerializableExtra(SuperAwesomeCardFragment.EXTRA_MESSAGE);
-        //event_id = (Event)intent.getSerializableExtra(SuperAwesomeCardFragment.EXTRA_MESSAGE);
         event_id = getIntent().getIntExtra("event_id",-1);
         //event_id =311;
 
@@ -159,6 +159,7 @@ public class recieve_help_ans_map extends AIActionBarActivity implements BaiduMa
         new Thread(runnable_).start();
 
         init();
+
         //set toolbar
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         mToolbar.setTitle("");
@@ -499,10 +500,9 @@ public class recieve_help_ans_map extends AIActionBarActivity implements BaiduMa
         // 处理搜索按钮响应
         init();
         setView();
-        LatLng pt2 = new LatLng(23.03777, 113.496627); //LatLng代表地图上经纬度提供的位置
-        PlanNode enNode = PlanNode.withLocation(pt2);
+        PlanNode enNode = PlanNode.withLocation(end_node);
         BitmapDescriptor bd = BitmapDescriptorFactory.fromResource(R.drawable.icon_gcoding);
-        OverlayOptions o2 = new MarkerOptions().icon(bd).position(pt2);
+        OverlayOptions o2 = new MarkerOptions().icon(bd).position(end_node);
         mBaidumap.addOverlay(o2);
 
 
@@ -630,6 +630,14 @@ public class recieve_help_ans_map extends AIActionBarActivity implements BaiduMa
         if(id ==R.id.action_comment){
 
         }
+
+        if (id == R.id.action_video) {
+            Intent mIntent = new Intent();
+            mIntent.putExtra("event_id", event_id);
+            mIntent.setClass(recieve_help_ans_map.this, VideoActivity.class);
+            startActivity(mIntent);
+        }
+
         if(id == R.id.action_cancelhelp){
             String jsonStrng = "{" +
                     "\"id\":" + user_id + ",\"event_id\":" +event_id+ "}";
@@ -792,20 +800,20 @@ public class recieve_help_ans_map extends AIActionBarActivity implements BaiduMa
 
 //    @Override
 //    protected void onPause() {
-////        mMapView.onPause();
+//        mMapView.onPause();
 //        super.onPause();
 //    }
 //
 //    @Override
 //    protected void onResume() {
-////        mMapView.onResume();
+//        mMapView.onResume();
 //        super.onResume();
 //    }
 //
 //    @Override
 //    protected void onDestroy() {
-////        mSearch.destroy();
-////        mMapView.onDestroy();
+//        mSearch.destroy();
+//        mMapView.onDestroy();
 //        super.onDestroy();
 //    }
 
@@ -842,30 +850,15 @@ public class recieve_help_ans_map extends AIActionBarActivity implements BaiduMa
 
         LatLngBounds.Builder builder = new LatLngBounds.Builder();
         // 暂时提供三个点标注在地图上作为例子
-        LatLng pt4 = new LatLng(23.063309, 113.394004);
-        LatLng pt2 = new LatLng(23.062578, 113.410821);
-        LatLng pt3 = new LatLng(23.045286, 113.405934);
+        end_node = new LatLng(m_event.getLatitude(), m_event.getLongitude());
 
         BitmapDescriptor bd = BitmapDescriptorFactory.fromResource(R.drawable.icon_gcoding);
-        OverlayOptions o1 = new MarkerOptions().icon(bd).position(pt4);
-        OverlayOptions o2 = new MarkerOptions().icon(bd).position(pt2);
-        OverlayOptions o3 = new MarkerOptions().icon(bd).position(pt3);
+        OverlayOptions o1 = new MarkerOptions().icon(bd).position(end_node);
 
         mBaidumap.addOverlay(o1);
-        mBaidumap.addOverlay(o2);
-        mBaidumap.addOverlay(o3);
 
-        builder.include(pt4);
-        builder.include(pt2);
-        builder.include(pt3);
+        builder.include(end_node);
 
-        LatLng pt5 = new LatLng(23.03777, 113.496627);
-        OverlayOptions o5 = new MarkerOptions().icon(bd).position(pt5);
-        mBaidumap.addOverlay(o5);
-
-        mMarker1 = (Marker) (mBaidumap.addOverlay(o1));
-        mMarker2 = (Marker) (mBaidumap.addOverlay(o2));
-        mMarker3 = (Marker) (mBaidumap.addOverlay(o3));
         StrictMode.setThreadPolicy(
                 new StrictMode.ThreadPolicy.Builder().
                         detectDiskReads().detectDiskWrites().detectNetwork().penaltyLog().build());

@@ -40,6 +40,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.rong.imkit.RongIM;
+import io.rong.imlib.RongIMClient;
 
 @AILayout(R.layout.activity_message)
 public class messageActivity extends AIActionBarActivity implements RapidFloatingActionContentLabelList.OnRapidFloatingActionContentLabelListListener {
@@ -65,7 +66,10 @@ public class messageActivity extends AIActionBarActivity implements RapidFloatin
     private String jsonStrng;
     private SharedPreferences SharedPref;
     private Menu menu_message;
-
+    //token相关
+    private String token = "false";
+    private int flag = 0;
+    private SharedPreferences sharedPref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,8 +90,11 @@ public class messageActivity extends AIActionBarActivity implements RapidFloatin
         SharedPref = this.getSharedPreferences("user_id", MODE_PRIVATE);
         id = SharedPref.getInt("user_id", -1);
         getType();
-        //根据用户类型初始化页面
 
+        //获取token
+        thread_token.start();
+
+        //根据用户类型初始化页面
 
         //根据用户ID从后台获取数据显示信息详情
         show123();
@@ -455,8 +462,10 @@ public class messageActivity extends AIActionBarActivity implements RapidFloatin
 
         //noinspection SimplifiableIfStatement
         if ((id == R.id.action_conversation)){
-            String IMid = String.valueOf(idd);
-            RongIM.getInstance().startPrivateChat(messageActivity.this, IMid, "聊天");
+            if (flag == 0) {
+                String IMid = String.valueOf(idd);
+                RongIM.getInstance().startPrivateChat(messageActivity.this, IMid, "聊天");
+            }
             return true;
         }
         if(id == R.id.action_friends){
@@ -508,4 +517,101 @@ public class messageActivity extends AIActionBarActivity implements RapidFloatin
             e.printStackTrace();
         }
     }
+
+    Thread thread_token =new Thread(new Runnable() {
+        @Override
+        public void run() {
+            getIMToken();
+            if (token.equals("false")) {
+                flag = 1;
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
+                                Toast.LENGTH_SHORT).show();
+                    }
+                });
+            } else {
+                //token = "SxzzzlNjm0qdIQtgUFqmqeRgfvzP32M+B6kCt5/NOhjlnkUgM2TiFEqH7NP3Yzy5+spQShmSUhpRjxNkdSyWSA==";
+                IMconnect(token);
+            }
+        }
+    });
+
+    private void getIMToken() {
+        String url = "http://120.24.208.130:1501/account/get_token";
+
+        sharedPref = getSharedPreferences("user_id", MODE_PRIVATE);
+        int user_id = sharedPref.getInt("user_id", -1);
+
+        if (user_id != -1) {
+            String jsonString = "{" + "\"id\":" + user_id + "}";
+
+            String msg = RequestHandler.sendPostRequest(url, jsonString);
+            if (msg.equals("false")) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
+                                Toast.LENGTH_SHORT).show();
+                    }
+                });
+            } else {
+                try {
+                    JSONObject JO = new JSONObject(msg);
+                    if (JO.getInt("status") == 500) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
+                                        Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    } else {
+                        token = JO.getString("chat_token");
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+            }
+        } else {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
+                            Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+    }
+
+    private void IMconnect(String token) {
+         /* IMKit SDK调用第二步 建立与服务器的连接 */
+
+    /* 集成和测试阶段，您可以直接使用从您开发者后台获取到的 token，比如 String token = “d6bCQsXiupB......”; */
+        RongIM.connect(token, new RongIMClient.ConnectCallback() {
+            @Override
+            public void onSuccess(String userId) {
+        /* 连接成功 */
+            }
+
+            @Override
+            public void onError(RongIMClient.ErrorCode e) {
+        /* 连接失败，注意并不需要您做重连 */
+            }
+
+            @Override
+            public void onTokenIncorrect() {
+        /* Token 错误，在线上环境下主要是因为 Token 已经过期，您需要向 App Server 重新请求一个新的 Token */
+            }
+        });
+    }
+
 }
