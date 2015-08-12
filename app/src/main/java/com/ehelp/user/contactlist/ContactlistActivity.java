@@ -289,6 +289,7 @@ public class ContactlistActivity extends AIActionBarActivity implements RapidFlo
 		if (id == R.id.action_settings) {
 			//添加好友。跳转至添加好友页面
 			Intent intent = new Intent(this, AddFriendActivity.class);
+			intent.putExtra("QueryPerson", 0);
 			startActivity(intent);
 			return true;
 		}

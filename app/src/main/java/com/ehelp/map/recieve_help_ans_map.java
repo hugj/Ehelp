@@ -61,6 +61,7 @@ import com.ehelp.home.Home;
 import com.ehelp.send.CountNum;
 import com.ehelp.send.SendQuestion;
 import com.ehelp.utils.RequestHandler;
+import com.google.gson.Gson;
 import com.wangjie.androidbucket.utils.ABTextUtil;
 import com.wangjie.androidbucket.utils.imageprocess.ABShape;
 import com.wangjie.androidinject.annotation.annotations.base.AILayout;
@@ -149,7 +150,7 @@ public class recieve_help_ans_map extends AIActionBarActivity implements BaiduMa
         //event_id = m_event.getEventId();
         sp = this.getSharedPreferences("user_id", MODE_PRIVATE);
         idd = sp.getInt("user_id", -1);
-        getlauncherId();
+        getEvent();
         setView();
 
         init();
@@ -253,7 +254,7 @@ public class recieve_help_ans_map extends AIActionBarActivity implements BaiduMa
 
     }
 
-    public void getlauncherId(){
+    public void getEvent(){
         //int id =-1;
         String jsonStrng = "{" +
                 "\"event_id\":" + event_id + "}";
@@ -284,8 +285,9 @@ public class recieve_help_ans_map extends AIActionBarActivity implements BaiduMa
             }else {
                 Toast.makeText(getApplicationContext(), "查询成功",
                         Toast.LENGTH_SHORT).show();
+                Gson gson = new Gson();
+                m_event = gson.fromJson(message, Event.class);
                 user_id = jO.getInt("launcher_id");
-
             }
         }catch (JSONException e) {
             e.printStackTrace();
