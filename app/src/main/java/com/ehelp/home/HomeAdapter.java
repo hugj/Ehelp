@@ -263,7 +263,7 @@ public class HomeAdapter extends BaseAdapter {
         lp_iv.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
         iv.setLayoutParams(lp_iv);
         iv.setScaleType(ScaleType.CENTER_INSIDE);
-        iv.setImageBitmap((Bitmap) ((list.get(position)).get("头像")));
+        //iv.setImageBitmap((Bitmap) ((list.get(position)).get("头像")));
         //iv.setImageBitmap(eventCache.getAsBitmap(type + "touxiang" + 1));
         //标题
         TextView title=new TextView(context);
