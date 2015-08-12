@@ -140,8 +140,6 @@ public class recieve_help_ans_map extends AIActionBarActivity implements BaiduMa
         int count = mMapView.getChildCount();
 
         Intent intent = getIntent();
-        //m_event = (Event)intent.getSerializableExtra(SuperAwesomeCardFragment.EXTRA_MESSAGE);
-        //event_id = (Event)intent.getSerializableExtra(SuperAwesomeCardFragment.EXTRA_MESSAGE);
         event_id = getIntent().getIntExtra("event_id",-1);
         //event_id =311;
 

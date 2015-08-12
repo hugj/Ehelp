@@ -21,6 +21,15 @@ public class Event implements Serializable {
     private int state;
     private String launcher;
     private double longitude;
+    private int demand_number;
+    private int love_coin;
+
+    public void setDemand_number(int demand_number) {
+        this.demand_number = demand_number;
+    }
+    public void setLove_coin(int love_coin) {
+        this.love_coin = love_coin;
+    }
 
     public void setFollow_number(int follow_number) {
         this.follow_number = follow_number;
@@ -132,4 +141,11 @@ public class Event implements Serializable {
         return longitude;
     }
 
+    public int getDemand_number() {
+        return demand_number;
+    }
+
+    public int getLove_coin() {
+        return love_coin;
+    }
 }
