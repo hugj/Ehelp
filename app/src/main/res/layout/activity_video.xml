@@ -4,6 +4,7 @@
     android:orientation="vertical"
     tools:context="com.ehelp.map.VideoActivity"
     android:weightSum="1">
+    <!--android:background="#000000">-->
 
     <include layout="@layout/toolbar" />
 
