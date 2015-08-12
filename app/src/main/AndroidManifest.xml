@@ -390,6 +390,11 @@
             android:label="@string/title_activity_fans_list"
             android:parentActivityName=".account.login" >
         </activity>
+        <activity
+            android:name=".map.VideoActivity"
+            android:label="@string/title_activity_video"
+            android:parentActivityName=".account.login" >
+        </activity>
     </application>
 
 </manifest>

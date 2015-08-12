@@ -9,13 +9,13 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.ehelp.R;
-import com.ehelp.entity.Event;
 import com.ehelp.receive.QuestionDetail;
 import com.wangjie.androidinject.annotation.annotations.base.AILayout;
 import com.wangjie.rapidfloatingactionbutton.RapidFloatingActionButton;
 import com.wangjie.rapidfloatingactionbutton.listener.OnRapidFloatingButtonSeparateListener;
 
-import java.util.List;
+import org.json.JSONArray;
+import org.json.JSONException;
 
 @AILayout(R.layout.activity_home_que)
 public class HomeQueActivity extends BaseFragment implements OnRapidFloatingButtonSeparateListener
@@ -23,7 +23,7 @@ public class HomeQueActivity extends BaseFragment implements OnRapidFloatingButt
 
     private RapidFloatingActionButton rfaButton;
     private int user_id;
-    private List<Event> events;
+    private JSONArray events;
     public final static String EXTRA_MESSAGE = "event_id";
     private static final int REFRESH_COMPLETE = 2;
     private ACache eventCache;// event cache
@@ -89,14 +89,19 @@ public class HomeQueActivity extends BaseFragment implements OnRapidFloatingButt
         SOS = new HomeAdapter(getActivity(), user_id, 0, eventCache);
         SOSList.setAdapter(SOS);
 
-        events = SOS.getEvent();
+        events = SOS.getEventList();
 
         //绑定监听
         SOSList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> arg0, View arg1, int index, long arg3) {
-                Intent intent = new Intent(getActivity(), QuestionDetail.class);
-                intent.putExtra("qusetiondatail", events.get(index));
-                startActivity(intent);
+                try {
+                    int eventID = events.getJSONObject(index).getInt("event_id");
+                    Intent intent = new Intent(getActivity(), QuestionDetail.class);
+                    intent.putExtra("qusetiondatail", eventID);
+                    startActivity(intent);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         });
     }

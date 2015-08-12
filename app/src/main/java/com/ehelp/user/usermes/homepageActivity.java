@@ -55,6 +55,11 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -516,21 +521,7 @@ public class homepageActivity extends AIActionBarActivity implements AbsListView
         headerBg = (ImageView) headerContainer.findViewById(R.id.img_header_bg);
 
         if (UserInfo != null) {
-            //设置头像
-            ImageView portrait = (ImageView) headerContainer.findViewById
-                    (R.id.portrait111);
-            portrait.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View arg0) {
-                    Intent intent = new Intent();
-                /* 开启Pictures画面Type设定为image */
-                    intent.setType("image/*");
-                /* 使用Intent.ACTION_GET_CONTENT这个Action */
-                    intent.setAction(Intent.ACTION_GET_CONTENT);
-                /* 取得相片后返回本画面 */
-                    startActivityForResult(intent, 1);
-                }
-            });
+            setPortrait(headerContainer);
             setNickname(headerContainer);
             setAttention(headerContainer);
             setFans(headerContainer);
@@ -540,21 +531,77 @@ public class homepageActivity extends AIActionBarActivity implements AbsListView
         listView.addHeaderView(headerContainer);
     }
 
+    /*
+* 设置头像
+* */
+    public void setPortrait(View headerContainer) {
+        ImageView portrait = (ImageView) headerContainer.findViewById
+                (R.id.portrait111);
+        String imageUrl = "http://120.24.208.130:1501/avatar/"
+                + UserInfo.getId() + ".jpg";
+        Bitmap bmp = returnBitMap(imageUrl);
+        if (bmp == null) {
+            imageUrl = "http://120.24.208.130:1501/avatar/touxiang.jpg";
+            bmp = returnBitMap(imageUrl);
+        }
+
+        portrait.setImageBitmap(bmp);
+        portrait.setScaleType(ImageView.ScaleType.FIT_XY);
+
+        portrait.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                Intent intent = new Intent();
+                /* 开启Pictures画面Type设定为image */
+                intent.setType("image/*");
+                /* 使用Intent.ACTION_GET_CONTENT这个Action */
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                /* 取得相片后返回本画面 */
+                startActivityForResult(intent, 1);
+            }
+        });
+    }
+
+    //URL转Bitmap
+    public Bitmap returnBitMap(String url){
+        URL myFileUrl = null;
+        Bitmap bitmap = null;
+        try {
+            myFileUrl = new URL(url);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        try {
+            HttpURLConnection conn = (HttpURLConnection) myFileUrl
+                    .openConnection();
+            conn.setDoInput(true);
+            conn.connect();
+            InputStream is = conn.getInputStream();
+            bitmap = BitmapFactory.decodeStream(is);
+            is.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return bitmap;
+    }
+
+    //处理选中图像
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK) {
             Uri uri = data.getData();
             Log.e("uri", uri.toString());
             ContentResolver cr = this.getContentResolver();
+
+            //获取图像路径
             String[] proj = { MediaStore.Images.Media.DATA };
-
             Cursor actualimagecursor = managedQuery(uri, proj, null, null, null);
-
-            int actual_image_column_index = actualimagecursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-
+            int actual_image_column_index =
+                    actualimagecursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
             actualimagecursor.moveToFirst();
-
             String img_path = actualimagecursor.getString(actual_image_column_index);
+
+            //得到文件
             String[] sourceStrArray = img_path.split("/");
             sourceStrArray[sourceStrArray.length - 1] = user_id + ".jpg";
             String new_img_path = "";
@@ -567,7 +614,8 @@ public class homepageActivity extends AIActionBarActivity implements AbsListView
                         Toast.LENGTH_SHORT).show();
                 return;
             }
-            //修改文件名
+
+            //修改文件名及上传
             if (file.renameTo(new File(new_img_path))) {
                 file = new File(new_img_path);
                 Upload(file);
@@ -750,7 +798,7 @@ public class homepageActivity extends AIActionBarActivity implements AbsListView
                 JSONObject jO = new JSONObject(message);
                 if (jO.getInt("status") == 500) {
                     Toast.makeText(getApplicationContext(),
-                            "我也不知道为什么出错了，也许是你没登陆吧。。？",
+                            "我也不知道为什么点击签到会出错，也许是你没登陆吧。。？",
                             Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(getApplicationContext(), "签到成功",
