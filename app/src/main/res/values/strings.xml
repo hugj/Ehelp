@@ -114,4 +114,5 @@
     <string name="title_activity_response">ResponseActivity</string>
     <string name="title_activity_othershealthcard">OthershealthcardActivity</string>
     <string name="title_activity_end_help">EndHelpActivity</string>
+    <string name="title_activity_respond_people">RespondPeopleActivity</string>
 </resources>

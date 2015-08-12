@@ -328,7 +328,7 @@ public class ContactlistActivity extends AIActionBarActivity implements RapidFlo
 							type = 1;
 						}
 						Intent intent = new Intent(ContactlistActivity.this, messageActivity.class);
-						intent.putExtra("type",type);
+						//intent.putExtra("type",type);
 						intent.putExtra("id",id);
 						startActivity(intent);
 					}

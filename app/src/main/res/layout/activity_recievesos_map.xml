@@ -26,8 +26,8 @@
             android:layout_height="wrap_content"
             android:onClick="SearchButtonProcess"
             android:text="驾车"
-            android:layout_centerVertical="true"
-            android:layout_alignParentEnd="true" />
+            android:layout_below="@+id/walk"
+            android:layout_alignStart="@+id/walk" />
 
         <Button
             android:id="@+id/walk"
@@ -35,8 +35,19 @@
             android:layout_height="wrap_content"
             android:onClick="SearchButtonProcess"
             android:text="步行"
-            android:layout_above="@+id/drive"
-            android:layout_alignEnd="@+id/drive" />
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true" />
+        <Button
+            android:layout_width="60sp"
+            android:layout_height="60sp"
+            android:text="空"
+            android:textSize="28sp"
+            android:textColor="#ffffff"
+            android:id="@+id/respond_number"
+        android:onClick="respondNum"
+        android:background="@drawable/circle_button"
+            android:layout_alignBottom="@+id/map"
+            android:layout_alignParentEnd="true" />
 
         <!--<TextView-->
             <!--android:layout_width="fill_parent"-->
