@@ -42,4 +42,6 @@
     <color name="listitem_green">#ffe3ffc6</color>
     <color name="listitem_greenyellow">#ff87b869</color>
     <color name="listitem_yellow">#fffaffbf</color>
+
+    <color name="divider">#9e807d7b</color>
 </resources>
