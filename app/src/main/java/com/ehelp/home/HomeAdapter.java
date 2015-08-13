@@ -60,6 +60,14 @@ public class HomeAdapter extends BaseAdapter {
         user_id = id;
         type = type_;
         eventCache = eventCache_;
+
+        StrictMode.setThreadPolicy(
+                new StrictMode.ThreadPolicy.Builder().
+                        detectDiskReads().detectDiskWrites().detectNetwork().penaltyLog().build());
+        StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder().
+                detectLeakedSqlLiteObjects().detectLeakedClosableObjects().
+                penaltyLog().penaltyDeath().build());
+
         init();
     }
 
@@ -89,7 +97,7 @@ public class HomeAdapter extends BaseAdapter {
     public void getDefault() {
         if (eventCache.getAsBitmap(type + "morentouxiang") == null) {
             String url = "http://120.24.208.130:1501/avatar/touxiang.jpg";
-            defaultPortrait = returnBitMap(url);
+            defaultPortrait = returnFirstBitMap(url);
             eventCache.put(type + "morentouxiang", defaultPortrait);
         }
     }
@@ -101,11 +109,62 @@ public class HomeAdapter extends BaseAdapter {
  */
     public void getTitleList(){
         if (eventCache.getAsJSONArray(type + "") == null) {
-            getRemoteTitleList(type);
+            getFirstRemoteTitleList(type);
         } else {
             eventList = eventCache.getAsJSONArray(type + "");
         }
     }
+
+    /*
+* get events' titles from server as a list
+* only return title
+* @param
+* @return a list contains events' titles
+*/
+    public ACache getFirstRemoteTitleList(int type_){
+        final int type = type_;
+        String message;
+        String postURL = "http://120.24.208.130:1501/event/get_nearby_event";
+        if (type == 0) {
+            postURL = "http://120.24.208.130:1501/event/get_events";
+        }
+        String postString = "{" +
+                "\"id\":" + user_id + ",\"state\":0," +
+                "\"type\":" + type + "}";
+
+        message = RequestHandler.sendPostRequest(postURL, postString);
+
+        if (message.equals("false")) {
+            eventCache = null;
+        } else {
+            JSONObject j1 = null;
+            try {
+                j1 = new JSONObject(message);
+                if (j1.getInt("status") == 500) {
+                    eventCache = null;
+                } else {
+                    JSONArray eventArray = j1.getJSONArray("event_list");
+                    eventCache.put(type + "", eventArray);
+
+                    for (int i = 0; i < eventArray.length(); i++) {
+                        int auncher_id = eventArray.getJSONObject(i).getInt("launcher_id");
+                        String url = "http://120.24.208.130:1501/avatar/" +
+                                auncher_id + ".jpg";
+                        Bitmap image = returnFirstBitMap(url);
+                        if (image == null) {
+                            image = eventCache.getAsBitmap(type + "morentouxiang");
+                        }
+                        eventCache.put(type + "touxiang" + i, image);
+                    }
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return eventCache;
+    }
+
 
     /*
  * get events' titles from server as a list
@@ -166,7 +225,7 @@ public class HomeAdapter extends BaseAdapter {
         try {
             if (eventList == null) {
                 item=new HashMap<String,Object>();
-                item.put("头像", R.drawable.icon);
+                item.put("Avatar", R.drawable.icon);
                 item.put("标题", "连接失败，请检查网络是否连接并重试");
                 item.put("用户", "");
                 item.put("时间", "");
@@ -175,7 +234,7 @@ public class HomeAdapter extends BaseAdapter {
             } else {
                 for (int i = 0; i < eventList.length(); i++) {
                     item=new HashMap<String,Object>();
-                    item.put("头像", eventCache.getAsBitmap(type + "touxiang" + i));
+                    item.put("Avatar", eventCache.getAsBitmap(type + "touxiang" + i));
                     item.put("标题", eventList.getJSONObject(i).getString("title"));
                     item.put("用户", eventList.getJSONObject(i).getString("launcher"));
                     item.put("时间", eventList.getJSONObject(i).getString("time"));
@@ -186,6 +245,29 @@ public class HomeAdapter extends BaseAdapter {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
+
+    public Bitmap returnFirstBitMap(String url_){
+        final String url = url_;
+        URL myFileUrl = null;
+        try {
+            myFileUrl = new URL(url);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        try {
+            HttpURLConnection conn = (HttpURLConnection) myFileUrl
+                    .openConnection();
+            conn.setDoInput(true);
+            conn.connect();
+            InputStream is = conn.getInputStream();
+            bitmap = BitmapFactory.decodeStream(is);
+            is.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return bitmap;
     }
 
     public Bitmap returnBitMap(String url_){
@@ -228,7 +310,7 @@ public class HomeAdapter extends BaseAdapter {
             Log.v("asdf3qweqw", message);
             if (message == "false") {
                 item=new HashMap<String,Object>();
-                item.put("头像", R.drawable.icon);
+                item.put("Avatar", R.drawable.icon);
                 item.put("标题", "连接失败，请检查网络是否连接并重试");
                 item.put("用户", "");
                 item.put("时间", "");
@@ -257,13 +339,16 @@ public class HomeAdapter extends BaseAdapter {
     public long getItemId(int position) {return position;}
 
     public View getView(int position, View convertView, ViewGroup parent) {
-        //头像
+        //Avatar
         ImageView iv=new ImageView(context);
         RelativeLayout.LayoutParams lp_iv=new RelativeLayout.LayoutParams(80,80);
         lp_iv.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
         iv.setLayoutParams(lp_iv);
         iv.setScaleType(ScaleType.CENTER_INSIDE);
-        //iv.setImageBitmap((Bitmap) ((list.get(position)).get("头像")));
+        Bitmap image = ((Bitmap) (list.get(position)).get("Avatar"));
+        if (image != null) {
+            iv.setImageBitmap(image);
+        }
         //iv.setImageBitmap(eventCache.getAsBitmap(type + "touxiang" + 1));
         //标题
         TextView title=new TextView(context);
