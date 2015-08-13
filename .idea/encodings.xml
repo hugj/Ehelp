@@ -21,6 +21,8 @@
     <file url="file://$PROJECT_DIR$/app/src/main/res/drawable-hdpi/qb_down.png" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/src/main/res/drawable-hdpi/qb_right.png" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/src/main/res/drawable-ldpi" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable-ldpi/bg_b.png" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable-ldpi/bg_g.png" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/src/main/res/drawable-ldpi/btn_style_one_disabled.9.png" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/src/main/res/drawable-ldpi/btn_style_one_focused.9.png" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/src/main/res/drawable-ldpi/btn_style_one_normal.9.png" charset="UTF-8" />

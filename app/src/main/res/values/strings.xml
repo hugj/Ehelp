@@ -223,5 +223,6 @@
 
     <string name="title_alert">提示信息</string>
     <string name="ok">确定</string>
+    <string name="title_activity_coinhistory">CoinhistoryActivity</string>
     <string name="title_activity_audio">AudioActivity</string>
 </resources>
