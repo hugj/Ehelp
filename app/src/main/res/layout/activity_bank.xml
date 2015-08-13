@@ -37,12 +37,12 @@
                 android:layout_marginLeft="85dp"
                 android:layout_marginTop="30dp"
                 android:text="等级"/>
-            <ImageView android:layout_height="20dp"
-                android:layout_width="20dp"
-                android:layout_marginLeft="90dp"
+            <TextView android:layout_height="20dp"
+                android:layout_width="30dp"
+                android:layout_marginLeft="88dp"
                 android:layout_marginTop="50dp"
-                android:id="@+id/bank_level"
-                android:src="@drawable/homepage"/>
+                android:text="LV0"
+                android:id="@+id/bank_level" />
         </RelativeLayout>
     </LinearLayout>
     <RelativeLayout android:layout_width="fill_parent"

@@ -478,11 +478,13 @@
         </activity>
         <activity
             android:name=".user.lovebank.IntegralActivity"
-            android:label="@string/title_activity_integral" >
+            android:label="@string/title_activity_integral"
+            android:parentActivityName=".account.login">
         </activity>
         <activity
             android:name=".user.lovebank.CoinActivity"
-            android:label="@string/title_activity_coin" >
+            android:label="@string/title_activity_coin"
+            android:parentActivityName=".account.login">
         </activity>
         <activity
             android:name=".user.usermes.FansListActivity"
@@ -502,6 +504,11 @@
             android:name="com.ehelp.video.RecordActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".user.lovebank.TransferActivity"
+            android:label="@string/title_activity_transfer"
+            android:parentActivityName=".account.login">
         </activity>
     </application>
 

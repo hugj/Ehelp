@@ -1,0 +1,73 @@
+<RelativeLayout
+    android:layout_height="fill_parent"
+    android:layout_width="fill_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+<LinearLayout android:layout_height="fill_parent"
+    android:layout_width="fill_parent"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    android:background="#eee">
+    <include layout="@layout/toolbar" />
+    <ImageView android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="30dp"
+        android:id="@+id/transfer_icon"
+        android:src="@drawable/icon"/>
+    <TextView android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_marginTop="10dp"
+        android:id="@+id/transfer_name"
+        android:text="黄志婷"/>
+    <RelativeLayout android:layout_width="350dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/background_box">
+        <TextView android:layout_height="fill_parent"
+            android:layout_width="wrap_content"
+            android:text="爱心币数"
+            android:textColor="#fff"
+            android:gravity="center"
+            android:background="#4876FF"/>
+        <EditText android:layout_height="fill_parent"
+            android:layout_width="300dp"
+            android:id="@+id/transfer_edit"
+            android:ems="20"
+            android:numeric="integer"
+            android:singleLine="true"
+            android:layout_marginLeft="70dp"
+            android:background="#fff"/>
+    </RelativeLayout>
+    <Button android:layout_height="50dp"
+        android:layout_width="350dp"
+        android:layout_marginTop="30dp"
+        android:id="@+id/transfer_btn1"
+        android:onClick="transfer_btn"
+        android:text="立即转账"/>
+</LinearLayout>
+    <com.wangjie.rapidfloatingactionbutton.RapidFloatingActionLayout
+        xmlns:rfal="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/label_list_sample_rfal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        rfal:rfal_frame_color="#ffffff"
+        rfal:rfal_frame_alpha="0.7">
+
+        <com.wangjie.rapidfloatingactionbutton.RapidFloatingActionButton
+            xmlns:rfab="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/label_list_sample_rfab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginRight="15dp"
+            android:layout_marginBottom="15dp"
+            rfab:rfab_size="normal"
+            rfab:rfab_drawable="@drawable/rfab__drawable_rfab_default"
+            rfab:rfab_color_normal="#37474f"
+            rfab:rfab_color_pressed="#263238"
+            rfab:rfab_shadow_radius="7dp"
+            rfab:rfab_shadow_color="#999999"
+            rfab:rfab_shadow_dx="0dp"
+            rfab:rfab_shadow_dy="5dp"/>
+    </com.wangjie.rapidfloatingactionbutton.RapidFloatingActionLayout>
+    </RelativeLayout>
