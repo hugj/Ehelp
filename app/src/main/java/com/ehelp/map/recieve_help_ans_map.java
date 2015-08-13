@@ -212,26 +212,16 @@ public class recieve_help_ans_map extends AIActionBarActivity implements BaiduMa
         String message = RequestHandler.sendPostRequest(
                 "http://120.24.208.130:1501/event/get_information", jsonStrng);
         if (message == "false") {
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
-                            Toast.LENGTH_SHORT).show();
-                }
-            });
+            Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
+                    Toast.LENGTH_SHORT).show();
             user_id= -1;
             return;
         }
         try{
             JSONObject jO = new JSONObject(message);
             if (jO.getInt("status") == 500) {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Toast.makeText(getApplicationContext(), "无此事件",
-                                Toast.LENGTH_SHORT).show();
-                    }
-                });
+                Toast.makeText(getApplicationContext(), "无此事件",
+                        Toast.LENGTH_SHORT).show();
                 user_id= -1;
             }else {
                 Toast.makeText(getApplicationContext(), "查询成功",

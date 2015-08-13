@@ -201,9 +201,9 @@ public class HomeAdapter extends BaseAdapter {
                             eventCache.put(type + "", eventArray);
 
                             for (int i = 0; i < eventArray.length(); i++) {
-                                int auncher_id = eventArray.getJSONObject(i).getInt("launcher_id");
+                                int launcher_id = eventArray.getJSONObject(i).getInt("launcher_id");
                                 String url = "http://120.24.208.130:1501/avatar/" +
-                                        auncher_id + ".jpg";
+                                        launcher_id + ".jpg";
                                 Bitmap image = returnBitMap(url);
                                 if (image == null) {
                                     image = eventCache.getAsBitmap(type + "morentouxiang");
