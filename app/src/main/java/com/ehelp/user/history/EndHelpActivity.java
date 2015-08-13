@@ -6,11 +6,13 @@ import android.os.StrictMode;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ExpandableListView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -55,6 +57,7 @@ public class EndHelpActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+//        new Thread(runnable).start();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_end_help);
         StrictMode.ThreadPolicy policy=new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -64,6 +67,7 @@ public class EndHelpActivity extends ActionBarActivity {
         //跟后台交互获取详情
         Intent intent = getIntent();
         event_id = intent.getIntExtra("event_id",-1);//intent时传入的事件id
+        event_id = 493;
 
         showdetail();
         initView();
@@ -91,20 +95,33 @@ public class EndHelpActivity extends ActionBarActivity {
         message = RequestHandler.sendPostRequest(
                 "http://120.24.208.130:1501/event/get_information", jsonStrng);
         if (message == "false") {
-
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
             Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
                     Toast.LENGTH_SHORT).show();
-
+                }
+            });
             return;
         }
         try{
             JSONObject jO = new JSONObject(message);
             if (jO.getInt("status") == 500) {
-                Toast.makeText(getApplicationContext(), "无此事件",
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(getApplicationContext(), "无此事件",
                         Toast.LENGTH_SHORT).show();
+                    }
+                });
             }else {
-                Toast.makeText(getApplicationContext(), "查询成功",
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(getApplicationContext(), "查询成功",
                         Toast.LENGTH_SHORT).show();
+                    }
+                });
                 //修改显示的时间
                 TextView tv1 =(TextView) findViewById(R.id.SOStime);
                 tv1.setText(jO.getString("time"));
@@ -113,7 +130,13 @@ public class EndHelpActivity extends ActionBarActivity {
                 tv3.setText(jO.getString("title"));
                 tv3 = (TextView)findViewById(R.id.content);
                 tv3.setText(jO.getString("content"));
-
+                tv3 = (TextView)findViewById(R.id.evaluate_);
+                tv3.setText(jO.getString("comment"));
+                RatingBar ratBar = (RatingBar)findViewById(R.id.ratingBar);
+                ratBar.setRating(jO.getInt("group_pts"));
+//                ratBar.setClickable(false);
+                ratBar.setEnabled(false);
+                Log.v("s88",jO.getString("comment"));
 
                 //通过发起者id寻找发起者用户名并显示
                 idd = jO.getInt("launcher_id");
@@ -275,5 +298,16 @@ public class EndHelpActivity extends ActionBarActivity {
 
         });
     }
+
+//    Runnable runnable = new Runnable() {
+//        @Override
+//        public void run() {
+//            getEvaluate();
+//        }
+//    };
+//
+//    private void getEvaluate(){
+//
+//    }
 
 }

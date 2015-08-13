@@ -627,13 +627,11 @@ public class recieve_help_ans_map extends AIActionBarActivity implements BaiduMa
         MenuItem item_comment = menu.findItem(R.id.action_comment);
         MenuItem item_cancelhelp = menu.findItem(R.id.action_cancelhelp);
         MenuItem item_endhelp = menu.findItem(R.id.action_endhelp);
-        MenuItem item_lookVedio = menu.findItem(R.id.action_video);
         Button bt = (Button)findViewById(R.id.video);
         Button dbt = (Button)findViewById(R.id.sound);
         if(idd == user_id){
             item_concern.setVisible(false);
             item_respond.setVisible(false);
-            item_lookVedio.setVisible(false);
             item_cancelhelp.setVisible(true);
             item_endhelp.setVisible(true);
             bt.setVisibility(View.VISIBLE);
@@ -641,7 +639,6 @@ public class recieve_help_ans_map extends AIActionBarActivity implements BaiduMa
         }else {
             item_concern.setVisible(true);
             item_respond.setVisible(true);
-            item_lookVedio.setVisible(true);
             item_cancelhelp.setVisible(false);
             item_endhelp.setVisible(false);
             bt.setVisibility(View.INVISIBLE);
