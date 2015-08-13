@@ -22,7 +22,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="228dp"
                 android:layout_weight="1"
-                android:hint="事件描述"
+                android:hint="您的回答"
                 android:inputType="textMultiLine"
                 android:gravity="left|top"
                 android:minLines="6" />
