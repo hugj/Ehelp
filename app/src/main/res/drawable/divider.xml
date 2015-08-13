@@ -2,6 +2,6 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <!-- 实心 -->
-    <solid android:color="@android:color/darker_gray" />
+    <solid android:color="@android:color/dim_foreground_dark" />
     <size android:height="1dp" android:width="500dp"/>
 </shape>  
