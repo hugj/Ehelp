@@ -365,7 +365,6 @@ public class recieve_help_ans_map extends AIActionBarActivity implements BaiduMa
     * */
     @Override
     public void onClick(View v) {
-        android.support.v7.widget.CardView card = (android.support.v7.widget.CardView)v;
         final int i =  v.getId();
 
         ResponseDialog = new AlertDialog.Builder(recieve_help_ans_map.this).create();
@@ -577,7 +576,9 @@ public class recieve_help_ans_map extends AIActionBarActivity implements BaiduMa
 
         //noinspection SimplifiableIfStatement
         if(id ==R.id.action_comment){
-
+            Intent intent = new Intent(recieve_help_ans_map.this, ResponseActivity.class);
+            intent.putExtra("eventID", event_id);
+            startActivity(intent);
         }
 
         if (id == R.id.action_video) {

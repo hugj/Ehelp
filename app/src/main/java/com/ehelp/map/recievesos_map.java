@@ -1,15 +1,14 @@
 package com.ehelp.map;
 
-import android.app.Application;
+import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Looper;
 import android.os.Message;
 import android.os.StrictMode;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -18,6 +17,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ZoomControls;
@@ -56,16 +57,39 @@ import com.baidu.mapapi.search.route.WalkingRoutePlanOption;
 import com.baidu.mapapi.search.route.WalkingRouteResult;
 import com.ehelp.R;
 import com.ehelp.entity.Event;
+import com.ehelp.entity.comment;
+import com.ehelp.home.Home;
+import com.ehelp.send.CountNum;
+import com.ehelp.send.SendQuestion;
 import com.ehelp.user.healthcard.OthershealthcardActivity;
 import com.ehelp.utils.RequestHandler;
 import com.google.gson.Gson;
+import com.wangjie.androidbucket.utils.ABTextUtil;
+import com.wangjie.androidbucket.utils.imageprocess.ABShape;
+import com.wangjie.androidinject.annotation.annotations.base.AILayout;
+import com.wangjie.androidinject.annotation.annotations.base.AIView;
+import com.wangjie.androidinject.annotation.present.AIActionBarActivity;
+import com.wangjie.rapidfloatingactionbutton.RapidFloatingActionButton;
+import com.wangjie.rapidfloatingactionbutton.RapidFloatingActionHelper;
+import com.wangjie.rapidfloatingactionbutton.RapidFloatingActionLayout;
+import com.wangjie.rapidfloatingactionbutton.contentimpl.labellist.RFACLabelItem;
+import com.wangjie.rapidfloatingactionbutton.contentimpl.labellist.RapidFloatingActionContentLabelList;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.List;
 
-public class recievesos_map extends ActionBarActivity implements BaiduMap.OnMapClickListener,
-        OnGetRoutePlanResultListener {
+@AILayout(R.layout.activity_recievesos_map)
+public class recievesos_map extends AIActionBarActivity implements BaiduMap.OnMapClickListener,
+        RapidFloatingActionContentLabelList.OnRapidFloatingActionContentLabelListListener,
+        OnGetRoutePlanResultListener, View.OnClickListener {
+    @AIView(R.id.label_list_sample_rfal)
+    private RapidFloatingActionLayout rfaLayout;
+    @AIView(R.id.label_list_sample_rfab)
+    private RapidFloatingActionButton rfaButton;
+    private RapidFloatingActionHelper rfabHelper;
 
     ImageView Image;
     //浏览路线节点相关
@@ -119,12 +143,14 @@ public class recievesos_map extends ActionBarActivity implements BaiduMap.OnMapC
     public LatLng end_node = null;
 
     private Event event;
+    private List<comment> comments;
+    private AlertDialog ResponseDialog = null;
 
     protected void onCreate(Bundle savedInstanceState) {
         init2();
+        // fab();
         super.onCreate(savedInstanceState);
         SDKInitializer.initialize(getApplicationContext());
-        setContentView(R.layout.activity_recievesos_map);
 
         event_id = this.getIntent().getIntExtra("event_id", -1);
         String s = String.valueOf(event_id);
@@ -235,6 +261,86 @@ public class recievesos_map extends ActionBarActivity implements BaiduMap.OnMapC
         user_id = sp.getInt("user_id", -1);
     }
 
+
+    private void fab(){
+        RapidFloatingActionContentLabelList rfaContent = new RapidFloatingActionContentLabelList(context);
+        rfaContent.setOnRapidFloatingActionContentLabelListListener(this);
+        List<RFACLabelItem> items = new ArrayList<>();
+        items.add(new RFACLabelItem<Integer>()
+                        .setLabel("求救")
+                        .setResId(R.mipmap.ic_launcher)
+                        .setIconNormalColor(0xffd84315)
+                        .setIconPressedColor(0xffbf360c)
+                        .setWrapper(0)
+        );
+        items.add(new RFACLabelItem<Integer>()
+                        .setLabel("求助")
+//                        .setResId(R.mipmap.ico_test_c)
+                        .setDrawable(getResources().getDrawable(R.mipmap.ic_launcher))
+                        .setIconNormalColor(0xff4e342e)
+                        .setIconPressedColor(0xff3e2723)
+                        .setLabelColor(Color.WHITE)
+                        .setLabelSizeSp(14)
+                        .setLabelBackgroundDrawable(ABShape.generateCornerShapeDrawable(0xaa000000, ABTextUtil.dip2px(context, 4)))
+                        .setWrapper(1)
+        );
+        items.add(new RFACLabelItem<Integer>()
+                        .setLabel("提问")
+                        .setResId(R.mipmap.ic_launcher)
+                        .setIconNormalColor(0xff056f00)
+                        .setIconPressedColor(0xff0d5302)
+                        .setLabelColor(0xff056f00)
+                        .setWrapper(2)
+        );
+        rfaContent
+                .setItems(items)
+                .setIconShadowRadius(ABTextUtil.dip2px(context, 5))
+                .setIconShadowColor(0xff888888)
+                .setIconShadowDy(ABTextUtil.dip2px(context, 5))
+        ;
+
+        rfabHelper = new RapidFloatingActionHelper(
+                context,
+                rfaLayout,
+                rfaButton,
+                rfaContent
+        ).build();
+    }
+    @Override
+    /*
+    for fab
+     */
+    public void onRFACItemLabelClick(int position, RFACLabelItem item) {
+        if (position == 0) {
+            Intent intent = new Intent(this, CountNum.class);
+            startActivity(intent);
+        } else
+        if (position == 1) {
+            showToastMessage("您正在求助界面");
+        } else {
+            Intent intent = new Intent(this, SendQuestion.class);
+            startActivity(intent);
+        }
+        rfabHelper.toggleContent();
+    }
+    @Override
+    /*
+for fab
+ */
+    public void onRFACItemIconClick(int position, RFACLabelItem item) {
+        if (position == 0) {
+            Intent intent = new Intent(this, CountNum.class);
+            startActivity(intent);
+        } else
+        if (position == 1) {
+            showToastMessage("您正在求助界面");
+        } else {
+            Intent intent = new Intent(this, SendQuestion.class);
+            startActivity(intent);
+        }
+        rfabHelper.toggleContent();
+    }
+
     public void healthCardClick(View v){
         Intent intent = new Intent(this, OthershealthcardActivity.class);
         intent.putExtra("user_id",idd);
@@ -289,11 +395,147 @@ public class recievesos_map extends ActionBarActivity implements BaiduMap.OnMapC
                 //通过发起者id寻找发起者用户名并显示
                 idd = jO.getInt("launcher_id");
                 findforusername();
+                setListView();
             }
 
         }catch (JSONException e) {
             e.printStackTrace();
         }
+    }
+
+    /*
+* 加载评论列表
+* */
+    public void setListView(){
+        //ListView comList = (ListView)findViewById(R.id.comment);
+        CommentAdapter com = new CommentAdapter(this, event_id);
+        //comList.setAdapter(com);
+        comments = com.getEvent();
+
+        LinearLayout commentll = (LinearLayout)findViewById(R.id.SOScomment);
+        for (int i = 0; i < comments.size(); i++) {
+            //时间
+            TextView time=new TextView(this);
+            time.setText(comments.get(i).getTime());
+            RelativeLayout.LayoutParams tim=new RelativeLayout.LayoutParams(-2,-2);
+            tim.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+            time.setLayoutParams(tim);
+
+            //内容
+            TextView content=new TextView(this);
+            content.setText(comments.get(i).getContent());
+
+            //作者
+            TextView Author=new TextView(this);
+            String Response = comments.get(i).getParent_author();
+            if (Response == null) {
+                Author.setText(comments.get(i).getAuthor());
+            } else {
+                Author.setText(comments.get(i).getAuthor() + " 回复：" + Response);
+            }
+            RelativeLayout.LayoutParams aut=new RelativeLayout.LayoutParams(-2,-2);
+            aut.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
+            Author.setLayoutParams(aut);
+
+            //作者和时间
+            RelativeLayout rl=new RelativeLayout(this);
+            rl.addView(Author);
+            rl.addView(time);
+
+            //单条评论
+            LinearLayout l1=new LinearLayout(this);
+            l1.setOrientation(LinearLayout.VERTICAL);
+            l1.addView(rl);
+            l1.addView(content);
+
+            android.support.v7.widget.CardView card = new android.support.v7.widget.CardView(this);
+            card.addView(l1);
+            card.setOnClickListener(this);
+            card.setId(i);
+
+            commentll.addView(card);
+        }
+    }
+    public Boolean isAuthor(int id) {
+        SharedPreferences sharedPref = this.getSharedPreferences("user_id", Context.MODE_PRIVATE);
+        int phone_user_id = sharedPref.getInt("user_id", -1);
+        return (id == phone_user_id);
+    }
+
+    /*
+    * 监听点击评论回复
+    * */
+    @Override
+    public void onClick(View v) {
+        final int i =  v.getId();
+
+        ResponseDialog = new AlertDialog.Builder(recievesos_map.this).create();
+        ResponseDialog.show();
+        ResponseDialog.getWindow().setContentView(R.layout.response_comment);
+
+        //设置弹出框内容
+        LinearLayout pop = (LinearLayout)ResponseDialog.getWindow().findViewById(R.id.pop);
+        LinearLayout resp = new LinearLayout(this);
+        TextView respText=new TextView(this);
+        respText.setText("回复");
+        respText.setTextSize(20);
+        resp.addView(respText);
+        pop.addView(resp);
+        //点击回复
+        resp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(recievesos_map.this, ResponseActivity.class);
+                intent.putExtra("comment", comments.get(i));
+                startActivity(intent);
+                ResponseDialog.dismiss();
+            }
+        });
+
+
+        if (isAuthor(comments.get(i).getAuthor_id())) {
+            LinearLayout dele = new LinearLayout(this);
+            TextView deleText=new TextView(this);
+            deleText.setText("删除");
+            deleText.setTextSize(20);
+            dele.addView(deleText);
+            pop.addView(dele);
+
+            //点击删除
+            dele.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    String jsonStrng = "{" +
+                            "\"id\":" + comments.get(i).getAuthor_id() +
+                            ",\"event_id\":" + comments.get(i).getEvent_id() +
+                            ",\"comment_id\":" + comments.get(i).getComment_id() + "}";
+
+                    String message = RequestHandler.sendPostRequest(
+                            "http://120.24.208.130:1501/comment/remove", jsonStrng);
+                    if (message == "false") {
+                        Toast.makeText(getApplicationContext(), "删除失败，请检查网络是否连接并重试",
+                                Toast.LENGTH_SHORT).show();
+                    } else {
+                        try {
+                            JSONObject jO = new JSONObject(message);
+                            if (jO.getInt("status") == 500) {
+                                Toast.makeText(getApplicationContext(), "删除失败",
+                                        Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(getApplicationContext(), "删除成功",
+                                        Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(recievesos_map.this, Home.class);
+                                startActivity(intent);
+                                ResponseDialog.dismiss();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            });
+        }
+
     }
 
     private void findforusername(){
@@ -349,6 +591,9 @@ public class recievesos_map extends ActionBarActivity implements BaiduMap.OnMapC
         int id = item.getItemId();
         if(id == R.id.action_comment){
             //点击评论按钮
+            Intent intent = new Intent(recievesos_map.this, ResponseActivity.class);
+            intent.putExtra("eventID", event_id);
+            startActivity(intent);
         }
 
         if (id == R.id.action_video) {
