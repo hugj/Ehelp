@@ -1,6 +1,5 @@
 package com.ehelp.user.lovebank;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -8,6 +7,9 @@ import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,154 +35,110 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-@AILayout(R.layout.activity_bank)
-public class BankActivity extends AIActionBarActivity implements RapidFloatingActionContentLabelList.OnRapidFloatingActionContentLabelListListener {
+@AILayout(R.layout.activity_transfer)
+public class TransferActivity extends AIActionBarActivity implements RapidFloatingActionContentLabelList.OnRapidFloatingActionContentLabelListListener {
     @AIView(R.id.label_list_sample_rfal)
     private RapidFloatingActionLayout rfaLayout;
     @AIView(R.id.label_list_sample_rfab)
     private RapidFloatingActionButton rfaButton;
     private RapidFloatingActionHelper rfabHelper;
-    private TextView name, phone, integral, coin;
-    private TextView level;
-    private int id, integral_, coin_;
-    private String jsonString, message, name_, phone_, level_;
-    private SharedPreferences sharedPref;
+    private int receiver_id, sender_id, num, sender_coin;
+    private String receiver_name;
+    private Button btn;
+    private TextView user_name;
+    private EditText edit_num;
+    private ImageView imag;
+    private String message, jsonStrng;
+    //用于获取当前登录id
+    private SharedPreferences SharedPref;
     private Toolbar mToolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        init();//fab
-        setmes();
+        Intent intent = getIntent();
+        receiver_id = intent.getIntExtra("id", -1);
+        receiver_name = intent.getStringExtra("name"); //传入用户id和name
+        sender_coin = intent.getIntExtra("coin", 0); //传入的爱心币数
+        user_name = (TextView)findViewById(R.id.transfer_name);
+        user_name.setText(receiver_name);//设置用户名
+        imag = (ImageView)findViewById(R.id.transfer_icon);//设置头像
+        init();
     }
-    public void setmes(){
-        //爱心银行首页的信息
-        name = (TextView)findViewById(R.id.bank_name);
-        phone = (TextView)findViewById(R.id.bank_phone);
-        integral = (TextView)findViewById(R.id.bank_integral1);
-        coin = (TextView)findViewById(R.id.bank_coin1);
-        level = (TextView)findViewById(R.id.bank_level);
-        //后台线程
-        new Thread(runnable).start();
-    }
-    Runnable runnable = new Runnable() {
-        @Override
-        public void run() {
-            setmes_help();
-        }
-    };
-    //获取用户爱心银行信息，先获取用户信息
-    private void setmes_help() {
-        sharedPref = this.getSharedPreferences("user_id", Context.MODE_PRIVATE);
-        id = sharedPref.getInt("user_id", -1);
-        jsonString = "{" +
-                "\"id\":" + id + "}";
-        message = RequestHandler.sendPostRequest(
-                "http://120.24.208.130:1501/user/get_information", jsonString);
-        if (message == "false") {
+    public void transfer_btn(View view) { //点击兑换按钮
+        btn = (Button)findViewById(R.id.transfer_btn1);
+        edit_num = (EditText)findViewById(R.id.transfer_edit);
+        //获取当前登录用户id
+        SharedPref = this.getSharedPreferences("user_id", MODE_PRIVATE);
+        sender_id = SharedPref.getInt("user_id", -1);
+        num = Integer.parseInt(edit_num.getText().toString()); //获取输入数字
+        if (sender_id == receiver_id) { //用户不能给自己转账
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
-                            Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "不能给自己转账，请重新选择",
+                            Toast.LENGTH_LONG).show();
                 }
             });
             return;
-        }
-        try {
-            JSONObject jO = new JSONObject(message);
-            if (jO.getInt("status") == 500) {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Toast.makeText(getApplicationContext(), "获取用户信息失败",
-                                Toast.LENGTH_SHORT).show();
-                    }
-                });
-                return;
-            }
-            name_ = jO.getString("name");
-            phone_ = jO.getString("phone");
+        } else if (edit_num.getText().toString() == "") { //输入为空时
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                        name.setText(name_);
-                        phone.setText(phone_);
+                    Toast.makeText(getApplicationContext(), "输入数量不能为空，请重新输入",
+                             Toast.LENGTH_LONG).show();
                 }
             });
-            jsonString = "{" +
-                    "\"user_id\":" + id + "}";
-            message = RequestHandler.sendPostRequest(
-                    "http://120.24.208.130:1501/user/lovingbank", jsonString);
-            if (message == "false") {
+            return;
+        } else if(num > sender_coin) {  //转账数额大余额
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(getApplicationContext(), "输入数量多于您的余额，请重新输入",
+                            Toast.LENGTH_LONG).show();
+                }
+            });
+            return;
+        } else {
+            jsonStrng = "{" + "\"sender\":" + sender_id + "," +
+                    "\"receiver\":" + receiver_id + "," +
+                    "\"love_coin\":" + num + "}";
+            message =  RequestHandler.sendPostRequest(
+                    "http://120.24.208.130:1501/user/bank_transfer", jsonStrng);
+            if(message == "false") {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        Toast.makeText(getApplicationContext(), "获取爱心银行信息失败，请检查网络是否连接并重试",
-                                Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
+                                Toast.LENGTH_LONG).show();
                     }
                 });
                 return;
             }
-            jO = new JSONObject(message);
-            if (jO.getInt("status") == 500) {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Toast.makeText(getApplicationContext(), "获取爱心银行信息失败",
-                                Toast.LENGTH_SHORT).show();
-                    }
-                });
-            } else {
-                integral_ = jO.getInt("score");
-                coin_ = jO.getInt("love_coin");
-                level_ = "LV0";
-                if (integral_ <= 10) {
-                    level_ = "LV1";
-                } else if (integral_ <= 100) {
-                    level_ = "LV2";
-                } else if (integral_ <= 500) {
-                    level_ = "LV3";
-                }  else if (integral_ <= 1000) {
-                    level_ = "LV4";
-                } else if (integral_ <= 2000) {
-                    level_ = "LV5";
-                } else if (integral_ <= 5000) {
-                    level_ = "LV6";
-                } else if (integral_ <= 10000) {
-                    level_ = "LV7";
-                }  else if (integral_ <= 20000) {
-                    level_ = "LV8";
+            try {
+                JSONObject j = new JSONObject(message);
+                if (j.getInt("status") == 500) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(getApplicationContext(), "转账失败，请重试",
+                                    Toast.LENGTH_LONG).show();
+                        }
+                    });
+                    return;
                 } else {
-                    level_ = "LV9";
+                    Toast.makeText(getApplicationContext(),
+                            "转账成功", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(this, CoinActivity.class);
+                    String s = String.valueOf(sender_coin - num);
+                    intent.putExtra("coin", s);
+                    startActivity(intent);
+                    TransferActivity.this.finish();
                 }
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-
-                            coin.setText(String.valueOf(coin_));
-                            integral.setText(String.valueOf(integral_));
-                            level.setText(level_);
-                    }
-                });
+            }catch (JSONException e){
+                e.printStackTrace();
             }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-    }
 
-    //积分管理
-    public void my_integral(View view){
-        Intent intent = new Intent(this, IntegralActivity.class);
-        String str1 = integral.getText().toString();
-        intent.putExtra("integral", str1);
-        startActivity(intent);
-    }
-    //爱心币管理
-    public void my_coin(View view){
-        Intent intent = new Intent(this, CoinActivity.class);
-        String  i = coin.getText().toString();
-        intent.putExtra("coin", i);
-        startActivity(intent);
+        }
     }
     private  void init() {
         StrictMode.setThreadPolicy(
@@ -194,7 +152,7 @@ public class BankActivity extends AIActionBarActivity implements RapidFloatingAc
         mToolbar.setTitle("  ");
         setSupportActionBar(mToolbar);
         TextView tvv =(TextView) findViewById(R.id.titlefortoolbar);
-        tvv.setText("爱心银行");
+        tvv.setText("转账");
 
         //下面的圆型按钮
         fab();
@@ -274,4 +232,5 @@ public class BankActivity extends AIActionBarActivity implements RapidFloatingAc
         }
         rfabHelper.toggleContent();
     }
+
 }
