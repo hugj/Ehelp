@@ -505,7 +505,8 @@
         </activity>
         <activity
             android:name=".user.lovebank.CoinhistoryActivity"
-            android:label="@string/title_activity_coinhistory" >
+            android:label="@string/title_activity_coinhistory"
+            android:parentActivityName=".account.login">
         </activity>
         <activity
             android:name=".map.RespondPeopleActivity"

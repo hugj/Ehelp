@@ -12,10 +12,10 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.ehelp.R;
-import com.ehelp.entity.Event;
 import com.ehelp.map.sendhelp_map;
 import com.ehelp.send.CountNum;
 import com.ehelp.send.SendQuestion;
@@ -43,7 +43,8 @@ public class CoinhistoryActivity extends AIActionBarActivity implements RapidFlo
 
     private SharedPreferences sharedPref;
     private int user_id;
-    private List<Event> events;
+    //private List<h_list> events;
+
 
     private ViewPager mPager;//页卡内容
     private List<View> listViews; // Tab页面列表
@@ -259,25 +260,25 @@ public class CoinhistoryActivity extends AIActionBarActivity implements RapidFlo
 
         @Override
         public void onPageSelected(int arg0) {
-            TextView tv = (TextView) findViewById(R.id.text1);
-            TextView tv2 = (TextView) findViewById(R.id.text2);
-            TextView tv3 = (TextView) findViewById(R.id.text3);
+            TextView tv = (TextView) findViewById(R.id.coin_text1);
+            TextView tv2 = (TextView) findViewById(R.id.coin_text2);
             switch (arg0) {
                 case 0:
                     tv.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
                     tv2.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-                    tv3.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
                     //添加该页面可能的事项。比如跳转之类
+                    ListView hislist1 = (ListView)findViewById(R.id.coin_historytran); //第一个listview
+                    CoinhistoryAdapter tranAdapter = new CoinhistoryAdapter(CoinhistoryActivity.this,
+                            user_id, 1);
+                    hislist1.setAdapter(tranAdapter);
                     break;
                 case 1:
                     tv.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
                     tv2.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
-                    tv3.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-                    break;
-                case 2:
-                    tv.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-                    tv2.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-                    tv3.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+                    ListView hislist2 = (ListView)findViewById(R.id.coin_historyevent);//第二个listview
+                    CoinhistoryAdapter eventAdapter = new CoinhistoryAdapter(CoinhistoryActivity.this,
+                            user_id, 2);
+                    hislist2.setAdapter(eventAdapter);
                     break;
             }
         }
