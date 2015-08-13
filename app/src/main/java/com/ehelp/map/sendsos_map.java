@@ -108,7 +108,9 @@ public class sendsos_map extends ActionBarActivity implements BaiduMap.OnMapClic
     private Thread thr;
 
     Message msg_ =new Message();
-    private int count = 0;
+    private boolean flag =false;
+
+
     //停止振动发声
     public void Stopvands(View view) {
         this.finish();
@@ -224,6 +226,7 @@ public class sendsos_map extends ActionBarActivity implements BaiduMap.OnMapClic
     @Override
     protected void onDestroy() {
         mMapView.onDestroy();
+        flag = true;
         vib.cancel();
         cancelsos();
         if (mLocClient != null) {
@@ -571,7 +574,9 @@ public class sendsos_map extends ActionBarActivity implements BaiduMap.OnMapClic
         public void run() {
             int i =0;
             while(i<1000) {
-                Log.v("123456", String.valueOf(count));
+                if(flag == true){
+                    break;
+                }
                 getRespondNumber();
                 i++;
                 try {
@@ -612,9 +617,6 @@ public class sendsos_map extends ActionBarActivity implements BaiduMap.OnMapClic
                     return;
                 } else if (jO.getInt("status") == 200) {
                     msg_.arg1 = jO.getInt("support_number");
-                    count++;
-//                    msg_.arg1= count;
-                    Log.v("count","count"+String.valueOf(count));
                     mHandler.sendMessage(msg_);
                 }
 

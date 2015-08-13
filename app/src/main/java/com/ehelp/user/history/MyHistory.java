@@ -198,6 +198,10 @@ public class MyHistory extends AIActionBarActivity implements RapidFloatingActio
             wha = 2;
             return true;
         }
+        if (id == R.id.concern){
+            wha = 3;
+            return true;
+        }
         return super.onOptionsItemSelected(item);
     }
     /**

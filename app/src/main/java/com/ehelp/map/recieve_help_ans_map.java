@@ -7,7 +7,6 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.HandlerThread;
 import android.os.Message;
 import android.os.StrictMode;
 import android.support.v7.widget.Toolbar;
@@ -64,6 +63,7 @@ import com.ehelp.home.Home;
 import com.ehelp.send.CountNum;
 import com.ehelp.send.SendQuestion;
 import com.ehelp.utils.RequestHandler;
+import com.google.gson.Gson;
 import com.wangjie.androidbucket.utils.ABTextUtil;
 import com.wangjie.androidbucket.utils.imageprocess.ABShape;
 import com.wangjie.androidinject.annotation.annotations.base.AILayout;
@@ -129,10 +129,11 @@ public class recieve_help_ans_map extends AIActionBarActivity implements BaiduMa
     private int user_id;//发起者ID
     private SharedPreferences sp;
 
-    Message msg_ =new Message();
-    private int count = 0;
     LatLng end_node = null;
     private Event m_event;
+//每隔15s刷新回应人数
+    Message msg_ =new Message();
+    private boolean flag =false;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -154,11 +155,11 @@ public class recieve_help_ans_map extends AIActionBarActivity implements BaiduMa
         //event_id = m_event.getEventId();
         sp = this.getSharedPreferences("user_id", MODE_PRIVATE);
         idd = sp.getInt("user_id", -1);
-        getlauncherId();
+        getEvent();
         setView();
-        new Thread(runnable_).start();
 
         init();
+        new Thread(runnable_).start();
 
         //set toolbar
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -257,7 +258,7 @@ public class recieve_help_ans_map extends AIActionBarActivity implements BaiduMa
 
     }
 
-    public void getlauncherId(){
+    public void getEvent(){
         //int id =-1;
         String jsonStrng = "{" +
                 "\"event_id\":" + event_id + "}";
@@ -288,8 +289,9 @@ public class recieve_help_ans_map extends AIActionBarActivity implements BaiduMa
             }else {
                 Toast.makeText(getApplicationContext(), "查询成功",
                         Toast.LENGTH_SHORT).show();
+                Gson gson = new Gson();
+                m_event = gson.fromJson(message, Event.class);
                 user_id = jO.getInt("launcher_id");
-
             }
         }catch (JSONException e) {
             e.printStackTrace();
@@ -816,6 +818,13 @@ public class recieve_help_ans_map extends AIActionBarActivity implements BaiduMa
 //        mMapView.onDestroy();
 //        super.onDestroy();
 //    }
+@Override
+protected void onDestroy() {
+//        mSearch.destroy();
+//        mMapView.onDestroy();
+    flag = true;
+    super.onDestroy();
+}
 
 
     public class MyLocationListenner implements BDLocationListener {
@@ -847,7 +856,6 @@ public class recieve_help_ans_map extends AIActionBarActivity implements BaiduMa
     }
 
     public void init() {
-
         LatLngBounds.Builder builder = new LatLngBounds.Builder();
         // 暂时提供三个点标注在地图上作为例子
         end_node = new LatLng(m_event.getLatitude(), m_event.getLongitude());
@@ -970,12 +978,15 @@ for fab
             }
         }
     }
+
     Runnable runnable_ = new Runnable() {
         @Override
         public void run() {
             int i =0;
             while(i<1000) {
-                Log.v("123456", String.valueOf(count));
+                if(flag == true){
+                    break;
+                }
                 getRespondNumber();
                 i++;
                 try {
@@ -1016,9 +1027,6 @@ for fab
                     return;
                 } else if (jO.getInt("status") == 200) {
                     msg_.arg1 = jO.getInt("support_number");
-                    count++;
-//                    msg_.arg1= count;
-                    Log.v("count","count"+String.valueOf(count));
                     mHandler.sendMessage(msg_);
                 }
 

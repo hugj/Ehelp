@@ -76,7 +76,6 @@ public class recievesos_map extends ActionBarActivity implements BaiduMap.OnMapC
 
     private EditText Eans;
     private String ans;
-    private int count =0;
 
     //
     MapView mMapView = null;    // map View
@@ -114,6 +113,7 @@ public class recievesos_map extends ActionBarActivity implements BaiduMap.OnMapC
     private Menu menu_recievesos_map;
 
     Message msg_ =new Message();
+    private boolean flag =false;
 
     private Gson gson = new Gson();
     public LatLng end_node = null;
@@ -620,13 +620,14 @@ public class recievesos_map extends ActionBarActivity implements BaiduMap.OnMapC
         // TODO Auto-generated method stub
         super.onResume();
     }
-//
-//    @Override
-//    protected void onDestroy() {
+
+    @Override
+    protected void onDestroy() {
 //        mSearch.destroy();
 //        mMapView.onDestroy();
-//        super.onDestroy();
-//    }
+        flag = true;
+        super.onDestroy();
+    }
 
 
     public class MyLocationListenner implements BDLocationListener {
@@ -719,7 +720,9 @@ public class recievesos_map extends ActionBarActivity implements BaiduMap.OnMapC
         public void run() {
             int i =0;
             while(i<1000) {
-                Log.v("123456", String.valueOf(count));
+                if(flag == true){
+                    break;
+                }
                 getRespondNumber();
                 i++;
                 try {
@@ -760,9 +763,6 @@ public class recievesos_map extends ActionBarActivity implements BaiduMap.OnMapC
                     return;
                 } else if (jO.getInt("status") == 200) {
                     msg_.arg1 = jO.getInt("support_number");
-                    count++;
-//                    msg_.arg1= count;
-                    Log.v("count","count"+String.valueOf(count));
                     mHandler.sendMessage(msg_);
                 }
 
