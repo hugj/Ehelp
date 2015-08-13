@@ -158,7 +158,6 @@ public class recieve_help_ans_map extends AIActionBarActivity implements BaiduMa
 
         Intent intent = getIntent();
         event_id = getIntent().getIntExtra("event_id",-1);
-        //event_id =311;
 
         //event_id = m_event.getEventId();
         sp = this.getSharedPreferences("user_id", MODE_PRIVATE);
@@ -250,6 +249,7 @@ public class recieve_help_ans_map extends AIActionBarActivity implements BaiduMa
         String title ="";
         String content ="";
         String time = "time";
+        String location = "loaction";
         String jsonStrng = "{" +
                 "\"id\":" + user_id + "}";
         String message = RequestHandler.sendPostRequest(
@@ -280,6 +280,7 @@ public class recieve_help_ans_map extends AIActionBarActivity implements BaiduMa
                 title = jO.getString("title");
                 content = jO.getString("content");
                 time = jO.getString("time");
+                location = jO.getString("location");
             } catch (JSONException e) {
                 e.printStackTrace();
                 Log.v("qazwsxed", e.toString());
@@ -292,6 +293,8 @@ public class recieve_help_ans_map extends AIActionBarActivity implements BaiduMa
         tmp.setText(content);
         tmp = (TextView)findViewById(R.id.helptime);
         tmp.setText(time);
+        tmp = (TextView)findViewById(R.id.location);
+        tmp.setText(location);
 
         setListView();
     }

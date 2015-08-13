@@ -311,10 +311,18 @@ public class messageActivity extends AIActionBarActivity implements RapidFloatin
                     manage_relation(0,0);
                     manage_relation(1,2);
                     //刷新当前页面
-                    Intent intent = new Intent(messageActivity.this, messageActivity.class);
-                    intent.putExtra("id",idd);
-                    startActivity(intent);
-                    messageActivity.this.finish();
+//                    Intent intent = new Intent(messageActivity.this, messageActivity.class);
+//                    intent.putExtra("id",idd);
+//                    startActivity(intent);
+//                    messageActivity.this.finish();
+                    Menu menu = menu_message;
+                    MenuItem item_VitalFriend = menu.findItem(R.id.action_VitalFriend);
+                    MenuItem item_Friends = menu.findItem(R.id.action_friends);
+
+                        item_VitalFriend.setVisible(true);
+                        item_Friends.setTitle("删除好友");
+                        item_VitalFriend.setTitle("添加为紧急联系人");
+                        item_Friends.setVisible(true);
 
                 }
             });
@@ -333,10 +341,18 @@ public class messageActivity extends AIActionBarActivity implements RapidFloatin
                     dialog.dismiss();
                     manage_relation(1, 0);
                     //刷新当前页面
-                    Intent intent = new Intent(messageActivity.this, messageActivity.class);
-                    intent.putExtra("id",idd);
-                    startActivity(intent);
-                    messageActivity.this.finish();
+//                    Intent intent = new Intent(messageActivity.this, messageActivity.class);
+//                    intent.putExtra("id",idd);
+//                    startActivity(intent);
+//                    messageActivity.this.finish();
+                    Menu menu = menu_message;
+                    MenuItem item_VitalFriend = menu.findItem(R.id.action_VitalFriend);
+                    MenuItem item_Friends = menu.findItem(R.id.action_friends);
+
+                        item_VitalFriend.setVisible(true);
+                    item_VitalFriend.setTitle("删除紧急联系人");
+                    item_Friends.setVisible(false);
+
                 }
             });
             builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
@@ -360,11 +376,21 @@ public class messageActivity extends AIActionBarActivity implements RapidFloatin
                     dialog.dismiss();
                     manage_relation(1, 2);
                     //刷新当前页面
-                    Intent intent = new Intent(messageActivity.this, messageActivity.class);
-                    intent.putExtra("type",1);//0表示非好友1表示好友2表示紧急联系人
-                    intent.putExtra("id",idd);
-                    startActivity(intent);
-                    messageActivity.this.finish();
+//                    Intent intent = new Intent(messageActivity.this, messageActivity.class);
+//                    intent.putExtra("type",1);//0表示非好友1表示好友2表示紧急联系人
+//                    intent.putExtra("id",idd);
+//                    startActivity(intent);
+//                    messageActivity.this.finish();
+                    Menu menu = menu_message;
+                    MenuItem item_VitalFriend = menu.findItem(R.id.action_VitalFriend);
+                    MenuItem item_Friends = menu.findItem(R.id.action_friends);
+
+                        item_VitalFriend.setVisible(true);
+                    item_Friends.setTitle("删除好友");
+                        item_VitalFriend.setTitle("添加为紧急联系人");
+                    item_Friends.setVisible(true);
+
+
                 }
             });
             delete.setNegativeButton("取消", new DialogInterface.OnClickListener() {
@@ -382,11 +408,20 @@ public class messageActivity extends AIActionBarActivity implements RapidFloatin
                     dialog.dismiss();
                     manage_relation(0, 2);
                     //刷新当前页面
-                    Intent intent = new Intent(messageActivity.this, messageActivity.class);
-                    intent.putExtra("type",0);//0表示非好友1表示好友2表示紧急联系人
-                    intent.putExtra("id",idd);
-                    startActivity(intent);
-                    messageActivity.this.finish();
+//                    Intent intent = new Intent(messageActivity.this, messageActivity.class);
+//                    intent.putExtra("type",0);//0表示非好友1表示好友2表示紧急联系人
+//                    intent.putExtra("id",idd);
+//                    startActivity(intent);
+//                    messageActivity.this.finish();
+                    Menu menu = menu_message;
+                    MenuItem item_VitalFriend = menu.findItem(R.id.action_VitalFriend);
+                    MenuItem item_Friends = menu.findItem(R.id.action_friends);
+
+
+                        item_VitalFriend.setVisible(false);
+                    item_Friends.setTitle("添加为好友");
+                    item_Friends.setVisible(true);
+
                 }
             });
             delete.setNegativeButton("取消", new DialogInterface.OnClickListener() {
@@ -469,11 +504,11 @@ public class messageActivity extends AIActionBarActivity implements RapidFloatin
             return true;
         }
         if(id == R.id.action_friends){
-            messageActivity.this.operation_friends();
+            this.operation_friends();
             return true;
         }
         if(id == R.id.action_VitalFriend) {
-            messageActivity.this.operation_VitalFriend();
+            operation_VitalFriend();
             return true;
         }
         return super.onOptionsItemSelected(item);

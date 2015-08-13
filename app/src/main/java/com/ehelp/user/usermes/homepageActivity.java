@@ -345,7 +345,7 @@ public class homepageActivity extends AIActionBarActivity implements AbsListView
                     }).show();
         } else
         if (index == 6) { //职业
-            new AlertDialog.Builder(homepageActivity.this).setTitle("选择性别").setIcon(
+            new AlertDialog.Builder(homepageActivity.this).setTitle("选择职业").setIcon(
                     android.R.drawable.ic_dialog_info).setSingleChoiceItems(
                     new String[]{"学生", "教师", "工人", "警察", "消防员", "其他"}, 0,
                     new DialogInterface.OnClickListener() {

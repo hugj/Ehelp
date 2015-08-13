@@ -75,60 +75,85 @@
                     android:textColor="#ffffff"
                     android:id="@+id/respond_number"
                     android:onClick="respondNum"
+                    android:elevation="6dp"
                     android:background="@drawable/circle_button"
-                    android:layout_alignBottom="@+id/map"
+                    android:layout_marginTop="270dp"
+                    android:layout_marginRight="16dp"
                     android:layout_alignParentEnd="true" />
-        <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="40sp"
-            android:id="@+id/Title"
-            android:text="事件标题"
-            android:textSize="20dp"
-            android:layout_alignParentLeft ="@+id/imageView"
-            android:layout_below="@+id/imageView" />
-
-                <TextView
-                    android:layout_width="fill_parent"
-                    android:layout_height="50sp"
-                    android:id="@+id/Content"
-                    android:text="事件内容"
-                    android:layout_alignParentLeft ="@+id/imageView"
-                    android:layout_below="@+id/Title" />
-
+                <!--android:layout_alignBottom="@+id/map"-->
 
                 <ImageView
-                    android:layout_width="60sp"
-                    android:layout_height="60sp"
+                    android:layout_width="50sp"
+                    android:layout_height="50sp"
                     android:id="@+id/imageView"
                     android:layout_marginTop="330sp"
                     android:layout_marginLeft="10sp"
                     android:layout_alignParentStart="true"
-                    android:src="@drawable/ic_launcher" />
+                    android:src="@drawable/icon" />
 
                 <TextView
-                    android:layout_width="120sp"
-                    android:layout_height="30sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:text="你大爷"
+                    android:textSize="14sp"
                     android:id="@+id/user_name"
                     android:layout_toRightOf ="@+id/imageView"
-                    android:layout_alignTop="@+id/imageView"
-                    android:layout_marginRight="240sp"
+                    android:layout_alignBottom="@+id/imageView"
                     android:layout_marginTop="20sp"
                     android:layout_alignParentEnd="true" />
-
                 <TextView
-                    android:layout_width="100sp"
-                    android:layout_height="20sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:text="这里是天堂"
-                    android:id="@+id/helptime"
+                    android:id="@+id/location"
                     android:layout_alignTop="@+id/imageView"
-                    android:layout_alignParentEnd="true" />
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="16sp"
+                    android:layout_marginRight="10sp"
+                    android:layout_marginBottom="1sp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="time"
+                    android:id="@+id/helptime"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginRight="10sp"
+                    android:layout_alignBottom="@+id/imageView"
+                    />
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/detail"
+                    android:background="@drawable/border_for_textview"
+                    android:layout_below="@+id/imageView"
+                    android:layout_marginRight="10sp"
+                    android:layout_marginLeft="10sp">
+                    <TextView
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/Title"
+                        android:text="事件标题"
+                        android:textSize="20dp"/>
+            <!--android:layout_alignParentLeft ="@+id/imageView"-->
+            <!--android:layout_below="@+id/imageView" />-->
+
+                    <TextView
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/Content"
+                        android:text="事件内容"
+                        android:layout_marginTop="15sp"
+                        android:layout_marginLeft="20sp"
+                        android:layout_below="@+id/Title" />
+                    <!--android:layout_alignParentLeft ="@+id/imageView"-->
+
+                </RelativeLayout>
 
                 <LinearLayout
                     android:orientation="vertical"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_below="@+id/Content"
+                    android:layout_below="@+id/detail"
                     android:id="@+id/comment"></LinearLayout>
             </RelativeLayout>
 

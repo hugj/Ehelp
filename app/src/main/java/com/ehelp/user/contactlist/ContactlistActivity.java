@@ -337,7 +337,6 @@ public class ContactlistActivity extends AIActionBarActivity implements RapidFlo
 								type = 1;
 							}
 							Intent intent = new Intent(ContactlistActivity.this, messageActivity.class);
-							intent.putExtra("type", type);
 							intent.putExtra("id", id);//传参来确定显示的界面
 							startActivity(intent);
 						} else {//1为转账，跳到转账页面并传参
@@ -347,10 +346,7 @@ public class ContactlistActivity extends AIActionBarActivity implements RapidFlo
 							intent.putExtra("coin", emp_);//用户的爱心币数
 							startActivity(intent);
 						}
-						Intent intent = new Intent(ContactlistActivity.this, messageActivity.class);
-						//intent.putExtra("type",type);
-						intent.putExtra("id",id);
-						startActivity(intent);
+
 					}
 				}catch (JSONException e) {
 					e.printStackTrace();
@@ -360,4 +356,9 @@ public class ContactlistActivity extends AIActionBarActivity implements RapidFlo
 			}
 		});
 	}
+	@Override
+    protected void onResume() {
+		Drawcontactlist();
+		super.onResume();
+    }
 }

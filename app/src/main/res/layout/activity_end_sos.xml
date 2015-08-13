@@ -67,33 +67,6 @@
         android:childDivider="#AFAFAF"
         android:listSelector="@android:color/transparent"
         android:divider="#AFAFAF" />
-    <!--<TextView-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:text="回应的帮客"-->
-        <!--android:layout_marginTop="20sp"/>-->
-    <!--<LinearLayout-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:gravity="bottom|center"-->
-        <!--android:background="@drawable/border_for_textview">-->
-        <!--<ImageView-->
-            <!--android:layout_width="40sp"-->
-            <!--android:layout_height="40sp"-->
-            <!--android:src="@drawable/icon"/>-->
-        <!--<TextView-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_marginLeft="18sp"-->
-            <!--android:text="黄志婷"-->
-            <!--android:textSize="18sp"/>-->
-        <!--<ImageView-->
-            <!--android:layout_width="20sp"-->
-            <!--android:layout_height="20sp"-->
-            <!--android:layout_gravity="right|center"-->
-            <!--android:layout_marginLeft="200sp"-->
-            <!--android:src="@drawable/mm_submenu"/>-->
-    <!--</LinearLayout>-->
 
 
 

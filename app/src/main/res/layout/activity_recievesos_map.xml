@@ -15,125 +15,157 @@
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:scrollbars="vertical">
-    <RelativeLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <com.baidu.mapapi.map.MapView
-            android:id="@+id/map"
-            android:layout_width="fill_parent"
-            android:layout_height="300sp"
-            android:clickable="true"
-            android:layout_marginBottom="250dp"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true" />
-
-        <Button
-            android:id="@+id/drive"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="SearchButtonProcess"
-            android:text="驾车"
-            android:layout_below="@+id/walk"
-            android:layout_alignStart="@+id/walk" />
-
-        <Button
-            android:id="@+id/walk"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="SearchButtonProcess"
-            android:text="步行"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true" />
-        <Button
-            android:layout_width="60sp"
-            android:layout_height="60sp"
-            android:text="空"
-            android:textSize="28sp"
-            android:textColor="#ffffff"
-            android:id="@+id/respond_number"
-        android:onClick="respondNum"
-        android:background="@drawable/circle_button"
-            android:layout_alignBottom="@+id/map"
-            android:layout_alignParentEnd="true" />
-
-        <!--<TextView-->
-            <!--android:layout_width="fill_parent"-->
-            <!--android:layout_height="100sp"-->
-            <!--android:inputType="textPersonName"-->
-            <!--android:ems="10"-->
-            <!--android:id="@+id/editText2"-->
-            <!--android:layout_alignParentBottom="true"-->
-            <!--android:layout_marginBottom="50sp"-->
-            <!--android:layout_alignParentStart="true" />-->
-
-        <ImageView
-            android:layout_width="60sp"
-            android:layout_height="60sp"
-            android:id="@+id/imageView"
-            android:layout_marginTop="330sp"
-            android:layout_marginLeft="10sp"
-            android:layout_alignParentStart="true"
-            android:src="@drawable/icon" />
-
-        <TextView
-            android:layout_width="70sp"
-            android:layout_height="30sp"
-            android:text="悟能"
-            android:id="@+id/SOSusername"
-            android:layout_alignTop="@+id/imageView"
-            android:layout_marginRight="200sp"
-            android:layout_marginTop="20sp"
-            android:layout_alignParentEnd="true" />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="健康卡"
-            android:background="#00cc33"
-            android:onClick="healthCardClick"
-            android:id="@+id/healthCard"
-            android:layout_alignBaseline="@+id/SOSusername"
-            android:layout_alignBottom="@+id/SOSusername"
-            android:layout_centerHorizontal="true" />
-
-        <TextView
-            android:layout_width="100sp"
-            android:layout_height="20sp"
-            android:text="这里是天堂"
-            android:id="@+id/SOSlocation"
-            android:layout_marginRight="0sp"
-            android:layout_marginTop="70sp"
-            android:layout_alignTop="@+id/imageView"
-            android:layout_alignParentEnd="true" />
-        <LinearLayout
-            android:orientation="vertical"
+        <RelativeLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/SOStime"
-            android:id="@+id/SOScomment"></LinearLayout>
+            android:layout_height="match_parent">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="2005年7月18日   13点25分37秒"
-            android:id="@+id/SOStime"
-            android:layout_below="@+id/SOSlocation"
-            android:layout_alignEnd="@+id/SOSlocation" />
-        <!--android:layout_alignBottom="@+id/editText2"-->
+            <com.baidu.mapapi.map.MapView
+                android:id="@+id/map"
+                android:layout_width="fill_parent"
+                android:layout_height="300sp"
+                android:clickable="true"
+                android:layout_marginBottom="250dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="SOS"
-            android:id="@+id/problem"
-            android:layout_alignTop="@+id/SOSlocation"
-            android:layout_alignStart="@+id/imageView"
-            android:layout_marginStart="31dp" />
+            <Button
+                android:id="@+id/drive"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="SearchButtonProcess"
+                android:text="驾车"
+                android:layout_below="@+id/walk"
+                android:layout_alignStart="@+id/walk" />
 
-    </RelativeLayout>
+            <Button
+                android:id="@+id/walk"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="SearchButtonProcess"
+                android:text="步行"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true" />
+            <Button
+                android:layout_width="60sp"
+                android:layout_height="60sp"
+                android:text="空"
+                android:textSize="28sp"
+                android:textColor="#ffffff"
+                android:id="@+id/respond_number"
+                android:onClick="respondNum"
+                android:elevation="20dp"
+                android:background="@drawable/circle_button"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="270dp"
+                android:layout_marginRight="16dp"/>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="330sp"
+                android:id="@+id/detail"
+                >
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center_vertical"
+                android:background="@drawable/preference_first_item"
+                android:id="@+id/medihistory1">
+                <ImageView android:layout_width="40sp"
+                    android:layout_height="40sp"
+                    android:layout_centerVertical="true"
+                    android:id="@+id/mediHistory"
+                    android:src="@drawable/icon"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/SOSusername"
+                    android:layout_marginLeft="70dp"
+                    android:textColor="#000" android:layout_centerVertical="true"
+                    android:layout_toRightOf="@id/mediHistory"
+                    android:text="李大爷"/>
+                <Button
+                    android:layout_width="50dp"
+                    android:layout_height="25dp"
+                    android:scaleType="matrix"
+                    android:text="健康卡"
+                    android:background="#00cc33"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    android:onClick="healthCardClick"
+                    android:clickable="true" />
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:background="@drawable/preference_item"
+                android:id="@+id/height1">
+                <TextView android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:textColor="#000"
+                    android:layout_centerVertical="true"
+                    android:id="@+id/height"
+                    android:text="问题类型"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/problem"
+                    android:textColor="#000" android:layout_centerVertical="true"
+                    android:layout_marginLeft="110dp"
+                    android:text="SOS"/>
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:background="@drawable/preference_item"
+                android:id="@+id/weight1">
+                <TextView android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:textColor="#000"
+                    android:layout_centerVertical="true"
+                    android:id="@+id/weight"
+                    android:text="时间"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/SOStime"
+                    android:textColor="#000"
+                    android:layout_marginLeft="110dp"
+                    android:layout_gravity="center_horizontal"
+                    android:text="2012年"
+                    />
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:background="@drawable/preference_last_item">
+                <TextView android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:textColor="#000"
+                    android:layout_centerVertical="true"
+                    android:id="@+id/weight2"
+                    android:text="地点"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/SOSlocation"
+                    android:textColor="#000"
+                    android:layout_marginLeft="110dp"
+                    android:text="北京"/>
+            </RelativeLayout>
+
+            </LinearLayout>
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/detail"
+                android:id="@+id/SOScomment"></LinearLayout>
+
+        </RelativeLayout>
 
 </ScrollView>
 

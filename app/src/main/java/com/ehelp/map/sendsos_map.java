@@ -1,5 +1,6 @@
 package com.ehelp.map;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -15,6 +16,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ZoomControls;
@@ -38,7 +41,11 @@ import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.map.OverlayOptions;
 import com.baidu.mapapi.model.LatLng;
 import com.baidu.mapapi.model.LatLngBounds;
+import com.baidu.mapapi.search.route.OnGetRoutePlanResultListener;
 import com.ehelp.R;
+import com.ehelp.entity.Event;
+import com.ehelp.entity.comment;
+import com.ehelp.home.Home;
 import com.ehelp.utils.RequestHandler;
 
 import org.json.JSONException;
@@ -48,6 +55,7 @@ import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.util.List;
 
 import javax.net.ssl.HttpsURLConnection;
 
@@ -68,7 +76,7 @@ import cn.jpush.android.api.JPushInterface;
 //严苛模式
 
 
-public class sendsos_map extends ActionBarActivity implements BaiduMap.OnMapClickListener{
+public class sendsos_map extends ActionBarActivity implements BaiduMap.OnMapClickListener,View.OnClickListener {
 
 
     MapView mMapView = null;    // map View
@@ -111,6 +119,10 @@ public class sendsos_map extends ActionBarActivity implements BaiduMap.OnMapClic
     private boolean flag =false;
 
 
+    private List<comment> comments;
+    private AlertDialog ResponseDialog = null;
+
+
     //停止振动发声
     public void Stopvands(View view) {
         this.finish();
@@ -135,6 +147,7 @@ public class sendsos_map extends ActionBarActivity implements BaiduMap.OnMapClic
         mBaidumap = mMapView.getMap();
         int count = mMapView.getChildCount();
         init();
+        setListView();
 
         //set toolbar
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -647,5 +660,137 @@ public class sendsos_map extends ActionBarActivity implements BaiduMap.OnMapClic
         Intent it = new Intent(sendsos_map.this,RespondPeopleActivity.class);
         it.putExtra("event_id", event_id);
         startActivity(it);
+    }
+
+    public void setListView(){
+        //ListView comList = (ListView)findViewById(R.id.comment);
+        CommentAdapter com = new CommentAdapter(this, event_id);
+        //comList.setAdapter(com);
+        comments = com.getEvent();
+
+        LinearLayout commentll = (LinearLayout)findViewById(R.id.SOScomment);
+        for (int i = 0; i < comments.size(); i++) {
+            //时间
+            TextView time=new TextView(this);
+            time.setText(comments.get(i).getTime());
+            RelativeLayout.LayoutParams tim=new RelativeLayout.LayoutParams(-2,-2);
+            tim.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+            time.setLayoutParams(tim);
+
+            //内容
+            TextView content=new TextView(this);
+            content.setText(comments.get(i).getContent());
+
+            //作者
+            TextView Author=new TextView(this);
+            String Response = comments.get(i).getParent_author();
+            if (Response == null) {
+                Author.setText(comments.get(i).getAuthor());
+            } else {
+                Author.setText(comments.get(i).getAuthor() + " 回复：" + Response);
+            }
+            RelativeLayout.LayoutParams aut=new RelativeLayout.LayoutParams(-2,-2);
+            aut.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
+            Author.setLayoutParams(aut);
+
+            //作者和时间
+            RelativeLayout rl=new RelativeLayout(this);
+            rl.addView(Author);
+            rl.addView(time);
+
+            //单条评论
+            LinearLayout l1=new LinearLayout(this);
+            l1.setOrientation(LinearLayout.VERTICAL);
+            l1.addView(rl);
+            l1.addView(content);
+
+            android.support.v7.widget.CardView card = new android.support.v7.widget.CardView(this);
+            card.addView(l1);
+            card.setOnClickListener(this);
+            card.setId(i);
+
+            commentll.addView(card);
+        }
+    }
+    public Boolean isAuthor(int id) {
+        SharedPreferences sharedPref = this.getSharedPreferences("user_id", Context.MODE_PRIVATE);
+        int phone_user_id = sharedPref.getInt("user_id", -1);
+        return (id == phone_user_id);
+    }
+
+    /*
+    * 监听点击评论回复
+    * */
+    @Override
+    public void onClick(View v) {
+        final int i =  v.getId();
+
+        ResponseDialog = new AlertDialog.Builder(sendsos_map.this).create();
+        ResponseDialog.show();
+        ResponseDialog.getWindow().setContentView(R.layout.response_comment);
+
+        //设置弹出框内容
+        LinearLayout pop = (LinearLayout)ResponseDialog.getWindow().findViewById(R.id.pop);
+        LinearLayout resp = new LinearLayout(this);
+        TextView respText=new TextView(this);
+        respText.setText("回复");
+        respText.setTextSize(20);
+        resp.addView(respText);
+        pop.addView(resp);
+        //点击回复
+        resp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(sendsos_map.this, ResponseActivity.class);
+                intent.putExtra("comment", comments.get(i));
+                startActivity(intent);
+                ResponseDialog.dismiss();
+            }
+        });
+
+
+        if (isAuthor(comments.get(i).getAuthor_id())) {
+            LinearLayout dele = new LinearLayout(this);
+            TextView deleText=new TextView(this);
+            deleText.setText("删除");
+            deleText.setTextSize(20);
+            dele.addView(deleText);
+            pop.addView(dele);
+
+            //点击删除
+            dele.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    String jsonStrng = "{" +
+                            "\"id\":" + comments.get(i).getAuthor_id() +
+                            ",\"event_id\":" + comments.get(i).getEvent_id() +
+                            ",\"comment_id\":" + comments.get(i).getComment_id() + "}";
+
+                    String message = RequestHandler.sendPostRequest(
+                            "http://120.24.208.130:1501/comment/remove", jsonStrng);
+                    if (message == "false") {
+                        Toast.makeText(getApplicationContext(), "删除失败，请检查网络是否连接并重试",
+                                Toast.LENGTH_SHORT).show();
+                    } else {
+                        try {
+                            JSONObject jO = new JSONObject(message);
+                            if (jO.getInt("status") == 500) {
+                                Toast.makeText(getApplicationContext(), "删除失败",
+                                        Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(getApplicationContext(), "删除成功",
+                                        Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(sendsos_map.this, Home.class);
+                                startActivity(intent);
+                                ResponseDialog.dismiss();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            });
+        }
+
     }
 }
