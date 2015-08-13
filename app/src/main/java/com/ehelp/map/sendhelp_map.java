@@ -361,6 +361,8 @@ public class sendhelp_map extends ActionBarActivity implements
                 MarkerOptions markerOptions = new MarkerOptions().icon(bd).position(pt);
                 mMarker1 = (Marker) (mBaiduMap.addOverlay(markerOptions));
             }
+            LatLng a = new LatLng(location.getLatitude(), location.getLongitude());
+            ll = a;
         }
 
         public void onReceivePoi(BDLocation poiLocation) {
