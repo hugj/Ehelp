@@ -149,7 +149,7 @@
         android:theme="@style/AppTheme" >
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
-            android:value="DHx2AGnN7bg1m5yzaTMgCr7C" />
+            android:value="hIOmFOzyRNVo5W7H75h5vmfo" />
 
         <activity
             android:name=".account.login"
