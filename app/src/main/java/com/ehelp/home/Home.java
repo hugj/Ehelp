@@ -267,6 +267,7 @@ public class Home extends AIActionBarActivity implements
     public void ContactList(View view) {
 
         Intent intent = new Intent(this, ContactlistActivity.class);
+        intent.putExtra("extra", 0);
         startActivity(intent);
     }
 

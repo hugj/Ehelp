@@ -20,6 +20,7 @@ import com.ehelp.entity.User;
 import com.ehelp.map.sendhelp_map;
 import com.ehelp.send.CountNum;
 import com.ehelp.send.SendQuestion;
+import com.ehelp.user.lovebank.TransferActivity;
 import com.ehelp.utils.RequestHandler;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -58,10 +59,14 @@ public class ContactlistActivity extends AIActionBarActivity implements RapidFlo
 
 	private Toolbar mToolbar;
 
+	private int emp,emp_;//判断是从哪个地方跳入到此页面的，1为爱心币转朋友，0为通讯录
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
+		Intent intent =  getIntent();
+		emp = intent.getIntExtra("extra", 0);//默认0
+		emp_ = intent.getIntExtra("coin", 0);//从CoinActivity传入的爱心币数
 		initView();
 		init();//fab
 		Drawcontactlist();
@@ -289,6 +294,8 @@ public class ContactlistActivity extends AIActionBarActivity implements RapidFlo
 		if (id == R.id.action_settings) {
 			//添加好友。跳转至添加好友页面
 			Intent intent = new Intent(this, AddFriendActivity.class);
+			intent.putExtra("QueryPerson", 0);
+			intent.putExtra("coin", 0);
 			startActivity(intent);
 			return true;
 		}
@@ -320,12 +327,25 @@ public class ContactlistActivity extends AIActionBarActivity implements RapidFlo
 								Toast.LENGTH_SHORT).show();
 					} else {
 						int id = jO.getInt("id");
-						int type;
-						//判断是紧急联系人还是好友
-						if (arg2 == 0) {
-							type = 2;
-						} else {
-							type = 1;
+						String name = jO.getString("name");
+						if (emp == 0) { //判断是从通讯录跳转过来的还是转账跳转来的，0为通讯录
+							int type;
+							//判断是紧急联系人还是好友
+							if (arg2 == 0) {
+								type = 2;
+							} else {
+								type = 1;
+							}
+							Intent intent = new Intent(ContactlistActivity.this, messageActivity.class);
+							intent.putExtra("type", type);
+							intent.putExtra("id", id);//传参来确定显示的界面
+							startActivity(intent);
+						} else {//1为转账，跳到转账页面并传参
+							Intent intent = new Intent(ContactlistActivity.this, TransferActivity.class);
+							intent.putExtra("id", id);
+							intent.putExtra("name", name);
+							intent.putExtra("coin", emp_);//用户的爱心币数
+							startActivity(intent);
 						}
 						Intent intent = new Intent(ContactlistActivity.this, messageActivity.class);
 						//intent.putExtra("type",type);
