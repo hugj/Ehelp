@@ -221,7 +221,6 @@ public class HomeMapActivity extends BaseFragment implements RapidFloatingAction
                 } else {
                     Event event = (Event) marker.getExtraInfo().get("event");
                     Intent intent = new Intent(getActivity(), recieve_help_ans_map.class);
-                    intent.putExtra("EVENT", event);
                     intent.putExtra(EXTRA_MESSAGE, event.getEventId());
                     startActivity(intent);
                 }

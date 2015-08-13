@@ -1,5 +1,7 @@
 package com.ehelp.utils;
 
+import android.util.Log;
+
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.File;
@@ -37,7 +39,7 @@ public class RequestHandler {
 			conn.setConnectTimeout(5000);
 			conn.setRequestMethod("GET");
 			conn.setDoInput(true); // permit to use the inputstream
-			conn.setDoOutput(true); // permit to use the outputstrem
+			conn.setDoOutput(false); // permit to use the outputstrem
 			conn.setUseCaches(false); // deny to use the cache
 
 			StringBuffer sBuffer = new StringBuffer();
@@ -206,8 +208,9 @@ public class RequestHandler {
 			conn.setConnectTimeout(500);
 			conn.setRequestMethod("GET");
 			conn.setDoInput(true); // permit to use the inputstream
-			conn.setDoOutput(true); // permit to use the outputstrem
+			conn.setDoOutput(false); // permit to use the outputstrem
 			conn.setUseCaches(false); // deny to use the cache
+			int a = conn.getResponseCode();
 
 			if(conn.getResponseCode() == HttpURLConnection.HTTP_OK){
 
@@ -218,6 +221,9 @@ public class RequestHandler {
 		} catch (Exception e) {
 
 			e.printStackTrace();
+			String sss = e.toString();
+			String a = sss;
+			Log.v("123123123123", a);
 
 		}
 

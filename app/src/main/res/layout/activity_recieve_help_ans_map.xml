@@ -49,6 +49,29 @@
                     android:layout_marginTop="210sp"
 
                     android:layout_alignEnd="@+id/drive" />
+                <Button
+                    android:id="@+id/sound"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="sound"
+                    android:text="sound"
+                    android:layout_marginRight="0sp"
+                    android:layout_marginTop="170sp"
+
+                    android:layout_alignEnd="@+id/drive" />
+
+                <Button
+                    android:id="@+id/video"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="video"
+                    android:text="video"
+                    android:layout_marginRight="0sp"
+                    android:layout_marginTop="130sp"
+
+                    android:layout_alignEnd="@+id/drive" />
+
+
                 <TextView
                     android:layout_width="fill_parent"
                     android:layout_height="40sp"
