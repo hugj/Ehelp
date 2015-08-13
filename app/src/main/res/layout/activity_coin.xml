@@ -1,26 +1,35 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout
+    android:layout_height="fill_parent"
+    android:layout_width="fill_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+   <LinearLayout
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical"
     android:background="#eee">
-    <RelativeLayout android:layout_width="fill_parent"
-        android:layout_height="150dp"
-        android:gravity="center_horizontal|center"
-        android:background="@drawable/background_box"
-        android:id="@+id/integral_inf">
-        <TextView android:layout_width="wrap_content"
+    <include layout="@layout/toolbar" />
+    <RelativeLayout android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_gravity="center"
+        android:background="@drawable/background_circle"
+        android:id="@+id/coin_inf">
+        <LinearLayout android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_centerInParent="true"
+            android:gravity="center">
+            <TextView android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="20dp"
             android:text="我的爱心币" />
-        <TextView android:layout_width="wrap_content"
+             <TextView android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/integral_num"
-            android:layout_marginTop="50dp"
-            android:layout_marginLeft="9dp"
+            android:id="@+id/coin_num"
+            android:layout_marginTop="25dp"
             android:textSize="40dp"
-            android:textColor="#4876FF"
-            android:text="123"/>
+            android:textColor="#fff"
+            android:text="1000"/>
+        </LinearLayout>
     </RelativeLayout>
     <RelativeLayout android:layout_width="fill_parent"
         android:layout_height="50dp"
@@ -28,7 +37,7 @@
         android:gravity="center_horizontal"
         android:layout_marginTop="30dp"
         android:clickable="true"
-        android:onClick="my_integral"
+        android:onClick="to_friends"
         android:background="@drawable/background_box">
         <TextView android:layout_height="wrap_content"
             android:layout_width="wrap_content"
@@ -50,7 +59,7 @@
         android:id="@+id/bank_transfer2"
         android:gravity="center_horizontal"
         android:clickable="true"
-        android:onClick="my_integral"
+        android:onClick="to_others"
         android:background="@drawable/background_box">
         <TextView android:layout_height="wrap_content"
             android:layout_width="wrap_content"
@@ -67,4 +76,31 @@
             android:clickable="true"
             android:src="@drawable/mm_submenu" />
     </RelativeLayout>
-</LinearLayout>
+    </LinearLayout>
+    <com.wangjie.rapidfloatingactionbutton.RapidFloatingActionLayout
+        xmlns:rfal="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/label_list_sample_rfal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        rfal:rfal_frame_color="#ffffff"
+        rfal:rfal_frame_alpha="0.7">
+
+        <com.wangjie.rapidfloatingactionbutton.RapidFloatingActionButton
+            xmlns:rfab="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/label_list_sample_rfab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginRight="15dp"
+            android:layout_marginBottom="15dp"
+            rfab:rfab_size="normal"
+            rfab:rfab_drawable="@drawable/rfab__drawable_rfab_default"
+            rfab:rfab_color_normal="#37474f"
+            rfab:rfab_color_pressed="#263238"
+            rfab:rfab_shadow_radius="7dp"
+            rfab:rfab_shadow_color="#999999"
+            rfab:rfab_shadow_dx="0dp"
+            rfab:rfab_shadow_dy="5dp"/>
+    </com.wangjie.rapidfloatingactionbutton.RapidFloatingActionLayout>
+    </RelativeLayout>

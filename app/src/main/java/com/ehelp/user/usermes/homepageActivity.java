@@ -238,7 +238,6 @@ public class homepageActivity extends AIActionBarActivity implements AbsListView
 
             data.add(6, "所在地    " + UserInfo.getLocation());
             data.add(7, "年  龄    " + UserInfo.getAge());
-            data.add("111");
         }
 
         adapter = new ArrayAdapter<>(this,
@@ -717,7 +716,7 @@ public class homepageActivity extends AIActionBarActivity implements AbsListView
 * */
     public void setAttention(View headerContainer) {
         final TextView Eattention = (TextView) headerContainer.findViewById(R.id.attention);
-        Eattention.setText("关注  " + attention.size());
+        Eattention.setText("关注  " + attention.size() + "  ");
         Eattention.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
@@ -732,7 +731,7 @@ public class homepageActivity extends AIActionBarActivity implements AbsListView
 * */
     public void setFans(View headerContainer) {
         final TextView Efans = (TextView) headerContainer.findViewById(R.id.fans);
-        Efans.setText("粉丝  " + fans.size());
+        Efans.setText("  粉丝  " + fans.size());
     }
     //跳转到粉丝列表页面
     public void click_on_fanslist(View view) {
@@ -816,12 +815,13 @@ public class homepageActivity extends AIActionBarActivity implements AbsListView
         listView.setOnScrollListener(this);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        super.onCreateOptionsMenu(menu);
-        getMenuInflater().inflate(R.menu.menu_homepage, menu);
-        return true;
-    }
+    //个人主页的右上角按钮没有存在的必要
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        super.onCreateOptionsMenu(menu);
+//        getMenuInflater().inflate(R.menu.menu_homepage, menu);
+//        return true;
+//    }
 
     @Override
     public void onScrollStateChanged(AbsListView view, int scrollState) {

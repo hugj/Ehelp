@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -42,9 +41,9 @@ public class BankActivity extends AIActionBarActivity implements RapidFloatingAc
     private RapidFloatingActionButton rfaButton;
     private RapidFloatingActionHelper rfabHelper;
     private TextView name, phone, integral, coin;
-    private ImageView level;
+    private TextView level;
     private int id, integral_, coin_;
-    private String jsonString, message, name_, phone_;
+    private String jsonString, message, name_, phone_, level_;
     private SharedPreferences sharedPref;
     private Toolbar mToolbar;
     @Override
@@ -59,7 +58,7 @@ public class BankActivity extends AIActionBarActivity implements RapidFloatingAc
         phone = (TextView)findViewById(R.id.bank_phone);
         integral = (TextView)findViewById(R.id.bank_integral1);
         coin = (TextView)findViewById(R.id.bank_coin1);
-        level = (ImageView)findViewById(R.id.bank_level);
+        level = (TextView)findViewById(R.id.bank_level);
         //后台线程
         new Thread(runnable).start();
     }
@@ -69,7 +68,7 @@ public class BankActivity extends AIActionBarActivity implements RapidFloatingAc
             setmes_help();
         }
     };
-    //获取用户爱心银行信息
+    //获取用户爱心银行信息，先获取用户信息
     private void setmes_help() {
         sharedPref = this.getSharedPreferences("user_id", Context.MODE_PRIVATE);
         id = sharedPref.getInt("user_id", -1);
@@ -134,11 +133,33 @@ public class BankActivity extends AIActionBarActivity implements RapidFloatingAc
             } else {
                 integral_ = jO.getInt("score");
                 coin_ = jO.getInt("love_coin");
+                level_ = "LV0";
+                if (integral_ <= 10) {
+                    level_ = "LV1";
+                } else if (integral_ <= 100) {
+                    level_ = "LV2";
+                } else if (integral_ <= 500) {
+                    level_ = "LV3";
+                }  else if (integral_ <= 1000) {
+                    level_ = "LV4";
+                } else if (integral_ <= 2000) {
+                    level_ = "LV5";
+                } else if (integral_ <= 5000) {
+                    level_ = "LV6";
+                } else if (integral_ <= 10000) {
+                    level_ = "LV7";
+                }  else if (integral_ <= 20000) {
+                    level_ = "LV8";
+                } else {
+                    level_ = "LV9";
+                }
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
+
                             coin.setText(String.valueOf(coin_));
                             integral.setText(String.valueOf(integral_));
+                            level.setText(level_);
                     }
                 });
             }
@@ -147,12 +168,18 @@ public class BankActivity extends AIActionBarActivity implements RapidFloatingAc
         }
     }
 
+    //积分管理
     public void my_integral(View view){
         Intent intent = new Intent(this, IntegralActivity.class);
+        String str1 = integral.getText().toString();
+        intent.putExtra("integral", str1);
         startActivity(intent);
     }
+    //爱心币管理
     public void my_coin(View view){
         Intent intent = new Intent(this, CoinActivity.class);
+        String  i = coin.getText().toString();
+        intent.putExtra("coin", i);
         startActivity(intent);
     }
     private  void init() {

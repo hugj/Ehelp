@@ -3,7 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools" tools:context="com.ehelp.receive.QuestionDetail">
 
     <item android:id="@+id/action_ans" android:title="添加回答"
-        android:orderInCategory="100" app:showAsAction="ifRoom" />
+        android:orderInCategory="100" app:showAsAction="never" />
     <!--属性说明：orderInCategory优先级，决定先显示哪个、showAsAction：always总是显示never不显示。。。icon图片、
     android:showAsAction="ifRoom|withText"有空间的时候同时显示title标题-->
+    <item android:id="@+id/action_concern" android:title="关注"
+        android:orderInCategory="100" app:showAsAction="never" />
 </menu>

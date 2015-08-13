@@ -57,7 +57,7 @@ public class messageActivity extends AIActionBarActivity implements RapidFloatin
     private Toolbar mToolbar;
     private TextView Setname;
 
-    private int type = 0;//传进来的参数，用户的类型，0非好友，1好友，2紧急联系人
+    private int type = 1;//用户的类型，非好友，2好友，0紧急联系人
     private int idd;//要查看的用户的id
     private int id;//当前用户id
 
@@ -65,6 +65,7 @@ public class messageActivity extends AIActionBarActivity implements RapidFloatin
     private String message;
     private String jsonStrng;
     private SharedPreferences SharedPref;
+    private Menu menu_message;
     //token相关
     private String token = "false";
     private int flag = 0;
@@ -83,55 +84,47 @@ public class messageActivity extends AIActionBarActivity implements RapidFloatin
         tvv.setText("详细资料");
 
         Intent intent = getIntent();
-        type = intent.getIntExtra("type",0);//默认0非好友。1表示好友，2表示紧急联系人
-        idd = intent.getIntExtra("id",-1);//intent时传入的id
+
+
+        idd = intent.getIntExtra("id", -1);//intent时传入的id
         SharedPref = this.getSharedPreferences("user_id", MODE_PRIVATE);
         id = SharedPref.getInt("user_id", -1);
+        getType();
 
         //获取token
         thread_token.start();
 
         //根据用户类型初始化页面
-        init();
 
         //根据用户ID从后台获取数据显示信息详情
         show123();
 
-        //add contact添加紧急联系人
-        Button add_excontact = (Button)findViewById(R.id.addexcontact);
-        add_excontact.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                messageActivity.this.add_dialog();
-            }
-        });
-        //delete contact 删除好友
-        Button Delete_contact = (Button)findViewById(R.id.delete_contact);
-        Delete_contact.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                messageActivity.this.delete_dialog();
-            }
-        });
     }
 
     protected void init(){
-        if(type == 0){
-            Button btn = (Button)findViewById(R.id.addexcontact);
-            btn.setVisibility(View.INVISIBLE);
-            Button btn2 = (Button)findViewById(R.id.delete_contact);
-            btn2.setText("添加为好友");
-        }else if(type == 1){
+        Button btn = (Button)findViewById(R.id.addexcontact);
+        btn.setVisibility(View.INVISIBLE);
+        btn = (Button)findViewById(R.id.delete_contact);
+        btn.setVisibility(View.INVISIBLE);
+        Menu menu = menu_message;
+        MenuItem item_VitalFriend = menu.findItem(R.id.action_VitalFriend);
+        MenuItem item_Friends = menu.findItem(R.id.action_friends);
 
-        }else if(type == 2){
-            Button btn = (Button)findViewById(R.id.addexcontact);
-            btn.setText("删除紧急联系人");
-            Button btn2 = (Button)findViewById(R.id.delete_contact);
-            btn2.setVisibility(View.INVISIBLE);
+       if(type == 2){
+            item_VitalFriend.setVisible(true);
+            item_Friends.setTitle("删除好友");
+            item_VitalFriend.setTitle("添加为紧急联系人");
+            item_Friends.setVisible(true);
+
+        }else if(type == 0){
+            item_VitalFriend.setVisible(true);
+            item_VitalFriend.setTitle("删除紧急联系人");
+            item_Friends.setVisible(false);
         }else {
-            Toast.makeText(getApplicationContext(), "参数传入错误",
-                    Toast.LENGTH_SHORT).show();
-        }
+               item_VitalFriend.setVisible(false);
+               item_Friends.setTitle("添加为好友");
+               item_Friends.setVisible(true);
+       }
         //set FAB
         fab();
     }
@@ -307,9 +300,9 @@ public class messageActivity extends AIActionBarActivity implements RapidFloatin
     }
 
     //add ex contact
-    protected void add_dialog() {
+    protected void operation_VitalFriend() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        if(type == 2){
+        if(type == 0){
             builder.setMessage("是否删除紧急联系人（保留好友）？");
             builder.setPositiveButton("确认", new DialogInterface.OnClickListener() {
                 @Override
@@ -319,11 +312,9 @@ public class messageActivity extends AIActionBarActivity implements RapidFloatin
                     manage_relation(1,2);
                     //刷新当前页面
                     Intent intent = new Intent(messageActivity.this, messageActivity.class);
-                    intent.putExtra("type",1);//0表示非好友1表示好友2表示紧急联系人
                     intent.putExtra("id",idd);
                     startActivity(intent);
                     messageActivity.this.finish();
-
 
                 }
             });
@@ -343,7 +334,6 @@ public class messageActivity extends AIActionBarActivity implements RapidFloatin
                     manage_relation(1, 0);
                     //刷新当前页面
                     Intent intent = new Intent(messageActivity.this, messageActivity.class);
-                    intent.putExtra("type",2);//0表示非好友1表示好友2表示紧急联系人
                     intent.putExtra("id",idd);
                     startActivity(intent);
                     messageActivity.this.finish();
@@ -360,9 +350,9 @@ public class messageActivity extends AIActionBarActivity implements RapidFloatin
 
     }
     //删除好友
-    protected void delete_dialog() {
+    protected void operation_friends() {
         AlertDialog.Builder delete = new AlertDialog.Builder(this);
-        if(type == 0){
+        if(type != 2){
             delete.setMessage("确定添加为好友？");
             delete.setPositiveButton("确认", new DialogInterface.OnClickListener() {
                 @Override
@@ -414,8 +404,6 @@ public class messageActivity extends AIActionBarActivity implements RapidFloatin
     public void manage_relation(int a,int b){
         //a代表0删除关系或1添加关系
         //b代表0紧急联系人操作2好友操作
-        int id = SharedPref.getInt("user_id", -1);
-
         jsonStrng = "{" +
                 "\"id\":" + id + "," +
                 "\"user_id\":" + idd + "," +
@@ -461,6 +449,8 @@ public class messageActivity extends AIActionBarActivity implements RapidFloatin
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_message, menu);
+        menu_message = menu;
+        init();
         return true;
     }
     @Override
@@ -478,8 +468,54 @@ public class messageActivity extends AIActionBarActivity implements RapidFloatin
             }
             return true;
         }
-
+        if(id == R.id.action_friends){
+            messageActivity.this.operation_friends();
+            return true;
+        }
+        if(id == R.id.action_VitalFriend) {
+            messageActivity.this.operation_VitalFriend();
+            return true;
+        }
         return super.onOptionsItemSelected(item);
+    }
+    private void getType(){
+        jsonStrng = "{" +
+                "\"id\":" + id + "," +
+                "\"user_id\":" + idd + "," +
+                "\"operation\":3" + "}";
+        message = RequestHandler.sendPostRequest(
+                "http://120.24.208.130:1501/user/relation_manage", jsonStrng);
+        if (message == "false") {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
+                            Toast.LENGTH_SHORT).show();
+                }
+            });
+            return;
+        }
+        try{
+            JSONObject jO = new JSONObject(message);
+            if (jO.getInt("status") == 500) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        //返回500
+                        Toast.makeText(getApplicationContext(), "操作失败",
+                                Toast.LENGTH_SHORT).show();
+                    }
+                });
+                return;
+            }else {
+                //返回200
+                type = jO.getInt("type");
+//                Toast.makeText(getApplicationContext(), "操作成功",
+//                        Toast.LENGTH_SHORT).show();
+            }
+        }catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     Thread thread_token =new Thread(new Runnable() {

@@ -6,12 +6,15 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.os.StrictMode;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -130,12 +133,19 @@ public class recieve_help_ans_map extends AIActionBarActivity implements BaiduMa
 
     LatLng end_node = null;
     private Event m_event;
+//每隔15s刷新回应人数
+    Message msg_ =new Message();
+    private boolean flag =false;
+
+    private int respond_or_not=0;//0无关1关注2回应
 
     private Gson gson = new Gson();
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         SDKInitializer.initialize(getApplicationContext());
+
+//        new Thread(runnable_m).start();//初始化关注（取消关注按钮）
         //setContentView(R.layout.activity_recieve_help_ans_map);
         StrictMode.ThreadPolicy policy=new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
@@ -153,10 +163,11 @@ public class recieve_help_ans_map extends AIActionBarActivity implements BaiduMa
         //event_id = m_event.getEventId();
         sp = this.getSharedPreferences("user_id", MODE_PRIVATE);
         idd = sp.getInt("user_id", -1);
-        getlauncherId();
+        getEvent();
         setView();
 
         init();
+        new Thread(runnable_).start();//实时显示关注的人数
 
         //set toolbar
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -169,8 +180,6 @@ public class recieve_help_ans_map extends AIActionBarActivity implements BaiduMa
         if(idd == user_id) {
             tvv.setText("我的求助");
         }
-//        if(idd != user_id) {
-//        }
 
         // fab();
 
@@ -200,44 +209,37 @@ public class recieve_help_ans_map extends AIActionBarActivity implements BaiduMa
         //-----------------------
     }
 
-    public void getlauncherId(){
+    public void getEvent(){
         //int id =-1;
         String jsonStrng = "{" +
                 "\"event_id\":" + event_id + "}";
         String message = RequestHandler.sendPostRequest(
                 "http://120.24.208.130:1501/event/get_information", jsonStrng);
         if (message == "false") {
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
-                            Toast.LENGTH_SHORT).show();
-                }
-            });
+            Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
+                    Toast.LENGTH_SHORT).show();
             user_id= -1;
             return;
         }
         try{
             JSONObject jO = new JSONObject(message);
             if (jO.getInt("status") == 500) {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Toast.makeText(getApplicationContext(), "无此事件",
-                                Toast.LENGTH_SHORT).show();
-                    }
-                });
+                Toast.makeText(getApplicationContext(), "无此事件",
+                        Toast.LENGTH_SHORT).show();
                 user_id= -1;
             }else {
                 Toast.makeText(getApplicationContext(), "查询成功",
                         Toast.LENGTH_SHORT).show();
+                Gson gson = new Gson();
+                m_event = gson.fromJson(message, Event.class);
                 user_id = jO.getInt("launcher_id");
-
             }
         }catch (JSONException e) {
             e.printStackTrace();
             Log.v("12345678", e.toString());
         }
+
+
         //return id;
     }
 
@@ -359,7 +361,6 @@ public class recieve_help_ans_map extends AIActionBarActivity implements BaiduMa
     * */
     @Override
     public void onClick(View v) {
-        android.support.v7.widget.CardView card = (android.support.v7.widget.CardView)v;
         final int i =  v.getId();
 
         ResponseDialog = new AlertDialog.Builder(recieve_help_ans_map.this).create();
@@ -571,7 +572,9 @@ public class recieve_help_ans_map extends AIActionBarActivity implements BaiduMa
 
         //noinspection SimplifiableIfStatement
         if(id ==R.id.action_comment){
-
+            Intent intent = new Intent(recieve_help_ans_map.this, ResponseActivity.class);
+            intent.putExtra("eventID", event_id);
+            startActivity(intent);
         }
 
         if (id == R.id.action_video) {
@@ -582,75 +585,12 @@ public class recieve_help_ans_map extends AIActionBarActivity implements BaiduMa
         }
 
         if(id == R.id.action_cancelhelp){
-            String jsonStrng = "{" +
-                    "\"id\":" + user_id + ",\"event_id\":" +event_id+ "}";
-            String message = RequestHandler.sendPostRequest(
-                    "http://120.24.208.130:1501/event/remove", jsonStrng);
-
-            if (message == "false") {
-                Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
-                        Toast.LENGTH_SHORT).show();
-                return true;
-            }
-            try{
-                JSONObject jO = new JSONObject(message);
-                if (jO.getInt("status") == 500) {
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            Toast.makeText(getApplicationContext(), "操作失败,您不是求助者",
-                                    Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                    return true;
-                }else if(jO.getInt("status") == 200){
-                    Toast.makeText(getApplicationContext(), "操作成功",
-                            Toast.LENGTH_SHORT).show();
-                    Intent intent=new Intent(this,Home.class);
-                    startActivity(intent);
-                    this.finish();
-                }
-            }catch (JSONException e) {
-                e.printStackTrace();
-            }
+            cancelhelp();
+            return true;
         }
         if(id == R.id.action_endhelp){
-            String jsonStrng = "{" +
-                    "\"state\":1" + "," +
-                    "\"id\":" + user_id +","+
-                    "\"event_id\":" +event_id + "}";
-//            String jsonStrng = "{" +
-//                    "\"state\":1" +1+ "," +
-//                    "\"id\":" + user_id +
-//                    "\"event_id\":" +event_id + "}";
-            String message = RequestHandler.sendPostRequest(
-                    "http://120.24.208.130:1501/event/modify", jsonStrng);
-            if (message == "false") {
-                Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
-                        Toast.LENGTH_SHORT).show();
-                return true;
-            }try{
-                JSONObject jO = new JSONObject(message);
-                if (jO.getInt("status") == 500) {
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            Toast.makeText(getApplicationContext(), "操作失败,您不是求助者",
-                                    Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                    return true;
-                }else if(jO.getInt("status") == 200){
-                    Toast.makeText(getApplicationContext(), "操作成功",
-                            Toast.LENGTH_SHORT).show();
-                    Intent intent=new Intent(this,Evaluation.class);
-                    intent.putExtra("event_id", event_id);
-                    startActivity(intent);
-                    this.finish();
-                }
-            }catch (JSONException e) {
-                e.printStackTrace();
-            }
+            endhelp();
+            return true;
         }
         if(id == R.id.action_concern||id == R.id.action_respond) {
             int operation =0;
@@ -660,54 +600,7 @@ public class recieve_help_ans_map extends AIActionBarActivity implements BaiduMa
             if (item.getTitle().toString().equals("关注")) {
                 operation = 1;
             }
-            String send = "{\"id\":" + user_id + ",\"event_id\":"
-                    + event_id + ",\"operation\":" + operation + "}";
-            String msg = RequestHandler.sendPostRequest(
-                    "http://120.24.208.130:1501/user/event_manage", send);
-            Log.v("receiversostest", msg);
-            if (msg == "false") {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
-                                Toast.LENGTH_SHORT).show();
-                    }
-                });
-                return true;
-            }
-            try {
-                JSONObject jO = new JSONObject(msg);
-                if (jO.getInt("status") == 500) {
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            Toast.makeText(getApplicationContext(), "操作失败",
-                                    Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                    return true;
-                } else if (jO.getInt("status") == 200) {
-                    Toast.makeText(getApplicationContext(), "操作成功",
-                            Toast.LENGTH_SHORT).show();
-                    if (item.getTitle().toString().equals("回应")) {
-                        MenuItem item_concern = menu_.findItem(R.id.action_concern);
-                        item.setTitle("取消回应");
-                        item_concern.setTitle("关注");
-                        item_concern.setVisible(false);
-                    }else if (item.getTitle().toString().equals("关注")) {
-                        item.setTitle("取消关注");
-                    }else if (item.getTitle().toString().equals("取消关注")) {
-                        item.setTitle("关注");
-                    }else if (item.getTitle().toString().equals("取消回应")) {
-                        MenuItem item_concern = menu_.findItem(R.id.action_concern);
-                        item.setTitle("回应");
-                        item_concern.setVisible(true);
-                    }
-                }
-
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+            action(operation,item);
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -719,22 +612,38 @@ public class recieve_help_ans_map extends AIActionBarActivity implements BaiduMa
         // Inflate the menu; this adds items to the action bar if it is present.
         //final int user_id = m_event.getLauncherId();
         getMenuInflater().inflate(R.menu.menu_recieve_help_ans_map, menu);
-
+        init_View();
         MenuItem item_concern = menu.findItem(R.id.action_concern);
         MenuItem item_respond = menu.findItem(R.id.action_respond);
         MenuItem item_comment = menu.findItem(R.id.action_comment);
         MenuItem item_cancelhelp = menu.findItem(R.id.action_cancelhelp);
         MenuItem item_endhelp = menu.findItem(R.id.action_endhelp);
+        Button bt = (Button)findViewById(R.id.video);
+        Button dbt = (Button)findViewById(R.id.sound);
         if(idd == user_id){
             item_concern.setVisible(false);
             item_respond.setVisible(false);
             item_cancelhelp.setVisible(true);
             item_endhelp.setVisible(true);
+            bt.setVisibility(View.VISIBLE);
+            dbt.setVisibility(View.VISIBLE);
         }else {
             item_concern.setVisible(true);
             item_respond.setVisible(true);
             item_cancelhelp.setVisible(false);
             item_endhelp.setVisible(false);
+            bt.setVisibility(View.INVISIBLE);
+            dbt.setVisibility(View.INVISIBLE);
+            if(respond_or_not == 2){
+                item_respond.setTitle("取消回应");
+                item_concern.setVisible(false);
+            }else if(respond_or_not ==1){
+                item_respond.setTitle("回应");
+                item_concern.setTitle("取消关注");
+            }else {
+                item_respond.setTitle("回应");
+                item_concern.setTitle("关注");
+            }
         }
         menu_ = menu;
         return true;
@@ -759,6 +668,13 @@ public class recieve_help_ans_map extends AIActionBarActivity implements BaiduMa
 //        mMapView.onDestroy();
 //        super.onDestroy();
 //    }
+@Override
+protected void onDestroy() {
+//        mSearch.destroy();
+//        mMapView.onDestroy();
+    flag = true;
+    super.onDestroy();
+}
 
 
     public class MyLocationListenner implements BDLocationListener {
@@ -908,8 +824,6 @@ for fab
             }   else {
                 Toast.makeText(getApplicationContext(), message,  //测试
                         Toast.LENGTH_SHORT).show();
-                // 这里是未完成的页面跳转
-                // getMenuInflater().inflate(R.menu.menu_send_help, menu);
             }
         }
     }
@@ -956,5 +870,256 @@ for fab
         Intent intent = new Intent(this, RecordActivity.class);
         intent.putExtra("EVENT_ID", m_event.getEventId());
         startActivity(intent);
+    }
+
+    Runnable runnable_ = new Runnable() {
+        @Override
+        public void run() {
+            int i =0;
+            while(i<2000) {
+                if(flag == true){
+                    break;
+                }
+                getRespondNumber();
+                i++;
+                try {
+                    Thread.sleep(15000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+
+        }
+    };
+    private void getRespondNumber(){
+        String url = "http://120.24.208.130:1501/event/get_information";
+        String send = "{" +"\"event_id\":" + event_id +"}";
+        String msg ="false";
+        msg = RequestHandler.sendPostRequest(
+                url, send);
+        if(msg == "false"){
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
+                            Toast.LENGTH_SHORT).show();
+                }
+            });
+            return;
+        }else {
+            try {
+                JSONObject jO = new JSONObject(msg);
+                if (jO.getInt("status") == 500) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(getApplicationContext(), "查询关注人数失败",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    return;
+                } else if (jO.getInt("status") == 200) {
+                    msg_.arg1 = jO.getInt("support_number");
+                    mHandler.sendMessage(msg_);
+                }
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+
+    }
+
+    public Handler mHandler=new Handler()
+    {
+        @Override
+        public void handleMessage(Message msg)
+        {
+            if(msg.arg1 != -1) {
+                Button btn = (Button) findViewById(R.id.respond_number);
+                int i = msg.arg1;
+                btn.setText(String.valueOf(i));
+            }else {
+                super.handleMessage(msg);
+            }
+        }
+    };
+
+    public void respondNum(View view){
+        Intent it = new Intent(recieve_help_ans_map.this,RespondPeopleActivity.class);
+        it.putExtra("event_id", event_id);
+        startActivity(it);
+    }
+
+//    Runnable runnable_m = new Runnable() {
+//        @Override
+//        public void run() {
+//                init_View();
+//        }
+//    };
+    private void init_View(){
+        String url = "http://120.24.208.130:1501/user/judge_sup";
+        String send = "{" +"\"id\":" + idd +"," +"\"event_id\":" + event_id +"}";
+        String msg ="false";
+        msg = RequestHandler.sendPostRequest(
+                url, send);
+        if(msg == "false"){
+            respond_or_not = 0;
+            return;
+        }else {
+            try {
+                JSONObject jO = new JSONObject(msg);
+                if (jO.getInt("status") == 500) {
+                    respond_or_not = 0;
+                    return;
+                } else if (jO.getInt("status") == 200) {
+                    respond_or_not = jO.getInt("type");
+                    Log.v("respondornot",String.valueOf(respond_or_not));
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (menu_ != null) {
+                                MenuItem item_concern = menu_.findItem(R.id.action_concern);
+                                MenuItem item_respond = menu_.findItem(R.id.action_respond);
+                                if (respond_or_not == 2) {
+                                    item_respond.setTitle("取消回应");
+                                    item_concern.setVisible(false);
+                                } else if (respond_or_not == 1) {
+                                    item_respond.setTitle("回应");
+                                    item_concern.setTitle("取消关注");
+                                } else {
+                                    item_respond.setTitle("回应");
+                                    item_concern.setTitle("关注");
+                                }
+                            }
+                        }
+                    });
+                }
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+        }
+    }
+
+    private void action(int operation,MenuItem item){
+        String send = "{\"id\":" + idd + ",\"event_id\":"
+                + event_id + ",\"operation\":" + operation + "}";
+        String msg = RequestHandler.sendPostRequest(
+                "http://120.24.208.130:1501/user/event_manage", send);
+        Log.v("receiversostest", msg);
+        if (msg == "false") {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
+                            Toast.LENGTH_SHORT).show();
+                }
+            });
+            return;
+        }else {
+            try {
+                JSONObject jO = new JSONObject(msg);
+                if (jO.getInt("status") == 500) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(getApplicationContext(), "操作失败",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    return;
+                } else if (jO.getInt("status") == 200) {
+                    Toast.makeText(getApplicationContext(), "操作成功",
+                            Toast.LENGTH_SHORT).show();
+                    if (item.getTitle().toString().equals("回应")) {
+                        MenuItem item_concern = menu_.findItem(R.id.action_concern);
+                        item.setTitle("取消回应");
+                        item_concern.setTitle("关注");
+                        item_concern.setVisible(false);
+                    } else if (item.getTitle().toString().equals("关注")) {
+                        item.setTitle("取消关注");
+                    } else if (item.getTitle().toString().equals("取消关注")) {
+                        item.setTitle("关注");
+                    } else if (item.getTitle().toString().equals("取消回应")) {
+                        MenuItem item_concern = menu_.findItem(R.id.action_concern);
+                        item.setTitle("回应");
+                        item_concern.setVisible(true);
+                    }
+                }
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    private void endhelp(){
+        String jsonStrng = "{" +
+                "\"state\":1" + "," +
+                "\"id\":" + user_id +","+
+                "\"event_id\":" +event_id + "}";
+        String message = RequestHandler.sendPostRequest(
+                "http://120.24.208.130:1501/event/modify", jsonStrng);
+        if (message == "false") {
+            Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
+                    Toast.LENGTH_SHORT).show();
+            return;
+        }try{
+            JSONObject jO = new JSONObject(message);
+            if (jO.getInt("status") == 500) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(getApplicationContext(), "操作失败,您不是求助者",
+                                Toast.LENGTH_SHORT).show();
+                    }
+                });
+                return;
+            }else if(jO.getInt("status") == 200){
+                Toast.makeText(getApplicationContext(), "操作成功",
+                        Toast.LENGTH_SHORT).show();
+                Intent intent=new Intent(this,Evaluation.class);
+                intent.putExtra("event_id", event_id);
+                startActivity(intent);
+                this.finish();
+            }
+        }catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+    private void cancelhelp(){
+        String jsonStrng = "{" +
+                "\"id\":" + user_id + ",\"event_id\":" +event_id+ "}";
+        String message = RequestHandler.sendPostRequest(
+                "http://120.24.208.130:1501/event/remove", jsonStrng);
+
+        if (message == "false") {
+            Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
+                    Toast.LENGTH_SHORT).show();
+            return;
+        }
+        try{
+            JSONObject jO = new JSONObject(message);
+            if (jO.getInt("status") == 500) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(getApplicationContext(), "操作失败,您不是求助者",
+                                Toast.LENGTH_SHORT).show();
+                    }
+                });
+                return;
+            }else if(jO.getInt("status") == 200){
+                Toast.makeText(getApplicationContext(), "操作成功",
+                        Toast.LENGTH_SHORT).show();
+                Intent intent=new Intent(this,Home.class);
+                startActivity(intent);
+                this.finish();
+            }
+        }catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -46,6 +46,18 @@
             android:layout_above="@+id/releaseHelp"
             android:layout_toEndOf="@+id/releaseHelp" />
 
+        <Button
+            android:layout_width="60sp"
+            android:layout_height="60sp"
+            android:text="0"
+            android:textSize="28sp"
+            android:textColor="#ffffff"
+            android:id="@+id/respond_number"
+        android:background="@drawable/circle_button"
+        android:layout_alignBottom="@+id/map"
+            android:layout_alignParentEnd="true" />
+        <!--android:onClick="respondNum"-->
+
 
     </RelativeLayout>
 

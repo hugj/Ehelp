@@ -9,7 +9,7 @@
     <color name="main_color">#ffff8c00</color>
     <color name="secondary_color">#BDBDBD</color>
     <color name="button_text">#ffececec</color>
-    <color name="divider">#666666</color>
+    <color name="divider_color">#666666</color>
     <color name="words_white_color">#ffff0000</color>
     <color name="popup_char_color">#ff8400ff</color>
     <color name="char_color">#ff114534</color>

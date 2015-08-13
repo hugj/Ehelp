@@ -1,18 +1,13 @@
-package com.ehelp.user.history;
+package com.ehelp.map;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.StrictMode;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.ExpandableListView;
-import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,14 +28,12 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EndHelpActivity extends ActionBarActivity {
+public class RespondPeopleActivity extends ActionBarActivity {
 
     private IphoneTreeView mIphoneTreeView;
     private ConstactAdapter mExpAdapter;
     private List<Group> listGroup;
     private List<User> userList;
-    private SharedPreferences sharedPref;
-    private int id;
     Gson gson = new Gson();
 
     //TOOLbar
@@ -53,13 +46,10 @@ public class EndHelpActivity extends ActionBarActivity {
     private String message;
     private String jsonStrng;
 
-    private int idd;//求救发起者ID
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-//        new Thread(runnable).start();
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_end_help);
+        setContentView(R.layout.activity_respond_people);
         StrictMode.ThreadPolicy policy=new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
         //toolbar
@@ -67,9 +57,7 @@ public class EndHelpActivity extends ActionBarActivity {
         //跟后台交互获取详情
         Intent intent = getIntent();
         event_id = intent.getIntExtra("event_id",-1);//intent时传入的事件id
-        event_id = 493;
 
-        showdetail();
         initView();
         listGroup=new ArrayList<Group>();
         showhelper(2);
@@ -86,107 +74,9 @@ public class EndHelpActivity extends ActionBarActivity {
         mToolbar.setTitle("");
         setSupportActionBar(mToolbar);
         TextView tvv =(TextView) findViewById(R.id.titlefortoolbar);
-        tvv.setText("求助信息详情");
+        tvv.setText("帮客");
     }
 
-    private void showdetail(){
-        jsonStrng = "{" +
-                "\"event_id\":" + event_id + "}";
-        message = RequestHandler.sendPostRequest(
-                "http://120.24.208.130:1501/event/get_information", jsonStrng);
-        if (message == "false") {
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-            Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
-                    Toast.LENGTH_SHORT).show();
-                }
-            });
-            return;
-        }
-        try{
-            JSONObject jO = new JSONObject(message);
-            if (jO.getInt("status") == 500) {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Toast.makeText(getApplicationContext(), "无此事件",
-                        Toast.LENGTH_SHORT).show();
-                    }
-                });
-            }else {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Toast.makeText(getApplicationContext(), "查询成功",
-                        Toast.LENGTH_SHORT).show();
-                    }
-                });
-                //修改显示的时间
-                TextView tv1 =(TextView) findViewById(R.id.SOStime);
-                tv1.setText(jO.getString("time"));
-                //title和详情
-                TextView tv3 =(TextView) findViewById(R.id.problem);
-                tv3.setText(jO.getString("title"));
-                tv3 = (TextView)findViewById(R.id.content);
-                tv3.setText(jO.getString("content"));
-                tv3 = (TextView)findViewById(R.id.evaluate_);
-                tv3.setText(jO.getString("comment"));
-                RatingBar ratBar = (RatingBar)findViewById(R.id.ratingBar);
-                ratBar.setRating(jO.getInt("group_pts"));
-//                ratBar.setClickable(false);
-                ratBar.setEnabled(false);
-                Log.v("s88",jO.getString("comment"));
-
-                //通过发起者id寻找发起者用户名并显示
-                idd = jO.getInt("launcher_id");
-                findforusername();
-            }
-
-        }catch (JSONException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void findforusername(){
-        if( idd != -1){
-            jsonStrng = "{" +
-                    "\"id\":" + idd + "}";
-            message = RequestHandler.sendPostRequest(
-                    "http://120.24.208.130:1501/user/get_information", jsonStrng);
-            if (message == "false") {
-                Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
-                        Toast.LENGTH_SHORT).show();
-                return;
-            }
-            try{
-                JSONObject jO1 = new JSONObject(message);
-                if (jO1.getInt("status") == 500) {
-                    Toast.makeText(getApplicationContext(), "查询用户名错误",
-                            Toast.LENGTH_SHORT).show();
-                }else {
-                    Toast.makeText(getApplicationContext(), "查询用户名成功",
-                            Toast.LENGTH_SHORT).show();
-                    //修改显示的用户名
-                    TextView tv3 =(TextView) findViewById(R.id.SOSusername);
-                    if(jO1.getString("nickname") !="") {
-                        tv3.setText(jO1.getString("nickname"));
-                    }else if(jO1.getString("name")!=""){
-                        tv3.setText(jO1.getString("name"));
-                    }else{
-                        tv3.setText(jO1.getString("phone"));
-                    }
-                    return;
-                }
-
-            }catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }else {
-            Toast.makeText(getApplicationContext(), "无此用户",
-                    Toast.LENGTH_SHORT).show();
-        }
-    }
 
     /*
     显示帮客和关注者
@@ -283,7 +173,7 @@ public class EndHelpActivity extends ActionBarActivity {
                                     Toast.LENGTH_SHORT).show();
                         } else {
                             int id = jO.getInt("id");
-                            Intent intent = new Intent(EndHelpActivity.this, messageActivity.class);
+                            Intent intent = new Intent(RespondPeopleActivity.this, messageActivity.class);
                             intent.putExtra("type", 0);//默认非好友
                             intent.putExtra("id", id);
                             startActivity(intent);
@@ -293,21 +183,9 @@ public class EndHelpActivity extends ActionBarActivity {
                     }
                 }
 //				Toast.makeText(getApplicationContext(), "点击"+arg2, Toast.LENGTH_SHORT).show();
-                    return true;
-                }
+                return true;
+            }
 
         });
     }
-
-//    Runnable runnable = new Runnable() {
-//        @Override
-//        public void run() {
-//            getEvaluate();
-//        }
-//    };
-//
-//    private void getEvaluate(){
-//
-//    }
-
 }

@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -16,6 +17,7 @@ import com.ehelp.R;
 import com.ehelp.map.sendhelp_map;
 import com.ehelp.send.CountNum;
 import com.ehelp.send.SendQuestion;
+import com.ehelp.user.lovebank.TransferActivity;
 import com.ehelp.utils.RequestHandler;
 import com.wangjie.androidbucket.utils.ABTextUtil;
 import com.wangjie.androidbucket.utils.imageprocess.ABShape;
@@ -50,24 +52,37 @@ public class AddFriendActivity extends AIActionBarActivity implements RapidFloat
     private SharedPreferences SharedPref;
 
     private int idd;//查询的用户ID
+    private String name;//查询用户名
     String phone="";//要查询的手机号码
+
+    //0为添加好友，1为转账
+    private int type, coin;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        type = getIntent().getIntExtra("QueryPerson",-1);
+        coin = getIntent().getIntExtra("coin", 0);
         //set toolbar
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         mToolbar.setTitle("");
         setSupportActionBar(mToolbar);
         TextView tvv =(TextView) findViewById(R.id.titlefortoolbar);
-        tvv.setText("添加好友");
+        if (type == 0) {
+            tvv.setText("添加好友");
+        } else {
+            tvv.setText("查询");
+        }
         //toolbar设置结束
 
         //获取当前登录用户id
         SharedPref = this.getSharedPreferences("user_id", MODE_PRIVATE);
+
         //set FAB
         fab();
+
+        clickbutton();
     }
     private void fab(){
         RapidFloatingActionContentLabelList rfaContent = new RapidFloatingActionContentLabelList(context);
@@ -183,6 +198,7 @@ public class AddFriendActivity extends AIActionBarActivity implements RapidFloat
                 }else {
                     Toast.makeText(getApplicationContext(), "查询成功",
                             Toast.LENGTH_SHORT).show();
+                    name = jO.getString("name");//获取用户名
                     //使隐藏的页卡显示
                     RelativeLayout rlll = (RelativeLayout) findViewById(R.id.rll);
                     rlll.setVisibility(View.VISIBLE);
@@ -217,7 +233,36 @@ public class AddFriendActivity extends AIActionBarActivity implements RapidFloat
 
     }
 
-    public void addfriend(View v){
+    /*
+    *
+    * */
+    public void clickbutton() {
+        Button button_ = (Button)findViewById(R.id.clicutton);
+        if (type == 0) {
+            button_.setText("添加");
+            button_.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View arg0) {
+                    addfriend();
+                }
+            });
+        } else {
+            button_.setText("转账");
+            button_.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View arg0) {
+                    Intent intent = new Intent(AddFriendActivity.this, TransferActivity.class);
+                    intent.putExtra("id", idd);
+                    intent.putExtra("name", name);
+                    intent.putExtra("coin", coin);
+                    startActivity(intent);
+                }
+            });
+        }
+
+    }
+
+    public void addfriend(){
         //这个id等于当前登录用户的id
         int id = SharedPref.getInt("user_id", -1);
 

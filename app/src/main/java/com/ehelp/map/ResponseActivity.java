@@ -50,6 +50,7 @@ public class ResponseActivity extends AIActionBarActivity implements RapidFloati
 
     // submit()
     private comment m_comment;
+    private int event_id;
     private EditText Equestion;
     private EditText Edesc_ques;
     private EditText Eshare_money;
@@ -62,6 +63,7 @@ public class ResponseActivity extends AIActionBarActivity implements RapidFloati
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();
         m_comment = (comment)intent.getSerializableExtra("comment");
+        event_id = intent.getIntExtra("eventID", -1);
         init();
 
         ActivityCollector.getInstance().addActivity(this);
@@ -81,7 +83,14 @@ public class ResponseActivity extends AIActionBarActivity implements RapidFloati
         //getActionBar().setDisplayHomeAsUpEnabled(true);
         setSupportActionBar(mToolbar);
         TextView tvv =(TextView) findViewById(R.id.titlefortoolbar);
-        tvv.setText("回复评论");
+        if (m_comment != null) {
+            tvv.setText("回复评论");
+        } else {
+            tvv.setText("添加评论");
+        }
+
+        sharedPref = this.getSharedPreferences("user_id", Context.MODE_PRIVATE);
+        user_id = sharedPref.getInt("user_id", -1);
 
         //set FAB
         fab();
@@ -181,13 +190,19 @@ public class ResponseActivity extends AIActionBarActivity implements RapidFloati
         if (id == R.id.action_settings) {
             EditText edit_com = (EditText)findViewById(R.id.edit_ans);
             String com = edit_com.getText().toString();
-            sharedPref = this.getSharedPreferences("user_id", Context.MODE_PRIVATE);
-            user_id = sharedPref.getInt("user_id", -1);
-            String jsonStrng = "{" +
-                    "\"id\":" + user_id +
-                    ",\"event_id\":" + m_comment.getEvent_id() +
-                    ",\"parent_author\":" + m_comment.getAuthor_id() +
-                    ",\"content\":\"" + com + "\"}";
+            String jsonStrng;
+            if (m_comment != null) {
+                jsonStrng = "{" +
+                        "\"id\":" + user_id +
+                        ",\"event_id\":" + m_comment.getEvent_id() +
+                        ",\"parent_author\":" + m_comment.getAuthor_id() +
+                        ",\"content\":\"" + com + "\"}";
+            } else {
+                jsonStrng = "{" +
+                        "\"id\":" + user_id +
+                        ",\"event_id\":" + event_id +
+                        ",\"content\":\"" + com + "\"}";
+            }
 
             String message = RequestHandler.sendPostRequest(
                     "http://120.24.208.130:1501/comment/add", jsonStrng);
@@ -206,6 +221,7 @@ public class ResponseActivity extends AIActionBarActivity implements RapidFloati
                         ActivityCollector.getInstance().exit();
                         Intent intent = new Intent(this, Home.class);
                         startActivity(intent);
+                        ResponseActivity.this.finish();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();

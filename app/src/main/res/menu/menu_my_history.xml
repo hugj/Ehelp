@@ -6,4 +6,6 @@
         android:orderInCategory="100" app:showAsAction="never" />
     <item android:id="@+id/accept" android:title="我接收的"
         android:orderInCategory="100" app:showAsAction="never" />
+    <item android:id="@+id/concern" android:title="我关注的"
+        android:orderInCategory="100" app:showAsAction="never" />
 </menu>
