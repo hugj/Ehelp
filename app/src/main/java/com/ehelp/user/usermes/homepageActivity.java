@@ -815,12 +815,13 @@ public class homepageActivity extends AIActionBarActivity implements AbsListView
         listView.setOnScrollListener(this);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        super.onCreateOptionsMenu(menu);
-        getMenuInflater().inflate(R.menu.menu_homepage, menu);
-        return true;
-    }
+    //个人主页的右上角按钮没有存在的必要
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        super.onCreateOptionsMenu(menu);
+//        getMenuInflater().inflate(R.menu.menu_homepage, menu);
+//        return true;
+//    }
 
     @Override
     public void onScrollStateChanged(AbsListView view, int scrollState) {

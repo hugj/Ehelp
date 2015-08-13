@@ -159,6 +159,13 @@ public class HomeMapActivity extends BaseFragment implements RapidFloatingAction
                 MapStatusUpdate u = MapStatusUpdateFactory.newLatLngZoom(ll, 15); // 更新定位焦点与缩放级别;
                 mBaiduMap.animateMapStatus(u);
             }
+
+            if (!isFirstLoc) {
+                LatLng ll = new LatLng(location.getLatitude(), location.getLongitude());
+                MapStatusUpdate u = MapStatusUpdateFactory.newLatLng(ll);
+                mBaiduMap.animateMapStatus(u);
+            }
+
             lon = location.getLongitude();
             lat = location.getLatitude();
             if (!isVaild) {
