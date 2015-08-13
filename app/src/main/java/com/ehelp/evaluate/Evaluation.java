@@ -52,7 +52,7 @@ public class Evaluation extends AIActionBarActivity implements RapidFloatingActi
     private Toolbar mToolbar;
     //static int starnum = 1;
     // public static int starnumm =1;
-    private int starnum = 1;
+    private int starnum = 3;
     private String comment;
 
     private String url = "http://120.24.208.130:1501/event/modify";
@@ -196,7 +196,8 @@ public class Evaluation extends AIActionBarActivity implements RapidFloatingActi
         if ((id == R.id.action_settings)){
             int state = 1;
             getComment();
-            String send = "{\"id\":" + id + ",\"event_id\":"
+            Log.v("star",String.valueOf(starnum));
+            String send = "{\"id\":" + user_id + ",\"event_id\":"
                     + event_id + ",\"group_pts\":" + starnum + ",\"comment\":\"" + comment
                     + "\",\"state\":" + state + "}";
             String message = RequestHandler.sendPostRequest(

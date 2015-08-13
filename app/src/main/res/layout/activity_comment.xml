@@ -48,57 +48,6 @@
         android:layout_height="wrap_content">
     </RatingBar>
 
-    <!--ImageButton//这些是图片按钮
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_below="@+id/editText_comment"
-        android:onClick="btn1_Listener"
-        android:id="@+id/imageButton1"
-        android:background="@drawable/kyy"/>
-    <ImageButton
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_below="@+id/editText_comment"
-        android:layout_toRightOf="@+id/imageButton1"
-        android:onClick="btn2_Listener"
-        android:id="@+id/imageButton2"
-        android:background="@drawable/kyy"/>
-
-    <ImageButton
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_below="@+id/editText_comment"
-        android:layout_toRightOf="@+id/imageButton2"
-        android:onClick="btn3_Listener"
-        android:id="@+id/imageButton3"
-        android:background="@drawable/kyy"/>
-
-    <ImageButton
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_below="@+id/editText_comment"
-        android:layout_toRightOf="@+id/imageButton3"
-        android:onClick="btn4_Listener"
-        android:id="@+id/imageButton4"
-        android:background="@drawable/kyy"/>
-
-    <ImageButton
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_below="@+id/editText_comment"
-        android:layout_toRightOf="@+id/imageButton4"
-        android:onClick="btn5_Listener"
-        android:id="@+id/imageButton5"
-        android:background="@drawable/kyy"/-->
-
-    <!--Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="提交"
-        android:id="@+id/button_comment_send"
-        android:layout_below="@+id/ratingBar"
-        android:layout_alignEnd="@+id/textView" /-->
-
         </LinearLayout>
 
         <com.wangjie.rapidfloatingactionbutton.RapidFloatingActionLayout
