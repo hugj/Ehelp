@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:background="#eee">
+    <LinearLayout android:layout_width="300dp"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical|center"
+    android:orientation="vertical"
+    android:id="@+id/item2"
+    android:background="@drawable/background_card1">
+        <TextView android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:text="2001-1-3"
+            android:id="@+id/date2" />
+    <RelativeLayout android:layout_height="wrap_content"
+    android:layout_width="wrap_content">
+        <TextView android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:textColor="#000"
+            android:text="huangzhit"
+            android:id="@+id/sender1"/>
+        <TextView android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_toRightOf="@+id/sender1"
+            android:text="向您转账:"/>
+    </RelativeLayout>
+    <RelativeLayout android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="10dp">
+        <TextView android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/his_num2"
+            android:textSize="30dp"
+            android:textColor="#FFF"
+            android:text="12"/>
+        <TextView android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/his_num2"
+            android:layout_marginTop="10dp"
+            android:text="个爱心币"/>
+    </RelativeLayout>
+    </LinearLayout>
+</LinearLayout>

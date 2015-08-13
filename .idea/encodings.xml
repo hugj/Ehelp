@@ -21,6 +21,8 @@
     <file url="file://$PROJECT_DIR$/app/src/main/res/drawable-hdpi/qb_down.png" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/src/main/res/drawable-hdpi/qb_right.png" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/src/main/res/drawable-ldpi" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable-ldpi/bg_b.png" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable-ldpi/bg_g.png" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/src/main/res/drawable-ldpi/btn_style_one_disabled.9.png" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/src/main/res/drawable-ldpi/btn_style_one_focused.9.png" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/src/main/res/drawable-ldpi/btn_style_one_normal.9.png" charset="UTF-8" />
@@ -56,6 +58,7 @@
     <file url="file://$PROJECT_DIR$/app/src/main/res/drawable-mdpi/video_recorder_start_btn_nor.png" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/src/main/res/drawable-mdpi/voip_switchcamera_normal.png" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/src/main/res/drawable-mdpi/voip_switchcamera_pressed.png" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/audio.jpg" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/btn_style_green.xml" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/icon_hehehe.png" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/list_group_item_background.xml" charset="UTF-8" />

@@ -52,17 +52,21 @@ public class CoinActivity extends AIActionBarActivity implements RapidFloatingAc
         coin_num.setText(str);//设置爱心币数量
         i = Integer.parseInt(str);
     }
-    public void to_friends(View view) {
+    public void to_friends(View view) { //转账给朋友
         Intent intent = new Intent(CoinActivity.this, ContactlistActivity.class);
         intent.putExtra("extra", 1);
         intent.putExtra("coin", i);
         startActivity(intent);
     }
-    public void to_others(View view) {
+    public void to_others(View view) { //转账给其他人
         Intent intent = new Intent(CoinActivity.this, AddFriendActivity.class);
         intent.putExtra("QueryPerson", 1);
         intent.putExtra("coin", i);//传爱心币
         startActivity(intent);
+    }
+    public void coin_history(View view) { //查看历史交易记录
+         Intent intent = new Intent(CoinActivity.this, CoinhistoryActivity.class);
+         startActivity(intent);
     }
     private  void init() {
         StrictMode.setThreadPolicy(

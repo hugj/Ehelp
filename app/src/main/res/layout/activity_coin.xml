@@ -55,27 +55,49 @@
             android:src="@drawable/mm_submenu" />
     </RelativeLayout>
     <RelativeLayout android:layout_width="fill_parent"
-        android:layout_height="50dp"
-        android:id="@+id/bank_transfer2"
-        android:gravity="center_horizontal"
-        android:clickable="true"
-        android:onClick="to_others"
-        android:background="@drawable/background_box">
-        <TextView android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:text="转给其他人"
-            android:textSize="18dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginLeft="20dp"/>
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:scaleType="matrix"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="330dp"
-            android:clickable="true"
-            android:src="@drawable/mm_submenu" />
-    </RelativeLayout>
+       android:layout_height="50dp"
+       android:id="@+id/bank_transfer2"
+       android:gravity="center_horizontal"
+       android:clickable="true"
+       android:onClick="to_others"
+       android:background="@drawable/background_box">
+       <TextView android:layout_height="wrap_content"
+           android:layout_width="wrap_content"
+           android:text="转给其他人"
+           android:textSize="18dp"
+           android:layout_marginTop="15dp"
+           android:layout_marginLeft="20dp"/>
+       <ImageView
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:scaleType="matrix"
+           android:layout_centerVertical="true"
+           android:layout_marginLeft="330dp"
+           android:clickable="true"
+           android:src="@drawable/mm_submenu" />
+   </RelativeLayout>
+       <RelativeLayout android:layout_width="fill_parent"
+           android:layout_height="50dp"
+           android:id="@+id/bank_history"
+           android:gravity="center_horizontal"
+           android:clickable="true"
+           android:onClick="coin_history"
+           android:background="@drawable/background_box">
+           <TextView android:layout_height="wrap_content"
+               android:layout_width="wrap_content"
+               android:text="爱心币历史交易记录"
+               android:textSize="18dp"
+               android:layout_marginTop="15dp"
+               android:layout_marginLeft="20dp"/>
+           <ImageView
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:scaleType="matrix"
+               android:layout_centerVertical="true"
+               android:layout_marginLeft="330dp"
+               android:clickable="true"
+               android:src="@drawable/mm_submenu" />
+       </RelativeLayout>
     </LinearLayout>
     <com.wangjie.rapidfloatingactionbutton.RapidFloatingActionLayout
         xmlns:rfal="http://schemas.android.com/apk/res-auto"

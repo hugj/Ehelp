@@ -11,9 +11,9 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:id="@+id/video_layout">
+        android:id="@+id/audio_layout"
+        android:layout_marginTop="80sp"
+        android:layout_gravity="center_horizontal">
     </RelativeLayout>
 
 </LinearLayout>

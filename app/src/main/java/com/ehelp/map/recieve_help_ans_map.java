@@ -587,6 +587,13 @@ public class recieve_help_ans_map extends AIActionBarActivity implements BaiduMa
             startActivity(mIntent);
         }
 
+        if (id == R.id.action_audio) {
+            Intent mIntent = new Intent();
+            mIntent.putExtra("event_id", event_id);
+            mIntent.setClass(recieve_help_ans_map.this, AudioActivity.class);
+            startActivity(mIntent);
+        }
+
         if(id == R.id.action_cancelhelp){
             cancelhelp();
             return true;
