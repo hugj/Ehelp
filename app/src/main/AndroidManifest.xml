@@ -79,8 +79,8 @@
     <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS" />
     <!-- 地图 -->
     <permission android:name="android.permission.BAIDU_LOCATION_SERVICE" />
-
     <uses-permission android:name="android.permission.BAIDU_LOCATION_SERVICE" />
+
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.BROADCAST_STICKY" />
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
@@ -142,7 +142,7 @@
         android:theme="@style/AppTheme" >
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
-            android:value="NnNvfHUWC4MpbOlGpDct7xTt" />
+            android:value="hIOmFOzyRNVo5W7H75h5vmfo" />
 
         <activity
             android:name=".account.login"
