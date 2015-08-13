@@ -41,9 +41,9 @@ public class VideoActivity extends ActionBarActivity {
         } else {
             String event_id_string = String.valueOf(event_id);
 
-            final String url_mp4 = "http://120.24.208.130:1501/video/201.mp4";
+//            final String url_mp4 = "http://120.24.208.130:1501/video/201.mp4";
 
-//            final String url_mp4 = url_part + "/video/" + event_id_string + ".mp4";
+            final String url_mp4 = url_part + "/video/" + event_id_string + ".mp4";
 
             boolean mp4 = RequestHandler.TestGetURL(url_mp4);
 

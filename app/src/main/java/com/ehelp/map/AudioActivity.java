@@ -41,9 +41,9 @@ public class AudioActivity extends ActionBarActivity {
         } else {
             String event_id_string = String.valueOf(event_id);
 
-            final String url_mp3 = "http://120.24.208.130:1501/sound/200.mp3";
+//            final String url_mp3 = "http://120.24.208.130:1501/sound/200.mp3";
 
-//            final String url_mp3 = url_part + "/sound/" + event_id_string + ".mp3";
+            final String url_mp3 = url_part + "/sound/" + event_id_string + ".mp3";
 
             boolean mp3 = RequestHandler.TestGetURL(url_mp3);
 
@@ -55,6 +55,7 @@ public class AudioActivity extends ActionBarActivity {
                 RL.setGravity(Gravity.CENTER);
                 VideoView vv = new VideoView(AudioActivity.this);
                 vv.setId(R.id.id_audio);
+                vv.setBackgroundDrawable(getResources().getDrawable(R.drawable.audio));
                 RL.addView(vv);
 
                 video_view = (VideoView) findViewById(R.id.id_audio);
