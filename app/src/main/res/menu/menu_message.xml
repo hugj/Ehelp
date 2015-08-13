@@ -4,4 +4,8 @@
     tools:context="com.ehelp.user.contactlist.messageActivity">
     <item android:id="@+id/action_conversation" android:title="私信"
         android:orderInCategory="100" app:showAsAction="never" />
+    <item android:id="@+id/action_friends" android:title="添加为好友"
+        android:orderInCategory="100" app:showAsAction="never" />
+    <item android:id="@+id/action_VitalFriend" android:title="添加为紧急联系人"
+        android:orderInCategory="100" app:showAsAction="never" />
 </menu>

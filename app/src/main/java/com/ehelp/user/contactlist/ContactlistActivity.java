@@ -347,6 +347,10 @@ public class ContactlistActivity extends AIActionBarActivity implements RapidFlo
 							intent.putExtra("coin", emp_);//用户的爱心币数
 							startActivity(intent);
 						}
+						Intent intent = new Intent(ContactlistActivity.this, messageActivity.class);
+						//intent.putExtra("type",type);
+						intent.putExtra("id",id);
+						startActivity(intent);
 					}
 				}catch (JSONException e) {
 					e.printStackTrace();
