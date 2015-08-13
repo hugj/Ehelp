@@ -20,7 +20,7 @@ import com.ehelp.utils.RequestHandler;
 
 import com.ehelp.R;
 
-public class VideoActivity extends ActionBarActivity {
+public class AudioActivity extends ActionBarActivity {
     private Toolbar mToolbar;
     private VideoView video_view;
     private int event_id;
@@ -29,7 +29,7 @@ public class VideoActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_video);
+        setContentView(R.layout.activity_audio);
 
         init();
 
@@ -41,26 +41,27 @@ public class VideoActivity extends ActionBarActivity {
         } else {
             String event_id_string = String.valueOf(event_id);
 
-//            final String url_mp4 = "http://120.24.208.130:1501/video/201.mp4";
+//            final String url_mp3 = "http://120.24.208.130:1501/sound/200.mp3";
 
-            final String url_mp4 = url_part + "/video/" + event_id_string + ".mp4";
+            final String url_mp3 = url_part + "/sound/" + event_id_string + ".mp3";
 
-            boolean mp4 = RequestHandler.TestGetURL(url_mp4);
+            boolean mp3 = RequestHandler.TestGetURL(url_mp3);
 
-            if (!mp4) {
-                Toast.makeText(getApplicationContext(), "没有相应的视频",
+            if (!mp3) {
+                Toast.makeText(getApplicationContext(), "没有相应的音频",
                         Toast.LENGTH_SHORT).show();
             } else {
-                RelativeLayout RL = (RelativeLayout) findViewById(R.id.video_layout);
+                RelativeLayout RL = (RelativeLayout)findViewById(R.id.audio_layout);
                 RL.setGravity(Gravity.CENTER);
-                VideoView vv = new VideoView(VideoActivity.this);
-                vv.setId(R.id.id_video);
+                VideoView vv = new VideoView(AudioActivity.this);
+                vv.setId(R.id.id_audio);
+                vv.setBackgroundDrawable(getResources().getDrawable(R.drawable.audio));
                 RL.addView(vv);
 
-                video_view = (VideoView) findViewById(R.id.id_video);
+                video_view = (VideoView) findViewById(R.id.id_audio);
 
-                Uri uri = Uri.parse(url_mp4);
-                video_view.setMediaController(new MediaController(VideoActivity.this));
+                Uri uri = Uri.parse(url_mp3);
+                video_view.setMediaController(new MediaController(AudioActivity.this));
                 video_view.setVideoURI(uri);
                 video_view.start();
                 video_view.requestFocus();
@@ -74,7 +75,7 @@ public class VideoActivity extends ActionBarActivity {
         mToolbar.setTitle("");
         setSupportActionBar(mToolbar);
         TextView tvv =(TextView) findViewById(R.id.titlefortoolbar);
-        tvv.setText("视频");
+        tvv.setText("音频");
     }
 
 //    @Override
