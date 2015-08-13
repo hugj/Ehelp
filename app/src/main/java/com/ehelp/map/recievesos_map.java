@@ -1,9 +1,13 @@
 package com.ehelp.map;
 
+import android.app.Application;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.os.StrictMode;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
@@ -73,7 +77,6 @@ public class recievesos_map extends ActionBarActivity implements BaiduMap.OnMapC
     private EditText Eans;
     private String ans;
 
-
     //
     MapView mMapView = null;    // map View
     BaiduMap mBaidumap = null;
@@ -109,6 +112,9 @@ public class recievesos_map extends ActionBarActivity implements BaiduMap.OnMapC
 
     private Menu menu_recievesos_map;
 
+    Message msg_ =new Message();
+    private boolean flag =false;
+
     private Gson gson = new Gson();
     public LatLng end_node = null;
 
@@ -139,6 +145,8 @@ public class recievesos_map extends ActionBarActivity implements BaiduMap.OnMapC
         tvv.setText("求救信息详情");
 
         init();
+
+        new Thread(runnable_).start();
 
         //显示信息详情
         showdetail();
@@ -320,14 +328,7 @@ public class recievesos_map extends ActionBarActivity implements BaiduMap.OnMapC
                             Toast.LENGTH_SHORT).show();
                     //修改显示的用户名
                     TextView tv3 =(TextView) findViewById(R.id.SOSusername);
-                    if(jO1.getString("nickname") !="") {
                         tv3.setText(jO1.getString("nickname"));
-                    }else if(jO1.getString("name")!=""){
-                        tv3.setText(jO1.getString("name"));
-                    }else{
-                        tv3.setText(jO1.getString("phone"));
-                    }
-
                     return;
                 }
 
@@ -619,13 +620,14 @@ public class recievesos_map extends ActionBarActivity implements BaiduMap.OnMapC
         // TODO Auto-generated method stub
         super.onResume();
     }
-//
-//    @Override
-//    protected void onDestroy() {
+
+    @Override
+    protected void onDestroy() {
 //        mSearch.destroy();
 //        mMapView.onDestroy();
-//        super.onDestroy();
-//    }
+        flag = true;
+        super.onDestroy();
+    }
 
 
     public class MyLocationListenner implements BDLocationListener {
@@ -712,5 +714,84 @@ public class recievesos_map extends ActionBarActivity implements BaiduMap.OnMapC
         StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder().
                 detectLeakedSqlLiteObjects().detectLeakedClosableObjects().
                 penaltyLog().penaltyDeath().build());
+    }
+    Runnable runnable_ = new Runnable() {
+        @Override
+        public void run() {
+            int i =0;
+            while(i<1000) {
+                if(flag == true){
+                    break;
+                }
+                getRespondNumber();
+                i++;
+                try {
+                    Thread.sleep(15000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+
+        }
+    };
+    private void getRespondNumber(){
+        String url = "http://120.24.208.130:1501/event/get_information";
+        String send = "{" +"\"event_id\":" + event_id +"}";
+        String msg ="false";
+        msg = RequestHandler.sendPostRequest(
+                url, send);
+        if(msg == "false"){
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
+                            Toast.LENGTH_SHORT).show();
+                }
+            });
+            return;
+        }else {
+            try {
+                JSONObject jO = new JSONObject(msg);
+                if (jO.getInt("status") == 500) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(getApplicationContext(), "查询关注人数失败",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    return;
+                } else if (jO.getInt("status") == 200) {
+                    msg_.arg1 = jO.getInt("support_number");
+                    mHandler.sendMessage(msg_);
+                }
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+
+    }
+
+    public Handler mHandler=new Handler()
+    {
+        @Override
+        public void handleMessage(Message msg)
+        {
+            if(msg.arg1 != -1) {
+                Button btn = (Button) findViewById(R.id.respond_number);
+                int i = msg.arg1;
+                btn.setText(String.valueOf(i));
+            }else {
+                super.handleMessage(msg);
+            }
+        }
+    };
+
+    public void respondNum(View view){
+        Intent it = new Intent(recievesos_map.this,RespondPeopleActivity.class);
+        it.putExtra("event_id", event_id);
+        startActivity(it);
     }
 }
