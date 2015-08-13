@@ -120,6 +120,8 @@ public class recievesos_map extends ActionBarActivity implements BaiduMap.OnMapC
 
     private Event event;
 
+    private int respond_or_not=0;//0无关1关注2回应
+
     protected void onCreate(Bundle savedInstanceState) {
         init2();
         super.onCreate(savedInstanceState);
@@ -351,12 +353,6 @@ public class recievesos_map extends ActionBarActivity implements BaiduMap.OnMapC
             //点击评论按钮
         }
 
-        if (id == R.id.action_video) {
-            Intent mIntent = new Intent();
-            mIntent.putExtra("event_id", event_id);
-            mIntent.setClass(recievesos_map.this, VideoActivity.class);
-            startActivity(mIntent);
-        }
 
         //noinspection SimplifiableIfStatement
         if (item.getTitle().toString().equals("回应")||item.getTitle().toString().equals("关注")){
@@ -475,6 +471,19 @@ public class recievesos_map extends ActionBarActivity implements BaiduMap.OnMapC
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_recievesos_map, menu);
         menu_recievesos_map = menu;
+        init_View();
+        MenuItem item_concern = menu.findItem(R.id.action_concern);
+        MenuItem item_respond = menu.findItem(R.id.action_respond);
+        if(respond_or_not == 2){
+            item_respond.setTitle("取消回应");
+            item_concern.setVisible(false);
+        }else if(respond_or_not ==1){
+            item_respond.setTitle("回应");
+            item_concern.setTitle("取消关注");
+        }else {
+            item_respond.setTitle("回应");
+            item_concern.setTitle("关注");
+        }
         return true;
     }
 //toolbar设置结束
@@ -793,5 +802,50 @@ public class recievesos_map extends ActionBarActivity implements BaiduMap.OnMapC
         Intent it = new Intent(recievesos_map.this,RespondPeopleActivity.class);
         it.putExtra("event_id", event_id);
         startActivity(it);
+    }
+    private void init_View(){
+        String url = "http://120.24.208.130:1501/user/judge_sup";
+        String send = "{" +"\"id\":" + user_id +"," +"\"event_id\":" + event_id +"}";
+        String msg ="false";
+        msg = RequestHandler.sendPostRequest(
+                url, send);
+        if(msg == "false"){
+            respond_or_not = 0;
+            return;
+        }else {
+            try {
+                JSONObject jO = new JSONObject(msg);
+                if (jO.getInt("status") == 500) {
+                    respond_or_not = 0;
+                    return;
+                } else if (jO.getInt("status") == 200) {
+                    respond_or_not = jO.getInt("type");
+                    Log.v("respondornot",String.valueOf(respond_or_not));
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (menu_recievesos_map != null) {
+                                MenuItem item_concern = menu_recievesos_map.findItem(R.id.action_concern);
+                                MenuItem item_respond = menu_recievesos_map.findItem(R.id.action_respond);
+                                if (respond_or_not == 2) {
+                                    item_respond.setTitle("取消回应");
+                                    item_concern.setVisible(false);
+                                } else if (respond_or_not == 1) {
+                                    item_respond.setTitle("回应");
+                                    item_concern.setTitle("取消关注");
+                                } else {
+                                    item_respond.setTitle("回应");
+                                    item_concern.setTitle("关注");
+                                }
+                            }
+                        }
+                    });
+                }
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+        }
     }
 }

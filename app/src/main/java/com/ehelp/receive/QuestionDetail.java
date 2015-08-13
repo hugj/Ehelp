@@ -81,6 +81,8 @@ public class QuestionDetail extends AIActionBarActivity implements RapidFloating
     private int operation = 0;
     private Menu menu_ ;
 
+    private int respond_or_not=0;//0无关1关注2回应
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -379,6 +381,7 @@ public class QuestionDetail extends AIActionBarActivity implements RapidFloating
         getMenuInflater().inflate(R.menu.menu_question_detail, menu);
         //这里做是否已关注的判断，然后修改按钮
         menu_ = menu;
+        init_View();
         return true;
     }
 
@@ -462,11 +465,11 @@ public class QuestionDetail extends AIActionBarActivity implements RapidFloating
                 });
                 return;
             } else if (jO.getInt("status") == 200) {
-                Toast.makeText(getApplicationContext(), "操作成功",
-                        Toast.LENGTH_SHORT).show();
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
+                        Toast.makeText(getApplicationContext(), "操作成功",
+                        Toast.LENGTH_SHORT).show();
                         MenuItem item_concern = menu_.findItem(R.id.action_concern);
                         if (operation == 1) {
                             item_concern.setTitle("取消关注");
@@ -479,6 +482,49 @@ public class QuestionDetail extends AIActionBarActivity implements RapidFloating
 
         } catch (JSONException e) {
             e.printStackTrace();
+        }
+    }
+    private void init_View(){
+        sharedPref = this.getSharedPreferences("user_id", Context.MODE_PRIVATE);
+        int idd = sharedPref.getInt("user_id", -1);
+        String url = "http://120.24.208.130:1501/user/judge_sup";
+        String send = "{" +"\"id\":" + idd +"," +"\"event_id\":" + event_id +"}";
+        String msg ="false";
+        msg = RequestHandler.sendPostRequest(
+                url, send);
+        if(msg == "false"){
+            respond_or_not = 0;
+            return;
+        }else {
+            try {
+                JSONObject jO = new JSONObject(msg);
+                if (jO.getInt("status") == 500) {
+                    respond_or_not = 0;
+                    return;
+                } else if (jO.getInt("status") == 200) {
+                    respond_or_not = jO.getInt("type");
+                    Log.v("respondornot",String.valueOf(respond_or_not));
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (menu_ != null) {
+                                MenuItem item_concern = menu_.findItem(R.id.action_concern);
+                                if (respond_or_not == 2) {
+                                    item_concern.setVisible(false);
+                                } else if (respond_or_not == 1) {
+                                    item_concern.setTitle("取消关注");
+                                } else {
+                                    item_concern.setTitle("关注");
+                                }
+                            }
+                        }
+                    });
+                }
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
         }
     }
 }
