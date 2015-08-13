@@ -1,18 +1,14 @@
 package com.ehelp.map;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.os.StrictMode;
 import android.os.Vibrator;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -25,19 +21,14 @@ import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.baidu.mapapi.SDKInitializer;
 import com.baidu.mapapi.map.BaiduMap;
-import com.baidu.mapapi.map.BitmapDescriptor;
-import com.baidu.mapapi.map.BitmapDescriptorFactory;
 import com.baidu.mapapi.map.InfoWindow;
 import com.baidu.mapapi.map.MapPoi;
 import com.baidu.mapapi.map.MapStatusUpdate;
 import com.baidu.mapapi.map.MapStatusUpdateFactory;
 import com.baidu.mapapi.map.MapView;
 import com.baidu.mapapi.map.Marker;
-import com.baidu.mapapi.map.MarkerOptions;
 import com.baidu.mapapi.map.MyLocationData;
-import com.baidu.mapapi.map.OverlayOptions;
 import com.baidu.mapapi.model.LatLng;
-import com.baidu.mapapi.model.LatLngBounds;
 import com.ehelp.R;
 import com.ehelp.utils.RequestHandler;
 
@@ -107,9 +98,7 @@ public class sendsos_map extends ActionBarActivity implements BaiduMap.OnMapClic
 
     private Thread thr;
 
-    Message msg_ =new Message();
-    private boolean flag =false;
-
+    String send;
 
     //停止振动发声
     public void Stopvands(View view) {
@@ -134,7 +123,6 @@ public class sendsos_map extends ActionBarActivity implements BaiduMap.OnMapClic
         mMapView = (MapView) findViewById(R.id.map);
         mBaidumap = mMapView.getMap();
         int count = mMapView.getChildCount();
-        init();
 
         //set toolbar
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -145,7 +133,6 @@ public class sendsos_map extends ActionBarActivity implements BaiduMap.OnMapClic
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         getSupportActionBar().setHomeButtonEnabled(false);
         getSupportActionBar().setDisplayShowHomeEnabled(false);
-        new Thread(runnable_).start();
 
         // 去除无关图标
         for (int i = 0; i < count; i++) {
@@ -172,14 +159,10 @@ public class sendsos_map extends ActionBarActivity implements BaiduMap.OnMapClic
         //-----------------------
 
         //发送求救信息到后台
-        try {
-            sendsos();
-        } catch (JSONException j) {
-            j.printStackTrace();
-        }
+        new Thread(runnable).start();
 
         //推送求救信息
-        thread.start();
+        //thread.start();
         //振动发声
         vibandsp();
         //sp = new SoundPool(10, AudioManager.STREAM_SYSTEM, 5);
@@ -226,7 +209,6 @@ public class sendsos_map extends ActionBarActivity implements BaiduMap.OnMapClic
     @Override
     protected void onDestroy() {
         mMapView.onDestroy();
-        flag = true;
         vib.cancel();
         cancelsos();
         if (mLocClient != null) {
@@ -264,46 +246,6 @@ public class sendsos_map extends ActionBarActivity implements BaiduMap.OnMapClic
         }
     }
 
-    public void init() {
-        LatLngBounds.Builder builder = new LatLngBounds.Builder();
-        // 暂时提供三个点标注在地图上作为例子
-        LatLng pt1 = new LatLng(23.063309, 113.394004);
-        LatLng pt2 = new LatLng(23.052578, 113.410821);
-        LatLng pt3 = new LatLng(23.075286, 113.425934);
-        LatLng pt4 = new LatLng(23.055286, 113.435934);
-        LatLng pt5 = new LatLng(23.045286, 113.415934);
-        LatLng pt6 = new LatLng(23.245286, 113.435934);
-
-        BitmapDescriptor bd = BitmapDescriptorFactory.fromResource(R.drawable.icon_gcoding);
-        OverlayOptions o1 = new MarkerOptions().icon(bd).position(pt1);
-        OverlayOptions o2 = new MarkerOptions().icon(bd).position(pt2);
-        OverlayOptions o3 = new MarkerOptions().icon(bd).position(pt3);
-        OverlayOptions o4 = new MarkerOptions().icon(bd).position(pt4);
-        OverlayOptions o5 = new MarkerOptions().icon(bd).position(pt5);
-        OverlayOptions o6 = new MarkerOptions().icon(bd).position(pt6);
-
-        mBaidumap.addOverlay(o1);
-        mBaidumap.addOverlay(o2);
-        mBaidumap.addOverlay(o3);
-        mBaidumap.addOverlay(o4);
-        mBaidumap.addOverlay(o5);
-        mBaidumap.addOverlay(o6);
-
-        builder.include(pt1);
-        builder.include(pt2);
-        builder.include(pt3);
-        builder.include(pt4);
-        builder.include(pt5);
-        builder.include(pt6);
-
-
-        mMarker1 = (Marker) (mBaidumap.addOverlay(o1));
-        mMarker2 = (Marker) (mBaidumap.addOverlay(o2));
-        mMarker3 = (Marker) (mBaidumap.addOverlay(o3));
-        mMarker4 = (Marker) (mBaidumap.addOverlay(o3));
-        mMarker5 = (Marker) (mBaidumap.addOverlay(o3));
-        mMarker6 = (Marker) (mBaidumap.addOverlay(o3));
-    }
 
     //开始振动发声
     private void vibandsp() {
@@ -366,56 +308,11 @@ public class sendsos_map extends ActionBarActivity implements BaiduMap.OnMapClic
     }
 
     //在新的线程中推送信息
-    Thread thread =new Thread(new Runnable() {
-        @Override
-        public void run() {
-            SharedPreferences spf = getApplicationContext().getSharedPreferences("user_id", Context.MODE_PRIVATE);
-            int id = spf.getInt("user_id", -1);
-            String s1 = String.valueOf(id);
-            Log.v("sendposttest", s1);
-
-            String locmsg = "{\"id\":"+ s1 + "}";
-            String msg = RequestHandler.sendPostRequest(
-                    "http://120.24.208.130:1501/user/neighbor", locmsg);
-            Log.v("sendposttest", msg);
-
-            String jsonString;
-
-            if (msg.equals("false")) {
-                return;
-            } else {
-                try {
-                    JSONObject JO = new JSONObject(msg);
-                if (JO.getInt("status") == 500) {
-                    return;
-                } else {
-                    if (msg.indexOf("]") - msg.indexOf("[") == 1) {
-                        jsonString = "{\"platform\":\"android\",\"audience\":\"all\",\"notification\":{\"alert\":\"有人正在求救！事件号：" + event_id + "\"}}";
-                    } else {
-                        msg = msg.substring(msg.indexOf("[") + 1, msg.indexOf("]"));
-                        int temp = msg.indexOf(",");
-                        if (temp == -1) {
-                            jsonString = "{\"platform\":\"android\",\"audience\":\"all\",\"notification\":{\"alert\":\"有人正在求救！事件号：" + event_id + "\"}}";
-                        } else {
-                            Log.v("sendposttest", msg);
-                            String jsonStringPart1 = "{" + "\"platform\":\"android\","
-                                    + "\"audience\":{\"registration_id\":[";
-
-                            String jsonStringPart2 = jsonStringPart1 + msg;
-
-                            jsonString = jsonStringPart2 + "]},\"notification\":{\"alert\":\"有人正在求救！事件号：" + event_id + "\"}}";
-                            Log.v("sendposttest", jsonString);
-                        }
-                    }
-                    Log.v("sendposttest", jsonString);
-                    sendPostRequest("https://api.jpush.cn/v3/push", jsonString);
-                }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-    });
+//    Thread thread =new Thread(new Runnable() {
+//        @Override
+//        public void run() {
+//        }
+//    });
 
     Runnable runnable = new Runnable() {
         @Override
@@ -441,11 +338,81 @@ public class sendsos_map extends ActionBarActivity implements BaiduMap.OnMapClic
 
             String msg = RequestHandler.sendPostRequest(
                     url, send);
-//            JSONObject jo = new JSONObject(msg);
-//            Log.v("sendsostest", msg);
-//            event_id =  jo.getInt("event_id");
-//            String tests2 = String.valueOf(event_id);
-//            Log.v("sendsostest", tests2);
+
+            if (msg.equals("false")) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
+                                Toast.LENGTH_SHORT).show();
+                    }
+                });
+            } else {
+                try {
+                    JSONObject jo = new JSONObject(msg);
+                    if (jo.getInt("status") == 500) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
+                                        Toast.LENGTH_SHORT).show();
+                            }
+                        });
+
+                    } else {
+                        JSONObject value = jo.getJSONObject("value");
+                        event_id = value.getInt("event_id");
+                        SharedPreferences spf = getApplicationContext().getSharedPreferences("user_id", Context.MODE_PRIVATE);
+                        String s1 = String.valueOf(id);
+                        Log.v("sendposttest", s1);
+
+                        String locmsg = "{\"id\":"+ s1 + "}";
+                        String msg_ = RequestHandler.sendPostRequest(
+                                "http://120.24.208.130:1501/user/neighbor", locmsg);
+                        Log.v("sendposttest", msg_);
+
+                        String jsonString;
+
+                        if (msg_.equals("false")) {
+                            return;
+                        } else {
+                            try {
+                                JSONObject JO = new JSONObject(msg_);
+                                if (JO.getInt("status") == 500) {
+                                    return;
+                                } else {
+                                    if (msg_.indexOf("]") - msg_.indexOf("[") == 1) {
+                                        jsonString = "{\"platform\":\"android\",\"audience\":\"all\",\"notification\":{\"alert\":\"有人正在求救！事件号：" + event_id + "\"}}";
+                                    } else {
+                                        msg_ = msg_.substring(msg_.indexOf("[") + 1, msg_.indexOf("]"));
+                                        int temp = msg.indexOf(",");
+                                        if (temp == -1) {
+                                            jsonString = "{\"platform\":\"android\",\"audience\":\"all\",\"notification\":{\"alert\":\"有人正在求救！事件号：" + event_id + "\"}}";
+                                        } else {
+                                            Log.v("sendposttest", msg_);
+                                            String jsonStringPart1 = "{" + "\"platform\":\"android\","
+                                                    + "\"audience\":{\"registration_id\":[";
+
+                                            String jsonStringPart2 = jsonStringPart1 + msg_;
+
+                                            jsonString = jsonStringPart2 + "]},\"notification\":{\"alert\":\"有人正在求救！事件号：" + event_id + "\"}}";
+                                            Log.v("sendposttest", jsonString);
+                                        }
+                                    }
+                                    Log.v("sendposttest", jsonString);
+                                    sendPostRequest("https://api.jpush.cn/v3/push", jsonString);
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+
         }
     };
 
@@ -568,84 +535,5 @@ public class sendsos_map extends ActionBarActivity implements BaiduMap.OnMapClic
         }catch (JSONException e) {
             e.printStackTrace();
         }
-    }
-    Runnable runnable_ = new Runnable() {
-        @Override
-        public void run() {
-            int i =0;
-            while(i<1000) {
-                if(flag == true){
-                    break;
-                }
-                getRespondNumber();
-                i++;
-                try {
-                    Thread.sleep(15000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-
-        }
-    };
-    private void getRespondNumber(){
-        String url = "http://120.24.208.130:1501/event/get_information";
-        String send = "{" +"\"event_id\":" + event_id +"}";
-        String msg ="false";
-        msg = RequestHandler.sendPostRequest(
-                url, send);
-        if(msg == "false"){
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
-                            Toast.LENGTH_SHORT).show();
-                }
-            });
-            return;
-        }else {
-            try {
-                JSONObject jO = new JSONObject(msg);
-                if (jO.getInt("status") == 500) {
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            Toast.makeText(getApplicationContext(), "查询关注人数失败",
-                                    Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                    return;
-                } else if (jO.getInt("status") == 200) {
-                    msg_.arg1 = jO.getInt("support_number");
-                    mHandler.sendMessage(msg_);
-                }
-
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
-
-
-    }
-
-    public Handler mHandler=new Handler()
-    {
-        @Override
-        public void handleMessage(Message msg)
-        {
-            if(msg.arg1 != -1) {
-                Button btn = (Button) findViewById(R.id.respond_number);
-                int i = msg.arg1;
-                btn.setText(String.valueOf(i));
-            }else {
-                super.handleMessage(msg);
-            }
-        }
-    };
-
-    public void respondNum(View view){
-        Intent it = new Intent(sendsos_map.this,RespondPeopleActivity.class);
-        it.putExtra("event_id", event_id);
-        startActivity(it);
     }
 }
