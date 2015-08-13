@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.os.StrictMode;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -60,7 +62,9 @@ import com.ehelp.evaluate.Evaluation;
 import com.ehelp.home.Home;
 import com.ehelp.send.CountNum;
 import com.ehelp.send.SendQuestion;
+import com.ehelp.sound.RecordingActivity;
 import com.ehelp.utils.RequestHandler;
+import com.ehelp.video.RecordActivity;
 import com.google.gson.Gson;
 import com.wangjie.androidbucket.utils.ABTextUtil;
 import com.wangjie.androidbucket.utils.imageprocess.ABShape;
@@ -129,6 +133,11 @@ public class recieve_help_ans_map extends AIActionBarActivity implements BaiduMa
 
     LatLng end_node = null;
     private Event m_event;
+//每隔15s刷新回应人数
+    Message msg_ =new Message();
+    private boolean flag =false;
+
+    private Gson gson = new Gson();
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -154,6 +163,7 @@ public class recieve_help_ans_map extends AIActionBarActivity implements BaiduMa
         setView();
 
         init();
+        new Thread(runnable_).start();
 
         //set toolbar
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -166,8 +176,6 @@ public class recieve_help_ans_map extends AIActionBarActivity implements BaiduMa
         if(idd == user_id) {
             tvv.setText("我的求助");
         }
-//        if(idd != user_id) {
-//        }
 
         // fab();
 
@@ -195,63 +203,6 @@ public class recieve_help_ans_map extends AIActionBarActivity implements BaiduMa
         mLocClient.setLocOption(option);
         mLocClient.start();
         //-----------------------
-
-        mBaidumap.setOnMarkerClickListener(new BaiduMap.OnMarkerClickListener() {
-            public boolean onMarkerClick(final Marker marker) {
-                Button button = new Button(getApplicationContext());
-                button.setBackgroundResource(R.drawable.popup);
-                InfoWindow.OnInfoWindowClickListener listener = null;
-                if (marker == mMarker1) {
-                    button.setText("这里是跳转");
-                    button.setTextColor(Color.BLACK);
-                    /*这里是跳转button
-                    listener = new InfoWindow.OnInfoWindowClickListener() {
-                        public void onInfoWindowClick() {
-                            LatLng ll = marker.getPosition();
-                            LatLng llNew = new LatLng(ll.latitude + 0.005,
-                                    ll.longitude + 0.005);
-                            marker.setPosition(llNew);
-                            mBaidumap.hideInfoWindow();
-                        }
-                    };
-                    */
-                    LatLng ll = marker.getPosition();
-                    mInfoWindow = new InfoWindow(BitmapDescriptorFactory.fromView(button), ll, -47, listener);
-                    mBaidumap.showInfoWindow(mInfoWindow);
-                } else if (marker == mMarker2) {
-                    button.setText("这里是跳转");
-                    button.setTextColor(Color.BLACK);
-                    /*这里是跳转button
-                    button.setOnClickListener(new View.OnClickListener() {
-                        public void onClick(View v) {
-                            marker.setIcon(bd);
-                            mBaiduMap.hideInfoWindow();
-                        }
-
-                    });
-                    */
-                    LatLng ll = marker.getPosition();
-                    mInfoWindow = new InfoWindow(button, ll, -47);
-                    mBaidumap.showInfoWindow(mInfoWindow);
-                } else if (marker == mMarker3) {
-                    button.setText("这里是跳转");
-                    button.setTextColor(Color.BLACK);
-                    /*这里是跳转button
-                    button.setOnClickListener(new View.OnClickListener() {
-                        public void onClick(View v) {
-                            marker.remove();
-                            mBaidumap.hideInfoWindow();
-                        }
-                    });
-                    */
-                    LatLng ll = marker.getPosition();
-                    mInfoWindow = new InfoWindow(button, ll, -47);
-                    mBaidumap.showInfoWindow(mInfoWindow);
-                }
-                return true;
-            }
-        });
-
     }
 
     public void getEvent(){
@@ -780,16 +731,22 @@ public class recieve_help_ans_map extends AIActionBarActivity implements BaiduMa
         MenuItem item_comment = menu.findItem(R.id.action_comment);
         MenuItem item_cancelhelp = menu.findItem(R.id.action_cancelhelp);
         MenuItem item_endhelp = menu.findItem(R.id.action_endhelp);
+        Button bt = (Button)findViewById(R.id.video);
+        Button dbt = (Button)findViewById(R.id.sound);
         if(idd == user_id){
             item_concern.setVisible(false);
             item_respond.setVisible(false);
             item_cancelhelp.setVisible(true);
             item_endhelp.setVisible(true);
+            bt.setVisibility(View.VISIBLE);
+            dbt.setVisibility(View.VISIBLE);
         }else {
             item_concern.setVisible(true);
             item_respond.setVisible(true);
             item_cancelhelp.setVisible(false);
             item_endhelp.setVisible(false);
+            bt.setVisibility(View.INVISIBLE);
+            dbt.setVisibility(View.INVISIBLE);
         }
         menu_ = menu;
         return true;
@@ -814,6 +771,13 @@ public class recieve_help_ans_map extends AIActionBarActivity implements BaiduMa
 //        mMapView.onDestroy();
 //        super.onDestroy();
 //    }
+@Override
+protected void onDestroy() {
+//        mSearch.destroy();
+//        mMapView.onDestroy();
+    flag = true;
+    super.onDestroy();
+}
 
 
     public class MyLocationListenner implements BDLocationListener {
@@ -845,6 +809,7 @@ public class recieve_help_ans_map extends AIActionBarActivity implements BaiduMa
     }
 
     public void init() {
+        init2();
         LatLngBounds.Builder builder = new LatLngBounds.Builder();
         // 暂时提供三个点标注在地图上作为例子
         end_node = new LatLng(m_event.getLatitude(), m_event.getLongitude());
@@ -966,5 +931,129 @@ for fab
                 // getMenuInflater().inflate(R.menu.menu_send_help, menu);
             }
         }
+    }
+
+    public void init2() {
+        String jsonString = "{" +
+                "\"event_id\":" + event_id + "}";
+        String message = RequestHandler.sendPostRequest("http://120.24.208.130:1501/event/get_information", jsonString);
+        if (message.equals("false")) {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(getApplicationContext(), "无法获取数据，请检查网络连接",
+                            Toast.LENGTH_SHORT).show();
+                }
+            });
+        } else {
+            try {
+                JSONObject jO = new JSONObject(message);
+                if (jO.getInt("status") == 500) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(getApplicationContext(), "获取周围用户信息失败",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    return;
+                }
+                m_event = gson.fromJson(message, Event.class);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void sound(View v) {
+        Intent intent = new Intent(this, RecordingActivity.class);
+        intent.putExtra("EVENT_ID", m_event.getEventId());
+        startActivity(intent);
+    }
+
+    public void video(View v) {
+        Intent intent = new Intent(this, RecordActivity.class);
+        intent.putExtra("EVENT_ID", m_event.getEventId());
+        startActivity(intent);
+    }
+
+    Runnable runnable_ = new Runnable() {
+        @Override
+        public void run() {
+            int i =0;
+            while(i<1000) {
+                if(flag == true){
+                    break;
+                }
+                getRespondNumber();
+                i++;
+                try {
+                    Thread.sleep(15000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+
+        }
+    };
+    private void getRespondNumber(){
+        String url = "http://120.24.208.130:1501/event/get_information";
+        String send = "{" +"\"event_id\":" + event_id +"}";
+        String msg ="false";
+        msg = RequestHandler.sendPostRequest(
+                url, send);
+        if(msg == "false"){
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
+                            Toast.LENGTH_SHORT).show();
+                }
+            });
+            return;
+        }else {
+            try {
+                JSONObject jO = new JSONObject(msg);
+                if (jO.getInt("status") == 500) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(getApplicationContext(), "查询关注人数失败",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    return;
+                } else if (jO.getInt("status") == 200) {
+                    msg_.arg1 = jO.getInt("support_number");
+                    mHandler.sendMessage(msg_);
+                }
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+
+    }
+
+    public Handler mHandler=new Handler()
+    {
+        @Override
+        public void handleMessage(Message msg)
+        {
+            if(msg.arg1 != -1) {
+                Button btn = (Button) findViewById(R.id.respond_number);
+                int i = msg.arg1;
+                btn.setText(String.valueOf(i));
+            }else {
+                super.handleMessage(msg);
+            }
+        }
+    };
+
+    public void respondNum(View view){
+        Intent it = new Intent(recieve_help_ans_map.this,RespondPeopleActivity.class);
+        it.putExtra("event_id", event_id);
+        startActivity(it);
     }
 }

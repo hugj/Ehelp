@@ -1,9 +1,11 @@
 package com.ehelp.map;
 
+import android.graphics.Color;
 import android.net.Uri;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -35,15 +37,8 @@ public class VideoActivity extends ActionBarActivity {
 
         if (event_id == -1) {
             Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
-                    Toast.LENGTH_SHORT).show();
+                    Toast.LENGTH_LONG).show();
         } else {
-            RelativeLayout RL = (RelativeLayout) findViewById(R.id.video_layout);
-            VideoView vv = new VideoView(VideoActivity.this);
-            vv.setId(R.id.id_video);
-            RL.addView(vv);
-
-            video_view = (VideoView) findViewById(R.id.id_video);
-
             String event_id_string = String.valueOf(event_id);
 
 //            final String url_mp3 = "http://120.24.208.130:1501/sound/459.mp3";
@@ -51,39 +46,68 @@ public class VideoActivity extends ActionBarActivity {
 
             final String url_mp3 = url_part + "/sound/" + event_id_string + ".mp3";
             final String url_mp4 = url_part + "/video/" + event_id_string + ".mp4";
-            if (!RequestHandler.TestGetURL(url_mp3) && !RequestHandler.TestGetURL(url_mp4)) {
+
+            boolean mp3 = RequestHandler.TestGetURL(url_mp3);
+            boolean mp4 = RequestHandler.TestGetURL(url_mp4);
+
+            if (!mp3 && !mp4) {
                 Toast.makeText(getApplicationContext(), "没有相应的音频或视频",
                         Toast.LENGTH_SHORT).show();
-            } else if (!RequestHandler.TestGetURL(url_mp3) && RequestHandler.TestGetURL(url_mp4)) {
+            } else if (!mp3 && mp4 == true) {
+                RelativeLayout RL = (RelativeLayout) findViewById(R.id.video_layout);
+                RL.setGravity(Gravity.CENTER);
+                VideoView vv = new VideoView(VideoActivity.this);
+                vv.setId(R.id.id_video);
+                RL.addView(vv);
+
+                video_view = (VideoView) findViewById(R.id.id_video);
+
                 Uri uri = Uri.parse(url_mp4);
                 video_view.setMediaController(new MediaController(VideoActivity.this));
                 video_view.setVideoURI(uri);
                 video_view.start();
                 video_view.requestFocus();
-            } else if (RequestHandler.TestGetURL(url_mp3) && !RequestHandler.TestGetURL(url_mp4)) {
+            } else if (mp3 == true && !mp4) {
+                RelativeLayout RL = (RelativeLayout) findViewById(R.id.video_layout);
+                RL.setGravity(Gravity.CENTER);
+                VideoView vv = new VideoView(VideoActivity.this);
+                vv.setId(R.id.id_video);
+                RL.addView(vv);
+
+                video_view = (VideoView) findViewById(R.id.id_video);
+
                 Uri uri = Uri.parse(url_mp3);
                 video_view.setMediaController(new MediaController(VideoActivity.this));
                 video_view.setVideoURI(uri);
                 video_view.start();
                 video_view.requestFocus();
             } else {
-                Button button_video = new Button(VideoActivity.this);
-                button_video.setId(R.id.id_button_video);
-                button_video.setText("点击收看视频");
-                RL.addView(button_video);
+                RelativeLayout RL = (RelativeLayout) findViewById(R.id.video_layout);
+                RL.setGravity(Gravity.CENTER);
 
                 RelativeLayout RL2 = (RelativeLayout) findViewById(R.id.audio_layout);
+                RL2.setGravity(Gravity.CENTER);
+
+                VideoView vv = new VideoView(VideoActivity.this);
+                vv.setId(R.id.id_video);
+                RL.addView(vv);
+                video_view = (VideoView) findViewById(R.id.id_video);
 
                 VideoView vv2 = new VideoView(VideoActivity.this);
                 vv2.setId(R.id.id_audio);
                 RL2.addView(vv2);
+                final VideoView video_view2 = (VideoView)findViewById(R.id.id_audio);
+
+                Button button_video = new Button(VideoActivity.this);
+                button_video.setId(R.id.id_button_video);
+                button_video.setText("点击收看视频");
+                RL.addView(button_video);
 
                 Button button_audio = new Button(VideoActivity.this);
                 button_audio.setId(R.id.id_button_audio);
                 button_audio.setText("点击收听音频");
                 RL2.addView(button_audio);
 
-                final VideoView video_view2 = (VideoView)findViewById(R.id.id_audio);
                 Button b_v = (Button)findViewById(R.id.id_button_video);
                 Button b_a = (Button)findViewById(R.id.id_button_audio);
 

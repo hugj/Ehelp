@@ -71,19 +71,31 @@ public class HistoryAdapter extends BaseAdapter {
     public String setListi() {
         //数据初始化
         String jsonStrng = "{" +
-                "\"id\":" + user_id + "}";
+                "\"id\":" + user_id + ",\"type\":2"+"}";
         String message = RequestHandler.sendPostRequest(
                 "http://120.24.208.130:1501/event/query_join", jsonStrng);
         return message;
     }
+
+    public String setListc() {
+        //数据初始化
+        String jsonStrng = "{" +
+                "\"id\":" + user_id + ",\"type\":1"+ "}";
+        String message = RequestHandler.sendPostRequest(
+                "http://120.24.208.130:1501/event/query_join", jsonStrng);
+        return message;
+    }
+
 
     public void setList(int io) {
         try {
             String message;
             if (io == 1) { //发起的事件
                 message = setListo();
-            } else { //接受的事件
+            } else if(io == 2){ //接受的事件
                 message = setListi();
+            }else{//关注的事件
+                message = setListc();
             }
             if (message == "false") {
                 item=new HashMap<String,Object>();

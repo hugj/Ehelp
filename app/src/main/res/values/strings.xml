@@ -122,4 +122,105 @@
     <string name="title_activity_fans_list">FansListActivity</string>
     <string name="title_activity_video">VideoActivity</string>
     <string name="title_activity_transfer">TransferActivity</string>
+    <string name="title_activity_respond_people">RespondPeopleActivity</string>
+    <string name="hello">Hello World, MainActivity!</string>
+
+
+
+    <!-- Content descriptions -->
+    <string name="descr_image">Image</string>
+    <string name="button_track">查看轨迹</string>
+    <string name="button_login">登录</string>
+    <string name="button_register">注册</string>
+    <string name="button_back">返回</string>
+    <string name="button_next">下一步</string>
+    <string name="button_submit">提交</string>
+    <string name="button_send">发送</string>
+    <string name="button_cancel">取消</string>
+    <string name="button_close">关闭</string>
+    <string name="setting_text_exit">退出登录</string>
+    <string name="button_call">拨打客服电话</string>
+    <string name="button_save">保存</string>
+    <string name="button_group">群组</string>
+    <string name="button_queding">确定</string>
+    <string name="button_search">搜索</string>
+    <string name="button_query">查找</string>
+    <string name="button_menu">菜单</string>
+    <string name="button_refresh">刷新</string>
+    <string name="button_add">添加</string>
+    <string name="button_invite">邀请</string>
+    <string name="button_upload">上传资料</string>
+    <string name="button_delexit">删除并退出</string>
+    <string name="button_del">删除</string>
+    <string name="button_jiesan">解散该群</string>
+    <string name="button_fabiao">发表</string>
+    <string name="button_advice">评论</string>
+    <string name="button_finish">完成</string>
+    <string name="button_fabiaohuiying">发表回应</string>
+    <string name="button_huiying">回应</string>
+    <string name="button_verify">审核</string>
+    <string name="button_bless">祝福</string>
+    <string name="button_send_code">发送验证码</string>
+    <string name="button_agree">同意</string>
+    <string name="button_refuse">拒绝</string>
+    <string name="button_photo_add">相册添加</string>
+    <string name="button_take_add">拍照添加</string>
+    <string name="takepicture">拍照</string>
+    <string name="fouse">对焦</string>
+    <string name="select_all">全选</string>
+
+
+    <string name="home_text_chat">聊天</string>
+    <string name="home_text_score">成绩</string>
+    <string name="home_text_book">通讯录</string>
+    <string name="home_text_notice">公告</string>
+    <string name="home_text_more">更多</string>
+
+
+    <string name="login_title">登录</string>
+    <string name="login_username">手机号</string>
+    <string name="login_password">密码</string>
+    <string name="login_confirm_password">确认密码</string>
+    <string name="login_username_edit"></string>
+    <string name="login_password_edit"></string>
+    <string name="login_forget">找回密码</string>
+    <string name="login_cb_mima">记住密码</string>
+    <string name="login_cb_auto">自动登录</string>
+
+    <string name="register_name_one">姓名:</string>
+    <string name="register_dept_one">部门:</string>
+    <string name="register_email_one">邮箱:</string>
+    <string name="register_phone_one">电话:</string>
+
+
+
+
+
+    <string name="user_main_text_login">登录</string>
+    <string name="user_main_text_register">注册</string>
+    <string name="user_find_pass">找回密码</string>
+    <string name="user_update_pass">修改密码</string>
+    <string name="user_update_oldpass">原密码</string>
+    <string name="user_update_newpass">新密码</string>
+    <string name="user_update_confirmpass">确认密码</string>
+    <!-- BBS -->
+    <string name="bbs_main_title">BBS</string>
+    <string name="bbs_main_send">发帖</string>
+    <string name="bbs_send_title">标题:</string>
+    <string name="bbs_send_content">内容</string>
+
+    <!-- log -->
+    <string name="log_main_title">日志</string>
+    <string name="log_main_write">写日志</string>
+    <string name="log_main_detail">日志详情</string>
+    <string name="log_time">时间</string>
+
+
+    <!-- video -->
+    <string name="video_main_text">视频回传</string>
+
+
+
+    <string name="title_alert">提示信息</string>
+    <string name="ok">确定</string>
 </resources>

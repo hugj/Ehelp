@@ -10,6 +10,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -75,6 +76,10 @@ public class QuestionDetail extends AIActionBarActivity implements RapidFloating
     private AlertDialog AnsDialog = null;
     private int phone_user_id;
     private List<answer> answers;
+
+    private SharedPreferences sharedPref;
+    private int operation = 0;
+    private Menu menu_ ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -273,7 +278,7 @@ public class QuestionDetail extends AIActionBarActivity implements RapidFloating
         int event_id = m_event.getEventId();
         AnsAdapter ans = new AnsAdapter(this, event_id);
         ansList.setAdapter(ans);
-        
+
         answers = ans.getAnswerList();
 
         //绑定监听
@@ -372,6 +377,8 @@ public class QuestionDetail extends AIActionBarActivity implements RapidFloating
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_question_detail, menu);
+        //这里做是否已关注的判断，然后修改按钮
+        menu_ = menu;
         return true;
     }
 
@@ -391,6 +398,16 @@ public class QuestionDetail extends AIActionBarActivity implements RapidFloating
             return true;
         }
 
+        if(id == R.id.action_concern){
+            if(item.getTitle().toString().equals("关注")){
+                operation = 1;
+            }else if(item.getTitle().toString().equals("取消关注")){
+                operation = 0;
+            }
+            new Thread(mRunnable).start();
+            return true;
+        }
+
         return super.onOptionsItemSelected(item);
     }
 //设置完毕
@@ -407,4 +424,61 @@ public class QuestionDetail extends AIActionBarActivity implements RapidFloating
             return true;
         }
     };*/
+
+    Runnable mRunnable = new Runnable() {
+        @Override
+        public void run() {
+            put_concern();
+        }
+    };
+    private void put_concern(){
+        sharedPref = this.getSharedPreferences("user_id", Context.MODE_PRIVATE);
+        int user_id = sharedPref.getInt("user_id", -1);
+
+        String send = "{\"id\":" + user_id + ",\"event_id\":"
+                + event_id + ",\"operation\":"  + operation +"}";
+        String msg = RequestHandler.sendPostRequest(
+                "http://120.24.208.130:1501/user/event_manage", send);
+        Log.v("receiversostest", msg);
+        if (msg == "false") {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(getApplicationContext(), "连接失败，请检查网络是否连接并重试",
+                            Toast.LENGTH_SHORT).show();
+                }
+            });
+            return;
+        }
+        try {
+            JSONObject jO = new JSONObject(msg);
+            if (jO.getInt("status") == 500) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(getApplicationContext(), "操作失败",
+                                Toast.LENGTH_SHORT).show();
+                    }
+                });
+                return;
+            } else if (jO.getInt("status") == 200) {
+                Toast.makeText(getApplicationContext(), "操作成功",
+                        Toast.LENGTH_SHORT).show();
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        MenuItem item_concern = menu_.findItem(R.id.action_concern);
+                        if (operation == 1) {
+                            item_concern.setTitle("取消关注");
+                        } else if (operation == 0) {
+                            item_concern.setTitle("关注");
+                        }
+                    }
+                });
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
 }

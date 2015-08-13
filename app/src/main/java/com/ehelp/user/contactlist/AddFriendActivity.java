@@ -17,6 +17,7 @@ import com.ehelp.R;
 import com.ehelp.map.sendhelp_map;
 import com.ehelp.send.CountNum;
 import com.ehelp.send.SendQuestion;
+import com.ehelp.user.lovebank.TransferActivity;
 import com.ehelp.utils.RequestHandler;
 import com.wangjie.androidbucket.utils.ABTextUtil;
 import com.wangjie.androidbucket.utils.imageprocess.ABShape;
@@ -51,17 +52,18 @@ public class AddFriendActivity extends AIActionBarActivity implements RapidFloat
     private SharedPreferences SharedPref;
 
     private int idd;//查询的用户ID
+    private String name;//查询用户名
     String phone="";//要查询的手机号码
 
     //0为添加好友，1为转账
-    private int type;
+    private int type, coin;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         type = getIntent().getIntExtra("QueryPerson",-1);
-
+        coin = getIntent().getIntExtra("coin", 0);
         //set toolbar
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         mToolbar.setTitle("");
@@ -196,6 +198,7 @@ public class AddFriendActivity extends AIActionBarActivity implements RapidFloat
                 }else {
                     Toast.makeText(getApplicationContext(), "查询成功",
                             Toast.LENGTH_SHORT).show();
+                    name = jO.getString("name");//获取用户名
                     //使隐藏的页卡显示
                     RelativeLayout rlll = (RelativeLayout) findViewById(R.id.rll);
                     rlll.setVisibility(View.VISIBLE);
@@ -248,7 +251,11 @@ public class AddFriendActivity extends AIActionBarActivity implements RapidFloat
             button_.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View arg0) {
-                    //跳转
+                    Intent intent = new Intent(AddFriendActivity.this, TransferActivity.class);
+                    intent.putExtra("id", idd);
+                    intent.putExtra("name", name);
+                    intent.putExtra("coin", coin);
+                    startActivity(intent);
                 }
             });
         }

@@ -36,27 +36,56 @@
                     android:layout_height="wrap_content"
                     android:onClick="SearchButtonProcess"
                     android:text="驾车"
-                    android:layout_centerVertical="true"
+                    android:layout_alignParentTop="true"
                     android:layout_alignParentEnd="true" />
+                <Button
+                    android:id="@+id/sound"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="sound"
+                    android:text="sound"
+                    android:layout_marginRight="0sp"
+                    android:layout_marginTop="170sp"
 
+                    android:layout_alignEnd="@+id/drive" />
+
+                <Button
+                    android:id="@+id/video"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="video"
+                    android:text="video"
+                    android:layout_marginRight="0sp"
+                    android:layout_marginTop="130sp"
+
+                    android:layout_alignEnd="@+id/drive" />
                 <Button
                     android:id="@+id/walk"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:onClick="SearchButtonProcess"
                     android:text="步行"
-                    android:layout_marginRight="0sp"
-                    android:layout_marginTop="210sp"
-
-                    android:layout_alignEnd="@+id/drive" />
-                <TextView
-                    android:layout_width="fill_parent"
-                    android:layout_height="40sp"
-                    android:id="@+id/Title"
-                    android:text="事件标题"
-                    android:textSize="20dp"
-                    android:layout_alignParentLeft ="@+id/imageView"
-                    android:layout_below="@+id/imageView" />
+                    android:layout_below="@+id/drive"
+                    android:layout_alignParentEnd="true" />
+                <Button
+                    android:layout_width="60sp"
+                    android:layout_height="60sp"
+                    android:text="空"
+                    android:textSize="28sp"
+                    android:textColor="#ffffff"
+                    android:id="@+id/respond_number"
+                    android:onClick="respondNum"
+                    android:background="@drawable/circle_button"
+                    android:layout_alignBottom="@+id/map"
+                    android:layout_alignParentEnd="true" />
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="40sp"
+            android:id="@+id/Title"
+            android:text="事件标题"
+            android:textSize="20dp"
+            android:layout_alignParentLeft ="@+id/imageView"
+            android:layout_below="@+id/imageView" />
 
                 <TextView
                     android:layout_width="fill_parent"
