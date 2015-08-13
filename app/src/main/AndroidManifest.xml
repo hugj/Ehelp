@@ -149,7 +149,7 @@
         android:theme="@style/AppTheme" >
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
-            android:value="NnNvfHUWC4MpbOlGpDct7xTt" />
+            android:value="hIOmFOzyRNVo5W7H75h5vmfo" />
 
         <activity
             android:name=".account.login"
@@ -478,18 +478,16 @@
         </activity>
         <activity
             android:name=".user.lovebank.IntegralActivity"
-            android:label="@string/title_activity_integral"
-            android:parentActivityName=".account.login">
+            android:label="@string/title_activity_integral" >
         </activity>
         <activity
             android:name=".user.lovebank.CoinActivity"
-            android:label="@string/title_activity_coin"
-            android:parentActivityName=".account.login">
+            android:label="@string/title_activity_coin" >
         </activity>
         <activity
             android:name=".user.usermes.FansListActivity"
             android:label="@string/title_activity_fans_list"
-            android:parentActivityName=".account.login" >
+            android:parentActivityName=".account.login">
         </activity>
         <activity
             android:name=".map.VideoActivity"
