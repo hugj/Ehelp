@@ -92,7 +92,7 @@
                     android:layout_height="25dp"
                     android:scaleType="matrix"
                     android:text="健康卡"
-                    android:background="#00cc33"
+                    android:background="#1de9b6"
                     android:layout_centerVertical="true"
                     android:layout_alignParentRight="true"
                     android:onClick="healthCardClick"
@@ -121,33 +121,12 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
-                android:background="@drawable/preference_item"
-                android:id="@+id/weight1">
-                <TextView android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" android:textColor="#000"
-                    android:layout_centerVertical="true"
-                    android:id="@+id/weight"
-                    android:text="时间"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/SOStime"
-                    android:textColor="#000"
-                    android:layout_marginLeft="110dp"
-                    android:layout_gravity="center_horizontal"
-                    android:text="2012年"
-                    />
-            </RelativeLayout>
-            <RelativeLayout
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
                 android:background="@drawable/preference_last_item">
                 <TextView android:layout_width="wrap_content"
                     android:layout_height="wrap_content" android:textColor="#000"
                     android:layout_centerVertical="true"
                     android:id="@+id/weight2"
-                    android:text="地点"/>
+                    android:text="时间"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
