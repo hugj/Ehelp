@@ -2,6 +2,7 @@ package com.ehelp.user.history;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.StrictMode;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -67,7 +68,6 @@ public class EndHelpActivity extends ActionBarActivity {
         //跟后台交互获取详情
         Intent intent = getIntent();
         event_id = intent.getIntExtra("event_id",-1);//intent时传入的事件id
-        event_id = 493;
 
         showdetail();
         initView();
@@ -134,8 +134,6 @@ public class EndHelpActivity extends ActionBarActivity {
                 tv3.setText(jO.getString("comment"));
                 RatingBar ratBar = (RatingBar)findViewById(R.id.ratingBar);
                 ratBar.setRating(jO.getInt("group_pts"));
-//                ratBar.setClickable(false);
-                ratBar.setEnabled(false);
                 Log.v("s88",jO.getString("comment"));
 
                 //通过发起者id寻找发起者用户名并显示

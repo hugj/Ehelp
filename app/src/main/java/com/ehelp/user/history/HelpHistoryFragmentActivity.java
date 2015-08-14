@@ -103,15 +103,22 @@ public class HelpHistoryFragmentActivity extends BaseFragment implements OnRapid
         SOSList.setAdapter(Help);
 
         events = Help.getEventList();
-
         //绑定监听
         SOSList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> arg0, View arg1, int index, long arg3) {
                 try {
                     int eventID = events.getJSONObject(index).getInt("event_id");
-                    Intent intent = new Intent(getActivity(), recieve_help_ans_map.class);
-                    intent.putExtra(EXTRA_MESSAGE, eventID);
-                    startActivity(intent);
+                    int state = events.getJSONObject(index).getInt("state");
+                    if(state == 0) {
+
+                        Intent intent = new Intent(getActivity(), recieve_help_ans_map.class);
+                        intent.putExtra(EXTRA_MESSAGE, eventID);
+                        startActivity(intent);
+                    }else {
+                        Intent intent = new Intent(getActivity(), EndHelpActivity.class);
+                        intent.putExtra(EXTRA_MESSAGE, eventID);
+                        startActivity(intent);
+                    }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

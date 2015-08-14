@@ -12,6 +12,7 @@ import com.ehelp.R;
 import com.ehelp.home.ACache;
 import com.ehelp.home.BaseFragment;
 import com.ehelp.map.recieve_help_ans_map;
+import com.ehelp.map.recievesos_map;
 import com.wangjie.androidinject.annotation.annotations.base.AILayout;
 import com.wangjie.rapidfloatingactionbutton.RapidFloatingActionButton;
 import com.wangjie.rapidfloatingactionbutton.listener.OnRapidFloatingButtonSeparateListener;
@@ -109,9 +110,17 @@ public class sosHistoryFragmentActivity extends BaseFragment implements OnRapidF
             public void onItemClick(AdapterView<?> arg0, View arg1, int index, long arg3) {
                 try {
                     int eventID = events.getJSONObject(index).getInt("event_id");
-                    Intent intent = new Intent(getActivity(), recieve_help_ans_map.class);
-                    intent.putExtra(EXTRA_MESSAGE, eventID);
-                    startActivity(intent);
+
+                    int state = events.getJSONObject(index).getInt("state");
+                    if(state == 0) {
+                        Intent intent = new Intent(getActivity(), recievesos_map.class);
+                        intent.putExtra(EXTRA_MESSAGE, eventID);
+                        startActivity(intent);
+                    }else {
+                        Intent intent = new Intent(getActivity(), EndSosActivity.class);
+                        intent.putExtra(EXTRA_MESSAGE, eventID);
+                        startActivity(intent);
+                    }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

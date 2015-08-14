@@ -380,11 +380,11 @@ for fab
                 Toast.makeText(getApplicationContext(), "查询成功",
                         Toast.LENGTH_SHORT).show();
                 //修改显示的时间
-                TextView tv1 =(TextView) findViewById(R.id.SOStime);
-                tv1.setText(jO.getString("time"));
+//                TextView tv1 =(TextView) findViewById(R.id.SOStime);
+//                tv1.setText(jO.getString("time"));
                 //地址的文字信息
                 TextView tv2 =(TextView) findViewById(R.id.SOSlocation);
-                tv2.setText("");
+                tv2.setText(jO.getString("time"));
                 //健康问题or安全问题
                 TextView tv3 =(TextView) findViewById(R.id.problem);
                 if(jO.getInt("demand_number") == 1){

@@ -53,11 +53,16 @@
             android:textSize="28sp"
             android:textColor="#ffffff"
             android:id="@+id/respond_number"
-        android:background="@drawable/circle_button"
-        android:layout_alignBottom="@+id/map"
+            android:background="@drawable/circle_button"
+            android:layout_alignBottom="@+id/map"
             android:layout_alignParentEnd="true" />
         <!--android:onClick="respondNum"-->
-
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/releaseHelp"
+            android:id="@+id/SOScomment"></LinearLayout>
 
     </RelativeLayout>
 

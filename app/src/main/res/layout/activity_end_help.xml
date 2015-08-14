@@ -60,14 +60,14 @@ android:weightSum="1">
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:text="求助者的评价："
-    android:id="@+id/tv1"
-    android:background="@drawable/border_for_textview">
+    android:id="@+id/tv1">
+    <!--android:background="@drawable/border_for_textview">-->
 </TextView>
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:id="@+id/evaluate"
-        android:background="@drawable/border_for_textview">
+        android:background="@drawable/background_card">
 
         <TextView
             android:layout_width="wrap_content"
@@ -80,6 +80,7 @@ android:weightSum="1">
             android:numStars="5"
             android:rating="3"
             android:clickable="false"
+            android:isIndicator="true"
             android:layout_below="@+id/evaluate_"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
