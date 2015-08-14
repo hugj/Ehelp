@@ -5,27 +5,25 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Parcelable;
-import android.os.StrictMode;
-import android.support.v4.view.PagerAdapter;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
+import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.ehelp.R;
-import com.ehelp.entity.Event;
-import com.ehelp.map.recieve_help_ans_map;
+import com.ehelp.home.BaseFragment;
+import com.ehelp.home.widget.PagerSlidingTabStrip;
 import com.ehelp.map.sendhelp_map;
-import com.ehelp.map.sendsos_map;
-import com.ehelp.receive.QuestionDetail;
 import com.ehelp.send.CountNum;
 import com.ehelp.send.SendQuestion;
+import com.ehelp.utils.ActivityCollector;
 import com.wangjie.androidbucket.utils.ABTextUtil;
 import com.wangjie.androidbucket.utils.imageprocess.ABShape;
 import com.wangjie.androidinject.annotation.annotations.base.AILayout;
@@ -41,30 +39,28 @@ import java.util.ArrayList;
 import java.util.List;
 
 @AILayout(R.layout.activity_my_history)
-public class MyHistory extends AIActionBarActivity implements RapidFloatingActionContentLabelList.OnRapidFloatingActionContentLabelListListener {
+public class MyHistory extends AIActionBarActivity implements
+        RapidFloatingActionContentLabelList.OnRapidFloatingActionContentLabelListListener {
     @AIView(R.id.label_list_sample_rfal)
     private RapidFloatingActionLayout rfaLayout;
     @AIView(R.id.label_list_sample_rfab)
     private RapidFloatingActionButton rfaButton;
     private RapidFloatingActionHelper rfabHelper;
-
-    private SharedPreferences sharedPref;
-    private int user_id;
-    private List<Event> events;
-
-    private ViewPager mPager;//页卡内容
-    private List<View> listViews; // Tab页面列表
-    private TextView t1, t2, t3;// 页卡头标
-    //后台连接
-    private SharedPreferences SharedPref;
-    private String message;
-    private String jsonStrng;
-
-    //toolbar
+    private DrawerLayout mDrawerLayout;
+    private ActionBarDrawerToggle mDrawerToggle;
+    private PagerSlidingTabStrip mPagerSlidingTabStrip;
+    private ViewPager mViewPager;
     private Toolbar mToolbar;
+    private int user_id;
+    private SharedPreferences sharedPref;
+    private List<BaseFragment> fragments = new ArrayList<>();
 
-    private int wha = 1;//1代表发起，2代表接收
-    public final static String EXTRA_MESSAGE = "com.ehelp.user.history.MESSAGE";
+    private String token = "false";
+    private int wha = 1;//1代表发起，2代表接收，3代表关注
+    private sosHistoryFragmentActivity sos = new sosHistoryFragmentActivity();
+    private HelpHistoryFragmentActivity help = new HelpHistoryFragmentActivity();
+    private QueHistoryFragmentActivity que = new QueHistoryFragmentActivity();
+    private int position_;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,30 +69,26 @@ public class MyHistory extends AIActionBarActivity implements RapidFloatingActio
     }
 
     private void init() {
-        StrictMode.setThreadPolicy(
-                new StrictMode.ThreadPolicy.Builder().
-                        detectDiskReads().detectDiskWrites().detectNetwork().penaltyLog().build());
-        StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder().
-                detectLeakedSqlLiteObjects().detectLeakedClosableObjects().
-                penaltyLog().penaltyDeath().build());
 
-        //set toolbar
-        mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        mToolbar.setTitle("");
-        setSupportActionBar(mToolbar);
-        TextView tvv =(TextView) findViewById(R.id.titlefortoolbar);
-        tvv.setText("我的历史记录");
+        initViews();
+        fab();
+
+        //获取reg id
+        //get_rid();
+        /*SharedPreferences spf = getApplicationContext().getSharedPreferences("user_id", Context.MODE_PRIVATE);
+        int id = spf.getInt("user_id", -1);
+        String s = String.valueOf(id);
+        Toast.makeText(getApplicationContext(), s, Toast.LENGTH_LONG).show();*/
+
+
+        // 收集activity，以便退出登录时集中销毁
+        ActivityCollector.getInstance().addActivity(this);
 
         sharedPref = this.getSharedPreferences("user_id", Context.MODE_PRIVATE);
         user_id = sharedPref.getInt("user_id", -1);
-        InitViewPager();
-        InitTextView();
-
-        //set FAB
-        fab();
     }
 
-    private void fab(){
+    private void fab() {
         RapidFloatingActionContentLabelList rfaContent = new RapidFloatingActionContentLabelList(context);
         rfaContent.setOnRapidFloatingActionContentLabelListListener(this);
         List<RFACLabelItem> items = new ArrayList<>();
@@ -140,13 +132,15 @@ public class MyHistory extends AIActionBarActivity implements RapidFloatingActio
                 rfaContent
         ).build();
     }
+
     @Override
     public void onRFACItemLabelClick(int position, RFACLabelItem item) {
+//        showToastMessage("clicked label: " + position);
+//        rfabHelper.toggleContent();
         if (position == 0) {
             Intent intent = new Intent(this, CountNum.class);
             startActivity(intent);
-        } else
-        if (position == 1) {
+        } else if (position == 1) {
             Intent intent = new Intent(this, sendhelp_map.class);
             startActivity(intent);
         } else {
@@ -161,8 +155,7 @@ public class MyHistory extends AIActionBarActivity implements RapidFloatingActio
         if (position == 0) {
             Intent intent = new Intent(this, CountNum.class);
             startActivity(intent);
-        } else
-        if (position == 1) {
+        } else if (position == 1) {
             Intent intent = new Intent(this, sendhelp_map.class);
             startActivity(intent);
         } else {
@@ -172,11 +165,76 @@ public class MyHistory extends AIActionBarActivity implements RapidFloatingActio
         rfabHelper.toggleContent();
     }
 
+    private void initViews() {
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        mToolbar.setTitle("");
+        //mToolbar.setTitleTextColor(0xffececec);
+        setSupportActionBar(mToolbar);
+        TextView tvv = (TextView) findViewById(R.id.titlefortoolbar);
+        tvv.setText("我的记录");
+
+        //wha 1代表发起的 2代表接受的
+        sos.setwha(wha);
+        fragments.add(sos);
+        help.setwha(wha);
+        fragments.add(help);
+        que.setwha(wha);
+        fragments.add(que);
+
+        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+///*
+
+        mPagerSlidingTabStrip = (PagerSlidingTabStrip) findViewById(R.id.tabs);
+        mViewPager = (ViewPager) findViewById(R.id.pager);
+        mViewPager.setAdapter(new MyPagerAdapter(getSupportFragmentManager()));
+        mPagerSlidingTabStrip.setViewPager(mViewPager);
+        mPagerSlidingTabStrip.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+
+            @Override
+            public void onPageSelected(int arg0) {
+                //colorChange(arg0);
+            }
+
+            @Override
+            public void onPageScrolled(int arg0, float arg1, int arg2) {
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int arg0) {
+            }
+        });
+        initTabsValue();
+    }
+
+    /**
+     * mPagerSlidingTabStrip榛樿鍊奸厤缃�
+     */
+    private void initTabsValue() {
+        // 搴曢儴娓告爣棰滆壊
+        mPagerSlidingTabStrip.setIndicatorColor(Color.BLUE);
+        // tab鐨勫垎鍓茬嚎棰滆壊
+        mPagerSlidingTabStrip.setDividerColor(Color.TRANSPARENT);
+        // tab鑳屾櫙
+        mPagerSlidingTabStrip.setBackgroundColor(Color.parseColor("#4876FF"));
+        // tab搴曠嚎楂樺害
+        mPagerSlidingTabStrip.setUnderlineHeight((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
+                (float) 0.1, getResources().getDisplayMetrics()));
+        // 娓告爣楂樺害
+        mPagerSlidingTabStrip.setIndicatorHeight((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
+                5, getResources().getDisplayMetrics()));
+        // 閫変腑鐨勬枃瀛楅鑹�
+        mPagerSlidingTabStrip.setSelectedTextColor(Color.WHITE);
+        // 姝ｅ父鏂囧瓧棰滆壊
+        mPagerSlidingTabStrip.setTextColor(Color.parseColor("#A2B5FF"));
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_my_history, menu);
-        return true;
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType("text/*");
+        //mShareActionProvider.setShareIntent(intent);
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
@@ -190,222 +248,82 @@ public class MyHistory extends AIActionBarActivity implements RapidFloatingActio
         if (id == R.id.sponsor) {
             //change to my luancd
             wha = 1;
+//            if (fragments.size() == 3) {
+//                if (position_ == 0) {
+//                    sos.changewha(wha);
+//                } else if (position_ == 1) {
+//                    help.changewha(wha);
+//                } else {
+//                    que.changewha(wha);
+//                }
+//            }
+
+            sos.setwha(wha);
+            help.setwha(wha);
+            que.setwha(wha);
             return true;
         }
         //noinspection SimplifiableIfStatement
         if (id == R.id.accept) {
             //change to what i accepted
             wha = 2;
+//            if (fragments.size() == 3) {
+//                if (position_ == 0) {
+//                    sos.changewha(wha);
+//                } else if (position_ == 1) {
+//                    help.changewha(wha);
+//                } else {
+//                    que.changewha(wha);
+//                }
+//            }
+            sos.setwha(wha);
+            help.setwha(wha);
+            que.setwha(wha);
             return true;
         }
-        if (id == R.id.concern){
+        if (id == R.id.concern) {
             wha = 3;
+//            if (fragments.size() == 3) {
+//                if (position_ == 0) {
+//                    sos.changewha(wha);
+//                } else if (position_ == 1) {
+//                    help.changewha(wha);
+//                } else {
+//                    que.changewha(wha);
+//                }
+//            }
+            sos.setwha(wha);
+            help.setwha(wha);
+            que.setwha(wha);
             return true;
         }
         return super.onOptionsItemSelected(item);
     }
-    /**
-     * 初始化头标
-     */
 
-    private void InitTextView() {
-        t1 = (TextView) findViewById(R.id.text1);
-        t2 = (TextView) findViewById(R.id.text2);
-        t3 = (TextView) findViewById(R.id.text3);
+    /* ***************FragmentPagerAdapter***************** */
+    public class MyPagerAdapter extends FragmentPagerAdapter {
 
-        t1.setOnClickListener(new MyOnClickListener(0));
-        t2.setOnClickListener(new MyOnClickListener(1));
-        t3.setOnClickListener(new MyOnClickListener(2));
-    }
-    /**
-     * 头标点击监听
-     */
-    public class MyOnClickListener implements View.OnClickListener {
-        private int index = 0;
-
-        public MyOnClickListener(int i) {
-            index = i;
+        public MyPagerAdapter(FragmentManager fm) {
+            super(fm);
         }
 
         @Override
-        public void onClick(View v) {
-            mPager.setCurrentItem(index);
-        }
-    }
-    /**
-     * 初始化ViewPager
-     */
-    private void InitViewPager() {
-        mPager = (ViewPager) findViewById(R.id.vPager);
-        listViews = new ArrayList<View>();
-        LayoutInflater mInflater = getLayoutInflater();
-        listViews.add(mInflater.inflate(R.layout.lay1, null));
-        listViews.add(mInflater.inflate(R.layout.lay2, null));
-        listViews.add(mInflater.inflate(R.layout.lay3, null));
-        mPager.setAdapter(new MyPagerAdapter(listViews));
-        mPager.setCurrentItem(0);
-        mPager.setOnPageChangeListener(new MyOnPageChangeListener());
-        //初始化，使默认页面卡是是绿色的
-        TextView tv = (TextView) findViewById(R.id.text1);
-        tv.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
-
-    }
-    /**
-     * ViewPager适配器
-     */
-    public class MyPagerAdapter extends PagerAdapter {
-        public List<View> mListViews;
-
-        public MyPagerAdapter(List<View> mListViews) {
-            this.mListViews = mListViews;
-        }
-
-        @Override
-        public void destroyItem(View arg0, int arg1, Object arg2) {
-            ((ViewPager) arg0).removeView(mListViews.get(arg1));
-        }
-
-        @Override
-        public void finishUpdate(View arg0) {
+        public CharSequence getPageTitle(int position) {
+            return fragments.get(position).getTitle();
         }
 
         @Override
         public int getCount() {
-            return mListViews.size();
+            return fragments.size();
         }
 
         @Override
-        public Object instantiateItem(View arg0, int arg1) {
-            ((ViewPager) arg0).addView(mListViews.get(arg1), 0);
-            return mListViews.get(arg1);
+        public Fragment getItem(int position) {
+            position_ = position;
+            fragments.get(position).setUserID(user_id);
+            return fragments.get(position);
         }
 
-        @Override
-        public boolean isViewFromObject(View arg0, Object arg1) {
-            return arg0 == (arg1);
-        }
-
-        @Override
-        public void restoreState(Parcelable arg0, ClassLoader arg1) {
-        }
-
-        @Override
-        public Parcelable saveState() {
-            return null;
-        }
-
-        @Override
-        public void startUpdate(View arg0) {
-        }
     }
-    /**
-     * 页卡切换监听
-     */
-    public class MyOnPageChangeListener implements ViewPager.OnPageChangeListener {
 
-        @Override
-        public void onPageSelected(int arg0) {
-            TextView tv = (TextView) findViewById(R.id.text1);
-            TextView tv2 = (TextView) findViewById(R.id.text2);
-            TextView tv3 = (TextView) findViewById(R.id.text3);
-            switch (arg0) {
-                case 0:
-                    tv.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
-                    tv2.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-                    tv3.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-                    //添加该页面可能的事项。比如跳转之类
-
-                    ListView hisList = (ListView)findViewById(R.id.lay1);
-                    //wha 1代表发起的 2代表接受的
-                    HistoryAdapter his = new HistoryAdapter(MyHistory.this, user_id, wha, 1);
-                    hisList.setAdapter(his);
-
-                    events = his.getEvent();
-
-                    //绑定监听
-                    hisList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                        public void onItemClick(AdapterView<?> arg0, View arg1, int index, long arg3) {
-                            Intent intent = new Intent(MyHistory.this, recieve_help_ans_map.class);
-                            Intent itt = new Intent(MyHistory.this, EndHelpActivity.class);
-                            //根据是否结束跳入不同页面
-                            int eventID = events.get(index).getEventId();
-                            int state = events.get(index).getState();
-                            intent.putExtra("event_id", eventID);
-                            itt.putExtra("event_id", eventID);
-                            if(state == 1){
-                                startActivity(itt);
-                            }else {
-                                startActivity(intent);
-                            }
-                        }
-                    });
-                    break;
-                case 1:
-
-                    tv.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-                    tv2.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
-                    tv3.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-
-                    ListView hisList2 = (ListView)findViewById(R.id.lay2);
-                    //wha 1代表发起的 2代表接受的
-                    HistoryAdapter his2 = new HistoryAdapter(MyHistory.this, user_id, wha, 2);
-                    hisList2.setAdapter(his2);
-
-                    events = his2.getEvent();
-
-                    //绑定监听
-                    hisList2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                        public void onItemClick(AdapterView<?> arg0, View arg1, int index, long arg3) {
-                            Intent intent = new Intent(MyHistory.this, sendsos_map.class);
-                            Intent itt = new Intent(MyHistory.this, EndSosActivity.class);
-                            //这里要根据是否结束判断跳转至哪个页面sendsos_map，endsos，一般情况下是跳至已结束的页面
-                            //还要根据是否自己发起的，来进入recieve页面或者send页面
-                            int eventID = events.get(index).getEventId();
-                            int state = events.get(index).getState();
-                            intent.putExtra("event_id", eventID);
-                            itt.putExtra("event_id", eventID);
-                            if(state == 0){
-                                startActivity(intent);
-                            }else {
-                                startActivity(itt);
-
-                            }
-                        }
-                    });
-                    break;
-                case 2:
-                    tv.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-                    tv2.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-                    tv3.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
-
-                    ListView hisList3 = (ListView)findViewById(R.id.lay3);
-                    //wha 1代表发起的 2代表接受的
-                    HistoryAdapter his3 = new HistoryAdapter(MyHistory.this, user_id, wha, 0);
-                    hisList3.setAdapter(his3);
-
-                    events = his3.getEvent();
-
-                    //绑定监听
-                    hisList3.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                        public void onItemClick(AdapterView<?> arg0, View arg1, int index, long arg3) {
-                            Intent intent = new Intent(MyHistory.this, QuestionDetail.class);
-                            int eventID = events.get(index).getEventId();
-                            intent.putExtra("qusetiondatail", events.get(index));
-                            startActivity(intent);
-                        }
-                    });
-                    break;
-            }
-
-
-        }
-
-        @Override
-        public void onPageScrolled(int arg0, float arg1, int arg2) {
-        }
-
-        @Override
-        public void onPageScrollStateChanged(int arg0) {
-        }
-    }
 }

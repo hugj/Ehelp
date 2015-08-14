@@ -114,13 +114,11 @@ public class HomeMapActivity extends BaseFragment implements RapidFloatingAction
 
     @Override
     public void onRFACItemLabelClick(int position, RFACLabelItem item) {
-        showToastMessage("clicked label: " + position);
         rfabHelper.toggleContent();
     }
 
     @Override
     public void onRFACItemIconClick(int position, RFACLabelItem item) {
-        showToastMessage("clicked icon: " + position);
         rfabHelper.toggleContent();
     }
 

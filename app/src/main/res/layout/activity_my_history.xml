@@ -12,56 +12,22 @@
         android:layout_height="match_parent">
 
         <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#ffffff"
             android:orientation="vertical" >
-    <LinearLayout
-        android:id="@+id/linearLayout1"
-        android:layout_width="fill_parent"
-        android:layout_height="20dp"
-        android:background="#4876FF" >
 
-        <TextView
-            android:id="@+id/text1"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_weight="1.0"
-            android:gravity="center"
-            android:text="求助"
-            android:textColor="#fff"
-            android:textSize="12.0dip" />
+            <com.ehelp.home.widget.PagerSlidingTabStrip
+                android:id="@+id/tabs"
+                android:layout_width="match_parent"
+                android:layout_height="48dip" >
+            </com.ehelp.home.widget.PagerSlidingTabStrip>
 
-        <TextView
-            android:id="@+id/text2"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_weight="1.0"
-            android:gravity="center"
-            android:text="求救"
-            android:textColor="#fff"
-            android:textSize="12.0dip" />
-
-        <TextView
-            android:id="@+id/text3"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_weight="1.0"
-            android:gravity="center"
-            android:text="提问"
-            android:textColor="#fff"
-            android:textSize="12.0dip" />
-    </LinearLayout>
-
-
-    <android.support.v4.view.ViewPager
-        android:id="@+id/vPager"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_weight="1.0"
-        android:background="#000000"
-        android:flipInterval="30"
-        android:persistentDrawingCache="animation" />
+            <android.support.v4.view.ViewPager
+                android:id="@+id/pager"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" >
+            </android.support.v4.view.ViewPager>
 
         </LinearLayout>
 
@@ -72,7 +38,8 @@
             android:layout_height="match_parent"
             rfal:rfal_frame_color="#ffffff"
             rfal:rfal_frame_alpha="0.7"
-            >
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true">
 
             <com.wangjie.rapidfloatingactionbutton.RapidFloatingActionButton
                 xmlns:rfab="http://schemas.android.com/apk/res-auto"

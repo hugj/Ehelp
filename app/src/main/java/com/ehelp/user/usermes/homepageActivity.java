@@ -17,7 +17,6 @@ import android.provider.MediaStore;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AbsListView;
@@ -574,6 +573,7 @@ public class homepageActivity extends AIActionBarActivity implements AbsListView
             HttpURLConnection conn = (HttpURLConnection) myFileUrl
                     .openConnection();
             conn.setDoInput(true);
+            conn.setUseCaches(false);
             conn.connect();
             InputStream is = conn.getInputStream();
             bitmap = BitmapFactory.decodeStream(is);
