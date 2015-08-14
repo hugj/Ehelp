@@ -767,7 +767,9 @@ public class homepageActivity extends AIActionBarActivity implements AbsListView
                             public void onClick(View arg0) {
                                 if (SignIn()) {
                                     EsignIn.setText("已签到");
+                                    data.set(3,"积  分    "+ (score+100) );
                                 }
+                                adapter.notifyDataSetChanged();
                             }
                         });
                     } else {
