@@ -75,7 +75,6 @@ public class SendHelp extends AIActionBarActivity implements RapidFloatingAction
         longitude = bunde.getString("longitude").toString();
         latitude = bunde.getString("latitude").toString();
         loc_name = bunde.getString("loc_name").toString();
-        Toast.makeText(SendHelp.this, latitude + longitude, Toast.LENGTH_SHORT).show();
     }
 
     private void init() {
@@ -214,9 +213,9 @@ public class SendHelp extends AIActionBarActivity implements RapidFloatingAction
                         "\"love_coin\":" + Ishare_money + "," +
                         "\"demand_number\":" + Ineed_peo + "," +
                         "\"location\":\"" + loc_name + "\"" + "}";
-                Toast.makeText(getApplicationContext(), user_id + "," + event + ","
-                                + desc_event + "," + Dlatitude + "," + Dlongitude,
-                        Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getApplicationContext(), user_id + "," + event + ","
+//                                + desc_event + "," + Dlatitude + "," + Dlongitude,
+//                        Toast.LENGTH_SHORT).show();
                 String message = RequestHandler.sendPostRequest(
                         "http://120.24.208.130:1501/event/add", jsonStrng);
                 if (message == "false") {
