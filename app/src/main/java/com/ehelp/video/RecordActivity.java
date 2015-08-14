@@ -174,8 +174,9 @@ public class RecordActivity extends Activity implements Callback,MediaPlayer.OnP
 				File f = new File(videoPath);
 				String message = RequestHandler.uploadFile(
 						"http://120.24.208.130:1501/user/upload_avatar", f);
-				Toast.makeText(getApplicationContext(), message,
+				Toast.makeText(getApplicationContext(), "上传成功",
 						Toast.LENGTH_SHORT).show();
+				this.finish();
 			}
 			if(camera!=null){
 				camera.release();
