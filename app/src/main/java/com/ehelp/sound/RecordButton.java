@@ -136,7 +136,7 @@ public class  RecordButton extends Button {
 		File f = new File(mFileName);
 		String message = RequestHandler.uploadFile(
 				"http://120.24.208.130:1501/user/upload_avatar", f);
-		Toast.makeText(getContext(), f.getPath() + ":" + message + f.getTotalSpace(), Toast.LENGTH_SHORT).show();
+		Toast.makeText(getContext(), "上传成功", Toast.LENGTH_SHORT).show();
 
 		//这里是跳转
 	}

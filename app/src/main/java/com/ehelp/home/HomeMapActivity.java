@@ -201,7 +201,7 @@ public class HomeMapActivity extends BaseFragment implements RapidFloatingAction
 
         //遍历所有sos信息
         for (Event sos : sosList) {
-            BitmapDescriptor bd = BitmapDescriptorFactory.fromResource(R.drawable.icon_hehehe);
+            BitmapDescriptor bd = BitmapDescriptorFactory.fromResource(R.drawable.ic_place_indigo_a200_24dp);
             LatLngBounds.Builder builder = new LatLngBounds.Builder();
             LatLng pt = new LatLng(sos.getLatitude(), sos.getLongitude());
             MarkerOptions markerOptions = new MarkerOptions().icon(bd).position(pt);
@@ -218,7 +218,6 @@ public class HomeMapActivity extends BaseFragment implements RapidFloatingAction
             @Override
             public boolean onMarkerClick(Marker marker) {
                 // TODO Auto-generated method stub
-                Toast.makeText(getActivity().getApplicationContext(), "Marker被点击了！", Toast.LENGTH_SHORT).show();
                 int type = (int) marker.getExtraInfo().get("type");
                 if (type == 2) {
                     int eventid = (int) marker.getExtraInfo().get("eventid");
@@ -257,7 +256,7 @@ public class HomeMapActivity extends BaseFragment implements RapidFloatingAction
             try {
                 jO = new JSONObject(message);
                 if (jO.getInt("status") == 500) {
-                    Toast.makeText(getActivity().getApplicationContext(), "fuck",
+                    Toast.makeText(getActivity().getApplicationContext(), "失败",
                             Toast.LENGTH_SHORT).show();
                 } else {
                 }
